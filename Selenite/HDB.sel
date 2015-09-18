@@ -13,6 +13,28 @@ require (SELENE_SCRIPT_DIR .. "/HDB_Config")
 -- Broker initialisation stuffs
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, ClientID=MQTT_ClientID } )
 
+-- Broker's stuffs
+
+function rcvTSalon( topic, val )	-- Receiving temperature
+	SelShared.set('Salon', val)
+	return true
+end
+
+_, err = Brk:subscribe( { 
+	{ topic = "maison/Temperature/Salon", func=rcvTSalon }
+})
+if err then
+	print( err )
+	return
+end
+
+while true do
+	print "Hit 'enter' key to dump"
+	io.stdin:read'*l'	-- wait for enter
+	SelShared.dump()
+end
+
+
 -- Init the screen
 -- Selene.init( Selene.CooperativeConst('FULLSCREEN') )
 
