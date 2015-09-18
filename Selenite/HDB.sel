@@ -1,16 +1,18 @@
 #!../Selene/Selene --dfb:quiet,no-vt
--- HomeDashBoard
+-- HomeDashBoard, Selenite version
 --
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own dashboard
 
+-- Ensure we're not using obsolete version
+assert( SELENE_VERSION >= 0.0201, "HDB requires at least Selene v0.0200" )
 
-assert( SELENE_VERSION >= 0.0200, "HDB requires at least Selene v0.0200" )
+-- Load configuration file
+require (SELENE_SCRIPT_DIR .. "/HDB_Config")
 
-print( os.getenv("PWD") )
-
-require "HDB_Config.lua"
+-- Broker initialisation stuffs
+local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, ClientID=MQTT_ClientID } )
 
 -- Init the screen
-Selene.init( Selene.CooperativeConst('FULLSCREEN') )
+-- Selene.init( Selene.CooperativeConst('FULLSCREEN') )
 
