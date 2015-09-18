@@ -20,21 +20,38 @@ function rcvTSalon( topic, val )	-- Receiving temperature
 	return true
 end
 
+function updateSalon()
+end
+
 _, err = Brk:subscribe( { 
-	{ topic = "maison/Temperature/Salon", func=rcvTSalon }
+	{ topic = "maison/Temperature/Salon", func=rcvTSalon, trigger=updateSalon, trigger_once=true }
 })
 if err then
 	print( err )
 	return
 end
 
+-- Init the screen
+Selene.init( Selene.CooperativeConst('FULLSCREEN') )
+local srf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
+local w,h = srf:GetSize()	-- Retrieve its size
+srf:FillRectangle(0,0, w,h)
+local ftxt = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=20, width=15} )
+
+
+srf:SetFont( ftxt )
+srf:SetColor( 0x80, 0xff, 0x80, 0xff );
+srf:DrawString("This is a test", 15,20)
+
+-- Waiting loop
 while true do
-	print "Hit 'enter' key to dump"
-	io.stdin:read'*l'	-- wait for enter
+	print "Hit 'enter' key to dump, 'q' so exit"
+	local s=io.stdin:read'*l'	-- wait for enter
+	if s=='q' then
+		break
+	end
 	SelShared.dump()
 end
 
-
--- Init the screen
--- Selene.init( Selene.CooperativeConst('FULLSCREEN') )
-
+ftxt:destroy()
+srf:destroy()
