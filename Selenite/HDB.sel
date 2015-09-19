@@ -21,7 +21,6 @@ function rcvVal( topic, val )
 end
 
 function updateVlt()
-print('ok Vlt')
 	srf:SetFont( fdigit )
 	srf:SetColor( 0,0,0,0 )	-- Erase previous message
 	srf:FillRectangle( 20,30, fdigit:StringWidth("XXXX"), fdigit:GetHeight() )
@@ -30,24 +29,76 @@ print('ok Vlt')
 end
 
 function updateConso()
-print('ok Conso')
 	srf:SetFont( fdigit )
 	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 20,35 + fdigit:GetHeight(), fdigit:StringWidth("XXXXXVA"), fdigit:GetHeight() )
+	srf:FillRectangle( 20,30 + fdigit:GetHeight(), fdigit:StringWidth("XXXXXVA"), fdigit:GetHeight() )
 	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Consommation/values/PAPP')) .. " VA", 20,80)
+	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Consommation/values/PAPP')) .. " VA", 20,30 + fdigit:GetHeight())
 end
 
 function updateProduction()
-print('ok Prod')
 	srf:SetFont( fdigit )
 	srf:SetColor( 0,0,0,0 )	-- Erase previous message
 	srf:FillRectangle( 20,35 + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX VA"), fdigit:GetHeight() )
 	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Production/values/PAPP')) .. " VA", 20,80 + fdigit:GetHeight())
+	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Production/values/PAPP')) .. " VA", 20,30 + 2*fdigit:GetHeight())
+end
+
+function updateTGN()
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 215, 2*ftxt:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Grenier Nord')) .. "°C", 215, 2*ftxt:GetHeight())
+end
+
+function updateTChJ()
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 350, 2*ftxt:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Chambre Joris')) .. "°C", 350, 2*ftxt:GetHeight())
+end
+
+function updateSalon()
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 215, 3*ftxt:GetHeight() + fdigit:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Salon')) .. "°C", 215, 3*ftxt:GetHeight() + fdigit:GetHeight())
+end
+
+function updateBureau()
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 350, 3*ftxt:GetHeight() + fdigit:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Bureau')) .. "°C", 350, 3*ftxt:GetHeight() + fdigit:GetHeight())
+end
+
+function updateDehors()
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 215, 4*ftxt:GetHeight() + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Dehors')) .. "°C", 215, 4*ftxt:GetHeight() + 2*fdigit:GetHeight())
+end
+
+function updateCave()
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 350, 4*ftxt:GetHeight() + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Cave')) .. "°C", 350, 4*ftxt:GetHeight() + 2*fdigit:GetHeight())
 end
 
 _, err = Brk:subscribe( {
+	{ topic = "maison/Temperature/Grenier Nord", func=rcvVal, trigger=updateTGN, trigger_once=true },
+	{ topic = "maison/Temperature/Chambre Joris", func=rcvVal, trigger=updateTChJ, trigger_once=true },
+	{ topic = "maison/Temperature/Salon", func=rcvVal, trigger=updateSalon, trigger_once=true },
+	{ topic = "maison/Temperature/Bureau", func=rcvVal, trigger=updateBureau, trigger_once=true },
+	{ topic = "maison/Temperature/Dehors", func=rcvVal, trigger=updateDehors, trigger_once=true },
+	{ topic = "maison/Temperature/Cave", func=rcvVal, trigger=updateCave, trigger_once=true },
 	{ topic = "onduleur/input.voltage", func=rcvVal, trigger=updateVlt, trigger_once=true },
 	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvVal, trigger=updateConso, trigger_once=true },
 	{ topic = "TeleInfo/Production/values/PAPP", func=rcvVal, trigger=updateProduction, trigger_once=true }
@@ -66,12 +117,19 @@ ftxt = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=25} )
 fdigit = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=60} )
 
 srf:SetFont( ftxt )
-srf:SetColor( 0x40, 0xff, 0x40, 0x00 );
-srf:DrawString("Salon :", 15,0)
-tsalonoff = 20 + ftxt:StringWidth("Electricity :")
-
 srf:SetColor( 0x00, 0x20, 0xff, 0x00)
+srf:DrawString("Salon :", 15,0)
+srf:DrawString("Temperature :", 215,0)
+
 srf:DrawLine( 200, 0, 200, sh )
+
+srf:SetColor( 0x40, 0xff, 0x40, 0x00 );
+srf:DrawString("Grenier Nord :", 215, ftxt:GetHeight() )
+srf:DrawString("Chambre Joris :", 350, ftxt:GetHeight() )
+srf:DrawString("Salon :", 215, 2*ftxt:GetHeight() + fdigit:GetHeight() )
+srf:DrawString("Bureau :", 350, 2*ftxt:GetHeight() + fdigit:GetHeight() )
+srf:DrawString("Dehors :", 215, 3*ftxt:GetHeight() + 2*fdigit:GetHeight() )
+srf:DrawString("Cave :", 350, 3*ftxt:GetHeight() + 2*fdigit:GetHeight() )
 
 -- Wait for events
 while true do
