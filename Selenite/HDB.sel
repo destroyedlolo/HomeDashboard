@@ -15,16 +15,22 @@ local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, ClientID=MQTT_Clie
 
 -- Broker's stuffs
 
-function rcvTSalon( topic, val )	-- Receiving temperature
-	SelShared.set('Salon', val)
+function rcvTConso( topic, val )	-- Receiving temperature
+	SelShared.set('EConsommation', val)
 	return true
 end
 
-function updateSalon()
+function updateConso()
+print('ok')
+	srf:SetFont( fdigit )
+	srf:SetColor( 0x10,0x10,0x10,0x10 )	-- Erase previous message
+	srf:FillRectangle( 200,70, fdigit:StringWidth("XXXX VA"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(SelShared.get('EConsommation') .. " VA", 200,70)
 end
 
 _, err = Brk:subscribe( { 
-	{ topic = "maison/Temperature/Salon", func=rcvTSalon, trigger=updateSalon, trigger_once=true }
+	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvTConso, trigger=updateConso, trigger_once=true }
 })
 if err then
 	print( err )
@@ -33,25 +39,22 @@ end
 
 -- Init the screen
 Selene.init( Selene.CooperativeConst('FULLSCREEN') )
-local srf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
+srf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
 local w,h = srf:GetSize()	-- Retrieve its size
 srf:FillRectangle(0,0, w,h)
-local ftxt = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=20, width=15} )
-
+ftxt = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=25} )
+fdigit = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=80} )
 
 srf:SetFont( ftxt )
 srf:SetColor( 0x80, 0xff, 0x80, 0xff );
-srf:DrawString("This is a test", 15,20)
+srf:DrawString("Salon :", 15,20)
+tsalonoff = 20 + ftxt:StringWidth("Salon :")
 
--- Waiting loop
+-- Wait for events
 while true do
-	print "Hit 'enter' key to dump, 'q' so exit"
-	local s=io.stdin:read'*l'	-- wait for enter
-	if s=='q' then
-		break
-	end
-	SelShared.dump()
-end
+	ret, err = Selene.WaitFor()
 
-ftxt:destroy()
-srf:destroy()
+	if type(ret) == 'function' then
+		ret()
+	end
+end
