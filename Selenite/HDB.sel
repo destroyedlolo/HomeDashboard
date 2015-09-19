@@ -33,7 +33,7 @@ function updateConso()
 print('ok Conso')
 	srf:SetFont( fdigit )
 	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 20,30 + fdigit:GetHeight(), fdigit:StringWidth("XXXXXVA"), fdigit:GetHeight() )
+	srf:FillRectangle( 20,35 + fdigit:GetHeight(), fdigit:StringWidth("XXXXXVA"), fdigit:GetHeight() )
 	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
 	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Consommation/values/PAPP')) .. " VA", 20,80)
 end
@@ -42,7 +42,7 @@ function updateProduction()
 print('ok Prod')
 	srf:SetFont( fdigit )
 	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 20,30 + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX VA"), fdigit:GetHeight() )
+	srf:FillRectangle( 20,35 + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX VA"), fdigit:GetHeight() )
 	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
 	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Production/values/PAPP')) .. " VA", 20,80 + fdigit:GetHeight())
 end
