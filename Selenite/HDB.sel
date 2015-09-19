@@ -15,22 +15,42 @@ local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, ClientID=MQTT_Clie
 
 -- Broker's stuffs
 
-function rcvTConso( topic, val )	-- Receiving temperature
-	SelShared.set('EConsommation', val)
+function rcvVal( topic, val )
+	SelShared.set(topic, val)
 	return true
 end
 
-function updateConso()
-print('ok')
+function updateVlt()
+print('ok Vlt')
 	srf:SetFont( fdigit )
-	srf:SetColor( 0x10,0x10,0x10,0x10 )	-- Erase previous message
-	srf:FillRectangle( 200,70, fdigit:StringWidth("XXXX VA"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(SelShared.get('EConsommation') .. " VA", 200,70)
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 20,30, fdigit:StringWidth("XXXX"), fdigit:GetHeight() )
+	srf:SetColor( 0xFF, 0x80, 0x00, 0xff )
+	srf:DrawString(string.format('%3s', SelShared.get('onduleur/input.voltage')) .. " V", 20,30)
 end
 
-_, err = Brk:subscribe( { 
-	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvTConso, trigger=updateConso, trigger_once=true }
+function updateConso()
+print('ok Conso')
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 20,30 + fdigit:GetHeight(), fdigit:StringWidth("XXXXXVA"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Consommation/values/PAPP')) .. " VA", 20,80)
+end
+
+function updateProduction()
+print('ok Prod')
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 20,30 + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX VA"), fdigit:GetHeight() )
+	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
+	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Production/values/PAPP')) .. " VA", 20,80 + fdigit:GetHeight())
+end
+
+_, err = Brk:subscribe( {
+	{ topic = "onduleur/input.voltage", func=rcvVal, trigger=updateVlt, trigger_once=true },
+	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvVal, trigger=updateConso, trigger_once=true },
+	{ topic = "TeleInfo/Production/values/PAPP", func=rcvVal, trigger=updateProduction, trigger_once=true }
 })
 if err then
 	print( err )
@@ -40,15 +60,18 @@ end
 -- Init the screen
 Selene.init( Selene.CooperativeConst('FULLSCREEN') )
 srf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
-local w,h = srf:GetSize()	-- Retrieve its size
-srf:FillRectangle(0,0, w,h)
+local sw,sh = srf:GetSize()	-- Retrieve its size
+srf:Clear(0,0,0,0)
 ftxt = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=25} )
-fdigit = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=80} )
+fdigit = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=60} )
 
 srf:SetFont( ftxt )
-srf:SetColor( 0x80, 0xff, 0x80, 0xff );
-srf:DrawString("Salon :", 15,20)
-tsalonoff = 20 + ftxt:StringWidth("Salon :")
+srf:SetColor( 0x40, 0xff, 0x40, 0x00 );
+srf:DrawString("Salon :", 15,0)
+tsalonoff = 20 + ftxt:StringWidth("Electricity :")
+
+srf:SetColor( 0x00, 0x20, 0xff, 0x00)
+srf:DrawLine( 200, 0, 200, sh )
 
 -- Wait for events
 while true do
