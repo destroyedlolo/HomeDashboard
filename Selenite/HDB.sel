@@ -102,9 +102,9 @@ function updatePower()
 
 	srf:SetFont( fdigit )
 	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 0, srf:GetHeight() - fdigit:GetHeight(), fdigit:StringWidth("XXX.XX W"), fdigit:GetHeight() )
+	srf:FillRectangle( 20, srf:GetHeight() - fdigit:GetHeight(), fdigit:StringWidth("XXX.XX W"), fdigit:GetHeight() )
 	srf:SetColor( 0xFF, 0x80, 0x00, 0xff )
-	srf:DrawString(string.format('%-3.2f', v) .. ' W', 0, srf:GetHeight() - fdigit:GetHeight())
+	srf:DrawString(string.format('%-3.2f', v) .. ' W', 20, srf:GetHeight() - fdigit:GetHeight())
 end
 
 _, err = Brk:subscribe( {
