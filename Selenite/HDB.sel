@@ -23,7 +23,7 @@ end
 function updateVlt()
 	srf:SetFont( fdigit )
 	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 20,30, fdigit:StringWidth("XXXX"), fdigit:GetHeight() )
+	srf:FillRectangle( 20,30, fdigit:StringWidth("XXXX.XV"), fdigit:GetHeight() )
 	srf:SetColor( 0xFF, 0x80, 0x00, 0xff )
 	srf:DrawString(string.format('%3s', SelShared.get('onduleur/input.voltage')) .. " V", 20,30)
 end
