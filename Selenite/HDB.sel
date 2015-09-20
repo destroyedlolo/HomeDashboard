@@ -92,6 +92,21 @@ function updateCave()
 	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Cave')) .. "°C", 350, 4*ftxt:GetHeight() + 2*fdigit:GetHeight())
 end
 
+function updatePower()
+	local f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/voltage_now" )
+	local v = f:read('*number') / 1000000
+	f:close()
+	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/current_now" )
+	v = v * f:read('*number') / 1000000
+	f:close()
+
+	srf:SetFont( fdigit )
+	srf:SetColor( 0,0,0,0 )	-- Erase previous message
+	srf:FillRectangle( 0, srf:GetHeight() - fdigit:GetHeight(), fdigit:StringWidth("XXX.XX W"), fdigit:GetHeight() )
+	srf:SetColor( 0xFF, 0x80, 0x00, 0xff )
+	srf:DrawString(string.format('%-3.2f', v) .. ' W', 0, srf:GetHeight() - fdigit:GetHeight())
+end
+
 _, err = Brk:subscribe( {
 	{ topic = "maison/Temperature/Grenier Nord", func=rcvVal, trigger=updateTGN, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Joris", func=rcvVal, trigger=updateTChJ, trigger_once=true },
@@ -108,6 +123,13 @@ if err then
 	return
 end
 
+-- Timer to check used power
+ptimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updatePower }
+if err then
+	print(err)
+	return
+end
+
 -- Init the screen
 Selene.init( Selene.CooperativeConst('FULLSCREEN') )
 srf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
@@ -120,6 +142,7 @@ srf:SetFont( ftxt )
 srf:SetColor( 0x00, 0x20, 0xff, 0x00)
 srf:DrawString("Salon :", 15,0)
 srf:DrawString("Temperature :", 215,0)
+srf:DrawString("Tablette :", 0, srf:GetHeight() - fdigit:GetHeight() - ftxt:GetHeight())
 
 srf:DrawLine( 200, 0, 200, sh )
 
@@ -133,7 +156,7 @@ srf:DrawString("Cave :", 350, 3*ftxt:GetHeight() + 2*fdigit:GetHeight() )
 
 -- Wait for events
 while true do
-	ret, err = Selene.WaitFor()
+	ret, err = Selene.WaitFor(ptimer)
 
 	if type(ret) == 'function' then
 		ret()
