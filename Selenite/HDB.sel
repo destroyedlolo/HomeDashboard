@@ -11,7 +11,7 @@ assert( SELENE_VERSION >= 0.0201, "HDB requires at least Selene v0.0200" )
 require (SELENE_SCRIPT_DIR .. "/HDB_Config")
 
 -- Broker initialisation stuffs
-local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, ClientID=MQTT_ClientID } )
+local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
 
 -- Broker's stuffs
 
@@ -133,7 +133,6 @@ end
 -- Init the screen
 Selene.init( Selene.CooperativeConst('FULLSCREEN') )
 srf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
-local sw,sh = srf:GetSize()	-- Retrieve its size
 srf:Clear(0,0,0,0)
 ftxt = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=25} )
 fdigit = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=60} )
@@ -144,7 +143,8 @@ srf:DrawString("Salon :", 15,0)
 srf:DrawString("Temperature :", 215,0)
 srf:DrawString("Tablette :", 0, srf:GetHeight() - fdigit:GetHeight() - ftxt:GetHeight())
 
-srf:DrawLine( 200, 0, 200, sh )
+srf:DrawLine( 200, 0, 200, srf:GetHeight() )
+srf:DrawLine( 0, srf:GetHeight() - fdigit:GetHeight() - ftxt:GetHeight() - 10, 200, srf:GetHeight() - fdigit:GetHeight() - ftxt:GetHeight() - 10 )
 
 srf:SetColor( 0x40, 0xff, 0x40, 0x00 );
 srf:DrawString("Grenier Nord :", 215, ftxt:GetHeight() )
