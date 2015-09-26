@@ -1,0 +1,7 @@
+-- Define frequently used colors
+-- (based on HTML color names)
+
+COL_BLACK = { 0,0,0, 0xff }
+COL_AQUA = { 0,0xff,0xff, 0xff }
+COL_ORANGE = { 0xff,0xff,0, 0xff }
+COL_BORDER = { 0x46,0x82,0xb4, 0xff }	-- SteelBlue

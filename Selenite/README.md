@@ -1,1 +1,2 @@
-This is a **simple** mostly text based dashboard
+This dashboard runs on my Tablet.
+Requires **Selene**.

@@ -4,161 +4,28 @@
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own dashboard
 
+-- compatibility with newer Lua
+local unpack = unpack or table.unpack
+
 -- Ensure we're not using obsolete version
-assert( SELENE_VERSION >= 0.0201, "HDB requires at least Selene v0.0200" )
+assert( SELENE_VERSION >= 0.0202, "HDB requires at least Selene v0.0200" )
 
--- Load configuration file
-require (SELENE_SCRIPT_DIR .. "/HDB_Config")
-
--- Broker initialisation stuffs
-local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
-
--- Broker's stuffs
-
-function rcvVal( topic, val )
-	SelShared.set(topic, val)
-	return true
-end
-
-function updateVlt()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 20,30, fdigit:StringWidth("XXXX.XV"), fdigit:GetHeight() )
-	srf:SetColor( 0xFF, 0x80, 0x00, 0xff )
-	srf:DrawString(string.format('%3s', SelShared.get('onduleur/input.voltage')) .. " V", 20,30)
-end
-
-function updateConso()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 20,30 + fdigit:GetHeight(), fdigit:StringWidth("XXXXXVA"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Consommation/values/PAPP')) .. " VA", 20,30 + fdigit:GetHeight())
-end
-
-function updateProduction()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 20,35 + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX VA"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('TeleInfo/Production/values/PAPP')) .. " VA", 20,30 + 2*fdigit:GetHeight())
-end
-
-function updateTGN()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 215, 2*ftxt:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Grenier Nord')) .. "°C", 215, 2*ftxt:GetHeight())
-end
-
-function updateTChJ()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 350, 2*ftxt:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Chambre Joris')) .. "°C", 350, 2*ftxt:GetHeight())
-end
-
-function updateSalon()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 215, 3*ftxt:GetHeight() + fdigit:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Salon')) .. "°C", 215, 3*ftxt:GetHeight() + fdigit:GetHeight())
-end
-
-function updateBureau()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 350, 3*ftxt:GetHeight() + fdigit:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Bureau')) .. "°C", 350, 3*ftxt:GetHeight() + fdigit:GetHeight())
-end
-
-function updateDehors()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 215, 4*ftxt:GetHeight() + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Dehors')) .. "°C", 215, 4*ftxt:GetHeight() + 2*fdigit:GetHeight())
-end
-
-function updateCave()
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 350, 4*ftxt:GetHeight() + 2*fdigit:GetHeight(), fdigit:StringWidth("XXXX°C"), fdigit:GetHeight() )
-	srf:SetColor( 0x80, 0xff, 0x80, 0xff )
-	srf:DrawString(string.format('%4s', SelShared.get('maison/Temperature/Cave')) .. "°C", 350, 4*ftxt:GetHeight() + 2*fdigit:GetHeight())
-end
-
-function updatePower()
-	local f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/voltage_now" )
-	local v = f:read('*number') / 1000000
-	f:close()
-	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/current_now" )
-	v = v * f:read('*number') / 1000000
-	f:close()
-
-	srf:SetFont( fdigit )
-	srf:SetColor( 0,0,0,0 )	-- Erase previous message
-	srf:FillRectangle( 20, srf:GetHeight() - fdigit:GetHeight(), fdigit:StringWidth("XXX.XX W"), fdigit:GetHeight() )
-	srf:SetColor( 0xFF, 0x80, 0x00, 0xff )
-	srf:DrawString(string.format('%-3.2f', v) .. ' W', 20, srf:GetHeight() - fdigit:GetHeight())
-end
-
-_, err = Brk:subscribe( {
-	{ topic = "maison/Temperature/Grenier Nord", func=rcvVal, trigger=updateTGN, trigger_once=true },
-	{ topic = "maison/Temperature/Chambre Joris", func=rcvVal, trigger=updateTChJ, trigger_once=true },
-	{ topic = "maison/Temperature/Salon", func=rcvVal, trigger=updateSalon, trigger_once=true },
-	{ topic = "maison/Temperature/Bureau", func=rcvVal, trigger=updateBureau, trigger_once=true },
-	{ topic = "maison/Temperature/Dehors", func=rcvVal, trigger=updateDehors, trigger_once=true },
-	{ topic = "maison/Temperature/Cave", func=rcvVal, trigger=updateCave, trigger_once=true },
-	{ topic = "onduleur/input.voltage", func=rcvVal, trigger=updateVlt, trigger_once=true },
-	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvVal, trigger=updateConso, trigger_once=true },
-	{ topic = "TeleInfo/Production/values/PAPP", func=rcvVal, trigger=updateProduction, trigger_once=true }
-})
-if err then
-	print( err )
-	return
-end
-
--- Timer to check used power
-ptimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updatePower }
-if err then
-	print(err)
-	return
-end
+-- Load configuration files
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")
+require (SELENE_SCRIPT_DIR .. "/Colors")
 
 -- Init the screen
 Selene.init( Selene.CooperativeConst('FULLSCREEN') )
-srf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
-srf:Clear(0,0,0,0)
-ftxt = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=25} )
-fdigit = SelFont.create("/usr/local/fonts/corpuscare_light.ttf", { height=60} )
+main_srf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
+print( unpack(COL_BLACK ) )
+main_srf:Clear( unpack(COL_BLACK) )
 
-srf:SetFont( ftxt )
-srf:SetColor( 0x00, 0x20, 0xff, 0x00)
-srf:DrawString("Salon :", 15,0)
-srf:DrawString("Temperature :", 215,0)
-srf:DrawString("Tablette :", 0, srf:GetHeight() - fdigit:GetHeight() - ftxt:GetHeight())
+require (SELENE_SCRIPT_DIR .. "/Design")
 
-srf:DrawLine( 200, 0, 200, srf:GetHeight() )
-srf:DrawLine( 0, srf:GetHeight() - fdigit:GetHeight() - ftxt:GetHeight() - 10, 200, srf:GetHeight() - fdigit:GetHeight() - ftxt:GetHeight() - 10 )
+main_srf:SetFont( fdigit )
+main_srf:SetColor( unpack(COL_BORDER) )
+main_srf:DrawString("C'est un Test", 150,150)
 
-srf:SetColor( 0x40, 0xff, 0x40, 0x00 );
-srf:DrawString("Grenier Nord :", 215, ftxt:GetHeight() )
-srf:DrawString("Chambre Joris :", 350, ftxt:GetHeight() )
-srf:DrawString("Salon :", 215, 2*ftxt:GetHeight() + fdigit:GetHeight() )
-srf:DrawString("Bureau :", 350, 2*ftxt:GetHeight() + fdigit:GetHeight() )
-srf:DrawString("Dehors :", 215, 3*ftxt:GetHeight() + 2*fdigit:GetHeight() )
-srf:DrawString("Cave :", 350, 3*ftxt:GetHeight() + 2*fdigit:GetHeight() )
+print "Hit 'enter' key to exit"
+io.stdin:read'*l'	-- wait for enter
 
--- Wait for events
-while true do
-	ret, err = Selene.WaitFor(ptimer)
-
-	if type(ret) == 'function' then
-		ret()
-	end
-end
