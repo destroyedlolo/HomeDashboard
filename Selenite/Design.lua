@@ -96,6 +96,10 @@ xcursor = tx+tw+15	-- x cursor
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawLine( xcursor, 0, xcursor, bar_ups.y + bar_ups.h + 4 )
 
+----
+-- Internet
+----
+
 xcursor = xcursor + 15
 psrf:SetColor( unpack(COL_TITLE) )
 psrf:DrawString("Internet :", xcursor, 5 )
@@ -104,8 +108,11 @@ srf_Internet:SetColor( unpack(COL_DIGIT) )
 tx, ty = srf_Internet:GetPosition()
 tw, th = srf_Internet:GetSize()
 tw = tx + tw - xcursor	-- width for bars
-bar_Idn = { x=xcursor, y=goffy, w=tw/2-3, h=10 }
-bar_Iup = { x=xcursor + tw/2 +3, y=goffy, w=tw/2-3, h=10 }
+bar_Idn = { x=xcursor+1, y=goffy+1, w=tw/2-2, h=8 }
+bar_Iup = { x=xcursor + tw/2 +4, y=goffy+1, w=tw/2-5, h=8 }
+psrf:SetColor( unpack( COL_WHITE ) )
+psrf:DrawRectangle( bar_Idn.x-1, bar_Idn.y-1, bar_Idn.w+2, bar_Idn.h+2 )
+psrf:DrawRectangle( bar_Iup.x-1, bar_Iup.y-1, bar_Iup.w+2, bar_Iup.h+2 )
 
 psrf:SetColor( unpack(COL_BORDER) )
 goffy = bar_ups.y + bar_ups.h + 4
@@ -157,6 +164,3 @@ srf_consogfx:Clear(10,10,10,255)
 upddata( srf_maxtpwr, fsdigit, "10.88" )
 srf_tpwr:Clear(10,10,10,255)
 
-upddata(srf_Internet, ftitle1, "8888 kb / 2000 kb")
-psrf:DrawRectangle( bar_Idn.x, bar_Idn.y, bar_Idn.w, bar_Idn.h )
-psrf:DrawRectangle( bar_Iup.x, bar_Iup.y, bar_Iup.w, bar_Iup.h )
