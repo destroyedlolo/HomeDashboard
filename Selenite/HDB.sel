@@ -166,6 +166,15 @@ if err then
 	return
 end
 
+local cols = {
+	[10] = 10,
+	[20] = 20
+}
+
+for i=5,25,5 do
+print( i, findcolor(i, cols ) )
+end
+
 -- Wait for events
 while true do
 	ret, err = Selene.WaitFor(tabtimer)
