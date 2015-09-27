@@ -43,6 +43,11 @@ srf_consommation:SetColor( unpack(COL_DIGIT) )
 srf_production = psrf:SubSurface( 10, 5 + ftitle:GetHeight() + 3*ftitle1:GetHeight() + 2*fdigit:GetHeight() + HSGRPH, VBAR1-20, fdigit:GetHeight() )
 srf_production:SetColor( unpack(COL_DIGIT) )
 
+local xoffmaxc = VBAR1 - (5 + fsdigit:StringWidth("12345"))
+srf_maxconso = psrf:SubSurface( xoffmaxc, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + 2*fdigit:GetHeight(), fsdigit:StringWidth("12345"), HSGRPH);
+srf_maxconso:SetColor( unpack(COL_DIGIT) )
+srf_consogfx = psrf:SubSurface( 5, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + 2*fdigit:GetHeight(), xoffmaxc -5, HSGRPH)
+
 -----
 -- Tablet
 -----
@@ -61,7 +66,7 @@ srf_tabpwr:SetColor( unpack(COL_DIGIT) )
 psrf:SetFont( fdigit )
 psrf:SetColor( unpack(COL_DIGIT) )
 
-psrf:SetFont( fsdigit )
-psrf:DrawString("12345", 90, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + 2*fdigit:GetHeight())
+upddata( srf_maxconso, fsdigit, "12345" )
+srf_consogfx:Clear(10,10,10,255)
 
 
