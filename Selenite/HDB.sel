@@ -7,6 +7,11 @@
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
 
+-- Hide console's cursor
+local f=io.open('/sys/class/graphics/fbcon/cursor_blink', 'w')
+f:write('0')
+f:close()
+
 -- Ensure we're not using obsolete version
 assert( SELENE_VERSION >= 0.0203, "HDB requires at least Selene v0.0203" )
 
@@ -65,7 +70,23 @@ function updateTCave()
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
 end
 
+function updateUPSLd()
+	local maxp = tonumber( SelShared.get('onduleur/ups.realpower.nominal') )
+	if maxp then -- maximum power not known yet
+		upddata( srf_consoUPS, ftitle1, string.format('%3.1f', SelShared.get('onduleur/ups.load')*maxp/100) .. ' W')
+	else
+		upddata( srf_consoUPS, ftitle1, SelShared.get('onduleur/ups.load') .. ' %')
+	end
+	local pw = bar_ups.w * SelShared.get('onduleur/ups.load') / 100
+	psrf:SetColor( unpack( COL_WHITE ) )
+	psrf:FillRectangle( bar_ups.x, bar_ups.y, pw, bar_ups.h )
+	psrf:SetColor( unpack( COL_BLACK ) )
+	psrf:FillRectangle( bar_ups.x+pw, bar_ups.y, bar_ups.w-pw, bar_ups.h )
+end
+
 _, err = Brk:subscribe({
+	{ topic = "onduleur/ups.realpower.nominal", func=rcvVal },
+	{ topic = "onduleur/ups.load", func=rcvVal, trigger=updateUPSLd, trigger_once=true },
 	{ topic = "maison/Temperature/Grenier Nord", func=rcvVal, trigger=updateTGN, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Joris", func=rcvVal, trigger=updateTChJ, trigger_once=true },
 	{ topic = "maison/Temperature/Salon", func=rcvVal, trigger=updateTSalon, trigger_once=true },

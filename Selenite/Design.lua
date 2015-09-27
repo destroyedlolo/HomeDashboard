@@ -88,13 +88,15 @@ srf_consoUPS:SetColor( unpack(COL_DIGIT) )
 local tx,ty = srf_consoUPS:GetPosition()
 local tw,th = srf_consoUPS:GetSize()
 goffy = ty + th + 2	-- bar's offset
-bar_ups = { x=VBAR1 + 5, y=goffy, w=tx+tw-VBAR1, h=10 }
+bar_ups = { x=VBAR1+6, y=goffy+1, w=tx+tw-VBAR1-1, h=8 }
+psrf:SetColor( unpack( COL_WHITE ) )
+psrf:DrawRectangle( bar_ups.x-1, bar_ups.y-1, bar_ups.w+2, bar_ups.h+2 )
 
-xcursor = tx+tw+20	-- x cursor
+xcursor = tx+tw+15	-- x cursor
 psrf:SetColor( unpack(COL_BORDER) )
-psrf:DrawLine( xcursor, 0, tx, bar_ups.y + bar_ups.h + 4 )
+psrf:DrawLine( xcursor, 0, xcursor, bar_ups.y + bar_ups.h + 4 )
 
-xcursor = xcursor + 20
+xcursor = xcursor + 15
 psrf:SetColor( unpack(COL_TITLE) )
 psrf:DrawString("Internet :", xcursor, 5 )
 srf_Internet = psrf:SubSurface( xcursor + ftitle1:StringWidth("Internet : "), 5, ftitle1:StringWidth("8888 kb / 2000 kb"), ftitle1:GetHeight() )
@@ -154,10 +156,6 @@ srf_consogfx:Clear(10,10,10,255)
 
 upddata( srf_maxtpwr, fsdigit, "10.88" )
 srf_tpwr:Clear(10,10,10,255)
-
-upddata(srf_consoUPS, ftitle1, "200.6W")
-psrf:SetColor( unpack( COL_WHITE ) )
-psrf:DrawRectangle( bar_ups.x, bar_ups.y, bar_ups.w, bar_ups.h )
 
 upddata(srf_Internet, ftitle1, "8888 kb / 2000 kb")
 psrf:DrawRectangle( bar_Idn.x, bar_Idn.y, bar_Idn.w, bar_Idn.h )
