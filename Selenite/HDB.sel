@@ -49,9 +49,29 @@ function updateTChJ()
 	upddata( srf_TChJ, fdigit, SelShared.get('maison/Temperature/Chambre Joris') .. "°C" )
 end
 
+function updateTSalon()
+	upddata( srf_TSalon, fdigit, SelShared.get('maison/Temperature/Salon') .. "°C" )
+end
+
+function updateTBureau()
+	upddata( srf_TBureau, fdigit, SelShared.get('maison/Temperature/Bureau') .. "°C" )
+end
+
+function updateTDehors()
+	upddata( srf_TDehors, fdigit, SelShared.get('maison/Temperature/Dehors') .. "°C" )
+end
+
+function updateTCave()
+	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
+end
+
 _, err = Brk:subscribe({
 	{ topic = "maison/Temperature/Grenier Nord", func=rcvVal, trigger=updateTGN, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Joris", func=rcvVal, trigger=updateTChJ, trigger_once=true },
+	{ topic = "maison/Temperature/Salon", func=rcvVal, trigger=updateTSalon, trigger_once=true },
+	{ topic = "maison/Temperature/Bureau", func=rcvVal, trigger=updateTBureau, trigger_once=true },
+	{ topic = "maison/Temperature/Dehors", func=rcvVal, trigger=updateTDehors, trigger_once=true },
+	{ topic = "maison/Temperature/Cave", func=rcvVal, trigger=updateTCave, trigger_once=true },
 	{ topic = "onduleur/input.voltage", func=rcvVal, trigger=updateVlt, trigger_once=true },
 	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvVal, trigger=updateConso, trigger_once=true },
 	{ topic = "TeleInfo/Production/values/PAPP", func=rcvVal, trigger=updateProduction, trigger_once=true }
