@@ -17,7 +17,6 @@ require (SELENE_SCRIPT_DIR .. "/Colors")
 -- Init the screen
 Selene.init( Selene.CooperativeConst('FULLSCREEN') )
 psrf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
-print( unpack(COL_BLACK ) )
 psrf:Clear( unpack(COL_BLACK) )
 
 require (SELENE_SCRIPT_DIR .. "/Design")
