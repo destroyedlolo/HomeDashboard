@@ -46,14 +46,33 @@ _, err = Brk:subscribe({
 	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvVal, trigger=updateConso, trigger_once=true },
 	{ topic = "TeleInfo/Production/values/PAPP", func=rcvVal, trigger=updateProduction, trigger_once=true }
 })
+
 if err then
 	print( err )
 	return
 end
 
+-- Timer for tablet figures
+function updateTablet()
+	local f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/voltage_now" )
+	local v = f:read('*number') / 1000000
+	f:close()
+	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/current_now" )
+	v = v * f:read('*number') / 1000000
+	f:close()
+
+	upddata( srf_tabpwr, fdigit, string.format('%-3.2f', v) .. ' W')
+end
+
+tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updateTablet}
+if err then
+	print(err)
+	return
+end
+
 -- Wait for events
 while true do
-	ret, err = Selene.WaitFor()
+	ret, err = Selene.WaitFor(tabtimer)
 
 	if type(ret) == 'function' then
 		ret()
