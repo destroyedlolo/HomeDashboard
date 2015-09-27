@@ -8,7 +8,7 @@
 local unpack = unpack or table.unpack
 
 -- Ensure we're not using obsolete version
-assert( SELENE_VERSION >= 0.0202, "HDB requires at least Selene v0.0200" )
+assert( SELENE_VERSION >= 0.0203, "HDB requires at least Selene v0.0203" )
 
 -- Load configuration files
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")
@@ -21,6 +21,41 @@ psrf:Clear( unpack(COL_BLACK) )
 
 require (SELENE_SCRIPT_DIR .. "/Design")
 
-print "Hit 'enter' key to exit"
-io.stdin:read'*l'	-- wait for enter
+-- Broker's stuffs
+local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
 
+function rcvVal( topic, val )
+	SelShared.set(topic, val)
+	return true
+end
+
+function updateVlt()
+	upddata( srf_tension, fdigit, SelShared.get('onduleur/input.voltage') .. ' V')
+end
+
+function updateConso()
+	upddata( srf_consommation, fdigit, SelShared.get('TeleInfo/Consommation/values/PAPP') .. ' VA')
+end
+
+function updateProduction()
+	upddata( srf_production, fdigit, SelShared.get('TeleInfo/Production/values/PAPP') .. ' VA')
+end
+
+_, err = Brk:subscribe({
+	{ topic = "onduleur/input.voltage", func=rcvVal, trigger=updateVlt, trigger_once=true },
+	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvVal, trigger=updateConso, trigger_once=true },
+	{ topic = "TeleInfo/Production/values/PAPP", func=rcvVal, trigger=updateProduction, trigger_once=true }
+})
+if err then
+	print( err )
+	return
+end
+
+-- Wait for events
+while true do
+	ret, err = Selene.WaitFor()
+
+	if type(ret) == 'function' then
+		ret()
+	end
+end

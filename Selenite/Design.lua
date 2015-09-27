@@ -1,7 +1,10 @@
 -- Design of the display
 
 local HSGRPH = 30	-- Height of small graphs
-local VBAR1 = 160	-- position of the first vertical bare
+local VBAR1 = 160	-- position of the first vertical bar
+
+-- compatibility with newer Lua
+local unpack = unpack or table.unpack
 
 -- Font used
 ftitle = SelFont.create("/usr/local/share/fonts/CarroisGothic-Regular.ttf", { height=30} )
@@ -36,9 +39,6 @@ srf_consommation = psrf:SubSurface( 10, 5 + ftitle:GetHeight() + 3*ftitle1:GetHe
 srf_consommation:SetColor( unpack(COL_DIGIT) )
 
 -- Test
-upddata( srf_tension, fdigit, "230 V" )
-upddata( srf_production, fdigit, "12345 VA" )
-upddata( srf_consommation, fdigit, "12345 VA" )
 
 psrf:SetFont( fdigit )
 psrf:SetColor( unpack(COL_DIGIT) )
