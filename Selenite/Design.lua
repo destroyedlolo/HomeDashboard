@@ -66,6 +66,68 @@ srf_maxtpwr = psrf:SubSurface( xoffmaxc, btab + ftitle:GetHeight() + fdigit:GetH
 srf_maxtpwr:SetColor( unpack(COL_DIGIT) )
 srf_tpwr =  psrf:SubSurface( 5, btab + ftitle:GetHeight() + fdigit:GetHeight(), xoffmaxc - 5, HSGRPH);
 
+psrf:SetFont( ftitle1 )
+psrf:SetColor( unpack(COL_TITLE) )
+psrf:DrawString("PMU", 5, btab + ftitle:GetHeight() + fdigit:GetHeight() + HSGRPH)
+psrf:DrawString("Batterie", 5 + VBAR1 / 2, btab + ftitle:GetHeight() + fdigit:GetHeight() + HSGRPH)
+
+srf_ttpmu = psrf:SubSurface( 5, btab + ftitle:GetHeight() + fdigit:GetHeight() + HSGRPH + ftitle1:GetHeight(), VBAR1 / 2 - 10, ftitle1:GetHeight() )
+srf_ttpmu:SetColor( unpack(COL_DIGIT) )
+srf_ttbat = psrf:SubSurface( 5 + VBAR1 / 2, btab + ftitle:GetHeight() + fdigit:GetHeight() + HSGRPH + ftitle1:GetHeight(), VBAR1 / 2 - 10, ftitle1:GetHeight() )
+srf_ttbat:SetColor( unpack(COL_DIGIT) )
+
+----
+-- Onduleur
+----
+psrf:SetFont( ftitle1 )
+psrf:SetColor( unpack(COL_TITLE) )
+psrf:DrawString("Onduleur :", VBAR1 + 5, 5 )
+srf_consoUPS = psrf:SubSurface( VBAR1 + 5 + ftitle1:StringWidth("Onduleur : "), 5, ftitle1:StringWidth("200.6 W"), ftitle1:GetHeight() )
+srf_consoUPS:SetColor( unpack(COL_DIGIT) )
+
+local tx,ty = srf_consoUPS:GetPosition()
+local tw,th = srf_consoUPS:GetSize()
+goffy = ty + th + 2	-- bar's offset
+bar_ups = { x=VBAR1 + 5, y=goffy, w=tx+tw-VBAR1, h=10 }
+
+xcursor = tx+tw+20	-- x cursor
+psrf:SetColor( unpack(COL_BORDER) )
+psrf:DrawLine( xcursor, 0, tx, bar_ups.y + bar_ups.h + 4 )
+
+xcursor = xcursor + 20
+psrf:SetColor( unpack(COL_TITLE) )
+psrf:DrawString("Internet :", xcursor, 5 )
+srf_Internet = psrf:SubSurface( xcursor + ftitle1:StringWidth("Internet : "), 5, ftitle1:StringWidth("8888 kb / 2000 kb"), ftitle1:GetHeight() )
+srf_Internet:SetColor( unpack(COL_DIGIT) )
+tx, ty = srf_Internet:GetPosition()
+tw, th = srf_Internet:GetSize()
+tw = tx + tw - xcursor	-- width for bars
+bar_Idn = { x=xcursor, y=goffy, w=tw/2-3, h=10 }
+bar_Iup = { x=xcursor + tw/2 +3, y=goffy, w=tw/2-3, h=10 }
+
+psrf:SetColor( unpack(COL_BORDER) )
+goffy = bar_ups.y + bar_ups.h + 4
+psrf:DrawLine(VBAR1, goffy, psrf:GetWidth(), goffy )
+
+goffy = goffy + 5
+psrf:SetFont( ftitle )
+psrf:SetColor( unpack(COL_BORDER) )
+psrf:DrawString("Températures :", VBAR1+5, goffy )
+
+goffy = goffy + ftitle:GetHeight() + 5
+psrf:SetFont( ftitle1 )
+psrf:SetColor( unpack(COL_TITLE) )
+psrf:DrawString("Grenier Nord :", VBAR1+5, goffy )
+psrf:DrawString("Chambre Joris :", VBAR1+170, goffy )
+goffy = goffy + ftitle1:GetHeight()
+srf_TGN = psrf:SubSurface( VBAR1+5, goffy, fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
+srf_TGN:SetColor( unpack(COL_DIGIT) )
+srf_TChJ = psrf:SubSurface( VBAR1+170, goffy, fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
+srf_TChJ:SetColor( unpack(COL_DIGIT) )
+goffy = goffy + fdigit:GetHeight()
+psrf:DrawString("Salon :", VBAR1+5, goffy )
+psrf:DrawString("Bureau :", VBAR1+170, goffy )
+
 -- Test
 
 psrf:SetFont( fdigit )
@@ -76,3 +138,11 @@ srf_consogfx:Clear(10,10,10,255)
 
 upddata( srf_maxtpwr, fsdigit, "10.88" )
 srf_tpwr:Clear(10,10,10,255)
+
+upddata(srf_consoUPS, ftitle1, "200.6W")
+psrf:SetColor( unpack( COL_WHITE ) )
+psrf:DrawRectangle( bar_ups.x, bar_ups.y, bar_ups.w, bar_ups.h )
+
+upddata(srf_Internet, ftitle1, "8888 kb / 2000 kb")
+psrf:DrawRectangle( bar_Idn.x, bar_Idn.y, bar_Idn.w, bar_Idn.h )
+psrf:DrawRectangle( bar_Iup.x, bar_Iup.y, bar_Iup.w, bar_Iup.h )

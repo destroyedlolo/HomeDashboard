@@ -41,7 +41,17 @@ function updateProduction()
 	upddata( srf_production, fdigit, SelShared.get('TeleInfo/Production/values/PAPP') .. ' VA')
 end
 
+function updateTGN()
+	upddata( srf_TGN, fdigit, SelShared.get('maison/Temperature/Grenier Nord') .. "°C" )
+end
+
+function updateTChJ()
+	upddata( srf_TChJ, fdigit, SelShared.get('maison/Temperature/Chambre Joris') .. "°C" )
+end
+
 _, err = Brk:subscribe({
+	{ topic = "maison/Temperature/Grenier Nord", func=rcvVal, trigger=updateTGN, trigger_once=true },
+	{ topic = "maison/Temperature/Chambre Joris", func=rcvVal, trigger=updateTChJ, trigger_once=true },
 	{ topic = "onduleur/input.voltage", func=rcvVal, trigger=updateVlt, trigger_once=true },
 	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvVal, trigger=updateConso, trigger_once=true },
 	{ topic = "TeleInfo/Production/values/PAPP", func=rcvVal, trigger=updateProduction, trigger_once=true }
@@ -60,8 +70,17 @@ function updateTablet()
 	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/current_now" )
 	v = v * f:read('*number') / 1000000
 	f:close()
+	upddata( srf_tabpwr, fdigit, string.format('%3.2f', v) .. ' W')
 
-	upddata( srf_tabpwr, fdigit, string.format('%-3.2f', v) .. ' W')
+	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input" )
+	v = f:read('*number') / 1000
+	f:close()
+	upddata( srf_ttpmu, fsdigit, string.format('%3.1f', v) .. '°C')
+
+	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/battery/temp" )
+	v = f:read('*number') / 10
+	f:close()
+	upddata( srf_ttbat, fsdigit, string.format('%3.1f', v) .. '°C')
 end
 
 tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updateTablet}
