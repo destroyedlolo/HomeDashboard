@@ -61,6 +61,11 @@ psrf:DrawString("Tablette :", 5, btab + 5)
 srf_tabpwr = psrf:SubSurface( 10, btab + ftitle:GetHeight(), VBAR1-20, fdigit:GetHeight() )
 srf_tabpwr:SetColor( unpack(COL_DIGIT) )
 
+xoffmaxc = VBAR1 - (5 + fsdigit:StringWidth("10.88"))
+srf_maxtpwr = psrf:SubSurface( xoffmaxc, btab + ftitle:GetHeight() + fdigit:GetHeight(), fsdigit:StringWidth("10.88"), HSGRPH);
+srf_maxtpwr:SetColor( unpack(COL_DIGIT) )
+srf_tpwr =  psrf:SubSurface( 5, btab + ftitle:GetHeight() + fdigit:GetHeight(), xoffmaxc - 5, HSGRPH);
+
 -- Test
 
 psrf:SetFont( fdigit )
@@ -69,4 +74,5 @@ psrf:SetColor( unpack(COL_DIGIT) )
 upddata( srf_maxconso, fsdigit, "12345" )
 srf_consogfx:Clear(10,10,10,255)
 
-
+upddata( srf_maxtpwr, fsdigit, "10.88" )
+srf_tpwr:Clear(10,10,10,255)
