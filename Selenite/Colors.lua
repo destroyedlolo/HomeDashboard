@@ -15,9 +15,21 @@ COL_DIGIT = { 0x00,0xff,0xff, 0xff }
 -- Find color b/w 2 known values
 -- key = known value
 -- value = corresponding color (table)
-function findcolor( val, colors )
+
+local function linearcolor( val, u1, v1, u2, v2)
+	if u1 == u2 then
+		return u1
+	else	-- Linear function col = a*val+b
+		local a,b
+		a = (v2-v1)/(u2-u1)
+		b = v1 - a*u1
+		return (a*val + b)
+	end
+end
+
+function findgradiancolor( val, colors )
 	if colors[val] then
-		return(colors[val])
+		return unpack(colors[val])
 	end
 
 	local keys={}
@@ -36,15 +48,15 @@ function findcolor( val, colors )
 	end
 
 	if pre and post then -- linear function
-return('linear function')
--- Voir https://fr.wikipedia.org/wiki/%C3%89quation_de_droite
--- Par résolution d'un système d'équations
+		return 
+			linearcolor( val, pre, colors[pre][1], post, colors[post][1] ),
+			linearcolor( val, pre, colors[pre][2], post, colors[post][2] ),
+			linearcolor( val, pre, colors[pre][3], post, colors[post][3] ),
+			linearcolor( val, pre, colors[pre][4], post, colors[post][4] )
 	elseif post then -- post without pre : 1st value
-print('premier', keys[1])
-		return(colors[keys[1]])
+		return( unpack(colors[keys[1]]) )
 	else
-print('dernier', keys[#keys])
-		return(colors[keys[#keys]])
+		return unpack(colors[keys[#keys]])
 	end
 end
 

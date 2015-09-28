@@ -173,7 +173,7 @@ local cols = {
 }
 
 for i=5,35,5 do
-print( i, findcolor(i, cols ) )
+print( i, findgradiancolor(i, cols ) )
 end
 
 -- Wait for events
