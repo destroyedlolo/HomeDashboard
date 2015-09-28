@@ -2,7 +2,9 @@
 -- (based on HTML color names)
 
 COL_BLACK = { 0,0,0, 0xff }
+COL_RED = { 0xff,0x0f,0x0f, 0xff }
 COL_ORANGE = { 0xff,0x8c,0x00, 0xff }
+COL_GREEN = { 0x00,0xc6,0x00, 0xff }
 COL_GREY = { 0x20, 0x20, 0x20, 0xff }
 COL_WHITE = { 0xff, 0xff, 0xff, 0xff }
 
@@ -15,7 +17,7 @@ COL_DIGIT = { 0x00,0xff,0xff, 0xff }
 -- value = corresponding color (table)
 function findcolor( val, colors )
 	if colors[val] then
-return('exact value')
+		return(colors[val])
 	end
 
 	local keys={}
@@ -35,10 +37,14 @@ return('exact value')
 
 	if pre and post then -- linear function
 return('linear function')
+-- Voir https://fr.wikipedia.org/wiki/%C3%89quation_de_droite
+-- Par résolution d'un système d'équations
 	elseif post then -- post without pre : 1st value
-return('post without pre : 1st value')
+print('premier', keys[1])
+		return(colors[keys[1]])
 	else
-return('last value')
+print('dernier', keys[#keys])
+		return(colors[keys[#keys]])
 	end
 end
 

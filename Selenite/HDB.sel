@@ -167,11 +167,12 @@ if err then
 end
 
 local cols = {
-	[10] = 10,
-	[20] = 20
+	[10] = COL_GREEN,
+	[20] = COL_ORANGE,
+	[30] = COL_RED
 }
 
-for i=5,25,5 do
+for i=5,35,5 do
 print( i, findcolor(i, cols ) )
 end
 
