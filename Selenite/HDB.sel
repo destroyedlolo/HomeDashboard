@@ -13,7 +13,7 @@ f:write('0')
 f:close()
 
 -- Ensure we're not using obsolete version
-assert( SELENE_VERSION >= 0.0203, "HDB requires at least Selene v0.0203" )
+assert( SELENE_VERSION >= 0.0300, "HDB requires at least Selene v0.0300" )
 
 -- Load configuration files
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")
@@ -26,51 +26,74 @@ psrf:Clear( unpack(COL_BLACK) )
 
 require (SELENE_SCRIPT_DIR .. "/Design")
 
+-- Collection for graphics
+dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/BARZOOM )
+
 -- Broker's stuffs
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
 
 function rcvVal( topic, val )
+print('msg', topic, val)
 	SelShared.set(topic, val)
 	return true
 end
 
 function updateVlt()
+print("updateVlt");
 	upddata( srf_tension, fdigit, SelShared.get('onduleur/input.voltage') .. ' V')
 end
 
 function updateConso()
-	upddata( srf_consommation, fdigit, SelShared.get('TeleInfo/Consommation/values/PAPP') .. ' VA')
+print("updateConso");
+	local cols = {
+		[500] = COL_DIGIT,
+		[1500] = COL_ORANGE,
+		[4500] = COL_RED
+	}
+	local v = SelShared.get('TeleInfo/Consommation/values/PAPP')
+print('v=', v)
+	srf_consommation:SetColor( findgradiancolor(v, cols ) )
+	upddata( srf_consommation, fdigit, v .. ' VA')
+print("updateConso : ok");
 end
 
 function updateProduction()
+print("updateProduction");
 	upddata( srf_production, fdigit, SelShared.get('TeleInfo/Production/values/PAPP') .. ' VA')
 end
 
 function updateTGN()
+print("updateTGN");
 	upddata( srf_TGN, fdigit, SelShared.get('maison/Temperature/Grenier Nord') .. "°C" )
 end
 
 function updateTChJ()
+print("updateTChJ");
 	upddata( srf_TChJ, fdigit, SelShared.get('maison/Temperature/Chambre Joris') .. "°C" )
 end
 
 function updateTSalon()
+print("updateTSalon");
 	upddata( srf_TSalon, fdigit, SelShared.get('maison/Temperature/Salon') .. "°C" )
 end
 
 function updateTBureau()
+print("updateTBureau");
 	upddata( srf_TBureau, fdigit, SelShared.get('maison/Temperature/Bureau') .. "°C" )
 end
 
 function updateTDehors()
+print("updateTDehors");
 	upddata( srf_TDehors, fdigit, SelShared.get('maison/Temperature/Dehors') .. "°C" )
 end
 
 function updateTCave()
+print("updateTCave");
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
 end
 
 function updateUPSLd()
+print("updateUPSLd");
 	local maxp = tonumber( SelShared.get('onduleur/ups.realpower.nominal') )
 	if maxp then -- maximum power not known yet
 		upddata( srf_consoUPS, ftitle1, string.format('%3.1f', SelShared.get('onduleur/ups.load')*maxp/100) .. ' W')
@@ -85,6 +108,7 @@ function updateUPSLd()
 end
 
 function updateInternet()
+print("updateInternet");
 	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
 	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
 	if intDn and intUp then
@@ -93,6 +117,7 @@ function updateInternet()
 end
 
 function updatedWAN()
+print("updatedWAN");
 	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
 	local wanDn = tonumber( SelShared.get('Freebox/DownloadWAN') )
 	if intDn then
@@ -105,6 +130,7 @@ function updatedWAN()
 end
 
 function updateuWAN()
+print("updateuWAN");
 	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
 	local wanUp = tonumber( SelShared.get('Freebox/UploadWAN') )
 	if intUp then
@@ -141,22 +167,39 @@ end
 
 -- Timer for tablet figures
 function updateTablet()
+	local cols = {
+		[1.5] = COL_GREEN,
+		[2.75] = COL_ORANGE,
+		[4] = COL_RED
+	}
+
 	local f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/voltage_now" )
 	local v = f:read('*number') / 1000000
 	f:close()
 	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/current_now" )
 	v = v * f:read('*number') / 1000000
 	f:close()
+	srf_tabpwr:SetColor( findgradiancolor(v, cols ) )
 	upddata( srf_tabpwr, fdigit, string.format('%3.2f', v) .. ' W')
+	dt_pwr:Push( v )
+	local min,max = dt_pwr:MinMax()
+	upddata( srf_maxtpwr, fsdigit, string.format('%3.2f', max) )
+	updgfx( srf_tpwrgfx, dt_pwr, 0 )
 
+	cols = {
+		[30] = COL_DIGIT,
+		[40] = COL_ORANGE
+	}
 	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input" )
 	v = f:read('*number') / 1000
 	f:close()
+	srf_ttpmu:SetColor( findgradiancolor(v, cols ) )
 	upddata( srf_ttpmu, fsdigit, string.format('%3.1f', v) .. '°C')
 
 	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/battery/temp" )
 	v = f:read('*number') / 10
 	f:close()
+	srf_ttbat:SetColor( findgradiancolor(v, cols ) )
 	upddata( srf_ttbat, fsdigit, string.format('%3.1f', v) .. '°C')
 end
 
@@ -164,16 +207,6 @@ tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeC
 if err then
 	print(err)
 	return
-end
-
-local cols = {
-	[10] = COL_GREEN,
-	[20] = COL_ORANGE,
-	[30] = COL_RED
-}
-
-for i=5,35,5 do
-print( i, findgradiancolor(i, cols ) )
 end
 
 -- Wait for events

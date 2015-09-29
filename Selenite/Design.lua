@@ -2,6 +2,7 @@
 
 local HSGRPH = 30	-- Height of small graphs
 local VBAR1 = 160	-- position of the first vertical bar
+BARZOOM = 5	-- Magnify bar
 
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
@@ -12,15 +13,36 @@ ftitle1 = SelFont.create("/usr/local/share/fonts/Capsuula.ttf", { height=20} )
 fdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=35} )
 fsdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=20} )
 
------
--- Electricity
------
-
+-- update helpers
 function upddata( srf, font, data )
 	srf:SetFont( font )
 	srf:Clear( unpack(COL_BLACK) )
 	srf:DrawString( data, srf:GetWidth() - font:StringWidth(data), 0)
 end
+
+function updgfx( srf, data, amin )
+	local min,max = data:MinMax()
+	min = amin or min
+	if max == min then	-- No dynamic data to draw
+		return
+	end
+-- print('max',max, 'min', min, 'h', srf:GetHeight(), max-min)
+	local ey = srf:GetHeight()/(max-min) -- scale
+
+	local y
+	srf:Clear( 10,10,10, 255 )
+	for _,v in ipairs({ data:Data() }) do
+		if y then
+			srf:DrawLine((_-1)*BARZOOM, srf:GetHeight() - (y-min)*ey, _*BARZOOM, srf:GetHeight() - (v-min)*ey)
+-- print(_, srf:GetHeight() - (v-min)*ey)
+		end
+		y = v 
+	end
+end
+
+-----
+-- Electricity
+-----
 
 -- title
 psrf:SetFont( ftitle )
@@ -64,7 +86,8 @@ srf_tabpwr:SetColor( unpack(COL_DIGIT) )
 xoffmaxc = VBAR1 - (5 + fsdigit:StringWidth("10.88"))
 srf_maxtpwr = psrf:SubSurface( xoffmaxc, btab + ftitle:GetHeight() + fdigit:GetHeight(), fsdigit:StringWidth("10.88"), HSGRPH);
 srf_maxtpwr:SetColor( unpack(COL_DIGIT) )
-srf_tpwr =  psrf:SubSurface( 5, btab + ftitle:GetHeight() + fdigit:GetHeight(), xoffmaxc - 5, HSGRPH);
+srf_tpwrgfx =  psrf:SubSurface( 5, btab + ftitle:GetHeight() + fdigit:GetHeight(), xoffmaxc - 5, HSGRPH);
+srf_tpwrgfx:SetColor( unpack(COL_RED) )
 
 psrf:SetFont( ftitle1 )
 psrf:SetColor( unpack(COL_TITLE) )
@@ -161,6 +184,6 @@ psrf:SetColor( unpack(COL_DIGIT) )
 upddata( srf_maxconso, fsdigit, "12345" )
 srf_consogfx:Clear(10,10,10,255)
 
-upddata( srf_maxtpwr, fsdigit, "10.88" )
-srf_tpwr:Clear(10,10,10,255)
+-- upddata( srf_maxtpwr, fsdigit, "10.88" )
+-- srf_tpwrgfx:Clear(10,10,10,255)
 

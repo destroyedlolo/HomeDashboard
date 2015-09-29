@@ -28,6 +28,7 @@ local function linearcolor( val, u1, v1, u2, v2)
 end
 
 function findgradiancolor( val, colors )
+	val = tonumber(val)
 	if colors[val] then
 		return unpack(colors[val])
 	end
@@ -54,7 +55,7 @@ function findgradiancolor( val, colors )
 			linearcolor( val, pre, colors[pre][3], post, colors[post][3] ),
 			linearcolor( val, pre, colors[pre][4], post, colors[post][4] )
 	elseif post then -- post without pre : 1st value
-		return( unpack(colors[keys[1]]) )
+		return unpack(colors[keys[1]])
 	else
 		return unpack(colors[keys[#keys]])
 	end
