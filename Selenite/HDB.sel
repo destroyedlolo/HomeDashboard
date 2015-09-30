@@ -30,6 +30,7 @@ require (SELENE_SCRIPT_DIR .. "/Design")
 
 -- Collection for graphics
 dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/BARZOOM )
+dt_conso = SelCollection.create( srf_consogfx:GetWidth()/BARZOOM )
 
 -- Broker's stuffs
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
@@ -52,6 +53,11 @@ function updateConso()
 	local v = SelShared.get('TeleInfo/Consommation/values/PAPP')
 	srf_consommation:SetColor( findgradiancolor(v, cols ) )
 	upddata( srf_consommation, fdigit, v .. ' VA')
+
+	dt_conso:Push(v)
+	local min,max = dt_conso:MinMax()
+	upddata( srf_maxconso, fsdigit, max )
+	updgfx( srf_consogfx, dt_conso, 0 )
 end
 
 function updateProduction()

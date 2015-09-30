@@ -69,6 +69,7 @@ local xoffmaxc = VBAR1 - (5 + fsdigit:StringWidth("12345"))
 srf_maxconso = psrf:SubSurface( xoffmaxc, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + 2*fdigit:GetHeight(), fsdigit:StringWidth("12345"), HSGRPH);
 srf_maxconso:SetColor( unpack(COL_DIGIT) )
 srf_consogfx = psrf:SubSurface( 5, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + 2*fdigit:GetHeight(), xoffmaxc -5, HSGRPH)
+srf_consogfx:SetColor( unpack(COL_RED) )
 
 -----
 -- Tablet
@@ -175,15 +176,3 @@ srf_TDehors:SetColor( unpack(COL_DIGIT) )
 srf_TCave = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TCave:SetColor( unpack(COL_DIGIT) )
 goffy = goffy + fdigit:GetHeight()
-
--- Test
-
-psrf:SetFont( fdigit )
-psrf:SetColor( unpack(COL_DIGIT) )
-
-upddata( srf_maxconso, fsdigit, "12345" )
-srf_consogfx:Clear(10,10,10,255)
-
--- upddata( srf_maxtpwr, fsdigit, "10.88" )
--- srf_tpwrgfx:Clear(10,10,10,255)
-
