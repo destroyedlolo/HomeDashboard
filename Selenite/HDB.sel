@@ -35,67 +35,54 @@ dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/BARZOOM )
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
 
 function rcvVal( topic, val )
-print('msg', topic, val)
 	SelShared.set(topic, val)
 	return true
 end
 
 function updateVlt()
-print("updateVlt");
 	upddata( srf_tension, fdigit, SelShared.get('onduleur/input.voltage') .. ' V')
 end
 
 function updateConso()
-print("updateConso");
 	local cols = {
 		[500] = COL_DIGIT,
 		[1500] = COL_ORANGE,
 		[4500] = COL_RED
 	}
 	local v = SelShared.get('TeleInfo/Consommation/values/PAPP')
-print('v=', v)
 	srf_consommation:SetColor( findgradiancolor(v, cols ) )
 	upddata( srf_consommation, fdigit, v .. ' VA')
-print("updateConso : ok");
 end
 
 function updateProduction()
-print("updateProduction");
 	upddata( srf_production, fdigit, SelShared.get('TeleInfo/Production/values/PAPP') .. ' VA')
 end
 
 function updateTGN()
-print("updateTGN");
 	upddata( srf_TGN, fdigit, SelShared.get('maison/Temperature/Grenier Nord') .. "°C" )
 end
 
 function updateTChJ()
-print("updateTChJ");
 	upddata( srf_TChJ, fdigit, SelShared.get('maison/Temperature/Chambre Joris') .. "°C" )
 end
 
 function updateTSalon()
-print("updateTSalon");
 	upddata( srf_TSalon, fdigit, SelShared.get('maison/Temperature/Salon') .. "°C" )
 end
 
 function updateTBureau()
-print("updateTBureau");
 	upddata( srf_TBureau, fdigit, SelShared.get('maison/Temperature/Bureau') .. "°C" )
 end
 
 function updateTDehors()
-print("updateTDehors");
 	upddata( srf_TDehors, fdigit, SelShared.get('maison/Temperature/Dehors') .. "°C" )
 end
 
 function updateTCave()
-print("updateTCave");
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
 end
 
 function updateUPSLd()
-print("updateUPSLd");
 	local maxp = tonumber( SelShared.get('onduleur/ups.realpower.nominal') )
 	if maxp then -- maximum power not known yet
 		upddata( srf_consoUPS, ftitle1, string.format('%3.1f', SelShared.get('onduleur/ups.load')*maxp/100) .. ' W')
@@ -110,7 +97,6 @@ print("updateUPSLd");
 end
 
 function updateInternet()
-print("updateInternet");
 	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
 	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
 	if intDn and intUp then
@@ -119,7 +105,6 @@ print("updateInternet");
 end
 
 function updatedWAN()
-print("updatedWAN");
 	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
 	local wanDn = tonumber( SelShared.get('Freebox/DownloadWAN') )
 	if intDn then
@@ -132,7 +117,6 @@ print("updatedWAN");
 end
 
 function updateuWAN()
-print("updateuWAN");
 	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
 	local wanUp = tonumber( SelShared.get('Freebox/UploadWAN') )
 	if intUp then
