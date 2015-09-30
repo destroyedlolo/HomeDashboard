@@ -9,8 +9,10 @@ local unpack = unpack or table.unpack
 
 -- Hide console's cursor
 local f=io.open('/sys/class/graphics/fbcon/cursor_blink', 'w')
-f:write('0')
-f:close()
+if f then	-- working only using root access
+	f:write('0')
+	f:close()
+end
 
 -- Ensure we're not using obsolete version
 assert( SELENE_VERSION >= 0.0300, "HDB requires at least Selene v0.0300" )
