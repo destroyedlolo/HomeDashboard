@@ -73,7 +73,16 @@ function updateTChJ()
 end
 
 function updateTSalon()
-	upddata( srf_TSalon, fdigit, SelShared.get('maison/Temperature/Salon') .. "°C" )
+	local cols = {
+		[15] = COL_DIGIT,
+		[21] = COL_GREEN,
+		[25] = COL_ORANGE,
+		[30] = COL_RED
+	}
+	local v = SelShared.get('maison/Temperature/Salon')
+	srf_TSalon:SetColor( findgradiancolor(v, cols ) )
+
+	upddata( srf_TSalon, fdigit, v .. "°C" )
 end
 
 function updateTBureau()
