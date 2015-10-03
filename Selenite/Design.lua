@@ -29,11 +29,13 @@ function updgfx( srf, data, amin )
 	local sy = srf:GetHeight()/(max-min) -- vertical scale
 	local sx = srf:GetWidth()/data:GetSize()
 
-	local y	-- previous value
+	local y		-- previous value
+	local x=0	-- x position
 	srf:Clear( 10,10,10, 255 )
-	for _,v in ipairs({ data:Data() }) do
+	for v in data:iData() do
 		if y then
-			srf:DrawLine((_-1)*sx, srf:GetHeight() - (y-min)*sy, _*sx, srf:GetHeight() - (v-min)*sy)
+			x = x+1
+			srf:DrawLine((x-1)*sx, srf:GetHeight() - (y-min)*sy, x*sx, srf:GetHeight() - (v-min)*sy)
 		end
 		y = v 
 	end
