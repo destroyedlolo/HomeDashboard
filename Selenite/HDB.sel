@@ -15,7 +15,7 @@ if f then	-- working only using root access
 end
 
 -- Ensure we're not using obsolete version
-assert( SELENE_VERSION >= 0.0300, "HDB requires at least Selene v0.0300" )
+assert( SELENE_VERSION >= 0.0400, "HDB requires at least Selene v0.04.00" )
 
 -- Load configuration files
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")
@@ -29,8 +29,8 @@ psrf:Clear( unpack(COL_BLACK) )
 require (SELENE_SCRIPT_DIR .. "/Design")
 
 -- Collection for graphics
-dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/BARZOOM )
-dt_conso = SelCollection.create( srf_consogfx:GetWidth()/BARZOOM )
+dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/5 )
+dt_conso = SelCollection.create( srf_consogfx:GetWidth()/2 )
 
 -- Broker's stuffs
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
@@ -144,21 +144,21 @@ function updateuWAN()
 end
 
 _, err = Brk:subscribe({
-	{ topic = "Freebox/DownloadWAN", func=rcvVal, trigger=updatedWAN, trigger_once=true },
-	{ topic = "Freebox/UploadWAN", func=rcvVal, trigger=updateuWAN, trigger_once=true },
+	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
+	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
 	{ topic = "Freebox/DownloadATM", func=rcvVal },
-	{ topic = "Freebox/UploadATM", func=rcvVal, trigger=updateInternet, trigger_once=true },
+	{ topic = "Freebox/UploadATM", trigger=updateInternet, trigger_once=true },
 	{ topic = "onduleur/ups.realpower.nominal", func=rcvVal },
-	{ topic = "onduleur/ups.load", func=rcvVal, trigger=updateUPSLd, trigger_once=true },
-	{ topic = "maison/Temperature/Grenier Nord", func=rcvVal, trigger=updateTGN, trigger_once=true },
-	{ topic = "maison/Temperature/Chambre Joris", func=rcvVal, trigger=updateTChJ, trigger_once=true },
-	{ topic = "maison/Temperature/Salon", func=rcvVal, trigger=updateTSalon, trigger_once=true },
-	{ topic = "maison/Temperature/Bureau", func=rcvVal, trigger=updateTBureau, trigger_once=true },
-	{ topic = "maison/Temperature/Dehors", func=rcvVal, trigger=updateTDehors, trigger_once=true },
-	{ topic = "maison/Temperature/Cave", func=rcvVal, trigger=updateTCave, trigger_once=true },
-	{ topic = "onduleur/input.voltage", func=rcvVal, trigger=updateVlt, trigger_once=true },
-	{ topic = "TeleInfo/Consommation/values/PAPP", func=rcvVal, trigger=updateConso, trigger_once=true },
-	{ topic = "TeleInfo/Production/values/PAPP", func=rcvVal, trigger=updateProduction, trigger_once=true }
+	{ topic = "onduleur/ups.load", trigger=updateUPSLd, trigger_once=true },
+	{ topic = "maison/Temperature/Grenier Nord", trigger=updateTGN, trigger_once=true },
+	{ topic = "maison/Temperature/Chambre Joris", trigger=updateTChJ, trigger_once=true },
+	{ topic = "maison/Temperature/Salon", trigger=updateTSalon, trigger_once=true },
+	{ topic = "maison/Temperature/Bureau", trigger=updateTBureau, trigger_once=true },
+	{ topic = "maison/Temperature/Dehors", trigger=updateTDehors, trigger_once=true },
+	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
+	{ topic = "onduleur/input.voltage", trigger=updateVlt, trigger_once=true },
+	{ topic = "TeleInfo/Consommation/values/PAPP", trigger=updateConso, trigger_once=true },
+	{ topic = "TeleInfo/Production/values/PAPP", trigger=updateProduction, trigger_once=true }
 })
 
 if err then
@@ -180,7 +180,6 @@ function updateTablet()
 	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/current_now" )
 	v = v * f:read('*number') / 1000000
 	f:close()
-	srf_tabpwr:SetColor( findgradiancolor(v, cols ) )
 	upddata( srf_tabpwr, fdigit, string.format('%3.2f', v) .. ' W')
 	dt_pwr:Push( v )
 	local min,max = dt_pwr:MinMax()

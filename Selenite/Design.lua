@@ -26,15 +26,14 @@ function updgfx( srf, data, amin )
 	if max == min then	-- No dynamic data to draw
 		return
 	end
--- print('max',max, 'min', min, 'h', srf:GetHeight(), max-min)
-	local ey = srf:GetHeight()/(max-min) -- scale
+	local sy = srf:GetHeight()/(max-min) -- vertical scale
+	local sx = srf:GetWidth()/data:GetSize()
 
-	local y
+	local y	-- previous value
 	srf:Clear( 10,10,10, 255 )
 	for _,v in ipairs({ data:Data() }) do
 		if y then
-			srf:DrawLine((_-1)*BARZOOM, srf:GetHeight() - (y-min)*ey, _*BARZOOM, srf:GetHeight() - (v-min)*ey)
--- print(_, srf:GetHeight() - (v-min)*ey)
+			srf:DrawLine((_-1)*sx, srf:GetHeight() - (y-min)*sy, _*sx, srf:GetHeight() - (v-min)*sy)
 		end
 		y = v 
 	end
