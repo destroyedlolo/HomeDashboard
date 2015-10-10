@@ -176,4 +176,32 @@ srf_TDehors = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°
 srf_TDehors:SetColor( unpack(COL_DIGIT) )
 srf_TCave = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TCave:SetColor( unpack(COL_DIGIT) )
-goffy = goffy + fdigit:GetHeight()
+goffy = goffy + fdigit:GetHeight() + 5
+
+-----
+-- Meteo
+-----
+
+psrf:SetColor( unpack(COL_BORDER) )
+psrf:DrawLine(VBAR1, goffy, psrf:GetWidth(), goffy )
+goffy = goffy + 5
+
+srf_Meteo = { 
+	psrf:SubSurface( VBAR1+5, goffy, 92,66),
+	psrf:SubSurface( VBAR1+135, goffy, 92,66),
+	psrf:SubSurface( VBAR1+265, goffy, 92,66),
+	psrf:SubSurface( VBAR1+395, goffy, 92,66),
+	psrf:SubSurface( VBAR1+525, goffy, 92,66)
+}
+local img,err = SelImage.create("/usr/local/share/WeatherIcons/10d.png")
+if not img then
+	print(err)
+end
+img:RenderTo( srf_Meteo[1], { 0,0, 92,66 } )
+img:RenderTo( srf_Meteo[2], { 0,0, 92,66 } )
+img:RenderTo( srf_Meteo[3], { 0,0, 92,66 } )
+img:RenderTo( srf_Meteo[4], { 0,0, 92,66 } )
+img:RenderTo( srf_Meteo[5], { 0,0, 92,66 } )
+
+-- 3 x 8 
+-- 46 x 33
