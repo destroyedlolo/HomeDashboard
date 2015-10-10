@@ -219,3 +219,4 @@ srf_MeteoDate = {
 for i=1,5 do
 	srf_MeteoDate[i]:SetColor( unpack(COL_DIGIT) )
 end
+

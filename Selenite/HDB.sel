@@ -147,20 +147,45 @@ function updated0Icn()
 	updmeteo( 1, SelShared.get('Meteo/Nonglard/0/weather/code' ) )
 end
 
+function updated0time()
+	local t=os.date("*t", SelShared.get('Meteo/Nonglard/0/time') )
+	upddata(srf_MeteoDate[1], fsdigit, t.day ..'/'.. t.month)	
+end
+
 function updated1Icn()
 	updmeteo( 2, SelShared.get('Meteo/Nonglard/1/weather/code' ) )
+end
+
+function updated1time()
+	local t=os.date("*t", SelShared.get('Meteo/Nonglard/1/time') )
+	upddata(srf_MeteoDate[2], fsdigit, t.day ..'/'.. t.month)	
 end
 
 function updated2Icn()
 	updmeteo( 3, SelShared.get('Meteo/Nonglard/2/weather/code' ) )
 end
 
+function updated2time()
+	local t=os.date("*t", SelShared.get('Meteo/Nonglard/2/time') )
+	upddata(srf_MeteoDate[3], fsdigit, t.day ..'/'.. t.month)	
+end
+
 function updated3Icn()
 	updmeteo( 4, SelShared.get('Meteo/Nonglard/3/weather/code' ) )
 end
 
+function updated3time()
+	local t=os.date("*t", SelShared.get('Meteo/Nonglard/3/time') )
+	upddata(srf_MeteoDate[4], fsdigit, t.day ..'/'.. t.month)	
+end
+
 function updated4Icn()
 	updmeteo( 5, SelShared.get('Meteo/Nonglard/4/weather/code' ) )
+end
+
+function updated4time()
+	local t=os.date("*t", SelShared.get('Meteo/Nonglard/4/time') )
+	upddata(srf_MeteoDate[5], fsdigit, t.day ..'/'.. t.month)	
 end
 
 _, err = Brk:subscribe({
@@ -169,6 +194,11 @@ _, err = Brk:subscribe({
 	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated2Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated3Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/4/weather/code", trigger=updated4Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/0/time", trigger=updated0time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/1/time", trigger=updated1time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/2/time", trigger=updated2time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/3/time", trigger=updated3time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/4/time", trigger=updated4time, trigger_once=true },
 	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
 	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
 	{ topic = "Freebox/DownloadATM", func=rcvVal },

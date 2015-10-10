@@ -12,6 +12,15 @@ COL_BORDER = { 0x00,0x20,0xff, 0xff }
 COL_TITLE = { 0x46,0x82,0xb4, 0xff }	-- SteelBlue
 COL_DIGIT = { 0x00,0xff,0xff, 0xff }
 
+-- shared color gradiant
+
+cols_temperature = {
+		[15] = COL_DIGIT,
+		[21] = COL_GREEN,
+		[25] = COL_ORANGE,
+		[30] = COL_RED
+}
+
 -- Find color b/w 2 known values
 -- key = known value
 -- value = corresponding color (table)
