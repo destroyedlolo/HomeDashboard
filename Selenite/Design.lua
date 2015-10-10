@@ -41,6 +41,19 @@ function updgfx( srf, data, amin )
 	end
 end
 
+WeatherImg = {}
+function updmeteo( idx, iconid )
+	if not WeatherImg[ iconid ] then
+		local err
+		WeatherImg[ iconid ],err = SelImage.create("/usr/local/share/WeatherIcons/" .. iconid .. ".png")
+		if not WeatherImg[ iconid ] then
+			print(err)
+			return
+		end
+	end
+	WeatherImg[ iconid ]:RenderTo( srf_Meteo[idx], { 0,0, 92,66 } )
+end
+
 -----
 -- Electricity
 -----
@@ -187,21 +200,22 @@ psrf:DrawLine(VBAR1, goffy, psrf:GetWidth(), goffy )
 goffy = goffy + 5
 
 srf_Meteo = { 
-	psrf:SubSurface( VBAR1+5, goffy, 92,66),
-	psrf:SubSurface( VBAR1+135, goffy, 92,66),
-	psrf:SubSurface( VBAR1+265, goffy, 92,66),
-	psrf:SubSurface( VBAR1+395, goffy, 92,66),
-	psrf:SubSurface( VBAR1+525, goffy, 92,66)
+	psrf:SubSurface( VBAR1+9, goffy, 92,66),
+	psrf:SubSurface( VBAR1+139, goffy, 92,66),
+	psrf:SubSurface( VBAR1+269, goffy, 92,66),
+	psrf:SubSurface( VBAR1+399, goffy, 92,66),
+	psrf:SubSurface( VBAR1+529, goffy, 92,66)
 }
-local img,err = SelImage.create("/usr/local/share/WeatherIcons/10d.png")
-if not img then
-	print(err)
-end
-img:RenderTo( srf_Meteo[1], { 0,0, 92,66 } )
-img:RenderTo( srf_Meteo[2], { 0,0, 92,66 } )
-img:RenderTo( srf_Meteo[3], { 0,0, 92,66 } )
-img:RenderTo( srf_Meteo[4], { 0,0, 92,66 } )
-img:RenderTo( srf_Meteo[5], { 0,0, 92,66 } )
 
--- 3 x 8 
--- 46 x 33
+goffy = goffy + 66
+
+srf_MeteoDate = {
+	psrf:SubSurface( VBAR1+9, goffy, 66, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+139, goffy, 66, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+269, goffy, 66, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+399, goffy, 66, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+529, goffy, 66, fsdigit:GetHeight()),
+}
+for i=1,5 do
+	srf_MeteoDate[i]:SetColor( unpack(COL_DIGIT) )
+end
