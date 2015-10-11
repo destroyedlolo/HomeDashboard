@@ -220,3 +220,13 @@ for i=1,5 do
 	srf_MeteoDate[i]:SetColor( unpack(COL_DIGIT) )
 end
 
+goffy = goffy + fsdigit:GetHeight()
+
+srf_MeteoTMax = {
+	psrf:SubSurface( VBAR1+9, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+139, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+269, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+399, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+529, goffy, 86, fsdigit:GetHeight()),
+}
+

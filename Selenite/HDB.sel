@@ -73,14 +73,8 @@ function updateTChJ()
 end
 
 function updateTSalon()
-	local cols = {
-		[15] = COL_DIGIT,
-		[21] = COL_GREEN,
-		[25] = COL_ORANGE,
-		[30] = COL_RED
-	}
 	local v = SelShared.get('maison/Temperature/Salon')
-	srf_TSalon:SetColor( findgradiancolor(v, cols ) )
+	srf_TSalon:SetColor( findgradiancolor(v, cols_temperature ) )
 
 	upddata( srf_TSalon, fdigit, v .. "°C" )
 end
@@ -149,7 +143,13 @@ end
 
 function updated0time()
 	local t=os.date("*t", SelShared.get('Meteo/Nonglard/0/time') )
-	upddata(srf_MeteoDate[1], fsdigit, t.day ..'/'.. t.month)	
+	upddata(srf_MeteoDate[1], fsdigit, t.day ..'/'.. t.month)
+end
+
+function updated0tmax()
+	local v=SelShared.get('Meteo/Nonglard/0/temperature/day')
+	srf_MeteoTMax[1]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMax[1], fsdigit, v .. '°C')
 end
 
 function updated1Icn()
@@ -161,6 +161,12 @@ function updated1time()
 	upddata(srf_MeteoDate[2], fsdigit, t.day ..'/'.. t.month)	
 end
 
+function updated1tmax()
+	local v=SelShared.get('Meteo/Nonglard/1/temperature/day')
+	srf_MeteoTMax[2]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMax[2], fsdigit, v .. '°C')
+end
+
 function updated2Icn()
 	updmeteo( 3, SelShared.get('Meteo/Nonglard/2/weather/code' ) )
 end
@@ -170,8 +176,20 @@ function updated2time()
 	upddata(srf_MeteoDate[3], fsdigit, t.day ..'/'.. t.month)	
 end
 
+function updated2tmax()
+	local v=SelShared.get('Meteo/Nonglard/2/temperature/day')
+	srf_MeteoTMax[3]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMax[3], fsdigit, v .. '°C')
+end
+
 function updated3Icn()
 	updmeteo( 4, SelShared.get('Meteo/Nonglard/3/weather/code' ) )
+end
+
+function updated3tmax()
+	local v=SelShared.get('Meteo/Nonglard/3/temperature/day')
+	srf_MeteoTMax[4]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMax[4], fsdigit, v .. '°C')
 end
 
 function updated3time()
@@ -188,6 +206,12 @@ function updated4time()
 	upddata(srf_MeteoDate[5], fsdigit, t.day ..'/'.. t.month)	
 end
 
+function updated4tmax()
+	local v=SelShared.get('Meteo/Nonglard/4/temperature/day')
+	srf_MeteoTMax[5]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMax[5], fsdigit, v .. '°C')
+end
+
 _, err = Brk:subscribe({
 	{ topic = "Meteo/Nonglard/0/weather/code", trigger=updated0Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated1Icn, trigger_once=true },
@@ -199,6 +223,11 @@ _, err = Brk:subscribe({
 	{ topic = "Meteo/Nonglard/2/time", trigger=updated2time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/time", trigger=updated3time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/4/time", trigger=updated4time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/0/temperature/day", trigger=updated0tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/1/temperature/day", trigger=updated1tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/2/temperature/day", trigger=updated2tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/3/temperature/day", trigger=updated3tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/4/temperature/day", trigger=updated4tmax, trigger_once=true },
 	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
 	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
 	{ topic = "Freebox/DownloadATM", func=rcvVal },
