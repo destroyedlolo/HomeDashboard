@@ -230,3 +230,13 @@ srf_MeteoTMax = {
 	psrf:SubSurface( VBAR1+529, goffy, 86, fsdigit:GetHeight()),
 }
 
+goffy = goffy + fsdigit:GetHeight()
+
+srf_MeteoTMin = {
+	psrf:SubSurface( VBAR1+9, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+139, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+269, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+399, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+529, goffy, 86, fsdigit:GetHeight()),
+}
+

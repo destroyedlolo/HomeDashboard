@@ -152,6 +152,12 @@ function updated0tmax()
 	upddata(srf_MeteoTMax[1], fsdigit, v .. '°C')
 end
 
+function updated0tmin()
+	local v=SelShared.get('Meteo/Nonglard/0/temperature/night')
+	srf_MeteoTMin[1]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMin[1], fsdigit, v .. '°C')
+end
+
 function updated1Icn()
 	updmeteo( 2, SelShared.get('Meteo/Nonglard/1/weather/code' ) )
 end
@@ -165,6 +171,12 @@ function updated1tmax()
 	local v=SelShared.get('Meteo/Nonglard/1/temperature/day')
 	srf_MeteoTMax[2]:SetColor( findgradiancolor(v, cols_temperature ) )
 	upddata(srf_MeteoTMax[2], fsdigit, v .. '°C')
+end
+
+function updated1tmin()
+	local v=SelShared.get('Meteo/Nonglard/1/temperature/night')
+	srf_MeteoTMin[2]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMin[2], fsdigit, v .. '°C')
 end
 
 function updated2Icn()
@@ -182,6 +194,12 @@ function updated2tmax()
 	upddata(srf_MeteoTMax[3], fsdigit, v .. '°C')
 end
 
+function updated2tmin()
+	local v=SelShared.get('Meteo/Nonglard/2/temperature/night')
+	srf_MeteoTMin[3]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMin[3], fsdigit, v .. '°C')
+end
+
 function updated3Icn()
 	updmeteo( 4, SelShared.get('Meteo/Nonglard/3/weather/code' ) )
 end
@@ -190,6 +208,12 @@ function updated3tmax()
 	local v=SelShared.get('Meteo/Nonglard/3/temperature/day')
 	srf_MeteoTMax[4]:SetColor( findgradiancolor(v, cols_temperature ) )
 	upddata(srf_MeteoTMax[4], fsdigit, v .. '°C')
+end
+
+function updated3tmin()
+	local v=SelShared.get('Meteo/Nonglard/3/temperature/night')
+	srf_MeteoTMin[4]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMin[4], fsdigit, v .. '°C')
 end
 
 function updated3time()
@@ -212,6 +236,12 @@ function updated4tmax()
 	upddata(srf_MeteoTMax[5], fsdigit, v .. '°C')
 end
 
+function updated4tmin()
+	local v=SelShared.get('Meteo/Nonglard/4/temperature/night')
+	srf_MeteoTMin[5]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddata(srf_MeteoTMin[5], fsdigit, v .. '°C')
+end
+
 _, err = Brk:subscribe({
 	{ topic = "Meteo/Nonglard/0/weather/code", trigger=updated0Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated1Icn, trigger_once=true },
@@ -228,6 +258,11 @@ _, err = Brk:subscribe({
 	{ topic = "Meteo/Nonglard/2/temperature/day", trigger=updated2tmax, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/temperature/day", trigger=updated3tmax, trigger_once=true },
 	{ topic = "Meteo/Nonglard/4/temperature/day", trigger=updated4tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/0/temperature/night", trigger=updated0tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/1/temperature/night", trigger=updated1tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/2/temperature/night", trigger=updated2tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/3/temperature/night", trigger=updated3tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/4/temperature/night", trigger=updated4tmin, trigger_once=true },
 	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
 	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
 	{ topic = "Freebox/DownloadATM", func=rcvVal },
