@@ -20,6 +20,12 @@ function upddata( srf, font, data )
 	srf:DrawString( data, srf:GetWidth() - font:StringWidth(data), 0)
 end
 
+function upddataCentered( srf, font, data )
+	srf:SetFont( font )
+	srf:Clear( unpack(COL_BLACK) )
+	srf:DrawString( data, (srf:GetWidth() - font:StringWidth(data))/2, 0)
+end
+
 function updgfx( srf, data, amin )
 	local min,max = data:MinMax()
 	min = amin or min
@@ -210,11 +216,11 @@ srf_Meteo = {
 goffy = goffy + 66
 
 srf_MeteoDate = {
-	psrf:SubSurface( VBAR1+9, goffy, 66, fsdigit:GetHeight()),
-	psrf:SubSurface( VBAR1+139, goffy, 66, fsdigit:GetHeight()),
-	psrf:SubSurface( VBAR1+269, goffy, 66, fsdigit:GetHeight()),
-	psrf:SubSurface( VBAR1+399, goffy, 66, fsdigit:GetHeight()),
-	psrf:SubSurface( VBAR1+529, goffy, 66, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+9, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+139, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+269, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+399, goffy, 86, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR1+529, goffy, 86, fsdigit:GetHeight()),
 }
 for i=1,5 do
 	srf_MeteoDate[i]:SetColor( unpack(COL_DIGIT) )

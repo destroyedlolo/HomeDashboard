@@ -137,25 +137,41 @@ function updateuWAN()
 	end
 end
 
+function updatetime(num)
+-- Update time 'num' field.
+-- Num is the number of the MQTT chanel
+	local wdays = {'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'}
+
+	local t=os.date("*t", SelShared.get('Meteo/Nonglard/'.. num ..'/time') )
+	upddataCentered(srf_MeteoDate[num+1], fsdigit, wdays[t.wday] ..' '.. t.day ..'/'.. t.month)
+end
+
+function updatedtmax(num)
+	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/day')
+	srf_MeteoTMax[num+1]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddataCentered(srf_MeteoTMax[num+1], fsdigit, v .. '°C')
+end
+
+function updatedtmin(num)
+	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/night')
+	srf_MeteoTMin[num+1]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddataCentered(srf_MeteoTMin[num+1], fsdigit, v .. '°C')
+end
+
 function updated0Icn()
 	updmeteo( 1, SelShared.get('Meteo/Nonglard/0/weather/code' ) )
 end
 
 function updated0time()
-	local t=os.date("*t", SelShared.get('Meteo/Nonglard/0/time') )
-	upddata(srf_MeteoDate[1], fsdigit, t.day ..'/'.. t.month)
+	updatetime(0)
 end
 
 function updated0tmax()
-	local v=SelShared.get('Meteo/Nonglard/0/temperature/day')
-	srf_MeteoTMax[1]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMax[1], fsdigit, v .. '°C')
+	updatedtmax(0)
 end
 
 function updated0tmin()
-	local v=SelShared.get('Meteo/Nonglard/0/temperature/night')
-	srf_MeteoTMin[1]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMin[1], fsdigit, v .. '°C')
+	updatedtmin(0)
 end
 
 function updated1Icn()
@@ -163,20 +179,15 @@ function updated1Icn()
 end
 
 function updated1time()
-	local t=os.date("*t", SelShared.get('Meteo/Nonglard/1/time') )
-	upddata(srf_MeteoDate[2], fsdigit, t.day ..'/'.. t.month)	
+	updatetime(1)
 end
 
 function updated1tmax()
-	local v=SelShared.get('Meteo/Nonglard/1/temperature/day')
-	srf_MeteoTMax[2]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMax[2], fsdigit, v .. '°C')
+	updatedtmax(1)
 end
 
 function updated1tmin()
-	local v=SelShared.get('Meteo/Nonglard/1/temperature/night')
-	srf_MeteoTMin[2]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMin[2], fsdigit, v .. '°C')
+	updatedtmin(1)
 end
 
 function updated2Icn()
@@ -184,41 +195,31 @@ function updated2Icn()
 end
 
 function updated2time()
-	local t=os.date("*t", SelShared.get('Meteo/Nonglard/2/time') )
-	upddata(srf_MeteoDate[3], fsdigit, t.day ..'/'.. t.month)	
+	updatetime(2)
 end
 
 function updated2tmax()
-	local v=SelShared.get('Meteo/Nonglard/2/temperature/day')
-	srf_MeteoTMax[3]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMax[3], fsdigit, v .. '°C')
+	updatedtmax(2)
 end
 
 function updated2tmin()
-	local v=SelShared.get('Meteo/Nonglard/2/temperature/night')
-	srf_MeteoTMin[3]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMin[3], fsdigit, v .. '°C')
+	updatedtmin(2)
 end
 
 function updated3Icn()
 	updmeteo( 4, SelShared.get('Meteo/Nonglard/3/weather/code' ) )
 end
 
+function updated3time()
+	updatetime(3)
+end
+
 function updated3tmax()
-	local v=SelShared.get('Meteo/Nonglard/3/temperature/day')
-	srf_MeteoTMax[4]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMax[4], fsdigit, v .. '°C')
+	updatedtmax(3)
 end
 
 function updated3tmin()
-	local v=SelShared.get('Meteo/Nonglard/3/temperature/night')
-	srf_MeteoTMin[4]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMin[4], fsdigit, v .. '°C')
-end
-
-function updated3time()
-	local t=os.date("*t", SelShared.get('Meteo/Nonglard/3/time') )
-	upddata(srf_MeteoDate[4], fsdigit, t.day ..'/'.. t.month)	
+	updatedtmin(3)
 end
 
 function updated4Icn()
@@ -226,20 +227,15 @@ function updated4Icn()
 end
 
 function updated4time()
-	local t=os.date("*t", SelShared.get('Meteo/Nonglard/4/time') )
-	upddata(srf_MeteoDate[5], fsdigit, t.day ..'/'.. t.month)	
+	updatetime(4)
 end
 
 function updated4tmax()
-	local v=SelShared.get('Meteo/Nonglard/4/temperature/day')
-	srf_MeteoTMax[5]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMax[5], fsdigit, v .. '°C')
+	updatedtmax(4)
 end
 
 function updated4tmin()
-	local v=SelShared.get('Meteo/Nonglard/4/temperature/night')
-	srf_MeteoTMin[5]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTMin[5], fsdigit, v .. '°C')
+	updatedtmin(4)
 end
 
 _, err = Brk:subscribe({
