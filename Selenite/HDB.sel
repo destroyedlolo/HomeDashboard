@@ -143,122 +143,122 @@ function updatetime(num)
 	local wdays = {'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'}
 
 	local t=os.date("*t", SelShared.get('Meteo/Nonglard/'.. num ..'/time') )
-	upddataCentered(srf_MeteoDate[num+1], fsdigit, wdays[t.wday] ..' '.. t.day ..'/'.. t.month)
+	upddataCentered(srf_MeteoDate[num], fsdigit, wdays[t.wday] ..' '.. t.day ..'/'.. t.month)
 end
 
 function updatedtmax(num)
 	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/day')
-	srf_MeteoTMax[num+1]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddataCentered(srf_MeteoTMax[num+1], fsdigit, v .. '°C')
+	srf_MeteoTMax[num]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddataCentered(srf_MeteoTMax[num], fsdigit, v .. '°C')
 end
 
 function updatedtmin(num)
 	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/night')
-	srf_MeteoTMin[num+1]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddataCentered(srf_MeteoTMin[num+1], fsdigit, v .. '°C')
+	srf_MeteoTMin[num]:SetColor( findgradiancolor(v, cols_temperature ) )
+	upddataCentered(srf_MeteoTMin[num], fsdigit, v .. '°C')
 end
 
 function updated0Icn()
-	updmeteo( 1, SelShared.get('Meteo/Nonglard/0/weather/code' ) )
+	updmeteo( 1, SelShared.get('Meteo/Nonglard/1/weather/code' ) )
 end
 
 function updated0time()
-	updatetime(0)
-end
-
-function updated0tmax()
-	updatedtmax(0)
-end
-
-function updated0tmin()
-	updatedtmin(0)
-end
-
-function updated1Icn()
-	updmeteo( 2, SelShared.get('Meteo/Nonglard/1/weather/code' ) )
-end
-
-function updated1time()
 	updatetime(1)
 end
 
-function updated1tmax()
+function updated0tmax()
 	updatedtmax(1)
 end
 
-function updated1tmin()
+function updated0tmin()
 	updatedtmin(1)
 end
 
-function updated2Icn()
-	updmeteo( 3, SelShared.get('Meteo/Nonglard/2/weather/code' ) )
+function updated1Icn()
+	updmeteo( 2, SelShared.get('Meteo/Nonglard/2/weather/code' ) )
 end
 
-function updated2time()
+function updated1time()
 	updatetime(2)
 end
 
-function updated2tmax()
+function updated1tmax()
 	updatedtmax(2)
 end
 
-function updated2tmin()
+function updated1tmin()
 	updatedtmin(2)
 end
 
-function updated3Icn()
-	updmeteo( 4, SelShared.get('Meteo/Nonglard/3/weather/code' ) )
+function updated2Icn()
+	updmeteo( 3, SelShared.get('Meteo/Nonglard/3/weather/code' ) )
 end
 
-function updated3time()
+function updated2time()
 	updatetime(3)
 end
 
-function updated3tmax()
+function updated2tmax()
 	updatedtmax(3)
 end
 
-function updated3tmin()
+function updated2tmin()
 	updatedtmin(3)
 end
 
-function updated4Icn()
-	updmeteo( 5, SelShared.get('Meteo/Nonglard/4/weather/code' ) )
+function updated3Icn()
+	updmeteo( 4, SelShared.get('Meteo/Nonglard/4/weather/code' ) )
 end
 
-function updated4time()
+function updated3time()
 	updatetime(4)
 end
 
-function updated4tmax()
+function updated3tmax()
 	updatedtmax(4)
 end
 
-function updated4tmin()
+function updated3tmin()
 	updatedtmin(4)
 end
 
+function updated4Icn()
+	updmeteo( 5, SelShared.get('Meteo/Nonglard/5/weather/code' ) )
+end
+
+function updated4time()
+	updatetime(5)
+end
+
+function updated4tmax()
+	updatedtmax(5)
+end
+
+function updated4tmin()
+	updatedtmin(5)
+end
+
 _, err = Brk:subscribe({
-	{ topic = "Meteo/Nonglard/0/weather/code", trigger=updated0Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated1Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated2Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated3Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/4/weather/code", trigger=updated4Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/0/time", trigger=updated0time, trigger_once=true },
-	{ topic = "Meteo/Nonglard/1/time", trigger=updated1time, trigger_once=true },
-	{ topic = "Meteo/Nonglard/2/time", trigger=updated2time, trigger_once=true },
-	{ topic = "Meteo/Nonglard/3/time", trigger=updated3time, trigger_once=true },
-	{ topic = "Meteo/Nonglard/4/time", trigger=updated4time, trigger_once=true },
-	{ topic = "Meteo/Nonglard/0/temperature/day", trigger=updated0tmax, trigger_once=true },
-	{ topic = "Meteo/Nonglard/1/temperature/day", trigger=updated1tmax, trigger_once=true },
-	{ topic = "Meteo/Nonglard/2/temperature/day", trigger=updated2tmax, trigger_once=true },
-	{ topic = "Meteo/Nonglard/3/temperature/day", trigger=updated3tmax, trigger_once=true },
-	{ topic = "Meteo/Nonglard/4/temperature/day", trigger=updated4tmax, trigger_once=true },
-	{ topic = "Meteo/Nonglard/0/temperature/night", trigger=updated0tmin, trigger_once=true },
-	{ topic = "Meteo/Nonglard/1/temperature/night", trigger=updated1tmin, trigger_once=true },
-	{ topic = "Meteo/Nonglard/2/temperature/night", trigger=updated2tmin, trigger_once=true },
-	{ topic = "Meteo/Nonglard/3/temperature/night", trigger=updated3tmin, trigger_once=true },
-	{ topic = "Meteo/Nonglard/4/temperature/night", trigger=updated4tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated0Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated1Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated2Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/4/weather/code", trigger=updated3Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/5/weather/code", trigger=updated4Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/1/time", trigger=updated0time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/2/time", trigger=updated1time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/3/time", trigger=updated2time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/4/time", trigger=updated3time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/5/time", trigger=updated4time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/1/temperature/day", trigger=updated0tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/2/temperature/day", trigger=updated1tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/3/temperature/day", trigger=updated2tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/4/temperature/day", trigger=updated3tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/5/temperature/day", trigger=updated4tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/1/temperature/night", trigger=updated0tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/2/temperature/night", trigger=updated1tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/3/temperature/night", trigger=updated2tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/4/temperature/night", trigger=updated3tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/5/temperature/night", trigger=updated4tmin, trigger_once=true },
 	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
 	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
 	{ topic = "Freebox/DownloadATM", func=rcvVal },

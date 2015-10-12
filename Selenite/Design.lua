@@ -195,7 +195,7 @@ srf_TDehors = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°
 srf_TDehors:SetColor( unpack(COL_DIGIT) )
 srf_TCave = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TCave:SetColor( unpack(COL_DIGIT) )
-goffy = goffy + fdigit:GetHeight() + 5
+goffy = goffy + fdigit:GetHeight() + 25
 
 -----
 -- Meteo
