@@ -137,6 +137,11 @@ function updateuWAN()
 	end
 end
 
+function updtime(num)
+	local t=os.date("*t", tonumber(SelShared.get('Meteo3H/Nonglard/'.. num ..'/time')) )
+	upddataCentered(srf_MeteoTime3H[num+1], fsdigit, string.format("%02d:%02d", t.hour, t.min))
+end
+
 function updatetime(num)
 -- Update time 'num' field.
 -- Num is the number of the MQTT chanel
@@ -156,6 +161,14 @@ function updatedtmin(num)
 	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/night')
 	srf_MeteoTMin[num]:SetColor( findgradiancolor(v, cols_temperature ) )
 	upddataCentered(srf_MeteoTMin[num], fsdigit, v .. '°C')
+end
+
+function upd0Icn()
+	updmeteo3H( 1, SelShared.get('Meteo3H/Nonglard/0/weather/code' ) )
+end
+
+function upd0time()
+	updtime(0)
 end
 
 function updated0Icn()
@@ -239,6 +252,8 @@ function updated4tmin()
 end
 
 _, err = Brk:subscribe({
+	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated0Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated1Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated2Icn, trigger_once=true },

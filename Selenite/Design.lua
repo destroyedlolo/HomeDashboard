@@ -2,6 +2,7 @@
 
 local HSGRPH = 30	-- Height of small graphs
 local VBAR1 = 160	-- position of the first vertical bar
+local VBAR2 = 500	-- position of the first vertical bar
 BARZOOM = 5	-- Magnify bar
 
 -- compatibility with newer Lua
@@ -58,6 +59,23 @@ function updmeteo( idx, iconid )
 		end
 	end
 	WeatherImg[ iconid ]:RenderTo( srf_Meteo[idx], { 0,0, 92,66 } )
+end
+
+function updmeteo3H( idx, iconid )
+	if not WeatherImg[ iconid ] then
+		local err
+		WeatherImg[ iconid ],err = SelImage.create("/usr/local/share/WeatherIcons/" .. iconid .. ".png")
+		if not WeatherImg[ iconid ] then
+			print(err)
+			return
+		end
+	end
+
+	if idx == 1 then
+		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 115, 82 } )
+	else
+		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 92,66 } )
+	end
 end
 
 -----
@@ -198,6 +216,30 @@ srf_TCave:SetColor( unpack(COL_DIGIT) )
 goffy = goffy + fdigit:GetHeight() + 25
 
 -----
+-- Short term meteo
+-----
+
+goffy3h = bar_ups.y + bar_ups.h + 4
+psrf:SetColor( unpack(COL_BORDER) )
+psrf:DrawLine( VBAR2, goffy3h, VBAR2, goffy )
+VBAR2 = VBAR2 + 5
+psrf:SetFont( ftitle )
+psrf:DrawString("Météo du jour", VBAR2, goffy3h + 1)
+
+goffy3h = goffy3h + ftitle1:GetHeight() + 10
+
+srf_Meteo3H = {
+	psrf:SubSurface( VBAR2, goffy3h, 115, 82 )
+}
+
+srf_MeteoTime3H = {
+	psrf:SubSurface( VBAR2 + 120, goffy3h+5, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() )
+}
+for i=1,1 do
+	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
+end
+
+-----
 -- Meteo
 -----
 
@@ -245,4 +287,5 @@ srf_MeteoTMin = {
 	psrf:SubSurface( VBAR1+399, goffy, 86, fsdigit:GetHeight()),
 	psrf:SubSurface( VBAR1+529, goffy, 86, fsdigit:GetHeight()),
 }
+
 
