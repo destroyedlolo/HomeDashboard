@@ -142,6 +142,20 @@ function updtime(num)
 	upddataCentered(srf_MeteoTime3H[num+1], fsdigit, string.format("%02d:%02d", t.hour, t.min))
 end
 
+function updtemp(num)
+	local v=SelShared.get('Meteo3H/Nonglard/'.. num ..'/temperature')
+	srf_MeteoTemp3H[num+1]:SetColor( findgradiancolor(v, cols_temperature ) )
+	if num == 0 then
+		upddata(srf_MeteoTemp3H[1], fdigit, string.format("%-3.1f", v) .. '°C')
+	else
+		upddata(srf_MeteoTemp3H[num+1], fsdigit, string.format("%-3.1f", v) .. '°C')
+	end
+end
+
+function updwinds(num)
+	upddata(srf_MeteoWind3H[num+1], fsdigit, string.format("%4.1f", SelShared.get("Meteo3H/Nonglard/"..num.."/wind/speed")*3.6))
+end
+
 function upd0Icn()
 	updmeteo3H( 1, SelShared.get('Meteo3H/Nonglard/0/weather/code' ) )
 end
@@ -151,9 +165,59 @@ function upd0time()
 end
 
 function upd0temp()
-	local v=SelShared.get('Meteo3H/Nonglard/0/temperature')
-	srf_MeteoTemp3H[1]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddata(srf_MeteoTemp3H[1], fdigit, string.format("%-3.2f", v) .. '°')
+	updtemp(0)
+end
+
+function upd0winds()
+	updwinds(0)
+end
+
+function upd1Icn()
+	updmeteo3H( 2, SelShared.get('Meteo3H/Nonglard/1/weather/code' ) )
+end
+
+function upd1time()
+	updtime(1)
+end
+
+function upd1temp()
+	updtemp(1)
+end
+
+function upd1winds()
+	updwinds(1)
+end
+
+function upd2Icn()
+	updmeteo3H( 3, SelShared.get('Meteo3H/Nonglard/2/weather/code' ) )
+end
+
+function upd2time()
+	updtime(2)
+end
+
+function upd2temp()
+	updtemp(2)
+end
+
+function upd2winds()
+	updwinds(2)
+end
+
+function upd3Icn()
+	updmeteo3H( 4, SelShared.get('Meteo3H/Nonglard/3/weather/code' ) )
+end
+
+function upd3time()
+	updtime(3)
+end
+
+function upd3temp()
+	updtemp(3)
+end
+
+function upd3winds()
+	updwinds(3)
 end
 
 function updatetime(num)
@@ -261,6 +325,19 @@ _, err = Brk:subscribe({
 	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/temperature", trigger=upd0temp, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/0/wind/speed", trigger=upd0winds, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/1/weather/code", trigger=upd1Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/1/time", trigger=upd1time, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/1/temperature", trigger=upd1temp, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/1/wind/speed", trigger=upd1winds, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/2/weather/code", trigger=upd2Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/2/time", trigger=upd2time, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/2/temperature", trigger=upd2temp, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/2/wind/speed", trigger=upd2winds, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/3/weather/code", trigger=upd3Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/3/time", trigger=upd3time, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/3/temperature", trigger=upd3temp, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/3/wind/speed", trigger=upd3winds, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated0Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated1Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated2Icn, trigger_once=true },

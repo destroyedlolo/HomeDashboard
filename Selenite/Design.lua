@@ -74,7 +74,7 @@ function updmeteo3H( idx, iconid )
 	if idx == 1 then
 		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 115, 82 } )
 	else
-		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 92,66 } )
+		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 78, 56 } )
 	end
 end
 
@@ -228,20 +228,38 @@ psrf:DrawString("Météo du jour", VBAR2, goffy3h + 1)
 
 goffy3h = goffy3h + ftitle1:GetHeight() + 10
 
-srf_Meteo3H = {
-	psrf:SubSurface( VBAR2, goffy3h, 115, 82 )
+srf_Meteo3H = {			-- Icon
+	psrf:SubSurface( VBAR2, goffy3h, 115, 82 ),
+	psrf:SubSurface( VBAR2 + 10, goffy3h + 90 + fsdigit:GetHeight(), 78, 56 ),
+	psrf:SubSurface( VBAR2 + 120, goffy3h + 90 + fsdigit:GetHeight(), 78, 56 ),
+	psrf:SubSurface( VBAR2 + 220, goffy3h + 90 + fsdigit:GetHeight(), 78, 56 )
 }
 
-srf_MeteoTime3H = {
-	psrf:SubSurface( psrf:GetWidth() - fsdigit:StringWidth("88:88"), goffy3h+5, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() )
+srf_MeteoTime3H = { 	-- Time
+	psrf:SubSurface( psrf:GetWidth() - fsdigit:StringWidth("88:88"), goffy3h+5, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() ),
+	psrf:SubSurface( VBAR2, goffy3h + 90, 92, fsdigit:GetHeight()), 
+	psrf:SubSurface( VBAR2 + 110, goffy3h + 90, 92, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR2 + 220, goffy3h + 90, 92, fsdigit:GetHeight())
 }
-for i=1,1 do
+
+srf_MeteoTemp3H = {		-- Temperature
+	psrf:SubSurface( VBAR2 + 115, goffy3h+10, fdigit:StringWidth("-88:8°C"), fdigit:GetHeight() ),
+	psrf:SubSurface( VBAR2, goffy3h + 146 + fsdigit:GetHeight(), 80, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR2 + 110, goffy3h + 146 + fsdigit:GetHeight(), 80, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR2 + 220, goffy3h + 146 + fsdigit:GetHeight(), 80, fsdigit:GetHeight())
+}
+
+srf_MeteoWind3H = {
+	psrf:SubSurface( psrf:GetWidth() - fsdigit:StringWidth("-888.8"), goffy3h + 5 + fsdigit:GetHeight(), fsdigit:StringWidth("88:88"), fsdigit:GetHeight() ),
+	psrf:SubSurface( VBAR2, goffy3h + 146 + 2*fsdigit:GetHeight(), 80, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR2 + 110, goffy3h + 146 + 2*fsdigit:GetHeight(), 80, fsdigit:GetHeight()),
+	psrf:SubSurface( VBAR2 + 220, goffy3h + 146 + 2*fsdigit:GetHeight(), 80, fsdigit:GetHeight())
+}
+
+for i=1,4 do
 	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
+	srf_MeteoWind3H[i]:SetColor( unpack(COL_DIGIT) )
 end
-
-srf_MeteoTemp3H = {
-	psrf:SubSurface( VBAR2 + 115, goffy3h+5, fdigit:StringWidth("-88:88°"), fdigit:GetHeight() )
-}
 
 -----
 -- Meteo
