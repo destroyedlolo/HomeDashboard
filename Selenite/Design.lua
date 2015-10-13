@@ -233,11 +233,15 @@ srf_Meteo3H = {
 }
 
 srf_MeteoTime3H = {
-	psrf:SubSurface( VBAR2 + 120, goffy3h+5, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() )
+	psrf:SubSurface( psrf:GetWidth() - fsdigit:StringWidth("88:88"), goffy3h+5, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() )
 }
 for i=1,1 do
 	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
 end
+
+srf_MeteoTemp3H = {
+	psrf:SubSurface( VBAR2 + 115, goffy3h+5, fdigit:StringWidth("-88:88°"), fdigit:GetHeight() )
+}
 
 -----
 -- Meteo
