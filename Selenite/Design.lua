@@ -239,21 +239,21 @@ srf_MeteoTime3H = { 	-- Time
 	psrf:SubSurface( psrf:GetWidth() - fsdigit:StringWidth("88:88"), goffy3h+5, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() ),
 	psrf:SubSurface( VBAR2, goffy3h + 90, 92, fsdigit:GetHeight()), 
 	psrf:SubSurface( VBAR2 + 110, goffy3h + 90, 92, fsdigit:GetHeight()),
-	psrf:SubSurface( VBAR2 + 220, goffy3h + 90, 92, fsdigit:GetHeight())
+	psrf:SubSurface( VBAR2 + 210, goffy3h + 90, 92, fsdigit:GetHeight())
 }
 
 srf_MeteoTemp3H = {		-- Temperature
 	psrf:SubSurface( VBAR2 + 115, goffy3h+10, fdigit:StringWidth("-88:8°C"), fdigit:GetHeight() ),
 	psrf:SubSurface( VBAR2, goffy3h + 146 + fsdigit:GetHeight(), 80, fsdigit:GetHeight()),
 	psrf:SubSurface( VBAR2 + 110, goffy3h + 146 + fsdigit:GetHeight(), 80, fsdigit:GetHeight()),
-	psrf:SubSurface( VBAR2 + 220, goffy3h + 146 + fsdigit:GetHeight(), 80, fsdigit:GetHeight())
+	psrf:SubSurface( VBAR2 + 210, goffy3h + 146 + fsdigit:GetHeight(), 80, fsdigit:GetHeight())
 }
 
 srf_MeteoWind3H = {
 	psrf:SubSurface( psrf:GetWidth() - fsdigit:StringWidth("-888.8"), goffy3h + 5 + fsdigit:GetHeight(), fsdigit:StringWidth("88:88"), fsdigit:GetHeight() ),
 	psrf:SubSurface( VBAR2, goffy3h + 146 + 2*fsdigit:GetHeight(), 80, fsdigit:GetHeight()),
 	psrf:SubSurface( VBAR2 + 110, goffy3h + 146 + 2*fsdigit:GetHeight(), 80, fsdigit:GetHeight()),
-	psrf:SubSurface( VBAR2 + 220, goffy3h + 146 + 2*fsdigit:GetHeight(), 80, fsdigit:GetHeight())
+	psrf:SubSurface( VBAR2 + 210, goffy3h + 146 + 2*fsdigit:GetHeight(), 80, fsdigit:GetHeight())
 }
 
 for i=1,4 do
