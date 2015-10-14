@@ -27,6 +27,7 @@ psrf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- creat
 psrf:Clear( unpack(COL_BLACK) )
 
 require (SELENE_SCRIPT_DIR .. "/Design")
+require (SELENE_SCRIPT_DIR .. "/Helpers")
 
 -- Collection for graphics
 dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/5 )
@@ -137,25 +138,6 @@ function updateuWAN()
 	end
 end
 
-function updtime(num)
-	local t=os.date("*t", tonumber(SelShared.get('Meteo3H/Nonglard/'.. num ..'/time')) )
-	upddataCentered(srf_MeteoTime3H[num+1], fsdigit, string.format("%02d:%02d", t.hour, t.min))
-end
-
-function updtemp(num)
-	local v=SelShared.get('Meteo3H/Nonglard/'.. num ..'/temperature')
-	srf_MeteoTemp3H[num+1]:SetColor( findgradiancolor(v, cols_temperature ) )
-	if num == 0 then
-		upddata(srf_MeteoTemp3H[1], fdigit, string.format("%-3.1f", v) .. '°C')
-	else
-		upddata(srf_MeteoTemp3H[num+1], fsdigit, string.format("%-3.1f", v) .. '°C')
-	end
-end
-
-function updwinds(num)
-	upddata(srf_MeteoWind3H[num+1], fsdigit, string.format("%4.1f", SelShared.get("Meteo3H/Nonglard/"..num.."/wind/speed")*3.6))
-end
-
 function upd0Icn()
 	updmeteo3H( 1, SelShared.get('Meteo3H/Nonglard/0/weather/code' ) )
 end
@@ -218,27 +200,6 @@ end
 
 function upd3winds()
 	updwinds(3)
-end
-
-function updatetime(num)
--- Update time 'num' field.
--- Num is the number of the MQTT chanel
-	local wdays = {'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'}
-
-	local t=os.date("*t", SelShared.get('Meteo/Nonglard/'.. num ..'/time') )
-	upddataCentered(srf_MeteoDate[num], fsdigit, wdays[t.wday] ..' '.. t.day ..'/'.. t.month)
-end
-
-function updatedtmax(num)
-	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/day')
-	srf_MeteoTMax[num]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddataCentered(srf_MeteoTMax[num], fsdigit, v .. '°C')
-end
-
-function updatedtmin(num)
-	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/night')
-	srf_MeteoTMin[num]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddataCentered(srf_MeteoTMin[num], fsdigit, v .. '°C')
 end
 
 function updated0Icn()
