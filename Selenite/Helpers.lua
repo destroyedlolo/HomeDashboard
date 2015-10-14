@@ -122,3 +122,57 @@ function updatedtmin(num)
 	upddataCentered(srf_MeteoTMin[num], fsdigit, v .. '°C')
 end
 
+--
+-- Wind direction
+--
+function rot( s, a )	-- Rotate coordinates s by angle a
+	return	s.x * math.cos(a) + s.y * math.sin(a),
+			-s.x * math.sin(a) + s.y * math.cos(a)
+end
+
+function point( pos, a, c )	-- return the coordinate of 
+							-- the point 'pos'
+							-- rotated by 'a'
+							-- centered on 'c'
+	local x = pos.x * math.cos(a) + pos.y * math.sin(a)
+	local y = -pos.x * math.sin(a) + pos.y * math.cos(a)
+	return 	x * c + c,
+			y * c + c
+end
+
+function drawWind(srf, dir)
+	local dir = math.rad(-dir)	-- 0° is for the north and it's anti-clockwise
+
+	local w,h = srf:GetSize()
+	local c = w/2	-- Center coordinate
+
+	local s1 = { x= -.35,	y= -.5 }
+	local s2 = { x=    0,	y= -.5 }
+	local s3 = { x=    0, 	y=  .5 }
+
+	srf:Clear( unpack(COL_BLACK) )
+
+	srf:SetColor( unpack(COL_ORANGE) )
+	local x1,y1 = point( s1, dir, c)
+	local x2,y2 = point( s2, dir, c)
+	local x3,y3 = point( s3, dir, c)
+
+	srf:FillTriangle( x1,y1, x2,y2, x3,y3 )
+
+	srf:SetColor( unpack(COL_RED) )
+	s1.x = .35
+	x1,y1 = point( s1, dir, c)
+	x2,y2 = point( s2, dir, c)
+	x3,y3 = point( s3, dir, c)
+
+	srf:FillTriangle( x1,y1, x2,y2, x3,y3 )
+end
+
+
+--[[
+	x	x	-.25,-.5	0,-5
+
+		x		0,0
+
+		x		0,.5
+]]

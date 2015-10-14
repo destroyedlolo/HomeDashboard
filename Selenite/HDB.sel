@@ -26,8 +26,8 @@ Selene.init( Selene.CooperativeConst('FULLSCREEN') )
 psrf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
 psrf:Clear( unpack(COL_BLACK) )
 
-require (SELENE_SCRIPT_DIR .. "/Design")
 require (SELENE_SCRIPT_DIR .. "/Helpers")
+require (SELENE_SCRIPT_DIR .. "/Design")
 
 -- Collection for graphics
 dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/5 )
