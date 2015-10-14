@@ -168,6 +168,9 @@ function drawWind(srf, dir)
 	srf:FillTriangle( x1,y1, x2,y2, x3,y3 )
 end
 
+function updwindd( num )
+	drawWind(srf_MeteoWindd3H[num+1], tonumber(SelShared.get('Meteo3H/Nonglard/'.. num ..'/wind/direction')) )
+end
 
 --[[
 	x	x	-.25,-.5	0,-5
