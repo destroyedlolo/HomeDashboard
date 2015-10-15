@@ -9,6 +9,7 @@
 function upddata( srf, font, data )
 	srf:SetFont( font )
 	srf:Clear( unpack(COL_BLACK) )
+	srf:Clear( 20,20,20,20 )
 	srf:DrawString( data, srf:GetWidth() - font:StringWidth(data), 0)
 end
 
