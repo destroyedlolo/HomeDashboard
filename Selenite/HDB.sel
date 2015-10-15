@@ -194,6 +194,10 @@ function upd2winds()
 	updwinds(2)
 end
 
+function upd2windd()
+	updwindd(2)
+end
+
 function upd3Icn()
 	updmeteo3H( 4, SelShared.get('Meteo3H/Nonglard/3/weather/code' ) )
 end
@@ -208,6 +212,10 @@ end
 
 function upd3winds()
 	updwinds(3)
+end
+
+function upd3windd()
+	updwindd(3)
 end
 
 function updated0Icn()
@@ -305,10 +313,12 @@ _, err = Brk:subscribe({
 	{ topic = "Meteo3H/Nonglard/2/time", trigger=upd2time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/temperature", trigger=upd2temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/wind/speed", trigger=upd2winds, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/2/wind/direction", trigger=upd2windd, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/weather/code", trigger=upd3Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/time", trigger=upd3time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/temperature", trigger=upd3temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/wind/speed", trigger=upd3winds, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/3/wind/direction", trigger=upd3windd, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated0Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated1Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated2Icn, trigger_once=true },
