@@ -298,7 +298,26 @@ function updated4tmin()
 	updatedtmin(5)
 end
 
+-- CAUTION : in race condition, commands may be lost.
+function Command()
+	if SelShared.get('HomeDashBoard/Tablette/Command') == 'Grab' then
+		psrf:Dump('/tmp', 'DashBoard')
+	end
+end
+
+--[[
+function Command(topic, val)
+print('func')
+	if val == 'Grab' then
+		print('Grab')
+	else
+		print('different')
+	end
+end
+--]]
+
 _, err = Brk:subscribe({
+	{ topic = "HomeDashBoard/Tablette/Command", trigger=Command },	-- 'Tablette' has to be changed if several dashboard
 	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/temperature", trigger=upd0temp, trigger_once=true },
