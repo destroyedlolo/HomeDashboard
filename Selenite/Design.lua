@@ -116,19 +116,34 @@ psrf:SetColor( unpack(COL_BORDER) )
 goffy = bar_ups.y + bar_ups.h + 4
 psrf:DrawLine(VBAR1, goffy, psrf:GetWidth(), goffy )
 
-goffy = goffy + 5
+
+----
+-- Temperature
+----
+
+goffy = goffy + 2
 psrf:SetFont( ftitle )
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawString("Températures :", VBAR1+5, goffy )
 
-goffy = goffy + ftitle:GetHeight() + 5
+goffy = goffy + ftitle:GetHeight() + 2
 psrf:SetFont( ftitle1 )
 psrf:SetColor( unpack(COL_TITLE) )
-psrf:DrawString("Grenier Nord :", VBAR1+5, goffy )
+psrf:DrawString("Comble :", VBAR1+5, goffy )
+psrf:DrawString("Grenier nord :", VBAR1+170, goffy )
+goffy = goffy + ftitle1:GetHeight()
+	-- calculate against fdigit and not fsdigit to aligned with other temperature
+srf_TComble = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°C"), fsdigit:GetHeight() )
+srf_TComble:SetColor( unpack(COL_DIGIT) )
+srf_TGrN = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fsdigit:GetHeight() )
+srf_TGrN:SetColor( unpack(COL_DIGIT) )
+goffy = goffy + fsdigit:GetHeight()
+
+psrf:DrawString("Chambre Océane :", VBAR1+5, goffy )
 psrf:DrawString("Chambre Joris :", VBAR1+170, goffy )
 goffy = goffy + ftitle1:GetHeight()
-srf_TGN = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
-srf_TGN:SetColor( unpack(COL_DIGIT) )
+srf_TChO = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
+srf_TChO:SetColor( unpack(COL_DIGIT) )
 srf_TChJ = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TChJ:SetColor( unpack(COL_DIGIT) )
 goffy = goffy + fdigit:GetHeight()
@@ -149,7 +164,7 @@ srf_TDehors = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°
 srf_TDehors:SetColor( unpack(COL_DIGIT) )
 srf_TCave = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TCave:SetColor( unpack(COL_DIGIT) )
-goffy = goffy + fdigit:GetHeight() + 25
+goffy = goffy + fdigit:GetHeight() + 15
 
 -----
 -- Short term meteo
