@@ -6,6 +6,13 @@
 -- Update text fields
 --
 
+function UpdDataRight( srf, data )
+	local font = srf:GetFont()
+	srf:Clear( unpack(COL_BLACK) )
+	srf:DrawString( data, srf:GetWidth() - font:StringWidth(data), 0)
+	font:Release()
+end
+
 function upddata( srf, font, data )
 	srf:SetFont( font )
 	srf:Clear( unpack(COL_BLACK) )

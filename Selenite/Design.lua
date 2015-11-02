@@ -11,7 +11,8 @@ local unpack = unpack or table.unpack
 -- Font used
 ftitle = SelFont.create("/usr/local/share/fonts/CarroisGothic-Regular.ttf", { height=30} )
 ftitle1 = SelFont.create("/usr/local/share/fonts/Capsuula.ttf", { height=20} )
-fdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=32} )
+fdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=35} )
+fmdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=30} )
 fsdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=20} )
 
 -----
@@ -23,27 +24,37 @@ psrf:SetFont( ftitle )
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawLine( VBAR1, 0, VBAR1, psrf:GetHeight() )
 psrf:DrawString("Electricité :", 5,0)
+local offy = 5+ftitle:GetHeight()
 
--- figures' sub titles
 psrf:SetFont( ftitle1 )
 psrf:SetColor( unpack(COL_TITLE) )
-psrf:DrawString("Tension EDF :", 5, 5+ftitle:GetHeight() )
-psrf:DrawString("Consommation :", 5, 5 + ftitle:GetHeight() + ftitle1:GetHeight() + fdigit:GetHeight())
-psrf:DrawString("Production :", 5, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + 2*fdigit:GetHeight() + HSGRPH)
-
--- figures' subsurfaces
-srf_tension = psrf:SubSurface( 10, 5 + ftitle:GetHeight() + ftitle1:GetHeight(), VBAR1-20, fdigit:GetHeight() )
+psrf:DrawString("Tension EDF :", 5, offy )
+offy = offy + ftitle1:GetHeight()
+srf_tension = psrf:SubSurface( 10, offy, VBAR1-20, fmdigit:GetHeight() )
+srf_tension:SetFont( fmdigit )
 srf_tension:SetColor( unpack(COL_DIGIT) )
-srf_consommation = psrf:SubSurface( 10, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + fdigit:GetHeight(), VBAR1-20, fdigit:GetHeight() )
-srf_consommation:SetColor( unpack(COL_DIGIT) )
-srf_production = psrf:SubSurface( 10, 5 + ftitle:GetHeight() + 3*ftitle1:GetHeight() + 2*fdigit:GetHeight() + HSGRPH, VBAR1-20, fdigit:GetHeight() )
-srf_production:SetColor( unpack(COL_DIGIT) )
+offy = offy + fmdigit:GetHeight()
 
+psrf:DrawString("Consommation :", 5, offy)
+offy = offy + ftitle1:GetHeight()
+srf_consommation = psrf:SubSurface( 10, offy, VBAR1-20, fdigit:GetHeight() )
+srf_consommation:SetFont( fdigit )
+srf_consommation:SetColor( unpack(COL_DIGIT) )
+offy = offy + fdigit:GetHeight()
 local xoffmaxc = VBAR1 - (5 + fsdigit:StringWidth("12345"))
-srf_maxconso = psrf:SubSurface( xoffmaxc, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + 2*fdigit:GetHeight(), fsdigit:StringWidth("12345"), HSGRPH);
+srf_maxconso = psrf:SubSurface( xoffmaxc, offy, fsdigit:StringWidth("12345"), HSGRPH);
+srf_maxconso:SetFont( fsdigit )
 srf_maxconso:SetColor( unpack(COL_DIGIT) )
-srf_consogfx = psrf:SubSurface( 5, 5 + ftitle:GetHeight() + 2*ftitle1:GetHeight() + 2*fdigit:GetHeight(), xoffmaxc -5, HSGRPH)
+srf_consogfx = psrf:SubSurface( 5, offy, xoffmaxc -5, HSGRPH)
 srf_consogfx:SetColor( unpack(COL_RED) )
+offy = offy + HSGRPH
+
+psrf:DrawString("Production :", 5, offy)
+offy = offy + ftitle1:GetHeight()
+srf_production = psrf:SubSurface( 10, offy, VBAR1-20, fdigit:GetHeight() )
+srf_production:SetFont( fdigit )
+srf_production:SetColor( unpack(COL_DIGIT) )
+offy = offy + fdigit:GetHeight()
 
 -----
 -- Tablet
