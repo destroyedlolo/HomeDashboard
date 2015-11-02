@@ -11,7 +11,7 @@ local unpack = unpack or table.unpack
 -- Font used
 ftitle = SelFont.create("/usr/local/share/fonts/CarroisGothic-Regular.ttf", { height=30} )
 ftitle1 = SelFont.create("/usr/local/share/fonts/Capsuula.ttf", { height=20} )
-fdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=35} )
+fdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=32} )
 fsdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=20} )
 
 -----
@@ -48,7 +48,7 @@ srf_consogfx:SetColor( unpack(COL_RED) )
 -----
 -- Tablet
 -----
-local btab = 20 + ftitle:GetHeight() + 3*ftitle1:GetHeight() + 3*fdigit:GetHeight() + HSGRPH
+local btab = 25 + ftitle:GetHeight() + 3*ftitle1:GetHeight() + 3*fdigit:GetHeight() + HSGRPH
 
 psrf:SetFont( ftitle )
 psrf:SetColor( unpack(COL_BORDER) )
@@ -107,7 +107,7 @@ tx, ty = srf_Internet:GetPosition()
 tw, th = srf_Internet:GetSize()
 tw = tx + tw - xcursor	-- width for bars
 bar_Idn = { x=xcursor+1, y=goffy+1, w=tw/2-2, h=8 }
-bar_Iup = { x=xcursor + tw/2 +4, y=goffy+1, w=tw/2-5, h=8 }
+bar_Iup = { x=xcursor + tw/2 +4, y=goffy+1, w=tw/2-2, h=8 }
 psrf:SetColor( unpack( COL_WHITE ) )
 psrf:DrawRectangle( bar_Idn.x-1, bar_Idn.y-1, bar_Idn.w+2, bar_Idn.h+2 )
 psrf:DrawRectangle( bar_Iup.x-1, bar_Iup.y-1, bar_Iup.w+2, bar_Iup.h+2 )
@@ -121,12 +121,12 @@ psrf:DrawLine(VBAR1, goffy, psrf:GetWidth(), goffy )
 -- Temperature
 ----
 
-goffy = goffy + 2
+goffy = goffy
 psrf:SetFont( ftitle )
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawString("Températures :", VBAR1+5, goffy )
 
-goffy = goffy + ftitle:GetHeight() + 2
+goffy = goffy + ftitle:GetHeight()
 psrf:SetFont( ftitle1 )
 psrf:SetColor( unpack(COL_TITLE) )
 psrf:DrawString("Comble :", VBAR1+5, goffy )
@@ -164,7 +164,7 @@ srf_TDehors = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°
 srf_TDehors:SetColor( unpack(COL_DIGIT) )
 srf_TCave = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TCave:SetColor( unpack(COL_DIGIT) )
-goffy = goffy + fdigit:GetHeight() + 15
+goffy = goffy + fdigit:GetHeight()
 
 -----
 -- Short term meteo
