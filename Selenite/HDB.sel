@@ -98,6 +98,10 @@ function updateTCave()
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
 end
 
+function updateVlt()
+	UpdDataRight( srf_tension, SelShared.get('onduleur/input.voltage') .. ' V')
+end
+
 function updateUPSLd()
 	local maxp = tonumber( SelShared.get('onduleur/ups.realpower.nominal') )
 	if maxp then -- maximum power not known yet
@@ -116,7 +120,7 @@ function updateInternet()
 	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
 	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
 	if intDn and intUp then
-		upddata( srf_Internet, ftitle1, intDn .. ' Kb / ' .. intUp ..' Kb' )
+		UpdDataRight( srf_Internet, intDn .. ' Kb / ' .. intUp ..' Kb' )
 	end
 end
 

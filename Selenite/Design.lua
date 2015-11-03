@@ -99,7 +99,7 @@ psrf:SetColor( unpack(COL_TITLE) )
 psrf:DrawString("Onduleur :", VBAR1 + 5, 0 )
 srf_consoUPS = psrf:SubSurface( VBAR1 + 5 + ftitle1:StringWidth("Onduleur : "), 0, ftitle1:StringWidth("200.6 W"), ftitle1:GetHeight() )
 srf_consoUPS:SetColor( unpack(COL_DIGIT) )
-srf_consoUPS:SetFont( fsdigit )
+srf_consoUPS:SetFont( ftitle1 )
 
 local tx,ty = srf_consoUPS:GetPosition()
 local tw,th = srf_consoUPS:GetSize()
@@ -108,7 +108,7 @@ bar_ups = { x=VBAR1+6, y=goffy+1, w=tx+tw-VBAR1-1, h=8 }
 psrf:SetColor( unpack( COL_WHITE ) )
 psrf:DrawRectangle( bar_ups.x-1, bar_ups.y-1, bar_ups.w+2, bar_ups.h+2 )
 
-xcursor = tx+tw+15	-- x cursor
+local xcursor = tx + tw + 9	-- x cursor
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawLine( xcursor, 0, xcursor, bar_ups.y + bar_ups.h + 4 )
 
@@ -116,11 +116,13 @@ psrf:DrawLine( xcursor, 0, xcursor, bar_ups.y + bar_ups.h + 4 )
 -- Internet
 ----
 
-xcursor = xcursor + 15
+xcursor = xcursor + 5
 psrf:SetColor( unpack(COL_TITLE) )
-psrf:DrawString("Internet :", xcursor, 5 )
-srf_Internet = psrf:SubSurface( xcursor + ftitle1:StringWidth("Internet : "), 5, ftitle1:StringWidth("8888 kb / 2000 kb"), ftitle1:GetHeight() )
+psrf:DrawString("Internet :", xcursor, 0 )
+srf_Internet = psrf:SubSurface( xcursor + ftitle1:StringWidth("Internet : "), 0, ftitle1:StringWidth("8888 kb / 2000 kb"), ftitle1:GetHeight() )
 srf_Internet:SetColor( unpack(COL_DIGIT) )
+srf_Internet:SetFont( ftitle1 )
+
 tx, ty = srf_Internet:GetPosition()
 tw, th = srf_Internet:GetSize()
 tw = tx + tw - xcursor	-- width for bars
