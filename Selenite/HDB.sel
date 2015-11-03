@@ -32,18 +32,10 @@ require (SELENE_SCRIPT_DIR .. "/Design")
 -- Collection for graphics
 dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/5 )
 dt_conso = SelCollection.create( srf_consogfx:GetWidth() )
+dt_prod = SelCollection.create( srf_prodgfx:GetWidth() )
 
 -- Broker's stuffs
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
-
-function rcvVal( topic, val )
-	SelShared.set(topic, val)
-	return true
-end
-
-function updateVlt()
-	UpdDataRight( srf_tension, SelShared.get('onduleur/input.voltage') .. ' V')
-end
 
 function updateConso()
 	local cols = {
@@ -62,7 +54,13 @@ function updateConso()
 end
 
 function updateProduction()
-	UpdDataRight( srf_production, SelShared.get('TeleInfo/Production/values/PAPP') .. ' VA')
+	local v = SelShared.get('TeleInfo/Production/values/PAPP')
+	UpdDataRight( srf_production, v .. ' VA')
+
+	dt_prod:Push(v)
+	local min,max = dt_prod:MinMax()
+	UpdDataRight( srf_maxprod, max )
+	updgfx( srf_prodgfx, dt_prod, 0 )
 end
 
 function updateTComble()
@@ -103,9 +101,9 @@ end
 function updateUPSLd()
 	local maxp = tonumber( SelShared.get('onduleur/ups.realpower.nominal') )
 	if maxp then -- maximum power not known yet
-		upddata( srf_consoUPS, ftitle1, string.format('%3.1f', SelShared.get('onduleur/ups.load')*maxp/100) .. ' W')
+		UpdDataRight( srf_consoUPS, string.format('%3.1f', SelShared.get('onduleur/ups.load')*maxp/100) .. ' W')
 	else
-		upddata( srf_consoUPS, ftitle1, SelShared.get('onduleur/ups.load') .. ' %')
+		UpdDataRight( srf_consoUPS, SelShared.get('onduleur/ups.load') .. ' %')
 	end
 	local pw = bar_ups.w * SelShared.get('onduleur/ups.load') / 100
 	psrf:SetColor( unpack( COL_WHITE ) )
@@ -313,19 +311,18 @@ function Command()
 	end
 end
 
---[[
-function Command(topic, val)
-print('func')
+function fCommand(topic, val)
+print("func")
+print('"'..val..'"')
 	if val == 'Grab' then
 		print('Grab')
 	else
 		print('different')
 	end
 end
---]]
 
 _, err = Brk:subscribe({
-	{ topic = "HomeDashBoard/Tablette/Command", trigger=Command },	-- 'Tablette' has to be changed if several dashboard
+	{ topic = "HomeDashBoard/Tablette/Command", xfunc=fCommand, trigger=Command },	-- 'Tablette' has to be changed if several dashboard
 	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/temperature", trigger=upd0temp, trigger_once=true },
@@ -368,9 +365,9 @@ _, err = Brk:subscribe({
 	{ topic = "Meteo/Nonglard/5/temperature/night", trigger=updated4tmin, trigger_once=true },
 	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
 	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
-	{ topic = "Freebox/DownloadATM", func=rcvVal },
+	{ topic = "Freebox/DownloadATM" },
 	{ topic = "Freebox/UploadATM", trigger=updateInternet, trigger_once=true },
-	{ topic = "onduleur/ups.realpower.nominal", func=rcvVal },
+	{ topic = "onduleur/ups.realpower.nominal" },
 	{ topic = "onduleur/ups.load", trigger=updateUPSLd, trigger_once=true },
 	{ topic = "maison/Temperature/Comble", trigger=updateTComble, trigger_once=true },
 	{ topic = "maison/Temperature/Grenier Nord", trigger=updateTGrN, trigger_once=true },

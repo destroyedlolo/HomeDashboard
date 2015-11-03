@@ -31,6 +31,7 @@ end
 --
 
 function updgfx( srf, data, amin )
+	srf:Clear( 10,10,10, 255 )
 	local min,max = data:MinMax()
 	min = amin or min
 	if max == min then	-- No dynamic data to draw
@@ -41,7 +42,6 @@ function updgfx( srf, data, amin )
 
 	local y		-- previous value
 	local x=0	-- x position
-	srf:Clear( 10,10,10, 255 )
 	for v in data:iData() do
 		if y then
 			x = x+1

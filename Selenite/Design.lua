@@ -55,6 +55,12 @@ srf_production = psrf:SubSurface( 10, offy, VBAR1-20, fdigit:GetHeight() )
 srf_production:SetFont( fdigit )
 srf_production:SetColor( unpack(COL_DIGIT) )
 offy = offy + fdigit:GetHeight()
+srf_maxprod = psrf:SubSurface( xoffmaxc, offy, fsdigit:StringWidth("12345"), HSGRPH);
+srf_maxprod:SetFont( fsdigit )
+srf_maxprod:SetColor( unpack(COL_DIGIT) )
+srf_prodgfx = psrf:SubSurface( 5, offy, xoffmaxc -5, HSGRPH)
+srf_prodgfx:SetColor( unpack(COL_RED) )
+offy = offy + HSGRPH
 
 -----
 -- Tablet
@@ -90,9 +96,10 @@ srf_ttbat:SetColor( unpack(COL_DIGIT) )
 ----
 psrf:SetFont( ftitle1 )
 psrf:SetColor( unpack(COL_TITLE) )
-psrf:DrawString("Onduleur :", VBAR1 + 5, 5 )
-srf_consoUPS = psrf:SubSurface( VBAR1 + 5 + ftitle1:StringWidth("Onduleur : "), 5, ftitle1:StringWidth("200.6 W"), ftitle1:GetHeight() )
+psrf:DrawString("Onduleur :", VBAR1 + 5, 0 )
+srf_consoUPS = psrf:SubSurface( VBAR1 + 5 + ftitle1:StringWidth("Onduleur : "), 0, ftitle1:StringWidth("200.6 W"), ftitle1:GetHeight() )
 srf_consoUPS:SetColor( unpack(COL_DIGIT) )
+srf_consoUPS:SetFont( fsdigit )
 
 local tx,ty = srf_consoUPS:GetPosition()
 local tw,th = srf_consoUPS:GetSize()
