@@ -406,7 +406,7 @@ function updateTablet()
 	v = v * f:read('*number') / 1000000
 	f:close()
 	srf_tabpwr:SetColor( findgradiancolor(v, cols ) )
-	upddata( srf_tabpwr, fdigit, string.format('%3.2f', v) .. ' W')
+	UpdDataRight( srf_tabpwr, string.format('%3.2f', v) .. ' W')
 	dt_pwr:Push( v )
 	local min,max = dt_pwr:MinMax()
 	upddata( srf_maxtpwr, fsdigit, string.format('%3.2f', max) )
@@ -420,7 +420,7 @@ function updateTablet()
 	v = f:read('*number') / 1000
 	f:close()
 	srf_ttpmu:SetColor( findgradiancolor(v, cols ) )
-	upddata( srf_ttpmu, fsdigit, string.format('%3.1f', v) .. '°C')
+	UpdDataRight( srf_ttpmu, string.format('%3.1f', v) .. '°C')
 
 	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/battery/temp" )
 	v = f:read('*number') / 10
