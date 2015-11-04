@@ -5,6 +5,8 @@ local VBAR1 = 160	-- position of the first vertical bar
 local VBAR2 = 500	-- position of the first vertical bar
 BARZOOM = 5	-- Magnify bar
 
+ThermImg = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/Thermometre.png")
+
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
 
@@ -49,7 +51,7 @@ srf_consogfx = psrf:SubSurface( 5, offy, xoffmaxc -5, HSGRPH)
 srf_consogfx:SetColor( unpack(COL_RED) )
 offy = offy + HSGRPH
 
-psrf:DrawString("Production :", 5, offy)
+psrf:DrawString("Production :", 5, offy + 10)
 offy = offy + ftitle1:GetHeight()
 srf_production = psrf:SubSurface( 10, offy, VBAR1-20, fdigit:GetHeight() )
 srf_production:SetFont( fdigit )
@@ -60,15 +62,30 @@ srf_maxprod:SetFont( fsdigit )
 srf_maxprod:SetColor( unpack(COL_DIGIT) )
 srf_prodgfx = psrf:SubSurface( 5, offy, xoffmaxc -5, HSGRPH)
 srf_prodgfx:SetColor( unpack(COL_RED) )
-offy = offy + HSGRPH + 5
+offy = offy + HSGRPH + 15
 
 -----
--- Tablet
+-- Keys temperatures
 -----
 
-psrf:SetFont( ftitle )
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawLine(0, offy, VBAR1, offy )
+offy = offy + 15
+psrf:SetColor( unpack(COL_TITLE) )
+ThermImg:RenderTo( psrf, { 0, offy + 20, 40,90 } )
+
+psrf:DrawString("Salon :", 65, offy)
+offy = offy + ftitle1:GetHeight()
+srf_TSalon = psrf:SubSurface( 35, offy, fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
+srf_TSalon:SetFont( fdigit )
+offy = offy + fdigit:GetHeight()
+
+psrf:DrawString("Dehors :", 65, offy)
+offy = offy + ftitle1:GetHeight()
+srf_TDehors = psrf:SubSurface( 35, offy, fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
+srf_TDehors:SetFont( fdigit )
+srf_TDehors:SetColor( unpack(COL_DIGIT) )
+offy = offy + fdigit:GetHeight()
 
 ----
 -- Onduleur
@@ -111,7 +128,7 @@ psrf:SetColor( unpack( COL_LIGHTGREY ) )
 psrf:DrawRectangle( bar_Idn.x-1, bar_Idn.y-1, bar_Idn.w+2, bar_Idn.h+2 )
 psrf:DrawRectangle( bar_Iup.x-1, bar_Iup.y-1, bar_Iup.w+2, bar_Iup.h+2 )
 
-xcursor = bar_Iup.x + bar_Iup.w + 8
+xcursor = bar_Iup.x + bar_Iup.w + 5
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawLine( xcursor, 0, xcursor, bar_ups.y + bar_ups.h + 4 )
 
@@ -178,8 +195,10 @@ goffy = goffy + fdigit:GetHeight()
 psrf:DrawString("Salon :", VBAR1+5, goffy )
 psrf:DrawString("Bureau :", VBAR1+170, goffy )
 goffy = goffy + ftitle1:GetHeight()
+--[[
 srf_TSalon = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TSalon:SetColor( unpack(COL_DIGIT) )
+--]]
 srf_TBureau = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TBureau:SetColor( unpack(COL_DIGIT) )
 goffy = goffy + fdigit:GetHeight()
@@ -187,8 +206,10 @@ goffy = goffy + fdigit:GetHeight()
 psrf:DrawString("Dehors :", VBAR1+5, goffy )
 psrf:DrawString("Cave :", VBAR1+170, goffy )
 goffy = goffy + ftitle1:GetHeight()
+--[[
 srf_TDehors = psrf:SubSurface( VBAR1+5, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TDehors:SetColor( unpack(COL_DIGIT) )
+--]]
 srf_TCave = psrf:SubSurface( VBAR1+170, goffy, 30 + fdigit:StringWidth("-888.8°C"), fdigit:GetHeight() )
 srf_TCave:SetColor( unpack(COL_DIGIT) )
 goffy = goffy + fdigit:GetHeight()
