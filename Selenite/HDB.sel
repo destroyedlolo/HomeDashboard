@@ -409,8 +409,7 @@ function updateTablet()
 	UpdDataRight( srf_tabpwr, string.format('%3.2f', v) .. ' W')
 	dt_pwr:Push( v )
 	local min,max = dt_pwr:MinMax()
-	upddata( srf_maxtpwr, fsdigit, string.format('%3.2f', max) )
-	updgfx( srf_tpwrgfx, dt_pwr, 0 )
+	updgfx( srf_tpwrgfx, dt_pwr )
 
 	cols = {
 		[30] = COL_DIGIT,
@@ -421,12 +420,6 @@ function updateTablet()
 	f:close()
 	srf_ttpmu:SetColor( findgradiancolor(v, cols ) )
 	UpdDataRight( srf_ttpmu, string.format('%3.1f', v) .. '°C')
-
-	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/battery/temp" )
-	v = f:read('*number') / 10
-	f:close()
-	srf_ttbat:SetColor( findgradiancolor(v, cols ) )
-	upddata( srf_ttbat, fsdigit, string.format('%3.1f', v) .. '°C')
 end
 
 tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updateTablet}

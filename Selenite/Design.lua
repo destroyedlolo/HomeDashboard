@@ -60,42 +60,15 @@ srf_maxprod:SetFont( fsdigit )
 srf_maxprod:SetColor( unpack(COL_DIGIT) )
 srf_prodgfx = psrf:SubSurface( 5, offy, xoffmaxc -5, HSGRPH)
 srf_prodgfx:SetColor( unpack(COL_RED) )
-offy = offy + HSGRPH
+offy = offy + HSGRPH + 5
 
 -----
 -- Tablet
 -----
-local btab = 25 + ftitle:GetHeight() + 3*ftitle1:GetHeight() + 3*fdigit:GetHeight() + HSGRPH
 
 psrf:SetFont( ftitle )
 psrf:SetColor( unpack(COL_BORDER) )
-psrf:DrawLine(0, btab, VBAR1, btab )
-psrf:DrawString("Tablette :", 5, btab + 5)
-
---[[
-srf_tabpwr = psrf:SubSurface( 10, btab + ftitle:GetHeight(), VBAR1-20, fdigit:GetHeight() )
-srf_tabpwr:SetColor( unpack(COL_DIGIT) )
---]]
-
-xoffmaxc = VBAR1 - (5 + fsdigit:StringWidth("10.88"))
-srf_maxtpwr = psrf:SubSurface( xoffmaxc, btab + ftitle:GetHeight() + fdigit:GetHeight(), fsdigit:StringWidth("10.88"), HSGRPH);
-srf_maxtpwr:SetColor( unpack(COL_DIGIT) )
---[[
-srf_tpwrgfx =  psrf:SubSurface( 5, btab + ftitle:GetHeight() + fdigit:GetHeight(), xoffmaxc - 5, HSGRPH);
-srf_tpwrgfx:SetColor( unpack(COL_RED) )
---]]
-
-psrf:SetFont( ftitle1 )
-psrf:SetColor( unpack(COL_TITLE) )
-psrf:DrawString("PMU", 5, btab + ftitle:GetHeight() + fdigit:GetHeight() + HSGRPH)
-psrf:DrawString("Batterie", 5 + VBAR1 / 2, btab + ftitle:GetHeight() + fdigit:GetHeight() + HSGRPH)
-
---[[
-srf_ttpmu = psrf:SubSurface( 5, btab + ftitle:GetHeight() + fdigit:GetHeight() + HSGRPH + ftitle1:GetHeight(), VBAR1 / 2 - 10, ftitle1:GetHeight() )
-srf_ttpmu:SetColor( unpack(COL_DIGIT) )
---]]
-srf_ttbat = psrf:SubSurface( 5 + VBAR1 / 2, btab + ftitle:GetHeight() + fdigit:GetHeight() + HSGRPH + ftitle1:GetHeight(), VBAR1 / 2 - 10, ftitle1:GetHeight() )
-srf_ttbat:SetColor( unpack(COL_DIGIT) )
+psrf:DrawLine(0, offy, VBAR1, offy )
 
 ----
 -- Onduleur
@@ -110,7 +83,7 @@ srf_consoUPS:SetFont( ftitle1 )
 local tx,ty = srf_consoUPS:GetPosition()
 local tw,th = srf_consoUPS:GetSize()
 local goffy = ty + th + 2	-- bar's offset
-bar_ups = { x=VBAR1+6, y=goffy+1, w=tx+tw-VBAR1-1, h=12 }
+bar_ups = { x=VBAR1+6, y=goffy+1, w=tx+tw-VBAR1-1, h=10 }
 psrf:SetColor( unpack( COL_LIGHTGREY ) )
 psrf:DrawRectangle( bar_ups.x-1, bar_ups.y-1, bar_ups.w+2, bar_ups.h+2 )
 
@@ -132,13 +105,13 @@ srf_Internet:SetFont( ftitle1 )
 tx, ty = srf_Internet:GetPosition()
 tw, th = srf_Internet:GetSize()
 tw = tx + tw - xcursor	-- width for bars
-bar_Idn = { x=xcursor+1, y=goffy+1, w=tw/2-2, h=12 }
-bar_Iup = { x=xcursor + tw/2 +4, y=goffy+1, w=tw/2-2, h=12 }
+bar_Idn = { x=xcursor+1, y=goffy+1, w=tw/2-2, h=10 }
+bar_Iup = { x=xcursor + tw/2 +4, y=goffy+1, w=tw/2-2, h=10 }
 psrf:SetColor( unpack( COL_LIGHTGREY ) )
 psrf:DrawRectangle( bar_Idn.x-1, bar_Idn.y-1, bar_Idn.w+2, bar_Idn.h+2 )
 psrf:DrawRectangle( bar_Iup.x-1, bar_Iup.y-1, bar_Iup.w+2, bar_Iup.h+2 )
 
-xcursor = bar_Iup.x + bar_Iup.w + 6
+xcursor = bar_Iup.x + bar_Iup.w + 8
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawLine( xcursor, 0, xcursor, bar_ups.y + bar_ups.h + 4 )
 
@@ -159,10 +132,9 @@ srf_ttpmu = psrf:SubSurface(tx + tw + 10, 0, ftitle1:StringWidth("88.8°C"), fti
 srf_ttpmu:SetColor( unpack(COL_DIGIT) )
 srf_ttpmu:SetFont( ftitle1 )
 
-
 srf_tpwrgfx =  psrf:SubSurface( 
 	xcursor, goffy-2, 
-	ftitle1:StringWidth("Tablette :") + ftitle1:StringWidth("88.88 W") + ftitle1:StringWidth("88.8°C"),
+	ftitle1:StringWidth("Tablette :") + ftitle1:StringWidth("88.88 W") + ftitle1:StringWidth("88.8°C") + 10,
 	bar_ups.y + bar_ups.h - goffy + 2
 );
 srf_tpwrgfx:SetColor( unpack(COL_RED) )
