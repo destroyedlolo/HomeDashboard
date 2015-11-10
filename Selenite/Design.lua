@@ -51,7 +51,7 @@ srf_consogfx = psrf:SubSurface( 5, offy, xoffmaxc -5, HSGRPH)
 srf_consogfx:SetColor( unpack(COL_RED) )
 offy = offy + HSGRPH
 
-psrf:DrawString("Production :", 5, offy + 10)
+psrf:DrawString("Production :", 5, offy)
 offy = offy + ftitle1:GetHeight()
 srf_production = psrf:SubSurface( 10, offy, VBAR1-20, fdigit:GetHeight() )
 srf_production:SetFont( fdigit )
@@ -72,7 +72,7 @@ psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawLine(0, offy, VBAR1, offy )
 offy = offy + 15
 psrf:SetColor( unpack(COL_TITLE) )
-ThermImg:RenderTo( psrf, { 0, offy + 20, 40,90 } )
+ThermImg:RenderTo( psrf, { 10, offy + 20, 25,90 } )
 
 psrf:DrawString("Salon :", 65, offy)
 offy = offy + ftitle1:GetHeight()

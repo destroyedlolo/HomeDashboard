@@ -37,7 +37,8 @@ function updgfx( srf, data, amin )
 	if max == min then	-- No dynamic data to draw
 		return
 	end
-	local sy = srf:GetHeight()/(max-min) -- vertical scale
+	local h = srf:GetHeight()-1
+	local sy = h/(max-min) -- vertical scale
 	local sx = srf:GetWidth()/data:GetSize()
 
 	local y		-- previous value
@@ -45,7 +46,7 @@ function updgfx( srf, data, amin )
 	for v in data:iData() do
 		if y then
 			x = x+1
-			srf:DrawLine((x-1)*sx, srf:GetHeight() - (y-min)*sy, x*sx, srf:GetHeight() - (v-min)*sy)
+			srf:DrawLine((x-1)*sx, h - (y-min)*sy, x*sx, h - (v-min)*sy)
 		end
 		y = v 
 	end
