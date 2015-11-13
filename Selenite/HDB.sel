@@ -50,7 +50,9 @@ psrf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- creat
 psrf:Clear( unpack(COL_BLACK) )
 
 require (SELENE_SCRIPT_DIR .. "/Helpers")	-- Helper functions to draw data
-require (SELENE_SCRIPT_DIR .. "/Design")	-- Main GUI design
+
+-- GUI
+require (SELENE_SCRIPT_DIR .. "/Primary")
 
 -- Broker's stuffs
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
