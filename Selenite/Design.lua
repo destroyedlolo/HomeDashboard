@@ -1,3 +1,6 @@
+-- This page contains all the information for the primary surface
+-- and then call sub windows definition
+
 -- Design of the display
 
 local HSGRPH = 30	-- Height of small graphs
@@ -318,5 +321,102 @@ srf_MeteoTMin = {
 	psrf:SubSurface( VBAR1+399, goffy, 86, fsdigit:GetHeight()),
 	psrf:SubSurface( VBAR1+529, goffy, 86, fsdigit:GetHeight()),
 }
+
+-- Collection for graphics
+dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/5 )
+dt_conso = SelCollection.create( srf_consogfx:GetWidth() )
+dt_prod = SelCollection.create( srf_prodgfx:GetWidth() )
+
+-- update functions
+function updateInternet()
+	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
+	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
+	if intDn and intUp then
+		UpdDataRight( srf_Internet, intDn .. ' Kb / ' .. intUp ..' Kb' )
+	end
+end
+
+function updatedWAN()
+	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
+	local wanDn = tonumber( SelShared.get('Freebox/DownloadWAN') )
+	if intDn then
+		local pw = bar_Idn.w * wanDn * 8 / intDn
+		psrf:SetColor( unpack( COL_WHITE ) )
+		psrf:FillRectangle( bar_Idn.x, bar_Idn.y, pw, bar_Idn.h )
+		psrf:SetColor( unpack( COL_BLACK ) )
+		psrf:FillRectangle( bar_Idn.x+pw, bar_Idn.y, bar_Idn.w-pw, bar_Idn.h )
+	end
+end
+
+function updateuWAN()
+	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
+	local wanUp = tonumber( SelShared.get('Freebox/UploadWAN') )
+	if intUp then
+		local pw = bar_Iup.w * wanUp * 8 / intUp
+		psrf:SetColor( unpack( COL_WHITE ) )
+		psrf:FillRectangle( bar_Iup.x, bar_Iup.y, pw, bar_Iup.h )
+		psrf:SetColor( unpack( COL_BLACK ) )
+		psrf:FillRectangle( bar_Iup.x+pw, bar_Iup.y, bar_Iup.w-pw, bar_Iup.h )
+	end
+end
+
+function updateUPSLd()
+	local maxp = tonumber( SelShared.get('onduleur/ups.realpower.nominal') )
+	if maxp then -- maximum power not known yet
+		UpdDataRight( srf_consoUPS, string.format('%3.1f', SelShared.get('onduleur/ups.load')*maxp/100) .. ' W')
+	else
+		UpdDataRight( srf_consoUPS, SelShared.get('onduleur/ups.load') .. ' %')
+	end
+	local pw = bar_ups.w * SelShared.get('onduleur/ups.load') / 100
+	psrf:SetColor( unpack( COL_WHITE ) )
+	psrf:FillRectangle( bar_ups.x, bar_ups.y, pw, bar_ups.h )
+	psrf:SetColor( unpack( COL_BLACK ) )
+	psrf:FillRectangle( bar_ups.x+pw, bar_ups.y, bar_ups.w-pw, bar_ups.h )
+end
+
+function updateVlt()
+	UpdDataRight( srf_tension, SelShared.get('onduleur/input.voltage') .. ' V')
+end
+
+function updateConso()
+	local cols = {
+		[500] = COL_DIGIT,
+		[1500] = COL_ORANGE,
+		[4500] = COL_RED
+	}
+	local v = SelShared.get('TeleInfo/Consommation/values/PAPP')
+	srf_consommation:SetColor( findgradiancolor(v, cols ) )
+	UpdDataRight( srf_consommation, v .. ' VA')
+
+	dt_conso:Push(v)
+	local min,max = dt_conso:MinMax()
+	UpdDataRight( srf_maxconso, max )
+	updgfx( srf_consogfx, dt_conso, 0 )
+end
+
+function updateProduction()
+	local v = SelShared.get('TeleInfo/Production/values/PAPP')
+	UpdDataRight( srf_production, v .. ' VA')
+
+	dt_prod:Push(v)
+	local min,max = dt_prod:MinMax()
+	UpdDataRight( srf_maxprod, max )
+	updgfx( srf_prodgfx, dt_prod, 0 )
+end
+
+-- local subscription
+local ltopics = {
+	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
+	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
+	{ topic = "Freebox/DownloadATM" },
+	{ topic = "Freebox/UploadATM", trigger=updateInternet, trigger_once=true },
+	{ topic = "onduleur/ups.realpower.nominal" },
+	{ topic = "onduleur/ups.load", trigger=updateUPSLd, trigger_once=true },
+	{ topic = "onduleur/input.voltage", trigger=updateVlt, trigger_once=true },
+	{ topic = "TeleInfo/Consommation/values/PAPP", trigger=updateConso, trigger_once=true },
+	{ topic = "TeleInfo/Production/values/PAPP", trigger=updateProduction, trigger_once=true }
+}
+
+TableMerge( Topics, ltopics)
 
 

@@ -15,53 +15,45 @@ if f then	-- working only using root access
 end
 
 -- Ensure we're not using obsolete version
-assert( SELENE_VERSION >= 0.0602, "HDB requires at least Selene v0.06.02" )
+assert( SELENE_VERSION >= 0.0700, "HDB requires at least Selene v0.07.00" )
 
 -- Load configuration files
-require (SELENE_SCRIPT_DIR .. "/LocalConfig")
-require (SELENE_SCRIPT_DIR .. "/Colors")
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Configuration to connect to the broker
+require (SELENE_SCRIPT_DIR .. "/Colors")		-- Colors used in the GUI
+
+-- List of topics to subscribe to
+function Command() -- CAUTION : in race condition, commands may be lost.
+	if SelShared.get('HomeDashBoard/Tablette/Command') == 'Grab' then
+		psrf:Dump('/tmp', 'DashBoard')
+	elseif SelShared.get('HomeDashBoard/Tablette/Command') == 'Tasks' then
+		SelShared.dump()
+	end
+end
+
+function fCommand(topic, val)
+print("func")
+print('"'..val..'"')
+	if val == 'Grab' then
+		print('Grab')
+	else
+		print('different')
+	end
+end
+
+Topics = {
+	{ topic = "HomeDashBoard/Tablette/Command", xfunc=fCommand, trigger=Command }	-- 'Tablette' has to be changed if several dashboard
+}
 
 -- Init the screen
 Selene.init( Selene.CooperativeConst('FULLSCREEN') )
 psrf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
 psrf:Clear( unpack(COL_BLACK) )
 
-require (SELENE_SCRIPT_DIR .. "/Helpers")
-require (SELENE_SCRIPT_DIR .. "/Design")
-
--- Collection for graphics
-dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/5 )
-dt_conso = SelCollection.create( srf_consogfx:GetWidth() )
-dt_prod = SelCollection.create( srf_prodgfx:GetWidth() )
+require (SELENE_SCRIPT_DIR .. "/Helpers")	-- Helper functions to draw data
+require (SELENE_SCRIPT_DIR .. "/Design")	-- Main GUI design
 
 -- Broker's stuffs
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
-
-function updateConso()
-	local cols = {
-		[500] = COL_DIGIT,
-		[1500] = COL_ORANGE,
-		[4500] = COL_RED
-	}
-	local v = SelShared.get('TeleInfo/Consommation/values/PAPP')
-	srf_consommation:SetColor( findgradiancolor(v, cols ) )
-	UpdDataRight( srf_consommation, v .. ' VA')
-
-	dt_conso:Push(v)
-	local min,max = dt_conso:MinMax()
-	UpdDataRight( srf_maxconso, max )
-	updgfx( srf_consogfx, dt_conso, 0 )
-end
-
-function updateProduction()
-	local v = SelShared.get('TeleInfo/Production/values/PAPP')
-	UpdDataRight( srf_production, v .. ' VA')
-
-	dt_prod:Push(v)
-	local min,max = dt_prod:MinMax()
-	UpdDataRight( srf_maxprod, max )
-	updgfx( srf_prodgfx, dt_prod, 0 )
-end
 
 function updateTComble()
 	upddata( srf_TComble, fsdigit, SelShared.get('maison/Temperature/Comble') .. "°C" )
@@ -96,56 +88,6 @@ end
 
 function updateTCave()
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
-end
-
-function updateVlt()
-	UpdDataRight( srf_tension, SelShared.get('onduleur/input.voltage') .. ' V')
-end
-
-function updateUPSLd()
-	local maxp = tonumber( SelShared.get('onduleur/ups.realpower.nominal') )
-	if maxp then -- maximum power not known yet
-		UpdDataRight( srf_consoUPS, string.format('%3.1f', SelShared.get('onduleur/ups.load')*maxp/100) .. ' W')
-	else
-		UpdDataRight( srf_consoUPS, SelShared.get('onduleur/ups.load') .. ' %')
-	end
-	local pw = bar_ups.w * SelShared.get('onduleur/ups.load') / 100
-	psrf:SetColor( unpack( COL_WHITE ) )
-	psrf:FillRectangle( bar_ups.x, bar_ups.y, pw, bar_ups.h )
-	psrf:SetColor( unpack( COL_BLACK ) )
-	psrf:FillRectangle( bar_ups.x+pw, bar_ups.y, bar_ups.w-pw, bar_ups.h )
-end
-
-function updateInternet()
-	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
-	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
-	if intDn and intUp then
-		UpdDataRight( srf_Internet, intDn .. ' Kb / ' .. intUp ..' Kb' )
-	end
-end
-
-function updatedWAN()
-	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
-	local wanDn = tonumber( SelShared.get('Freebox/DownloadWAN') )
-	if intDn then
-		local pw = bar_Idn.w * wanDn * 8 / intDn
-		psrf:SetColor( unpack( COL_WHITE ) )
-		psrf:FillRectangle( bar_Idn.x, bar_Idn.y, pw, bar_Idn.h )
-		psrf:SetColor( unpack( COL_BLACK ) )
-		psrf:FillRectangle( bar_Idn.x+pw, bar_Idn.y, bar_Idn.w-pw, bar_Idn.h )
-	end
-end
-
-function updateuWAN()
-	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
-	local wanUp = tonumber( SelShared.get('Freebox/UploadWAN') )
-	if intUp then
-		local pw = bar_Iup.w * wanUp * 8 / intUp
-		psrf:SetColor( unpack( COL_WHITE ) )
-		psrf:FillRectangle( bar_Iup.x, bar_Iup.y, pw, bar_Iup.h )
-		psrf:SetColor( unpack( COL_BLACK ) )
-		psrf:FillRectangle( bar_Iup.x+pw, bar_Iup.y, bar_Iup.w-pw, bar_Iup.h )
-	end
 end
 
 function upd0Icn()
@@ -308,25 +250,7 @@ function updated4tmin()
 	updatedtmin(5)
 end
 
--- CAUTION : in race condition, commands may be lost.
-function Command()
-	if SelShared.get('HomeDashBoard/Tablette/Command') == 'Grab' then
-		psrf:Dump('/tmp', 'DashBoard')
-	end
-end
-
-function fCommand(topic, val)
-print("func")
-print('"'..val..'"')
-	if val == 'Grab' then
-		print('Grab')
-	else
-		print('different')
-	end
-end
-
-_, err = Brk:subscribe({
-	{ topic = "HomeDashBoard/Tablette/Command", xfunc=fCommand, trigger=Command },	-- 'Tablette' has to be changed if several dashboard
+remaining = {
 	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/temperature", trigger=upd0temp, trigger_once=true },
@@ -367,12 +291,6 @@ _, err = Brk:subscribe({
 	{ topic = "Meteo/Nonglard/3/temperature/night", trigger=updated2tmin, trigger_once=true },
 	{ topic = "Meteo/Nonglard/4/temperature/night", trigger=updated3tmin, trigger_once=true },
 	{ topic = "Meteo/Nonglard/5/temperature/night", trigger=updated4tmin, trigger_once=true },
-	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
-	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
-	{ topic = "Freebox/DownloadATM" },
-	{ topic = "Freebox/UploadATM", trigger=updateInternet, trigger_once=true },
-	{ topic = "onduleur/ups.realpower.nominal" },
-	{ topic = "onduleur/ups.load", trigger=updateUPSLd, trigger_once=true },
 	{ topic = "maison/Temperature/Comble", trigger=updateTComble, trigger_once=true },
 	{ topic = "maison/Temperature/Grenier Nord", trigger=updateTGrN, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Oceane", trigger=updateTChO, trigger_once=true },
@@ -380,12 +298,17 @@ _, err = Brk:subscribe({
 	{ topic = "maison/Temperature/Salon", trigger=updateTSalon, trigger_once=true },
 	{ topic = "maison/Temperature/Bureau", trigger=updateTBureau, trigger_once=true },
 	{ topic = "maison/Temperature/Dehors", trigger=updateTDehors, trigger_once=true },
-	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
-	{ topic = "onduleur/input.voltage", trigger=updateVlt, trigger_once=true },
-	{ topic = "TeleInfo/Consommation/values/PAPP", trigger=updateConso, trigger_once=true },
-	{ topic = "TeleInfo/Production/values/PAPP", trigger=updateProduction, trigger_once=true }
-})
+	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true }
+}
 
+--[[
+require("tostring")
+print(universal_tostring(Topics))
+]]
+
+-- Subscribtion
+
+_, err = Brk:subscribe( Topics )
 if err then
 	print( err )
 	return
