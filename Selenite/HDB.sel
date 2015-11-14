@@ -16,8 +16,6 @@ end
 
 -- Ensure we're not using obsolete version
 assert( SELENE_VERSION >= 0.0700, "HDB requires at least Selene v0.07.00" )
-
--- Load configuration files
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Configuration to connect to the broker
 require (SELENE_SCRIPT_DIR .. "/Colors")		-- Colors used in the GUI
 
