@@ -166,6 +166,8 @@ function updateInternet()
 	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
 	if intDn and intUp then
 		UpdDataRight( srf_Internet, intDn .. ' Kb / ' .. intUp ..' Kb' )
+
+		SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
 	end
 end
 
@@ -178,6 +180,8 @@ function updatedWAN()
 		psrf:FillRectangle( bar_Idn.x, bar_Idn.y, pw, bar_Idn.h )
 		psrf:SetColor( unpack( COL_BLACK ) )
 		psrf:FillRectangle( bar_Idn.x+pw, bar_Idn.y, bar_Idn.w-pw, bar_Idn.h )
+
+		SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
 	end
 end
 
@@ -190,6 +194,8 @@ function updateuWAN()
 		psrf:FillRectangle( bar_Iup.x, bar_Iup.y, pw, bar_Iup.h )
 		psrf:SetColor( unpack( COL_BLACK ) )
 		psrf:FillRectangle( bar_Iup.x+pw, bar_Iup.y, bar_Iup.w-pw, bar_Iup.h )
+
+		SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
 	end
 end
 
@@ -205,10 +211,14 @@ function updateUPSLd()
 	psrf:FillRectangle( bar_ups.x, bar_ups.y, pw, bar_ups.h )
 	psrf:SetColor( unpack( COL_BLACK ) )
 	psrf:FillRectangle( bar_ups.x+pw, bar_ups.y, bar_ups.w-pw, bar_ups.h )
+
+	SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 function updateVlt()
 	UpdDataRight( srf_tension, SelShared.get('onduleur/input.voltage') .. ' V')
+
+	SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 function updateConso()
@@ -225,6 +235,8 @@ function updateConso()
 	local min,max = dt_conso:MinMax()
 	UpdDataRight( srf_maxconso, max )
 	updgfx( srf_consogfx, dt_conso, 0 )
+
+	SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 function updateProduction()
@@ -235,6 +247,12 @@ function updateProduction()
 	local min,max = dt_prod:MinMax()
 	UpdDataRight( srf_maxprod, max )
 	updgfx( srf_prodgfx, dt_prod, 0 )
+
+	SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
+function psrfupdate()
+	psrf:Flip(SelSurface.FlipFlagsConst("NONE"))	
 end
 
 -- local subscription
@@ -252,4 +270,4 @@ local ltopics = {
 
 TableMerge( Topics, ltopics)
 
-
+SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))	-- Make the information visible

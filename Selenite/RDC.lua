@@ -1,5 +1,16 @@
 -- This file define the window related to the "rez-de-chaussée"
 
+local window = layer:CreateWindow {
+	pos = {50,50}, size = {200,200},
+	caps=SelWindow.CapsConst('NONE'),
+	surface_caps=SelSurface.CapabilityConst('NONE')
+}
+window:SetOpacity(0xff)			-- Make it visible
+rdc_srf = window:GetSurface()	-- Get its surface
+
+rdc_srf:Clear(60,60,60,100)
+rdc_srf:Flip(SelSurface.FlipFlagsConst("BLIT"))
+
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
 
