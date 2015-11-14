@@ -151,8 +151,6 @@ srf_tpwrgfx =  psrf:SubSurface(
 );
 srf_tpwrgfx:SetColor( unpack(COL_RED) )
 
-
-
 psrf:SetColor( unpack(COL_BORDER) )
 goffy = bar_ups.y + bar_ups.h + 4
 psrf:DrawLine(VBAR1, goffy, psrf:GetWidth(), goffy )
