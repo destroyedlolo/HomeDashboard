@@ -3,6 +3,7 @@
 local window = layer:CreateWindow {
 	pos = {50,50}, size = {200,200},
 	caps=SelWindow.CapsConst('NONE'),
+	stacking=SelWindow.StackingConst("UPPER"),
 	surface_caps=SelSurface.CapabilityConst('NONE')
 }
 window:SetOpacity(0xff)			-- Make it visible
