@@ -103,6 +103,14 @@ local xcursor = tx + tw + 12	-- x cursor
 psrf:SetColor( unpack(COL_BORDER) )
 psrf:DrawLine( xcursor, 0, xcursor, bar_ups.y + bar_ups.h + 4 )
 
+-----
+-- Position for subwindows
+-----
+
+tx,ty = psrf:GetSize()
+WINTOP = { VBAR1 + 4, bar_ups.y + bar_ups.h + 8 }
+WINSIZE = { tx - WINTOP[1] - 4, ty - WINTOP[2] - 4 }
+
 ----
 -- Internet
 ----
