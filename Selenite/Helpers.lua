@@ -15,9 +15,13 @@ end
 -- Update text fields
 --
 
-function UpdDataRight( srf, data )
+function UpdDataRight( srf, data, col )
 	local font = srf:GetFont()
-	srf:Clear( unpack(COL_BLACK) )
+	if not col then
+		srf:Clear( unpack(COL_BLACK) )
+	else
+		srf:Clear( unpack(col) )
+	end
 	srf:DrawString( data, srf:GetWidth() - font:StringWidth(data), 0)
 	font:Release()
 end
