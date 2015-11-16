@@ -23,7 +23,7 @@ local goffy = ftitle:GetHeight() + 10
 local img,err = SelImage.create("Selenite/Images/RDC.png")
 assert(img)
 local tx,ty = rdc_srf:GetSize()
-img:RenderTo( rdc_srf, { 30,50, tx-120, ty-110 } )
+img:RenderTo( rdc_srf, { 10,40, tx-80, ty-70 } )
 img:destroy()	-- The image is not needed anymore
 
 
