@@ -26,6 +26,12 @@ function UpdDataRight( srf, data, col )
 	font:Release()
 end
 
+function UpdDataCentered( srf, data )
+	local font = srf:GetFont()
+	srf:Clear( unpack(COL_BLACK) )
+	srf:DrawString( data, (srf:GetWidth() - font:StringWidth(data))/2, 0)
+end
+
 function upddata( srf, font, data )
 	srf:SetFont( font )
 	srf:Clear( unpack(COL_BLACK) )

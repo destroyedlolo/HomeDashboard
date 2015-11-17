@@ -21,8 +21,11 @@ mto_srf:DrawString("Prévisions du jour", 0, 0)
 local goffy = ftitle:GetHeight() + 10
 
 srf_Meteo3H = {			-- Icon
-	mto_srf:SubSurface( 0, goffy, 115, 82 )
+	mto_srf:SubSurface( 0, goffy, 184, 131 )
 }
+mto_desc = mto_srf:SubSurface( 0, goffy + 132, 184, fsdigit:GetHeight())
+mto_desc:SetColor( unpack(COL_DIGIT) )
+mto_desc:SetFont( fsdigit )
 
 --[[
 goffy3h = goffy3h + ftitle1:GetHeight() + 10
@@ -69,6 +72,9 @@ end
 --]]
 
 -- Update functions
+function mtosrfupdate()
+	mto_srf:Flip(SelSurface.FlipFlagsConst("NONE"))
+end
 
 WeatherImg = {}
 function updmeteo( idx, iconid )
@@ -84,7 +90,6 @@ function updmeteo( idx, iconid )
 end
 
 function updmeteo3H( idx, iconid )
-print( "upd3H" )
 	if not WeatherImg[ iconid ] then
 		local err
 		WeatherImg[ iconid ],err = SelImage.create("/usr/local/share/WeatherIcons/" .. iconid .. ".png")
@@ -95,10 +100,12 @@ print( "upd3H" )
 	end
 
 	if idx == 1 then
-		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 115, 82 } )
+		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 184, 131 } )
 	else
 		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 78, 56 } )
 	end
+
+	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 --
@@ -195,9 +202,12 @@ function updwindd( num )
 	drawWind(srf_MeteoWindd3H[num+1], tonumber(SelShared.get('Meteo3H/Nonglard/'.. num ..'/wind/direction')) )
 end
 
-
 function upd0Icn()
 	updmeteo3H( 1, SelShared.get('Meteo3H/Nonglard/0/weather/code' ) )
+end
+
+function upd0Desc()
+	UpdDataCentered( mto_desc, SelShared.get('Meteo3H/Nonglard/0/weather/description' ) )
 end
 
 function upd0time()
@@ -364,6 +374,7 @@ end
 -- local subscription
 local ltopics = {
 	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/0/weather/description", trigger=upd0Desc, trigger_once=true },
 --[[
 	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/temperature", trigger=upd0temp, trigger_once=true },
