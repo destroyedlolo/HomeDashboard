@@ -33,7 +33,6 @@ srf_TBureau:SetFont( fmdigit )
 srf_TCSalon = rdc_srf:SubSurface( 185, 290, 15 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TCSalon:SetColor( unpack(COL_BLACK) )
 srf_TCSalon:SetFont( fmdigit )
-srf_TCSalon:Clear( unpack(COL_BLACK) )
 
 -- Update functions
 function rdcsrfupdate()
