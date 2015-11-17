@@ -27,6 +27,38 @@ mto_desc = mto_srf:SubSurface( 0, goffy + 132, 184, fsdigit:GetHeight())
 mto_desc:SetColor( unpack(COL_DIGIT) )
 mto_desc:SetFont( fsdigit )
 
+mto_srf:SetFont( fsdigit )
+mto_srf:DrawString("Pour :", 190, goffy)
+srf_MeteoTime3H = { 	-- Time
+	mto_srf:SubSurface( 190 + fsdigit:StringWidth("Pour : "), goffy, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() )
+}
+goffy = goffy + fsdigit:GetHeight()
+
+srf_MeteoTemp3H = {		-- Temperature
+	mto_srf:SubSurface( 190, goffy, fdigit:StringWidth("-88:8°C"), fdigit:GetHeight() )
+}
+goffy = goffy + fdigit:GetHeight()
+
+srf_MeteoWindd3H = {
+	mto_srf:SubSurface( 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() )
+}
+
+srf_MeteoWind3H = {
+	mto_srf:SubSurface( 190 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() )
+}
+mto_srf:DrawString(" km/h", 190 + fsdigit:GetHeight() + fsdigit:StringWidth("88:88"), goffy)
+
+for i=1,1 do
+	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
+	srf_MeteoTime3H[i]:SetFont( fsdigit )
+	if i==1 then
+		srf_MeteoTemp3H[i]:SetFont( fdigit )
+	else
+		srf_MeteoTemp3H[i]:SetFont( fsdigit )
+	end
+	srf_MeteoWind3H[i]:SetColor( unpack(COL_DIGIT) )
+	srf_MeteoWind3H[i]:SetFont( fsdigit )
+end
 --[[
 goffy3h = goffy3h + ftitle1:GetHeight() + 10
 
@@ -65,10 +97,6 @@ srf_MeteoWindd3H = {
 	psrf:SubSurface( VBAR2 + 290 - fsdigit:GetHeight(), goffy3h + 146 + 2*fsdigit:GetHeight(), fsdigit:GetHeight(), fsdigit:GetHeight() )
 }
 
-for i=1,4 do
-	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
-	srf_MeteoWind3H[i]:SetColor( unpack(COL_DIGIT) )
-end
 --]]
 
 -- Update functions
@@ -114,21 +142,20 @@ end
 
 function updtime(num)
 	local t=os.date("*t", tonumber(SelShared.get('Meteo3H/Nonglard/'.. num ..'/time')) )
-	upddataCentered(srf_MeteoTime3H[num+1], fsdigit, string.format("%02d:%02d", t.hour, t.min))
+	UpdDataCentered(srf_MeteoTime3H[num+1], string.format("%02d:%02d", t.hour, t.min))
+	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 function updtemp(num)
 	local v=SelShared.get('Meteo3H/Nonglard/'.. num ..'/temperature')
 	srf_MeteoTemp3H[num+1]:SetColor( findgradiancolor(v, cols_temperature ) )
-	if num == 0 then
-		upddata(srf_MeteoTemp3H[1], fdigit, string.format("%-3.1f", v) .. '°C')
-	else
-		upddata(srf_MeteoTemp3H[num+1], fsdigit, string.format("%-3.1f", v) .. '°C')
-	end
+	UpdDataRight(srf_MeteoTemp3H[num+1], string.format("%-3.1f", v) .. '°C' )
+
+	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 function updwinds(num)
-	upddata(srf_MeteoWind3H[num+1], fsdigit, string.format("%4.1f", SelShared.get("Meteo3H/Nonglard/"..num.."/wind/speed")*3.6))
+	UpdDataRight(srf_MeteoWind3H[num+1], string.format("%4.1f", SelShared.get("Meteo3H/Nonglard/"..num.."/wind/speed")*3.6))
 end
 
 function updatetime(num)
@@ -366,20 +393,15 @@ function updated4tmin()
 	updatedtmin(5)
 end
 
-
-function mtosrfupdate()
-	mto_srf:Flip(SelSurface.FlipFlagsConst("NONE"))	
-end
-
 -- local subscription
 local ltopics = {
 	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/weather/description", trigger=upd0Desc, trigger_once=true },
---[[
 	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/temperature", trigger=upd0temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/wind/speed", trigger=upd0winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/wind/direction", trigger=upd0windd, trigger_once=true },
+--[[
 	{ topic = "Meteo3H/Nonglard/1/weather/code", trigger=upd1Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/time", trigger=upd1time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/temperature", trigger=upd1temp, trigger_once=true },
@@ -419,5 +441,3 @@ local ltopics = {
 }
 
 TableMerge( Topics, ltopics)
-
-SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
