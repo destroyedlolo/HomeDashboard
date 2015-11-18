@@ -3,11 +3,12 @@
 local window = layer:CreateWindow {
 	pos = WINTOP, size = WINSIZE,
 	caps=SelWindow.CapsConst('NONE'),
-	stacking=SelWindow.StackingConst("UPPER"),
 	surface_caps=SelSurface.CapabilityConst('NONE')
 }
 window:SetOpacity(0xff)			-- Make it visible
 mto_srf = window:GetSurface()	-- Get its surface
+
+table.insert( winlist, window )
 
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
@@ -64,7 +65,11 @@ img:destroy()
 mto_hydro = mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight())
 mto_hydro:SetColor( unpack(COL_DIGIT) )
 mto_hydro:SetFont( fsdigit )
-goffy = goffy + fsdigit:GetHeight()
+goffy = goffy + fsdigit:GetHeight() + 20
+
+mto_srf:DrawLine( 20, goffy, 260, goffy )
+
+goffy = goffy + 20
 
 table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 0, goffy, 92, fsdigit:GetHeight()) )
 table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 110, goffy, 92, fsdigit:GetHeight()) )

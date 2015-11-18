@@ -52,6 +52,8 @@ psrf:Clear( unpack(COL_BLACK) )
 require (SELENE_SCRIPT_DIR .. "/Helpers")	-- Helper functions to draw data
 
 -- GUI
+winlist = {}	-- List of all windows
+
 require (SELENE_SCRIPT_DIR .. "/Primary")
 require (SELENE_SCRIPT_DIR .. "/RDC")
 require (SELENE_SCRIPT_DIR .. "/Meteo")

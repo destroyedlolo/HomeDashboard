@@ -3,11 +3,12 @@
 local window = layer:CreateWindow {
 	pos = WINTOP, size = WINSIZE,
 	caps=SelWindow.CapsConst('NONE'),
-	stacking=SelWindow.StackingConst("UPPER"),
 	surface_caps=SelSurface.CapabilityConst('NONE')
 }
 window:SetOpacity(0xff)			-- Make it visible
 rdc_srf = window:GetSurface()	-- Get its surface
+
+table.insert( winlist, window )
 
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
