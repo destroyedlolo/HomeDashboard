@@ -13,6 +13,7 @@ mto_srf = window:GetSurface()	-- Get its surface
 local unpack = unpack or table.unpack
 
 -- Design
+WeatherImg = {}
 
 mto_srf:SetColor( unpack(COL_BORDER) )
 mto_srf:SetFont( ftitle )
@@ -47,6 +48,28 @@ srf_MeteoWind3H = {
 	mto_srf:SubSurface( 190 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("88:88"), fsdigit:GetHeight() )
 }
 mto_srf:DrawString(" km/h", 190 + fsdigit:GetHeight() + fsdigit:StringWidth("88:88"), goffy)
+goffy = goffy + fsdigit:GetHeight()
+
+WeatherImg['03d'] = SelImage.create("/usr/local/share/WeatherIcons/03d.png")
+WeatherImg['03d']:RenderTo( mto_srf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
+mto_cloud = mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight())
+mto_cloud:SetColor( unpack(COL_DIGIT) )
+mto_cloud:SetFont( fsdigit )
+goffy = goffy + fsdigit:GetHeight()
+
+local img,err = SelImage.create("Selenite/Images/Goutte.png")
+assert(img)
+img:RenderTo( mto_srf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
+img:destroy()
+mto_hydro = mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight())
+mto_hydro:SetColor( unpack(COL_DIGIT) )
+mto_hydro:SetFont( fsdigit )
+goffy = goffy + fsdigit:GetHeight()
+
+table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 0, goffy, 92, fsdigit:GetHeight()) )
+table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 110, goffy, 92, fsdigit:GetHeight()) )
+table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 210, goffy, 92, fsdigit:GetHeight()) )
+goffy = goffy + fsdigit:GetHeight()
 
 for i=1,1 do
 	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
@@ -104,7 +127,6 @@ function mtosrfupdate()
 	mto_srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 end
 
-WeatherImg = {}
 function updmeteo( idx, iconid )
 	if not WeatherImg[ iconid ] then
 		local err
@@ -235,6 +257,7 @@ end
 
 function upd0Desc()
 	UpdDataCentered( mto_desc, SelShared.get('Meteo3H/Nonglard/0/weather/description' ) )
+	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 function upd0time()
@@ -251,6 +274,16 @@ end
 
 function upd0windd()
 	updwindd(0)
+end
+
+function upd0clouds()
+	UpdDataRight( mto_cloud, SelShared.get('Meteo3H/Nonglard/0/clouds')..'%' )
+	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
+function upd0hum()
+	UpdDataRight( mto_hydro, SelShared.get('Meteo3H/Nonglard/0/humidity')..'%' )
+	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 function upd1Icn()
@@ -401,6 +434,8 @@ local ltopics = {
 	{ topic = "Meteo3H/Nonglard/0/temperature", trigger=upd0temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/wind/speed", trigger=upd0winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/wind/direction", trigger=upd0windd, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/0/clouds", trigger=upd0clouds, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/0/humidity", trigger=upd0hum, trigger_once=true },
 --[[
 	{ topic = "Meteo3H/Nonglard/1/weather/code", trigger=upd1Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/time", trigger=upd1time, trigger_once=true },
