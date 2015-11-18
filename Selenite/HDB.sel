@@ -135,7 +135,19 @@ function updateTablet()
 	UpdDataRight( srf_ttpmu, string.format('%3.1f', v) .. '°C')
 end
 
-tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updateTablet}
+local tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updateTablet}
+if err then
+	print(err)
+	return
+end
+
+wcnt = 0
+function switchwindows()
+	winlist[ (wcnt % #winlist)+1 ]:RaiseToTop()
+	wcnt = wcnt + 1
+end
+
+local switchtimer,err = SelTimer.create { when=10, interval=10, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=switchwindows}
 if err then
 	print(err)
 	return
@@ -143,7 +155,7 @@ end
 
 -- Wait for events
 while true do
-	ret, err = Selene.WaitFor(tabtimer)
+	ret, err = Selene.WaitFor(tabtimer, switchtimer)
 
 	if type(ret) == 'function' then
 		ret()
