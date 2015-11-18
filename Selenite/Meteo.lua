@@ -71,7 +71,25 @@ table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 110, goffy, 92, fsdigit:GetHe
 table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 210, goffy, 92, fsdigit:GetHeight()) )
 goffy = goffy + fsdigit:GetHeight()
 
-for i=1,1 do
+table.insert( srf_Meteo3H, mto_srf:SubSurface( 0, goffy, 78, 56 ) )
+table.insert( srf_Meteo3H, mto_srf:SubSurface( 110, goffy, 78, 56 ) )
+table.insert( srf_Meteo3H, mto_srf:SubSurface( 210, goffy, 78, 56 ) )
+goffy = goffy + 56
+
+table.insert( srf_MeteoTemp3H, mto_srf:SubSurface( 0, goffy, 80, fsdigit:GetHeight() ) )
+table.insert( srf_MeteoTemp3H, mto_srf:SubSurface( 110, goffy, 80, fsdigit:GetHeight() ) )
+table.insert( srf_MeteoTemp3H, mto_srf:SubSurface( 210, goffy, 80, fsdigit:GetHeight() ) )
+goffy = goffy + fsdigit:GetHeight()
+
+table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 0, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 110, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 210, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+
+table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 80 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 190 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 290 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+
+for i=1,4 do
 	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
 	srf_MeteoTime3H[i]:SetFont( fsdigit )
 	if i==1 then
@@ -436,7 +454,6 @@ local ltopics = {
 	{ topic = "Meteo3H/Nonglard/0/wind/direction", trigger=upd0windd, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/clouds", trigger=upd0clouds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/humidity", trigger=upd0hum, trigger_once=true },
---[[
 	{ topic = "Meteo3H/Nonglard/1/weather/code", trigger=upd1Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/time", trigger=upd1time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/temperature", trigger=upd1temp, trigger_once=true },
@@ -452,6 +469,7 @@ local ltopics = {
 	{ topic = "Meteo3H/Nonglard/3/temperature", trigger=upd3temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/wind/speed", trigger=upd3winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/wind/direction", trigger=upd3windd, trigger_once=true },
+--[[
 	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated0Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated1Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated2Icn, trigger_once=true },
