@@ -19,6 +19,13 @@ per_srf:SetColor( unpack(COL_BORDER) )
 per_srf:SetFont( ftitle )
 per_srf:DrawString("1er étage", 0, 0)
 
+per_srf:SetFont( ftitle1 )
+per_srf:SetColor( unpack(COL_TITLE) )
+per_srf:DrawString("Comble :", 200, 10)
+srf_TComble = per_srf:SubSurface( 200 + ftitle1:StringWidth("Comble : "), 0, ftitle:StringWidth("-88.8°C"), ftitle:GetHeight() )
+srf_TComble:SetColor( unpack(COL_DIGIT) )
+srf_TComble:SetFont( ftitle )
+
 local goffy = ftitle:GetHeight() + 10
 
 local img,err = SelImage.create("Selenite/Images/1er.png")
@@ -30,17 +37,14 @@ img:destroy()	-- The image is not needed anymore
 srf_TGN = per_srf:SubSurface( 40, 200, 25 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TGN:SetColor( unpack(COL_BLACK) )
 srf_TGN:SetFont( fmdigit )
-srf_TGN:Clear( 50,50,50,255 )
 
 srf_TchJ = per_srf:SubSurface( 185, 250, 25 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TchJ:SetColor( unpack(COL_BLACK) )
 srf_TchJ:SetFont( fmdigit )
-srf_TchJ:Clear( 50,50,50,255 )
 
 srf_TchO = per_srf:SubSurface( 340, 250, 25 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TchO:SetColor( unpack(COL_BLACK) )
 srf_TchO:SetFont( fmdigit )
-srf_TchO:Clear( 50,50,50,255 )
 
 -- Update functions
 function presrfupdate()
@@ -62,12 +66,17 @@ function updateTChO()
 	SelShared.PushTask( presrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
+function updateTComble()
+	UpdDataRight( srf_TComble, SelShared.get('maison/Temperature/Comble') .. "°C")
+	SelShared.PushTask( presrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Grenier Nord", trigger=updateTGrN, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Joris", trigger=updateTChJ, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Oceane", trigger=updateTChO, trigger_once=true },
-
+	{ topic = "maison/Temperature/Comble", trigger=updateTComble, trigger_once=true }
 }
 
 TableMerge( Topics, ltopics)
