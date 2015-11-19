@@ -34,17 +34,17 @@ local tx,ty = per_srf:GetSize()
 img:RenderTo( per_srf, { 20,50, tx-30, ty-70 } )
 img:destroy()	-- The image is not needed anymore
 
-srf_TGN = per_srf:SubSurface( 40, 200, 25 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
+srf_TGN = per_srf:SubSurface( 30, 200, 25 + fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TGN:SetColor( unpack(COL_BLACK) )
-srf_TGN:SetFont( fmdigit )
+srf_TGN:SetFont( fdigit )
 
-srf_TchJ = per_srf:SubSurface( 185, 250, 25 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
+srf_TchJ = per_srf:SubSurface( 175, 250, 25 + fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TchJ:SetColor( unpack(COL_BLACK) )
-srf_TchJ:SetFont( fmdigit )
+srf_TchJ:SetFont( fdigit )
 
-srf_TchO = per_srf:SubSurface( 340, 250, 25 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
+srf_TchO = per_srf:SubSurface( 330, 250, 25 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TchO:SetColor( unpack(COL_BLACK) )
-srf_TchO:SetFont( fmdigit )
+srf_TchO:SetFont( fdigit )
 
 -- Update functions
 function presrfupdate()
