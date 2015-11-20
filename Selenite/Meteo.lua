@@ -57,8 +57,8 @@ srf_cloud = {
 	mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight() )
 }
 -- mto_cloud = mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight())
-mto_cloud:SetColor( unpack(COL_DIGIT) )
-mto_cloud:SetFont( fsdigit )
+--mto_cloud:SetColor( unpack(COL_DIGIT) )
+--mto_cloud:SetFont( fsdigit )
 goffy = goffy + fsdigit:GetHeight()
 
 local img,err = SelImage.create("Selenite/Images/Goutte.png")
@@ -96,10 +96,7 @@ table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 210, goffy, 80 - fsdigit:GetH
 table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 80 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() ) )
 table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 190 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() ) )
 table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 290 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() ) )
-
-table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 0, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
-table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 110, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
-table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 210, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+goffy = goffy + fsdigit:GetHeight()
 
 table.insert( srf_cloud, mto_srf:SubSurface( 0, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
 table.insert( srf_cloud, mto_srf:SubSurface( 110, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
@@ -118,6 +115,7 @@ for i=1,4 do
 
 	srf_cloud[i]:SetColor( unpack(COL_DIGIT) )
 	srf_cloud[i]:SetFont( fsdigit )
+	srf_cloud[i]:Clear( 50,50,50,255 )
 end
 --[[
 goffy3h = goffy3h + ftitle1:GetHeight() + 10
@@ -217,6 +215,11 @@ function updwinds(num)
 	UpdDataRight(srf_MeteoWind3H[num+1], string.format("%4.1f", SelShared.get("Meteo3H/Nonglard/"..num.."/wind/speed")*3.6))
 end
 
+function updclouds( num )
+	UpdDataRight( srf_cloud[num+1], SelShared.get('Meteo3H/Nonglard/'..num..'/clouds')..'%' )
+	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
 function updatetime(num)
 -- Update time 'num' field.
 -- Num is the number of the MQTT chanel
@@ -314,8 +317,7 @@ function upd0windd()
 end
 
 function upd0clouds()
-	UpdDataRight( mto_cloud, SelShared.get('Meteo3H/Nonglard/0/clouds')..'%' )
-	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
+	updclouds(0)
 end
 
 function upd0hum()
@@ -343,6 +345,10 @@ function upd1windd()
 	updwindd(1)
 end
 
+function upd1clouds()
+	updclouds(1)
+end
+
 function upd2Icn()
 	updmeteo3H( 3, SelShared.get('Meteo3H/Nonglard/2/weather/code' ) )
 end
@@ -363,6 +369,10 @@ function upd2windd()
 	updwindd(2)
 end
 
+function upd2clouds()
+	updclouds(2)
+end
+
 function upd3Icn()
 	updmeteo3H( 4, SelShared.get('Meteo3H/Nonglard/3/weather/code' ) )
 end
@@ -381,6 +391,10 @@ end
 
 function upd3windd()
 	updwindd(3)
+end
+
+function upd3clouds()
+	updclouds(3)
 end
 
 function updated0Icn()
@@ -478,16 +492,19 @@ local ltopics = {
 	{ topic = "Meteo3H/Nonglard/1/temperature", trigger=upd1temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/wind/speed", trigger=upd1winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/wind/direction", trigger=upd1windd, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/1/clouds", trigger=upd1clouds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/weather/code", trigger=upd2Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/time", trigger=upd2time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/temperature", trigger=upd2temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/wind/speed", trigger=upd2winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/wind/direction", trigger=upd2windd, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/2/clouds", trigger=upd2clouds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/weather/code", trigger=upd3Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/time", trigger=upd3time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/temperature", trigger=upd3temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/wind/speed", trigger=upd3winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/wind/direction", trigger=upd3windd, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/3/clouds", trigger=upd3clouds, trigger_once=true },
 --[[
 	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated0Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated1Icn, trigger_once=true },
