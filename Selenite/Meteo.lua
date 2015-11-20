@@ -56,9 +56,6 @@ WeatherImg['03d']:RenderTo( mto_srf, { 190, goffy, fsdigit:GetHeight(), fsdigit:
 srf_cloud = {
 	mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight() )
 }
--- mto_cloud = mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight())
---mto_cloud:SetColor( unpack(COL_DIGIT) )
---mto_cloud:SetFont( fsdigit )
 goffy = goffy + fsdigit:GetHeight()
 
 local img,err = SelImage.create("Selenite/Images/Goutte.png")
@@ -101,6 +98,9 @@ goffy = goffy + fsdigit:GetHeight()
 table.insert( srf_cloud, mto_srf:SubSurface( 0, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
 table.insert( srf_cloud, mto_srf:SubSurface( 110, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
 table.insert( srf_cloud, mto_srf:SubSurface( 210, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+WeatherImg['03d']:RenderTo( mto_srf, { 80 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
+WeatherImg['03d']:RenderTo( mto_srf, { 190 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
+WeatherImg['03d']:RenderTo( mto_srf, { 290 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
 
 for i=1,4 do
 	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
@@ -115,7 +115,6 @@ for i=1,4 do
 
 	srf_cloud[i]:SetColor( unpack(COL_DIGIT) )
 	srf_cloud[i]:SetFont( fsdigit )
-	srf_cloud[i]:Clear( 50,50,50,255 )
 end
 --[[
 goffy3h = goffy3h + ftitle1:GetHeight() + 10
