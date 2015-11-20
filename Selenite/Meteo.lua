@@ -53,7 +53,10 @@ goffy = goffy + fsdigit:GetHeight()
 
 WeatherImg['03d'] = SelImage.create("/usr/local/share/WeatherIcons/03d.png")
 WeatherImg['03d']:RenderTo( mto_srf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
-mto_cloud = mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight())
+srf_cloud = {
+	mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight() )
+}
+-- mto_cloud = mto_srf:SubSurface( 195 + fsdigit:GetHeight(), goffy, fsdigit:StringWidth("188%"), fsdigit:GetHeight())
 mto_cloud:SetColor( unpack(COL_DIGIT) )
 mto_cloud:SetFont( fsdigit )
 goffy = goffy + fsdigit:GetHeight()
@@ -94,6 +97,14 @@ table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 80 - fsdigit:GetHeight(), go
 table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 190 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() ) )
 table.insert( srf_MeteoWindd3H, mto_srf:SubSurface( 290 - fsdigit:GetHeight(), goffy, fsdigit:GetHeight(), fsdigit:GetHeight() ) )
 
+table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 0, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 110, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+table.insert( srf_MeteoWind3H, mto_srf:SubSurface( 210, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+
+table.insert( srf_cloud, mto_srf:SubSurface( 0, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+table.insert( srf_cloud, mto_srf:SubSurface( 110, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+table.insert( srf_cloud, mto_srf:SubSurface( 210, goffy, 80 - fsdigit:GetHeight(), fsdigit:GetHeight() ) )
+
 for i=1,4 do
 	srf_MeteoTime3H[i]:SetColor( unpack(COL_DIGIT) )
 	srf_MeteoTime3H[i]:SetFont( fsdigit )
@@ -104,6 +115,9 @@ for i=1,4 do
 	end
 	srf_MeteoWind3H[i]:SetColor( unpack(COL_DIGIT) )
 	srf_MeteoWind3H[i]:SetFont( fsdigit )
+
+	srf_cloud[i]:SetColor( unpack(COL_DIGIT) )
+	srf_cloud[i]:SetFont( fsdigit )
 end
 --[[
 goffy3h = goffy3h + ftitle1:GetHeight() + 10
