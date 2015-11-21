@@ -118,29 +118,66 @@ for i=1,4 do
 end
 
 mto_srf:SetColor( unpack(COL_BORDER) )
-mto_srf:DrawLine( 325, 40, 325, WINSIZE[2]-40 )
+mto_srf:DrawLine( 315, 40, 315, WINSIZE[2]-40 )
 
 mto_srf:SetFont( ftitle )
 mto_srf:DrawString("Jours à venir", 335, 0)
 goffy = ftitle:GetHeight()
 
 srf_Meteo = { 
-	mto_srf:SubSurface( 340 , goffy, 82,56),
-	mto_srf:SubSurface( 440 , goffy, 82,56),
+	mto_srf:SubSurface( 330 , goffy, 82,56),
+	mto_srf:SubSurface( 435 , goffy, 82,56),
 	mto_srf:SubSurface( 540 , goffy, 82,56),
+
+	mto_srf:SubSurface( 330 , goffy + 56 + 3*fsdigit:GetHeight(), 82,56),
+	mto_srf:SubSurface( 435 , goffy + 56 + 3*fsdigit:GetHeight(), 82,56),
+	mto_srf:SubSurface( 540 , goffy + 56 + 3*fsdigit:GetHeight(), 82,56)
 }
 goffy = goffy + 56
 
 srf_MeteoDate = {
-	mto_srf:SubSurface( 335, goffy, 92, fsdigit:GetHeight()),
-	mto_srf:SubSurface( 435, goffy, 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 325, goffy, 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy, 92, fsdigit:GetHeight()),
 	mto_srf:SubSurface( 535, goffy, 92, fsdigit:GetHeight()),
+
+	mto_srf:SubSurface( 325, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 535, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
 }
-for i=1,3 do
+goffy = goffy + fsdigit:GetHeight()
+
+srf_MeteoTMax = {
+	mto_srf:SubSurface( 325, goffy, 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy, 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 535, goffy, 92, fsdigit:GetHeight()),
+
+	mto_srf:SubSurface( 325, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 535, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
+}
+goffy = goffy + fsdigit:GetHeight()
+
+srf_MeteoTMin = {
+	mto_srf:SubSurface( 325, goffy, 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy, 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 535, goffy, 92, fsdigit:GetHeight()),
+
+	mto_srf:SubSurface( 325, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 535, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
+}
+goffy = goffy + fsdigit:GetHeight()
+
+for i=1,6 do
 	srf_MeteoDate[i]:SetColor( unpack(COL_DIGIT) )
 	srf_MeteoDate[i]:SetFont( fsdigit )
-end
 
+	srf_MeteoTMax[i]:SetColor( unpack(COL_DIGIT) )
+	srf_MeteoTMax[i]:SetFont( fsdigit )
+
+	srf_MeteoTMin[i]:SetColor( unpack(COL_DIGIT) )
+	srf_MeteoTMin[i]:SetFont( fsdigit )
+end
 
 -- Update functions
 function mtosrfupdate()
@@ -217,13 +254,13 @@ end
 function updatedtmax(num)
 	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/day')
 	srf_MeteoTMax[num]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddataCentered(srf_MeteoTMax[num], fsdigit, v .. '°C')
+	UpdDataCentered(srf_MeteoTMax[num], v .. '°C')
 end
 
 function updatedtmin(num)
 	local v=SelShared.get('Meteo/Nonglard/'.. num ..'/temperature/night')
 	srf_MeteoTMin[num]:SetColor( findgradiancolor(v, cols_temperature ) )
-	upddataCentered(srf_MeteoTMin[num], fsdigit, v .. '°C')
+	UpdDataCentered(srf_MeteoTMin[num], v .. '°C')
 end
 
 --
@@ -462,6 +499,23 @@ function updated4tmin()
 	updatedtmin(5)
 end
 
+function updated5Icn()
+	updmeteo( 6, SelShared.get('Meteo/Nonglard/6/weather/code' ) )
+end
+
+function updated5time()
+	updatetime(6)
+end
+
+function updated5tmax()
+	updatedtmax(6)
+end
+
+function updated5tmin()
+	updatedtmin(6)
+end
+
+
 -- local subscription
 local ltopics = {
 	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
@@ -493,27 +547,27 @@ local ltopics = {
 	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated0Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated1Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated2Icn, trigger_once=true },
---[[
 	{ topic = "Meteo/Nonglard/4/weather/code", trigger=updated3Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/5/weather/code", trigger=updated4Icn, trigger_once=true },
---]]
+	{ topic = "Meteo/Nonglard/6/weather/code", trigger=updated5Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/time", trigger=updated0time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/time", trigger=updated1time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/time", trigger=updated2time, trigger_once=true },
---[[
 	{ topic = "Meteo/Nonglard/4/time", trigger=updated3time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/5/time", trigger=updated4time, trigger_once=true },
+	{ topic = "Meteo/Nonglard/6/time", trigger=updated5time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/temperature/day", trigger=updated0tmax, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/temperature/day", trigger=updated1tmax, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/temperature/day", trigger=updated2tmax, trigger_once=true },
 	{ topic = "Meteo/Nonglard/4/temperature/day", trigger=updated3tmax, trigger_once=true },
 	{ topic = "Meteo/Nonglard/5/temperature/day", trigger=updated4tmax, trigger_once=true },
+	{ topic = "Meteo/Nonglard/6/temperature/day", trigger=updated5tmax, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/temperature/night", trigger=updated0tmin, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/temperature/night", trigger=updated1tmin, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/temperature/night", trigger=updated2tmin, trigger_once=true },
 	{ topic = "Meteo/Nonglard/4/temperature/night", trigger=updated3tmin, trigger_once=true },
-	{ topic = "Meteo/Nonglard/5/temperature/night", trigger=updated4tmin, trigger_once=true }
---]]
+	{ topic = "Meteo/Nonglard/5/temperature/night", trigger=updated4tmin, trigger_once=true },
+	{ topic = "Meteo/Nonglard/6/temperature/night", trigger=updated5tmin, trigger_once=true }
 }
 
 TableMerge( Topics, ltopics)
