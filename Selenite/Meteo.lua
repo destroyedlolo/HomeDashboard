@@ -166,7 +166,7 @@ srf_MeteoTMin = {
 	mto_srf:SubSurface( 430, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
 	mto_srf:SubSurface( 535, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
 }
-goffy = goffy + fsdigit:GetHeight()
+goffy = goffy + 56 + 4*fsdigit:GetHeight()
 
 for i=1,6 do
 	srf_MeteoDate[i]:SetColor( unpack(COL_DIGIT) )
@@ -180,6 +180,7 @@ for i=1,6 do
 end
 
 srf_TDehorsGfx = mto_srf:SubSurface( 325, goffy, WINSIZE[1] - 325, WINSIZE[2] - goffy)
+srf_TDehorsGfx:SetFont( fsdigit )
 dt_TDehors = SelCollection.create( srf_TDehorsGfx:GetWidth() )
 
 -- Update functions
@@ -189,6 +190,9 @@ end
 
 function updateTDehors()
 	local v = SelShared.get('maison/Temperature/Dehors')
+	dt_TDehors:Push( v )
+	updFGfx( srf_TDehorsGfx, dt_TDehors, 0 )
+
 		-- Update on the primary surface
 	upddata( srf_TDehors, fdigit, v .. "°C" )
 	SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
