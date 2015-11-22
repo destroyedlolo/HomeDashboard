@@ -167,6 +167,7 @@ psrf:DrawLine(VBAR1, goffy, psrf:GetWidth(), goffy )
 dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/5 )
 dt_conso = SelCollection.create( srf_consogfx:GetWidth() )
 dt_prod = SelCollection.create( srf_prodgfx:GetWidth() )
+-- dt_TDehors is defined in Meteo.lua
 
 -- update functions
 function updateInternet()

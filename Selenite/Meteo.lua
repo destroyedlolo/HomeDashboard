@@ -179,9 +179,19 @@ for i=1,6 do
 	srf_MeteoTMin[i]:SetFont( fsdigit )
 end
 
+srf_TDehorsGfx = mto_srf:SubSurface( 325, goffy, WINSIZE[1] - 325, WINSIZE[2] - goffy)
+dt_TDehors = SelCollection.create( srf_TDehorsGfx:GetWidth() )
+
 -- Update functions
 function mtosrfupdate()
 	mto_srf:Flip(SelSurface.FlipFlagsConst("NONE"))
+end
+
+function updateTDehors()
+	local v = SelShared.get('maison/Temperature/Dehors')
+		-- Update on the primary surface
+	upddata( srf_TDehors, fdigit, v .. "°C" )
+	SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
 function updmeteo( idx, iconid )
@@ -518,6 +528,8 @@ end
 
 -- local subscription
 local ltopics = {
+	{ topic = "maison/Temperature/Dehors", trigger=updateTDehors, trigger_once=true },
+
 	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/weather/description", trigger=upd0Desc, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },

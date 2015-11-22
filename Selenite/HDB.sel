@@ -62,22 +62,6 @@ require (SELENE_SCRIPT_DIR .. "/Meteo")
 -- Broker's stuffs
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
 
-function updateTComble()
-	upddata( srf_TComble, fsdigit, SelShared.get('maison/Temperature/Comble') .. "°C" )
-end
-
-function updateTGrN()
-	upddata( srf_TGrN, fsdigit, SelShared.get('maison/Temperature/Grenier Nord') .. "°C" )
-end
-
-function updateTChO()
-	upddata( srf_TChO, fdigit, SelShared.get('maison/Temperature/Chambre Oceane') .. "°C" )
-end
-
-function updateTChJ()
-	upddata( srf_TChJ, fdigit, SelShared.get('maison/Temperature/Chambre Joris') .. "°C" )
-end
-
 function updateTCave()
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
 end

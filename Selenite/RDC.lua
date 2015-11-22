@@ -53,12 +53,6 @@ function updateTSalon()
 	SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
-function updateTDehors()
-		-- Update on the primary surface
-	upddata( srf_TDehors, fdigit, SelShared.get('maison/Temperature/Dehors') .. "°C" )
-	SelShared.PushTask( psrfupdate, SelShared.TaskOnceConst("LAST"))
-end
-
 function updateTBureau()
 	UpdDataRight( srf_TBureau, SelShared.get('maison/Temperature/Bureau') .. "°C", { 96,66,18, 255 } )
 	SelShared.PushTask( rdcsrfupdate, SelShared.TaskOnceConst("LAST"))
@@ -67,7 +61,6 @@ end
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Salon", trigger=updateTSalon, trigger_once=true },
-	{ topic = "maison/Temperature/Dehors", trigger=updateTDehors, trigger_once=true },
 	{ topic = "maison/Temperature/Bureau", trigger=updateTBureau, trigger_once=true },
 }
 
