@@ -28,7 +28,7 @@ srf_TComble:SetFont( ftitle )
 
 local goffy = ftitle:GetHeight() + 10
 
-local img,err = SelImage.create("Selenite/Images/1er.png")
+local img,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/1er.png")
 assert(img)
 local tx,ty = per_srf:GetSize()
 img:RenderTo( per_srf, { 20,50, tx-30, ty-70 } )

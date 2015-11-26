@@ -21,7 +21,7 @@ rdc_srf:DrawString("Rez-de-chaussée", 0, 0)
 
 local goffy = ftitle:GetHeight() + 10
 
-local img,err = SelImage.create("Selenite/Images/RDC.png")
+local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/RDC.png")
 assert(img)
 local tx,ty = rdc_srf:GetSize()
 img:RenderTo( rdc_srf, { 10,40, tx-20, ty-60 } )

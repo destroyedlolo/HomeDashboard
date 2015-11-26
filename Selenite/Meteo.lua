@@ -58,7 +58,7 @@ srf_cloud = {
 }
 goffy = goffy + fsdigit:GetHeight()
 
-local img,err = SelImage.create("Selenite/Images/Goutte.png")
+local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Goutte.png")
 assert(img)
 img:RenderTo( mto_srf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
 img:destroy()
