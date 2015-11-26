@@ -75,7 +75,7 @@ function updFGfx( srf, data, amin ) -- Full graphics
 	local font = srf:GetFont()
 	srf:Clear( 10,10,10, 255 )
 	local vmin,max = data:MinMax()
-	if amin or vmin > amin then
+	if amin and vmin > amin then
 		min = amin
 	else
 		min = vmin
