@@ -23,9 +23,9 @@ mto_srf:DrawString("Prévisions du jour", 0, 0)
 local goffy = ftitle:GetHeight() + 10
 
 srf_Meteo3H = {			-- Icon
-	mto_srf:SubSurface( 0, goffy, 184, 131 )
+	mto_srf:SubSurface( 0, goffy, 184, 128 )
 }
-mto_desc = mto_srf:SubSurface( 0, goffy + 132, 184, fsdigit:GetHeight())
+mto_desc = mto_srf:SubSurface( 0, goffy + 129, 184, fsdigit:GetHeight())
 mto_desc:SetColor( unpack(COL_DIGIT) )
 mto_desc:SetFont( fsdigit )
 
@@ -76,10 +76,10 @@ table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 110, goffy, 92, fsdigit:GetHe
 table.insert( srf_MeteoTime3H, mto_srf:SubSurface( 210, goffy, 92, fsdigit:GetHeight()) )
 goffy = goffy + fsdigit:GetHeight()
 
-table.insert( srf_Meteo3H, mto_srf:SubSurface( 0, goffy, 78, 56 ) )
-table.insert( srf_Meteo3H, mto_srf:SubSurface( 110, goffy, 78, 56 ) )
-table.insert( srf_Meteo3H, mto_srf:SubSurface( 210, goffy, 78, 56 ) )
-goffy = goffy + 56
+table.insert( srf_Meteo3H, mto_srf:SubSurface( 0, goffy, 78, 54 ) )
+table.insert( srf_Meteo3H, mto_srf:SubSurface( 110, goffy, 78, 54 ) )
+table.insert( srf_Meteo3H, mto_srf:SubSurface( 210, goffy, 78, 54 ) )
+goffy = goffy + 54
 
 table.insert( srf_MeteoTemp3H, mto_srf:SubSurface( 0, goffy, 80, fsdigit:GetHeight() ) )
 table.insert( srf_MeteoTemp3H, mto_srf:SubSurface( 110, goffy, 80, fsdigit:GetHeight() ) )
@@ -125,24 +125,24 @@ mto_srf:DrawString("Jours à venir", 335, 0)
 goffy = ftitle:GetHeight()
 
 srf_Meteo = { 
-	mto_srf:SubSurface( 330 , goffy, 82,56),
-	mto_srf:SubSurface( 435 , goffy, 82,56),
-	mto_srf:SubSurface( 540 , goffy, 82,56),
+	mto_srf:SubSurface( 330 , goffy, 82,54),
+	mto_srf:SubSurface( 435 , goffy, 82,54),
+	mto_srf:SubSurface( 540 , goffy, 82,54),
 
-	mto_srf:SubSurface( 330 , goffy + 56 + 3*fsdigit:GetHeight(), 82,56),
-	mto_srf:SubSurface( 435 , goffy + 56 + 3*fsdigit:GetHeight(), 82,56),
-	mto_srf:SubSurface( 540 , goffy + 56 + 3*fsdigit:GetHeight(), 82,56)
+	mto_srf:SubSurface( 330 , goffy + 54 + 3*fsdigit:GetHeight(), 82,54),
+	mto_srf:SubSurface( 435 , goffy + 54 + 3*fsdigit:GetHeight(), 82,54),
+	mto_srf:SubSurface( 540 , goffy + 54 + 3*fsdigit:GetHeight(), 82,54)
 }
-goffy = goffy + 56
+goffy = goffy + 54
 
 srf_MeteoDate = {
 	mto_srf:SubSurface( 325, goffy, 92, fsdigit:GetHeight()),
 	mto_srf:SubSurface( 430, goffy, 92, fsdigit:GetHeight()),
 	mto_srf:SubSurface( 535, goffy, 92, fsdigit:GetHeight()),
 
-	mto_srf:SubSurface( 325, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
-	mto_srf:SubSurface( 430, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
-	mto_srf:SubSurface( 535, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
+	mto_srf:SubSurface( 325, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 535, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
 }
 goffy = goffy + fsdigit:GetHeight()
 
@@ -151,9 +151,9 @@ srf_MeteoTMax = {
 	mto_srf:SubSurface( 430, goffy, 92, fsdigit:GetHeight()),
 	mto_srf:SubSurface( 535, goffy, 92, fsdigit:GetHeight()),
 
-	mto_srf:SubSurface( 325, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
-	mto_srf:SubSurface( 430, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
-	mto_srf:SubSurface( 535, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
+	mto_srf:SubSurface( 325, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 535, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
 }
 goffy = goffy + fsdigit:GetHeight()
 
@@ -162,11 +162,11 @@ srf_MeteoTMin = {
 	mto_srf:SubSurface( 430, goffy, 92, fsdigit:GetHeight()),
 	mto_srf:SubSurface( 535, goffy, 92, fsdigit:GetHeight()),
 
-	mto_srf:SubSurface( 325, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
-	mto_srf:SubSurface( 430, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
-	mto_srf:SubSurface( 535, goffy + 56 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
+	mto_srf:SubSurface( 325, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 430, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight()),
+	mto_srf:SubSurface( 535, goffy + 54 + 3*fsdigit:GetHeight(), 92, fsdigit:GetHeight())
 }
-goffy = goffy + 56 + 4*fsdigit:GetHeight()
+goffy = goffy + 54 + 4*fsdigit:GetHeight()
 
 for i=1,6 do
 	srf_MeteoDate[i]:SetColor( unpack(COL_DIGIT) )
@@ -201,19 +201,19 @@ end
 function updmeteo( idx, iconid )
 	if not WeatherImg[ iconid ] then
 		local err
-		WeatherImg[ iconid ],err = SelImage.create("/usr/local/share/WeatherIcons/" .. iconid .. ".png")
+		WeatherImg[ iconid ],err = SelImage.create("/usr/local/share/aWeatherIcons/" .. iconid .. ".png")
 		if not WeatherImg[ iconid ] then
 			print(err)
 			return
 		end
 	end
-	WeatherImg[ iconid ]:RenderTo( srf_Meteo[idx], { 0,0, 92,66 } )
+	WeatherImg[ iconid ]:RenderTo( srf_Meteo[idx], { 0,0, 77,54 } )
 end
 
 function updmeteo3H( idx, iconid )
 	if not WeatherImg[ iconid ] then
 		local err
-		WeatherImg[ iconid ],err = SelImage.create("/usr/local/share/WeatherIcons/" .. iconid .. ".png")
+		WeatherImg[ iconid ],err = SelImage.create("/usr/local/share/aWeatherIcons/" .. iconid .. ".png")
 		if not WeatherImg[ iconid ] then
 			print(err)
 			return
@@ -223,7 +223,7 @@ function updmeteo3H( idx, iconid )
 	if idx == 1 then
 		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 184, 131 } )
 	else
-		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 78, 56 } )
+		WeatherImg[ iconid ]:RenderTo( srf_Meteo3H[idx], { 0,0, 77, 54 } )
 	end
 
 	SelShared.PushTask( mtosrfupdate, SelShared.TaskOnceConst("LAST"))
@@ -328,7 +328,7 @@ function updwindd( num )
 end
 
 function upd0Icn()
-	updmeteo3H( 1, SelShared.get('Meteo3H/Nonglard/0/weather/code' ) )
+	updmeteo3H( 1, SelShared.get('Meteo3H/Nonglard/0/weather/acode' ) )
 end
 
 function upd0Desc()
@@ -362,7 +362,7 @@ function upd0hum()
 end
 
 function upd1Icn()
-	updmeteo3H( 2, SelShared.get('Meteo3H/Nonglard/1/weather/code' ) )
+	updmeteo3H( 2, SelShared.get('Meteo3H/Nonglard/1/weather/acode' ) )
 end
 
 function upd1time()
@@ -386,7 +386,7 @@ function upd1clouds()
 end
 
 function upd2Icn()
-	updmeteo3H( 3, SelShared.get('Meteo3H/Nonglard/2/weather/code' ) )
+	updmeteo3H( 3, SelShared.get('Meteo3H/Nonglard/2/weather/acode' ) )
 end
 
 function upd2time()
@@ -410,7 +410,7 @@ function upd2clouds()
 end
 
 function upd3Icn()
-	updmeteo3H( 4, SelShared.get('Meteo3H/Nonglard/3/weather/code' ) )
+	updmeteo3H( 4, SelShared.get('Meteo3H/Nonglard/3/weather/acode' ) )
 end
 
 function upd3time()
@@ -434,7 +434,7 @@ function upd3clouds()
 end
 
 function updated0Icn()
-	updmeteo( 1, SelShared.get('Meteo/Nonglard/1/weather/code' ) )
+	updmeteo( 1, SelShared.get('Meteo/Nonglard/1/weather/acode' ) )
 end
 
 function updated0time()
@@ -450,7 +450,7 @@ function updated0tmin()
 end
 
 function updated1Icn()
-	updmeteo( 2, SelShared.get('Meteo/Nonglard/2/weather/code' ) )
+	updmeteo( 2, SelShared.get('Meteo/Nonglard/2/weather/acode' ) )
 end
 
 function updated1time()
@@ -466,7 +466,7 @@ function updated1tmin()
 end
 
 function updated2Icn()
-	updmeteo( 3, SelShared.get('Meteo/Nonglard/3/weather/code' ) )
+	updmeteo( 3, SelShared.get('Meteo/Nonglard/3/weather/acode' ) )
 end
 
 function updated2time()
@@ -482,7 +482,7 @@ function updated2tmin()
 end
 
 function updated3Icn()
-	updmeteo( 4, SelShared.get('Meteo/Nonglard/4/weather/code' ) )
+	updmeteo( 4, SelShared.get('Meteo/Nonglard/4/weather/acode' ) )
 end
 
 function updated3time()
@@ -498,7 +498,7 @@ function updated3tmin()
 end
 
 function updated4Icn()
-	updmeteo( 5, SelShared.get('Meteo/Nonglard/5/weather/code' ) )
+	updmeteo( 5, SelShared.get('Meteo/Nonglard/5/weather/acode' ) )
 end
 
 function updated4time()
@@ -514,7 +514,7 @@ function updated4tmin()
 end
 
 function updated5Icn()
-	updmeteo( 6, SelShared.get('Meteo/Nonglard/6/weather/code' ) )
+	updmeteo( 6, SelShared.get('Meteo/Nonglard/6/weather/acode' ) )
 end
 
 function updated5time()
@@ -534,7 +534,7 @@ end
 local ltopics = {
 	{ topic = "maison/Temperature/Dehors", trigger=updateTDehors, trigger_once=true },
 
-	{ topic = "Meteo3H/Nonglard/0/weather/code", trigger=upd0Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/0/weather/acode", trigger=upd0Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/weather/description", trigger=upd0Desc, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/time", trigger=upd0time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/temperature", trigger=upd0temp, trigger_once=true },
@@ -542,30 +542,30 @@ local ltopics = {
 	{ topic = "Meteo3H/Nonglard/0/wind/direction", trigger=upd0windd, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/clouds", trigger=upd0clouds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/0/humidity", trigger=upd0hum, trigger_once=true },
-	{ topic = "Meteo3H/Nonglard/1/weather/code", trigger=upd1Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/1/weather/acode", trigger=upd1Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/time", trigger=upd1time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/temperature", trigger=upd1temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/wind/speed", trigger=upd1winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/wind/direction", trigger=upd1windd, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/1/clouds", trigger=upd1clouds, trigger_once=true },
-	{ topic = "Meteo3H/Nonglard/2/weather/code", trigger=upd2Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/2/weather/acode", trigger=upd2Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/time", trigger=upd2time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/temperature", trigger=upd2temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/wind/speed", trigger=upd2winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/wind/direction", trigger=upd2windd, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/2/clouds", trigger=upd2clouds, trigger_once=true },
-	{ topic = "Meteo3H/Nonglard/3/weather/code", trigger=upd3Icn, trigger_once=true },
+	{ topic = "Meteo3H/Nonglard/3/weather/acode", trigger=upd3Icn, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/time", trigger=upd3time, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/temperature", trigger=upd3temp, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/wind/speed", trigger=upd3winds, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/wind/direction", trigger=upd3windd, trigger_once=true },
 	{ topic = "Meteo3H/Nonglard/3/clouds", trigger=upd3clouds, trigger_once=true },
-	{ topic = "Meteo/Nonglard/1/weather/code", trigger=updated0Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/2/weather/code", trigger=updated1Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/3/weather/code", trigger=updated2Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/4/weather/code", trigger=updated3Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/5/weather/code", trigger=updated4Icn, trigger_once=true },
-	{ topic = "Meteo/Nonglard/6/weather/code", trigger=updated5Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/1/weather/acode", trigger=updated0Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/2/weather/acode", trigger=updated1Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/3/weather/acode", trigger=updated2Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/4/weather/acode", trigger=updated3Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/5/weather/acode", trigger=updated4Icn, trigger_once=true },
+	{ topic = "Meteo/Nonglard/6/weather/acode", trigger=updated5Icn, trigger_once=true },
 	{ topic = "Meteo/Nonglard/1/time", trigger=updated0time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/2/time", trigger=updated1time, trigger_once=true },
 	{ topic = "Meteo/Nonglard/3/time", trigger=updated2time, trigger_once=true },
