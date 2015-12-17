@@ -199,6 +199,9 @@ function updateuWAN()
 	local wanUp = tonumber( SelShared.get('Freebox/UploadWAN') )
 	if intUp then
 		local pw = bar_Iup.w * wanUp * 8 / intUp
+		if pw > intUp then -- It seems the freebox provides incorrect value above real line speed
+			pw = bar_Iup
+		end
 		psrf:SetColor( unpack( COL_WHITE ) )
 		psrf:FillRectangle( bar_Iup.x, bar_Iup.y, pw, bar_Iup.h )
 		psrf:SetColor( unpack( COL_BLACK ) )
