@@ -15,7 +15,7 @@ if f then	-- working only using root access
 end
 
 -- Ensure we're not using obsolete version
-assert( SELENE_VERSION >= 0.0700, "HDB requires at least Selene v0.07.00" )
+assert( SELENE_VERSION >= 0.0800, "HDB requires at least Selene v0.08.00" )
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Configuration to connect to the broker
 require (SELENE_SCRIPT_DIR .. "/Colors")		-- Colors used in the GUI
 
@@ -28,18 +28,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 	end
 end
 
-function fCommand(topic, val)
-print("func")
-print('"'..val..'"')
-	if val == 'Grab' then
-		print('Grab')
-	else
-		print('different')
-	end
-end
-
 Topics = {
-	{ topic = "HomeDashBoard/Tablette/Command", xfunc=fCommand, trigger=Command }	-- 'Tablette' has to be changed if several dashboard
+	{ topic = "HomeDashBoard/Tablette/Command", trigger=Command }	-- 'Tablette' has to be changed if several dashboard
 }
 
 -- Init the screen
@@ -60,7 +50,12 @@ require (SELENE_SCRIPT_DIR .. "/1er")
 require (SELENE_SCRIPT_DIR .. "/Meteo")
 
 -- Broker's stuffs
-local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
+function disconnected( cause )
+	local skull = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/Red-Skull-icon.png")
+	skull:RenderTo( psrf, { psrf:GetWidth() - 50, 0, 50,50 } )
+end
+
+local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnect=disconnected } )
 
 function updateTCave()
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
