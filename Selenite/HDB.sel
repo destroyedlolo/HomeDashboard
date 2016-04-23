@@ -53,19 +53,16 @@ require (SELENE_SCRIPT_DIR .. "/1er")
 require (SELENE_SCRIPT_DIR .. "/Meteo")
 
 -- Broker's stuffs
-function discfunc()
+function disconnected()
 	local skull,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/Red-Skull-icon.png")
 	if err then
 		print (err)
 	end
 	skull:RenderTo( psrf, { psrf:GetWidth() - 50, 0, 50,50 } )
+	SelShared.PushTask( psrfupdate )
 end
 
-function disconnected( cause )
-	SelShared.PushTask( discfunc )
-end
-
-local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnect=disconnected } )
+local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
 if err then
 	print( "Broker", err )
 	return
