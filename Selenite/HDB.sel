@@ -1,8 +1,13 @@
-#!/usr/local/bin/Selene --dfb:quiet,no-vt --dfb:quiet,no-vt,no-cursor
+#!/usr/local/bin/Selene
 -- HomeDashBoard, Selenite version
 --
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own dashboard
+
+-- Ensure we're not using obsolete version
+assert( SELENE_VERSION >= 2.0100, "HDB requires at least Selene v2.01.00" )
+
+Selene.UseDirectFB("--dfb:quiet,no-vt,no-cursor")
 
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
@@ -14,8 +19,6 @@ if f then	-- working only using root access
 	f:close()
 end
 
--- Ensure we're not using obsolete version
-assert( SELENE_VERSION >= 0.0800, "HDB requires at least Selene v0.08.00" )
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Configuration to connect to the broker
 require (SELENE_SCRIPT_DIR .. "/Colors")		-- Colors used in the GUI
 
@@ -33,7 +36,7 @@ Topics = {
 }
 
 -- Init the screen
-Selene.init( Selene.CooperativeConst('NORMAL') )
+DirectFB.init( DirectFB.CooperativeConst('NORMAL') )
 layer = SelLayer.GetLayer(0)	-- Get primary layer
 layer:SetCooperativeLevel( SelLayer.CooperativeLevelConst('ADMINISTRATIVE') )
 psrf = layer:GetSurface()
@@ -50,12 +53,23 @@ require (SELENE_SCRIPT_DIR .. "/1er")
 require (SELENE_SCRIPT_DIR .. "/Meteo")
 
 -- Broker's stuffs
-function disconnected( cause )
-	local skull = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/Red-Skull-icon.png")
+function discfunc()
+	local skull,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/Red-Skull-icon.png")
+	if err then
+		print (err)
+	end
 	skull:RenderTo( psrf, { psrf:GetWidth() - 50, 0, 50,50 } )
 end
 
+function disconnected( cause )
+	SelShared.PushTask( discfunc )
+end
+
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnect=disconnected } )
+if err then
+	print( "Broker", err )
+	return
+end
 
 function updateTCave()
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
