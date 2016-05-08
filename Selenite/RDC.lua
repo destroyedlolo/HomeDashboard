@@ -19,6 +19,13 @@ rdc_srf:SetColor( unpack(COL_BORDER) )
 rdc_srf:SetFont( ftitle )
 rdc_srf:DrawString("Rez-de-chaussée", 0, 0)
 
+rdc_srf:SetFont( ftitle1 )
+rdc_srf:SetColor( unpack(COL_TITLE) )
+rdc_srf:DrawString("Congélateur :", 250, 10)
+srf_TCongelo = rdc_srf:SubSurface( 250 + ftitle1:StringWidth("Congélateur : "), 0, ftitle:StringWidth("-88.8°C"), ftitle:GetHeight() )
+srf_TCongelo:SetColor( unpack(COL_DIGIT) )
+srf_TCongelo:SetFont( ftitle )
+
 local goffy = ftitle:GetHeight() + 10
 
 local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/RDC.png")
@@ -58,10 +65,25 @@ function updateTBureau()
 	SelShared.PushTask( rdcsrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
+function updateTCongelo()
+	local cols = {
+		[-18] = COL_DIGIT,
+		[-15.5] = COL_GREEN,
+		[-10] = COL_ORANGE,
+		[0] = COL_RED
+	}
+	local v = SelShared.get('maison/Temperature/Congelateur')
+	srf_TCongelo:SetColor( findgradiancolor(v, cols ) )
+
+	UpdDataRight( srf_TCongelo, v .. "°C")
+	SelShared.PushTask( rdcsrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Salon", trigger=updateTSalon, trigger_once=true },
 	{ topic = "maison/Temperature/Bureau", trigger=updateTBureau, trigger_once=true },
+	{ topic = "maison/Temperature/Congelateur", trigger=updateTCongelo, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
