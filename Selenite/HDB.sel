@@ -1,8 +1,13 @@
-#!../Selene/Selene --dfb:quiet,no-vt
+#!/usr/local/bin/Selene
 -- HomeDashBoard, Selenite version
 --
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own dashboard
+
+-- Ensure we're not using obsolete version
+assert( SELENE_VERSION >= 2.0100, "HDB requires at least Selene v2.01.00" )
+
+Selene.UseDirectFB("--dfb:quiet,no-vt,no-cursor")
 
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
@@ -14,153 +19,71 @@ if f then	-- working only using root access
 	f:close()
 end
 
--- Ensure we're not using obsolete version
-assert( SELENE_VERSION >= 0.0400, "HDB requires at least Selene v0.04.00" )
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Configuration to connect to the broker
+require (SELENE_SCRIPT_DIR .. "/Colors")		-- Colors used in the GUI
 
--- Load configuration files
-require (SELENE_SCRIPT_DIR .. "/LocalConfig")
-require (SELENE_SCRIPT_DIR .. "/Colors")
+-- List of topics to subscribe to
+function Command() -- CAUTION : in race condition, commands may be lost.
+	if SelShared.get('HomeDashBoard/Tablette/Command') == 'Grab' then
+		psrf:Dump('/tmp', 'DashBoard')
+	elseif SelShared.get('HomeDashBoard/Tablette/Command') == 'Tasks' then
+		SelShared.dump()
+	end
+end
+
+Topics = {
+	{ topic = "HomeDashBoard/Tablette/Command", trigger=Command }	-- 'Tablette' has to be changed if several dashboard
+}
 
 -- Init the screen
-Selene.init( Selene.CooperativeConst('FULLSCREEN') )
-psrf = SelSurface.create { caps=SelSurface.CapabilityConst('PRIMARY') } -- create a primary surface
+DirectFB.init( DirectFB.CooperativeConst('NORMAL') )
+layer = SelLayer.GetLayer(0)	-- Get primary layer
+layer:SetCooperativeLevel( SelLayer.CooperativeLevelConst('ADMINISTRATIVE') )
+psrf = layer:GetSurface()
 psrf:Clear( unpack(COL_BLACK) )
 
-require (SELENE_SCRIPT_DIR .. "/Design")
+require (SELENE_SCRIPT_DIR .. "/Helpers")	-- Helper functions to draw data
 
--- Collection for graphics
-dt_pwr = SelCollection.create( srf_tpwrgfx:GetWidth()/5 )
-dt_conso = SelCollection.create( srf_consogfx:GetWidth() )
+-- GUI
+winlist = {}	-- List of all windows
+
+require (SELENE_SCRIPT_DIR .. "/Primary")
+require (SELENE_SCRIPT_DIR .. "/RDC")
+require (SELENE_SCRIPT_DIR .. "/1er")
+require (SELENE_SCRIPT_DIR .. "/Meteo")
 
 -- Broker's stuffs
-local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID } )
-
-function rcvVal( topic, val )
-	SelShared.set(topic, val)
-	return true
+function disconnected()
+	local skull,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/Red-Skull-icon.png")
+	if err then
+		print (err)
+	end
+	skull:RenderTo( psrf, { psrf:GetWidth() - 50, 0, 50,50 } )
+	SelShared.PushTask( psrfupdate )
 end
 
-function updateVlt()
-	upddata( srf_tension, fdigit, SelShared.get('onduleur/input.voltage') .. ' V')
-end
-
-function updateConso()
-	local cols = {
-		[500] = COL_DIGIT,
-		[1500] = COL_ORANGE,
-		[4500] = COL_RED
-	}
-	local v = SelShared.get('TeleInfo/Consommation/values/PAPP')
-	srf_consommation:SetColor( findgradiancolor(v, cols ) )
-	upddata( srf_consommation, fdigit, v .. ' VA')
-
-	dt_conso:Push(v)
-	local min,max = dt_conso:MinMax()
-	upddata( srf_maxconso, fsdigit, max )
-	updgfx( srf_consogfx, dt_conso, 0 )
-end
-
-function updateProduction()
-	upddata( srf_production, fdigit, SelShared.get('TeleInfo/Production/values/PAPP') .. ' VA')
-end
-
-function updateTGN()
-	upddata( srf_TGN, fdigit, SelShared.get('maison/Temperature/Grenier Nord') .. "°C" )
-end
-
-function updateTChJ()
-	upddata( srf_TChJ, fdigit, SelShared.get('maison/Temperature/Chambre Joris') .. "°C" )
-end
-
-function updateTSalon()
-	local cols = {
-		[15] = COL_DIGIT,
-		[21] = COL_GREEN,
-		[25] = COL_ORANGE,
-		[30] = COL_RED
-	}
-	local v = SelShared.get('maison/Temperature/Salon')
-	srf_TSalon:SetColor( findgradiancolor(v, cols ) )
-
-	upddata( srf_TSalon, fdigit, v .. "°C" )
-end
-
-function updateTBureau()
-	upddata( srf_TBureau, fdigit, SelShared.get('maison/Temperature/Bureau') .. "°C" )
-end
-
-function updateTDehors()
-	upddata( srf_TDehors, fdigit, SelShared.get('maison/Temperature/Dehors') .. "°C" )
+local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
+if err then
+	print( "Broker", err )
+	return
 end
 
 function updateTCave()
 	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
 end
 
-function updateUPSLd()
-	local maxp = tonumber( SelShared.get('onduleur/ups.realpower.nominal') )
-	if maxp then -- maximum power not known yet
-		upddata( srf_consoUPS, ftitle1, string.format('%3.1f', SelShared.get('onduleur/ups.load')*maxp/100) .. ' W')
-	else
-		upddata( srf_consoUPS, ftitle1, SelShared.get('onduleur/ups.load') .. ' %')
-	end
-	local pw = bar_ups.w * SelShared.get('onduleur/ups.load') / 100
-	psrf:SetColor( unpack( COL_WHITE ) )
-	psrf:FillRectangle( bar_ups.x, bar_ups.y, pw, bar_ups.h )
-	psrf:SetColor( unpack( COL_BLACK ) )
-	psrf:FillRectangle( bar_ups.x+pw, bar_ups.y, bar_ups.w-pw, bar_ups.h )
-end
+remaining = {
+	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true }
+}
 
-function updateInternet()
-	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
-	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
-	if intDn and intUp then
-		upddata( srf_Internet, ftitle1, intDn .. ' Kb / ' .. intUp ..' Kb' )
-	end
-end
+--[[
+require("tostring")
+print(universal_tostring(Topics))
+]]
 
-function updatedWAN()
-	local intDn = tonumber( SelShared.get('Freebox/DownloadATM') )
-	local wanDn = tonumber( SelShared.get('Freebox/DownloadWAN') )
-	if intDn then
-		local pw = bar_Idn.w * wanDn * 8 / intDn
-		psrf:SetColor( unpack( COL_WHITE ) )
-		psrf:FillRectangle( bar_Idn.x, bar_Idn.y, pw, bar_Idn.h )
-		psrf:SetColor( unpack( COL_BLACK ) )
-		psrf:FillRectangle( bar_Idn.x+pw, bar_Idn.y, bar_Idn.w-pw, bar_Idn.h )
-	end
-end
+-- Subscribtion
 
-function updateuWAN()
-	local intUp = tonumber( SelShared.get('Freebox/UploadATM') )
-	local wanUp = tonumber( SelShared.get('Freebox/UploadWAN') )
-	if intUp then
-		local pw = bar_Iup.w * wanUp * 8 / intUp
-		psrf:SetColor( unpack( COL_WHITE ) )
-		psrf:FillRectangle( bar_Iup.x, bar_Iup.y, pw, bar_Iup.h )
-		psrf:SetColor( unpack( COL_BLACK ) )
-		psrf:FillRectangle( bar_Iup.x+pw, bar_Iup.y, bar_Iup.w-pw, bar_Iup.h )
-	end
-end
-
-_, err = Brk:subscribe({
-	{ topic = "Freebox/DownloadWAN", trigger=updatedWAN, trigger_once=true },
-	{ topic = "Freebox/UploadWAN", trigger=updateuWAN, trigger_once=true },
-	{ topic = "Freebox/DownloadATM", func=rcvVal },
-	{ topic = "Freebox/UploadATM", trigger=updateInternet, trigger_once=true },
-	{ topic = "onduleur/ups.realpower.nominal", func=rcvVal },
-	{ topic = "onduleur/ups.load", trigger=updateUPSLd, trigger_once=true },
-	{ topic = "maison/Temperature/Grenier Nord", trigger=updateTGN, trigger_once=true },
-	{ topic = "maison/Temperature/Chambre Joris", trigger=updateTChJ, trigger_once=true },
-	{ topic = "maison/Temperature/Salon", trigger=updateTSalon, trigger_once=true },
-	{ topic = "maison/Temperature/Bureau", trigger=updateTBureau, trigger_once=true },
-	{ topic = "maison/Temperature/Dehors", trigger=updateTDehors, trigger_once=true },
-	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
-	{ topic = "onduleur/input.voltage", trigger=updateVlt, trigger_once=true },
-	{ topic = "TeleInfo/Consommation/values/PAPP", trigger=updateConso, trigger_once=true },
-	{ topic = "TeleInfo/Production/values/PAPP", trigger=updateProduction, trigger_once=true }
-})
-
+_, err = Brk:subscribe( Topics )
 if err then
 	print( err )
 	return
@@ -180,11 +103,11 @@ function updateTablet()
 	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/current_now" )
 	v = v * f:read('*number') / 1000000
 	f:close()
-	upddata( srf_tabpwr, fdigit, string.format('%3.2f', v) .. ' W')
+	srf_tabpwr:SetColor( findgradiancolor(v, cols ) )
+	UpdDataRight( srf_tabpwr, string.format('%3.2f', v) .. ' W')
 	dt_pwr:Push( v )
 	local min,max = dt_pwr:MinMax()
-	upddata( srf_maxtpwr, fsdigit, string.format('%3.2f', max) )
-	updgfx( srf_tpwrgfx, dt_pwr, 0 )
+	updgfx( srf_tpwrgfx, dt_pwr )
 
 	cols = {
 		[30] = COL_DIGIT,
@@ -194,16 +117,22 @@ function updateTablet()
 	v = f:read('*number') / 1000
 	f:close()
 	srf_ttpmu:SetColor( findgradiancolor(v, cols ) )
-	upddata( srf_ttpmu, fsdigit, string.format('%3.1f', v) .. '°C')
-
-	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/battery/temp" )
-	v = f:read('*number') / 10
-	f:close()
-	srf_ttbat:SetColor( findgradiancolor(v, cols ) )
-	upddata( srf_ttbat, fsdigit, string.format('%3.1f', v) .. '°C')
+	UpdDataRight( srf_ttpmu, string.format('%3.1f', v) .. '°C')
 end
 
-tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updateTablet}
+local tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updateTablet}
+if err then
+	print(err)
+	return
+end
+
+wcnt = 0
+function switchwindows()
+	winlist[ (wcnt % #winlist)+1 ]:RaiseToTop()
+	wcnt = wcnt + 1
+end
+
+local switchtimer,err = SelTimer.create { when=10, interval=10, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=switchwindows}
 if err then
 	print(err)
 	return
@@ -211,7 +140,7 @@ end
 
 -- Wait for events
 while true do
-	ret, err = Selene.WaitFor(tabtimer)
+	ret, err = Selene.WaitFor(tabtimer, switchtimer)
 
 	if type(ret) == 'function' then
 		ret()

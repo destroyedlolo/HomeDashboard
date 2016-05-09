@@ -6,11 +6,21 @@ COL_RED = { 0xff,0x0f,0x0f, 0xff }
 COL_ORANGE = { 0xff,0x8c,0x00, 0xff }
 COL_GREEN = { 0x00,0xc6,0x00, 0xff }
 COL_GREY = { 0x20, 0x20, 0x20, 0xff }
+COL_LIGHTGREY = { 0x80, 0x80, 0x80, 0xff }
 COL_WHITE = { 0xff, 0xff, 0xff, 0xff }
 
 COL_BORDER = { 0x00,0x20,0xff, 0xff }
 COL_TITLE = { 0x46,0x82,0xb4, 0xff }	-- SteelBlue
 COL_DIGIT = { 0x00,0xff,0xff, 0xff }
+
+-- shared color gradiant
+
+cols_temperature = {
+		[15] = COL_DIGIT,
+		[21] = COL_GREEN,
+		[25] = COL_ORANGE,
+		[30] = COL_RED
+}
 
 -- Find color b/w 2 known values
 -- key = known value
@@ -60,4 +70,11 @@ function findgradiancolor( val, colors )
 		return unpack(colors[keys[#keys]])
 	end
 end
+
+-- Font used
+ftitle = SelFont.create("/usr/local/share/fonts/CarroisGothic-Regular.ttf", { height=30} )
+ftitle1 = SelFont.create("/usr/local/share/fonts/Capsuula.ttf", { height=20} )
+fdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=35} )
+fmdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=30} )
+fsdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=20} )
 
