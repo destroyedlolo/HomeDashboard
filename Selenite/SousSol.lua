@@ -35,6 +35,10 @@ srf_TCaveP = ss_srf:SubSurface( 30, 350, 25 + fdigit:StringWidth("-88.8°C"), fm
 srf_TCaveP:SetColor( unpack(COL_BLACK) )
 srf_TCaveP:SetFont( fdigit )
 
+srf_TCongelo = ss_srf:SubSurface( 475, 150, 25 + fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight()  )
+srf_TCongelo:SetColor( unpack(COL_BLACK) )
+srf_TCongelo:SetFont( ftitle )
+
 -- Update functions
 function sssrfupdate()
 	ss_srf:Flip(SelSurface.FlipFlagsConst("NONE"))
@@ -43,8 +47,6 @@ end
 function updateTCave()
 	UpdDataRight( srf_TCave, SelShared.get('maison/Temperature/Cave') .. "°C", { 26,123,23, 255 } )
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
-
-print('cave', SelShared.get( 'maison/Temperature/Cave' ))
 end
 
 function updateTCaveP()
@@ -52,10 +54,26 @@ function updateTCaveP()
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
+function updateTCongelo()
+	local cols = {
+		[-18] = COL_DIGITD,
+		[-15.5] = COL_GREEND,
+		[-10] = COL_ORANGED,
+		[0] = COL_REDD
+	}
+	local v = SelShared.get('maison/Temperature/Congelateur')
+	srf_TCongelo:SetColor( findgradiancolor(v, cols ) )
+
+	UpdDataRight( srf_TCongelo, v .. "°C",  {129,110,21, 255} )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
+
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
 	{ topic = "maison/Temperature/CaveP", trigger=updateTCaveP, trigger_once=true },
+	{ topic = "maison/Temperature/Congelateur", trigger=updateTCongelo, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)

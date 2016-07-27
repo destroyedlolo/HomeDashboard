@@ -48,10 +48,10 @@ require (SELENE_SCRIPT_DIR .. "/Helpers")	-- Helper functions to draw data
 winlist = {}	-- List of all windows
 
 require (SELENE_SCRIPT_DIR .. "/Primary")
--- require (SELENE_SCRIPT_DIR .. "/RDC")
+require (SELENE_SCRIPT_DIR .. "/RDC")
 require (SELENE_SCRIPT_DIR .. "/1er")
 require (SELENE_SCRIPT_DIR .. "/SousSol")
--- require (SELENE_SCRIPT_DIR .. "/Meteo")
+require (SELENE_SCRIPT_DIR .. "/Meteo")
 
 -- Broker's stuffs
 function disconnected()
