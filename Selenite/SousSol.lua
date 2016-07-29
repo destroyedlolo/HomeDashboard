@@ -24,20 +24,20 @@ local goffy = ftitle:GetHeight() + 10
 local img,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/SousSol.png")
 assert(img)
 local tx,ty = ss_srf:GetSize()
-img:RenderTo( ss_srf, { 20,50, tx-30, ty-70 } )
+img:RenderTo( ss_srf, { 20,50, tx-150, ty-150 } )
 img:destroy()	-- The image is not needed anymore
 
-srf_TCave = ss_srf:SubSurface( 450, 350, 25 + fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
+srf_TCave = ss_srf:SubSurface( 360, 280, fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TCave:SetColor( unpack(COL_BLACK) )
 srf_TCave:SetFont( fdigit )
 
-srf_TCaveP = ss_srf:SubSurface( 30, 350, 25 + fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
+srf_TCaveP = ss_srf:SubSurface( 30, 280, fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TCaveP:SetColor( unpack(COL_BLACK) )
 srf_TCaveP:SetFont( fdigit )
 
-srf_TCongelo = ss_srf:SubSurface( 475, 150, 25 + fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight()  )
+srf_TCongelo = ss_srf:SubSurface( 400, 125, fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight()  )
 srf_TCongelo:SetColor( unpack(COL_BLACK) )
-srf_TCongelo:SetFont( ftitle )
+srf_TCongelo:SetFont( fmdigit)
 
 -- Update functions
 function sssrfupdate()
