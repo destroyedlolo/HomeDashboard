@@ -71,6 +71,19 @@ srf_CCouche:SetFont( fmdigit)
 srf_CCouche:SetColor( unpack(COL_DIGIT) )
 goffy = goffy + fmdigit:GetHeight() + 15
 
+ss_srf:DrawString("Saison :", goffx, goffy )
+goffy = goffy + ftitle1:GetHeight()
+
+srf_Saison = ss_srf:SubSurface( goffx-5, goffy, fmdigit:StringWidth("Intersaison"), fmdigit:GetHeight()  )
+srf_Saison:SetFont( fmdigit)
+srf_Saison:SetColor( unpack(COL_DIGIT) )
+goffy = goffy + fmdigit:GetHeight() + 15
+
+--[[
+goffy = ty - 130
+goffx = 20
+ss_srf:DrawString("Mode forcé :", goffx, 45 )
+]]
 
 -- Update functions
 function sssrfupdate()
@@ -128,6 +141,11 @@ function updatePorteCave()
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
+function updateSaison()
+	UpdDataCentered( srf_Saison, SelShared.get('Majordome/Saison') )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
+end
+
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
@@ -136,6 +154,7 @@ local ltopics = {
 	{ topic = "Majordome/HLever", trigger=updateCLeve, trigger_once=true },
 	{ topic = "Majordome/HCoucher", trigger=updateCCouche, trigger_once=true },
 	{ topic = "maison/IO/Porte_Cave", trigger=updatePorteCave, trigger_once=true },
+	{ topic = "Majordome/Saison", trigger=updateSaison, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
