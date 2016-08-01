@@ -39,6 +39,9 @@ srf_TCaveP = ss_srf:SubSurface( 30, 280, fdigit:StringWidth("-88.8°C"), fmdigit
 srf_TCaveP:SetColor( unpack(COL_BLACK) )
 srf_TCaveP:SetFont( fdigit )
 
+srf_SCaveP = ss_srf:SubSurface( 30, 190, fmdigit:StringWidth("Verrouillee"), fmdigit:GetHeight() )
+srf_SCaveP:SetFont( fmdigit )
+
 local goffx = tx-120
 ss_srf:SetFont( ftitle1 )
 ss_srf:SetColor( unpack(COL_TITLE) )
@@ -108,6 +111,23 @@ function updateCCouche()
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
+function updatePorteCave()
+	local v = SelShared.get('maison/IO/Porte_Cave')
+
+	srf_SCaveP:Clear( 26,123,23, 255 )
+	if v == 'Ouverte' then
+		srf_SCaveP:SetColor( unpack(COL_ORANGED) )
+	elseif v == 'Fermee' then
+		srf_SCaveP:SetColor( unpack(COL_REDD) )
+		v = 'Fermée'
+	else
+		srf_SCaveP:SetColor( unpack(COL_GREEND) )
+		v = 'Verrouillée'
+	end
+	srf_SCaveP:DrawString(v, 0,0)
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
@@ -115,6 +135,7 @@ local ltopics = {
 	{ topic = "maison/Temperature/Congelateur", trigger=updateTCongelo, trigger_once=true },
 	{ topic = "Majordome/HLever", trigger=updateCLeve, trigger_once=true },
 	{ topic = "Majordome/HCoucher", trigger=updateCCouche, trigger_once=true },
+	{ topic = "maison/IO/Porte_Cave", trigger=updatePorteCave, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
