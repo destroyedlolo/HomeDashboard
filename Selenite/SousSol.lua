@@ -19,8 +19,6 @@ ss_srf:SetColor( unpack(COL_BORDER) )
 ss_srf:SetFont( ftitle )
 ss_srf:DrawString("Sous sol", 0, 0)
 
-local goffy = ftitle:GetHeight() + 10
-
 local img,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/SousSol.png")
 assert(img)
 local tx,ty = ss_srf:GetSize()
@@ -35,8 +33,14 @@ srf_TCaveP = ss_srf:SubSurface( 30, 280, fdigit:StringWidth("-88.8°C"), fmdigit
 srf_TCaveP:SetColor( unpack(COL_BLACK) )
 srf_TCaveP:SetFont( fdigit )
 
-srf_TCongelo = ss_srf:SubSurface( 400, 125, fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight()  )
-srf_TCongelo:SetColor( unpack(COL_BLACK) )
+local goffx = tx-120
+ss_srf:SetFont( ftitle1 )
+ss_srf:SetColor( unpack(COL_TITLE) )
+ss_srf:DrawString("Congélateur :", goffx, 45 )
+local goffy = 45 + ftitle1:GetHeight()
+
+srf_TCongelo = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight()  )
+--srf_TCongelo:SetColor( unpack(COL_BLACK) )
 srf_TCongelo:SetFont( fmdigit)
 
 -- Update functions
@@ -56,15 +60,15 @@ end
 
 function updateTCongelo()
 	local cols = {
-		[-18] = COL_DIGITD,
-		[-15.5] = COL_GREEND,
-		[-10] = COL_ORANGED,
-		[0] = COL_REDD
+		[-18] = COL_DIGIT,
+		[-15.5] = COL_GREEN,
+		[-10] = COL_ORANGE,
+		[0] = COL_RED
 	}
 	local v = SelShared.get('maison/Temperature/Congelateur')
 	srf_TCongelo:SetColor( findgradiancolor(v, cols ) )
 
-	UpdDataRight( srf_TCongelo, v .. "°C",  {129,110,21, 255} )
+	UpdDataRight( srf_TCongelo, v .. "°C" )
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
