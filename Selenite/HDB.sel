@@ -69,14 +69,6 @@ if err then
 	return
 end
 
-function updateTCave()
-	upddata( srf_TCave, fdigit, SelShared.get('maison/Temperature/Cave') .. "°C" )
-end
-
-remaining = {
-	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true }
-}
-
 --[[
 require("tostring")
 print(universal_tostring(Topics))
