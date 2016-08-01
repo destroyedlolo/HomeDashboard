@@ -1,5 +1,11 @@
 -- This file define the window related to the basement "Sous sol"
 
+-- valeur par défaut
+SelShared.set('Majordome/HLever', 8.0 )
+SelShared.set('Majordome/HCoucher', 21.3 )
+
+-- Graphismes
+
 local window = layer:CreateWindow {
 	pos = WINTOP, size = WINSIZE,
 	caps=SelWindow.CapsConst('NONE'),
@@ -40,8 +46,28 @@ ss_srf:DrawString("Congélateur :", goffx, 45 )
 local goffy = 45 + ftitle1:GetHeight()
 
 srf_TCongelo = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight()  )
---srf_TCongelo:SetColor( unpack(COL_BLACK) )
 srf_TCongelo:SetFont( fmdigit)
+goffy = goffy + fmdigit:GetHeight() + 15
+
+ss_srf:DrawLine( goffx + 30, goffy, tx - 30, goffy )
+goffy = goffy + 15
+
+ss_srf:DrawString("Heure du Levé :", goffx, goffy )
+goffy = goffy + ftitle1:GetHeight()
+
+srf_CLeve = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("88:88"), fmdigit:GetHeight()  )
+srf_CLeve:SetFont( fmdigit)
+srf_CLeve:SetColor( unpack(COL_DIGIT) )
+goffy = goffy + fmdigit:GetHeight() + 15
+
+ss_srf:DrawString("Heure du Couché :", goffx, goffy )
+goffy = goffy + ftitle1:GetHeight()
+
+srf_CCouche = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("88:88"), fmdigit:GetHeight()  )
+srf_CCouche:SetFont( fmdigit)
+srf_CCouche:SetColor( unpack(COL_DIGIT) )
+goffy = goffy + fmdigit:GetHeight() + 15
+
 
 -- Update functions
 function sssrfupdate()
@@ -72,14 +98,27 @@ function updateTCongelo()
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
+function updateCLeve()
+	UpdDataCentered( srf_CLeve, string.format("%02.02f", SelShared.get('Majordome/HLever')) )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
+function updateCCouche()
+	UpdDataCentered( srf_CCouche, string.format("%02.02f", SelShared.get('Majordome/HCoucher')) )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
+end
 
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
 	{ topic = "maison/Temperature/CaveP", trigger=updateTCaveP, trigger_once=true },
 	{ topic = "maison/Temperature/Congelateur", trigger=updateTCongelo, trigger_once=true },
+	{ topic = "Majordome/HLever", trigger=updateCLeve, trigger_once=true },
+	{ topic = "Majordome/HCoucher", trigger=updateCCouche, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
 
+updateCLeve()
+updateCCouche()
 sssrfupdate()
