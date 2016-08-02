@@ -79,11 +79,26 @@ srf_Saison:SetFont( fmdigit)
 srf_Saison:SetColor( unpack(COL_DIGIT) )
 goffy = goffy + fmdigit:GetHeight() + 15
 
---[[
-goffy = ty - 130
+goffy = ty - 80
 goffx = 20
-ss_srf:DrawString("Mode forcé :", goffx, 45 )
-]]
+local tmode = fmdigit:StringWidth("Vacances")
+
+ss_srf:DrawString("Mode forcé :", goffx, goffy )
+srf_ModeF = ss_srf:SubSurface( goffx, goffy + ftitle1:GetHeight(), tmode, fmdigit:GetHeight()  )
+srf_ModeF:SetFont( fmdigit)
+srf_ModeF:SetColor( unpack(COL_DIGIT) )
+
+goffx = goffx + tmode + 30
+ss_srf:DrawString("Mode forcé enfants:", goffx, goffy )
+srf_ModeFE = ss_srf:SubSurface( goffx, goffy + ftitle1:GetHeight(), tmode, fmdigit:GetHeight()  )
+srf_ModeFE:SetFont( fmdigit)
+srf_ModeFE:SetColor( unpack(COL_DIGIT) )
+
+goffx = goffx + ftitle1:StringWidth("Mode forcé enfants:")  + 30
+ss_srf:DrawString("Mode actif:", goffx, goffy )
+srf_Mode = ss_srf:SubSurface( goffx, goffy + ftitle1:GetHeight(), fdigit:StringWidth("Vacances"), fdigit:GetHeight()  )
+srf_Mode:SetFont( fdigit)
+srf_Mode:SetColor( unpack(COL_DIGIT) )
 
 -- Update functions
 function sssrfupdate()
@@ -146,6 +161,21 @@ function updateSaison()
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
 end
 
+function updateMForce()
+	UpdDataCentered( srf_ModeF, SelShared.get('Majordome/Mode/Force') )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
+end
+
+function updateMEnfants()
+	UpdDataCentered( srf_ModeFE, SelShared.get('Majordome/Mode/Enfants') )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
+end
+
+function updateMode()
+	UpdDataCentered( srf_Mode, SelShared.get('Majordome/Mode') )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
+end
+
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
@@ -155,6 +185,9 @@ local ltopics = {
 	{ topic = "Majordome/HCoucher", trigger=updateCCouche, trigger_once=true },
 	{ topic = "maison/IO/Porte_Cave", trigger=updatePorteCave, trigger_once=true },
 	{ topic = "Majordome/Saison", trigger=updateSaison, trigger_once=true },
+	{ topic = "Majordome/Mode/Force", trigger=updateMForce, trigger_once=true },
+	{ topic = "Majordome/Mode/Enfants", trigger=updateMEnfants, trigger_once=true },
+	{ topic = "Majordome/Mode", trigger=updateMode, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
