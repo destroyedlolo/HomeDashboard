@@ -24,6 +24,7 @@ local unpack = unpack or table.unpack
 ss_srf:SetColor( unpack(COL_BORDER) )
 ss_srf:SetFont( ftitle )
 ss_srf:DrawString("Sous sol", 0, 0)
+local goffx = ftitle:StringWidth("Sous sol") + 55
 
 local img,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/SousSol.png")
 assert(img)
@@ -42,26 +43,31 @@ srf_TCaveP:SetFont( fdigit )
 srf_SCaveP = ss_srf:SubSurface( 30, 190, fmdigit:StringWidth("Verrouillee"), fmdigit:GetHeight() )
 srf_SCaveP:SetFont( fmdigit )
 
-local goffx = tx-120
 ss_srf:SetFont( ftitle1 )
 ss_srf:SetColor( unpack(COL_TITLE) )
-ss_srf:DrawString("Congélateur :", goffx, 45 )
-local goffy = 45 + ftitle1:GetHeight()
+ss_srf:DrawString("Congélateur :", goffx, ftitle:GetHeight() - ftitle1:GetHeight() )
+goffx = goffx + ftitle1:StringWidth("Congélateur :") + 10
 
-srf_TCongelo = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight()  )
+srf_TCongelo = ss_srf:SubSurface( goffx, ftitle:GetHeight() - fmdigit:GetHeight(), fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight()  )
 srf_TCongelo:SetFont( fmdigit)
-goffy = goffy + fmdigit:GetHeight() + 15
 
-ss_srf:DrawLine( goffx + 30, goffy, tx - 30, goffy )
-goffy = goffy + 15
+local goffy = 0
+goffx = tx-120
 
+ss_srf:SetColor( unpack(COL_BORDER) )
+ss_srf:SetFont( ftitle )
+ss_srf:DrawString("Enfants", goffx, goffy)
+goffy = goffy + ftitle:GetHeight()
+
+ss_srf:SetFont( ftitle1 )
+ss_srf:SetColor( unpack(COL_TITLE) )
 ss_srf:DrawString("Heure du Levé :", goffx, goffy )
 goffy = goffy + ftitle1:GetHeight()
 
 srf_CLeve = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("88:88"), fmdigit:GetHeight()  )
 srf_CLeve:SetFont( fmdigit)
 srf_CLeve:SetColor( unpack(COL_DIGIT) )
-goffy = goffy + fmdigit:GetHeight() + 15
+goffy = goffy + fmdigit:GetHeight() + 5
 
 ss_srf:DrawString("Heure du Couché :", goffx, goffy )
 goffy = goffy + ftitle1:GetHeight()
@@ -69,15 +75,42 @@ goffy = goffy + ftitle1:GetHeight()
 srf_CCouche = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("88:88"), fmdigit:GetHeight()  )
 srf_CCouche:SetFont( fmdigit)
 srf_CCouche:SetColor( unpack(COL_DIGIT) )
-goffy = goffy + fmdigit:GetHeight() + 15
+goffy = goffy + fmdigit:GetHeight() + 5
+
+ss_srf:DrawLine( goffx + 30, goffy, tx - 30, goffy )
+goffy = goffy + 5
+
+ss_srf:SetColor( unpack(COL_BORDER) )
+ss_srf:SetFont( ftitle )
+ss_srf:DrawString("Soleil", goffx, goffy)
+goffy = goffy + ftitle:GetHeight()
+
+ss_srf:SetFont( ftitle1 )
+ss_srf:SetColor( unpack(COL_TITLE) )
+
+ss_srf:DrawString("Heure du Levé :", goffx, goffy )
+goffy = goffy + ftitle1:GetHeight()
+
+srf_SLeve = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("88:88"), fmdigit:GetHeight()  )
+srf_SLeve:SetFont( fmdigit)
+srf_SLeve:SetColor( unpack(COL_DIGIT) )
+goffy = goffy + fmdigit:GetHeight() + 5
+
+ss_srf:DrawString("Heure du Couché :", goffx, goffy )
+goffy = goffy + ftitle1:GetHeight()
+
+srf_SCouche = ss_srf:SubSurface( goffx+20, goffy, fmdigit:StringWidth("88:88"), fmdigit:GetHeight()  )
+srf_SCouche:SetFont( fmdigit)
+srf_SCouche:SetColor( unpack(COL_DIGIT) )
+goffy = goffy + fmdigit:GetHeight() + 5
 
 ss_srf:DrawString("Saison :", goffx, goffy )
 goffy = goffy + ftitle1:GetHeight()
 
-srf_Saison = ss_srf:SubSurface( goffx-5, goffy, fmdigit:StringWidth("Intersaison"), fmdigit:GetHeight()  )
+srf_Saison = ss_srf:SubSurface( goffx-15, goffy, fmdigit:StringWidth("Intersaison"), fmdigit:GetHeight()  )
 srf_Saison:SetFont( fmdigit)
 srf_Saison:SetColor( unpack(COL_DIGIT) )
-goffy = goffy + fmdigit:GetHeight() + 15
+goffy = goffy + fmdigit:GetHeight() + 5
 
 goffy = ty - 80
 goffx = 20
@@ -176,6 +209,16 @@ function updateMode()
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
 end
 
+function updateSLeve()
+	UpdDataCentered( srf_SLeve, SelShared.get('Meteo/Nonglard/sunrise') )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
+end
+
+function updateSCouche()
+	UpdDataCentered( srf_SCouche, SelShared.get('Meteo/Nonglard/sunset') )
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
+end
+
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Cave", trigger=updateTCave, trigger_once=true },
@@ -188,6 +231,8 @@ local ltopics = {
 	{ topic = "Majordome/Mode/Force", trigger=updateMForce, trigger_once=true },
 	{ topic = "Majordome/Mode/Enfants", trigger=updateMEnfants, trigger_once=true },
 	{ topic = "Majordome/Mode", trigger=updateMode, trigger_once=true },
+	{ topic = "Meteo/Nonglard/sunrise", trigger=updateSLeve, trigger_once=true },
+	{ topic = "Meteo/Nonglard/sunset", trigger=updateSCouche, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
