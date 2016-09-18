@@ -1,4 +1,4 @@
--- This file define the window related to the "rez-de-chaussée"
+-- This file define the window related to the "1st floor"
 
 local window = layer:CreateWindow {
 	pos = WINTOP, size = WINSIZE,

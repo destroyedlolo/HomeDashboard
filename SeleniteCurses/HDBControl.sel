@@ -1,0 +1,56 @@
+#!/usr/local/bin/Selene
+-- HomeDashBoard, Selenite Curses version
+--
+-- Reduced dashboard to allows to controle/configure some aspect of my
+-- smart home automation.
+--
+-- This tool is configured for my own usage and is matching my home configuration
+-- but it should be took as example to build your own one
+
+assert( SELENE_VERSION >= 3.0005, "HDB requires at least Selene v3.00.05" )
+local stitle = " Home Dashboard Control v0.0.1 (Selene v".. SELENE_VERSION ..") "
+
+require(SELENE_SCRIPT_DIR .. "/LocalConfig")
+require(SELENE_SCRIPT_DIR .. "/Helpers")
+
+Selene.UseCurses()
+pwnd = SelCurses.init()
+w,h = pwnd:GetSize()
+
+Topics = {}
+
+pwnd:HLineAt(0,0,w)
+pwnd:attrset( SelCurses.CharAttrConst("REVERSE") )
+pwnd:PrintAt((w-stitle:len())/2,0, stitle)
+pwnd:attrset( SelCurses.CharAttrConst("NORMAL") )
+
+pwnd:Move(0,1)
+require(SELENE_SCRIPT_DIR .. "/1er")
+require(SELENE_SCRIPT_DIR .. "/RDC")
+
+pwnd:refresh()
+
+-- Broker's stuffs
+function disconnected()
+end
+
+local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
+if err then
+	print( "Broker", err )
+	return
+end
+
+_, err = Brk:subscribe( Topics )
+if err then
+	print( err )
+	return
+end
+
+-- Wait for events
+while true do
+	ret, err = Selene.WaitFor()
+
+	if type(ret) == 'function' then
+		ret()
+	end
+end
