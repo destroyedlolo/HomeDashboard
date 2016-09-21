@@ -30,7 +30,7 @@ end
 
 function updateTCongelo()
 	TCongelo:clear()
-	TCongelo:print( string.format("%4.1f", SelShared.get('maison/Temperature/CaveP')) )
+	TCongelo:print( string.format("%4.1f", SelShared.get('maison/Temperature/Congelateur')) )
 	TCongelo:refresh()
 end
 
