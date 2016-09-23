@@ -11,4 +11,30 @@ function TableMerge( t1, t2 )
 	return t1
 end
 
+-- GFX
+function genTitre(w, s)
+	local sub=false;
+	for c in s:gmatch(".") do 
+		if c == '&' then
+			sub = true;
+			w:attron( SelCurses.CharAttrConst("UNDERLINE") )
+		else 
+			w:addch(c)
+			if sub then
+				sub = false;
+				w:attroff( SelCurses.CharAttrConst("UNDERLINE") )
+			end
+		end
+	end
+end
+
+function genMenu()
+	wndMenu:clear()
+	for _,w in pairs(swinLst) do
+		wndMenu:addch('[')
+		genTitre(wndMenu, w.titre)
+		wndMenu:addch(']')
+	end
+	wndMenu:refresh()
+end
 

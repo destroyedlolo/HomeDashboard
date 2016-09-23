@@ -7,8 +7,10 @@
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own one
 
-assert( SELENE_VERSION >= 3.0005, "HDB requires at least Selene v3.00.05" )
-local stitle = " Home Dashboard Control v0.0.1 (Selene v".. SELENE_VERSION ..") "
+assert( SELENE_VERSION >= 3.0100, "HDB requires at least Selene v3.01.00" )
+local stitle = " Home Dashboard Control v0.1.0 (Selene v".. SELENE_VERSION ..") "
+
+-- SelLog.init("hdb.log")
 
 require(SELENE_SCRIPT_DIR .. "/LocalConfig")
 require(SELENE_SCRIPT_DIR .. "/Helpers")
@@ -19,7 +21,7 @@ w,h = pwnd:GetSize()
 
 Topics = {}
 
-pwnd:HLineAt(0,0,w)
+pwnd:HLineAt(0,0,w,'=')
 pwnd:attrset( SelCurses.CharAttrConst("REVERSE") )
 pwnd:PrintAt((w-stitle:len())/2,0, stitle)
 pwnd:attrset( SelCurses.CharAttrConst("NORMAL") )
@@ -28,6 +30,26 @@ pwnd:Move(0,1)
 require(SELENE_SCRIPT_DIR .. "/1er")
 require(SELENE_SCRIPT_DIR .. "/RDC")
 require(SELENE_SCRIPT_DIR .. "/SousSol")
+
+pwnd:print("\n\n")
+pwnd:HLine(w,'-')
+local x,y = pwnd:GetXY()
+wndMenu = pwnd:DerWin(x,y+1,w,1)
+wmdSub = pwnd:DerWin(x,y+2,0,0)
+wmdSub:border()
+
+-- sub windows
+swinLst = {}
+
+--[[
+	{ titre="&Volets", sc='V' },
+	{ titre="&Consignes", sc='C' }
+}
+]]
+
+swinLst['Q'] = { titre="&Quitter", func=os.exit }
+
+genMenu()
 
 pwnd:refresh()
 
@@ -49,9 +71,18 @@ end
 
 -- Wait for events
 while true do
-	ret, err = Selene.WaitFor()
+	ret = { Selene.WaitFor( io.stdin ) }
 
-	if type(ret) == 'function' then
-		ret()
+	for i,r in ipairs(ret) do
+		if type(r) == 'function' then
+			r()
+		elseif type(r) == 'string' then
+			print('error', r)
+		elseif r == io.stdin then
+			local c = pwnd:getch()
+			if swinLst[c].func then
+				swinLst[c].func()
+			end
+		end
 	end
 end
