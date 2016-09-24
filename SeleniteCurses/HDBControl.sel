@@ -10,7 +10,11 @@
 assert( SELENE_VERSION >= 3.0100, "HDB requires at least Selene v3.01.00" )
 local stitle = " Home Dashboard Control v0.1.0 (Selene v".. SELENE_VERSION ..") "
 
--- SelLog.init("hdb.log")
+-- Debug only
+--[[
+require("tostring")
+SelLog.init("hdb.log")
+]]
 
 require(SELENE_SCRIPT_DIR .. "/LocalConfig")
 require(SELENE_SCRIPT_DIR .. "/Helpers")
@@ -69,6 +73,7 @@ if err then
 	return
 end
 
+SelCurses.echo(false)
 -- Wait for events
 while true do
 	ret = { Selene.WaitFor( io.stdin ) }
@@ -79,8 +84,12 @@ while true do
 		elseif type(r) == 'string' then
 			print('error', r)
 		elseif r == io.stdin then
-			local c = pwnd:getch()
-			if swinLst[c].func then
+SelLog.log("Clavier")
+			local c = string.char(pwnd:getch())
+-- SelLog.log(c)
+-- SelLog.log(universal_tostring(swinLst))
+			if swinLst[c] ~= nil then
+SelLog.log("func")
 				swinLst[c].func()
 			end
 		end

@@ -38,6 +38,7 @@ function updatePorteCave()
 	pwnd:Move(xSitP, uSitP)
 	pwnd:clrtoeol()
 	pwnd:print( SelShared.get('maison/IO/Porte_Cave') )
+	pwnd:refresh()
 end
 
 -- local subscription
