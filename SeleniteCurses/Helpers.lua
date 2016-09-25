@@ -31,9 +31,15 @@ end
 function genMenu()
 	wndMenu:clear()
 	for _,w in pairs(swinLst) do
+		if Mode==_ then
+			wndMenu:attrset( SelCurses.CharAttrConst("REVERSE") )
+		end
 		wndMenu:addch('[')
 		genTitre(wndMenu, w.titre)
 		wndMenu:addch(']')
+		if Mode==_ then
+			wndMenu:attrset( SelCurses.CharAttrConst("NORMAL") )
+		end
 	end
 	wndMenu:refresh()
 end

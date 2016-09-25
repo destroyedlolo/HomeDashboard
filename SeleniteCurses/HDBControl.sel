@@ -40,20 +40,16 @@ pwnd:HLine(w,'-')
 local x,y = pwnd:GetXY()
 wndMenu = pwnd:DerWin(x,y+1,w,1)
 wmdSub = pwnd:DerWin(x,y+2,0,0)
-wmdSub:border()
 
 -- sub windows
 swinLst = {}
+actWnd = nil	-- Fenetre active
 
---[[
-	{ titre="&Volets", sc='V' },
-	{ titre="&Consignes", sc='C' }
-}
-]]
-
+require(SELENE_SCRIPT_DIR .. "/Volets")
 swinLst['Q'] = { titre="&Quitter", func=os.exit }
 
 genMenu()
+-- SelLog.log(universal_tostring(swinLst))
 
 pwnd:refresh()
 
@@ -74,6 +70,8 @@ if err then
 end
 
 SelCurses.echo(false)
+SelCurses.curs_set( SelCurses.CursorVisibilityConst("INVISIBLE") )
+pwnd:keypad( true )
 -- Wait for events
 while true do
 	ret = { Selene.WaitFor( io.stdin ) }
@@ -84,13 +82,18 @@ while true do
 		elseif type(r) == 'string' then
 			print('error', r)
 		elseif r == io.stdin then
-SelLog.log("Clavier")
-			local c = string.char(pwnd:getch())
--- SelLog.log(c)
--- SelLog.log(universal_tostring(swinLst))
+			local cn = pwnd:getch()
+			local c
+			if cn < 128 then
+				c = string.char(cn)
+			end
 			if swinLst[c] ~= nil then
-SelLog.log("func")
+				actWnd = swinLst[c]
 				swinLst[c].func()
+			elseif actWnd ~= nil then
+				if actWnd.key ~= nil then
+					actWnd.key(Brk, c,cn)
+				end
 			end
 		end
 	end
