@@ -55,7 +55,7 @@ ${template0 Injecteur Injecteur °C}
 ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
 
  ${template0 Comble Comble °C} ${template0 Congelo Congelo °C}
-${template0 Gr_Nord GrenierN °C}	 ${template0 Gr_Sud GrenierS °C}	
+ ${template0 Gr_Sud GrenierS °C}	${template0 Gr_Nord GrenierN °C}	 
  ${template0 Oceane ChOceane °C}	  ${template0 Joris ChJoris °C}
   ${template0 Salon Salon °C}	 ${template0 Bureau Bureau °C}
  ${template0 Dehors Dehors °C}	    ${template0 Cave Cave °C}
