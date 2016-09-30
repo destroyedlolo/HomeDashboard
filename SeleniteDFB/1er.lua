@@ -46,6 +46,10 @@ srf_TchO = per_srf:SubSurface( 330, 250, 25 + fmdigit:StringWidth("-88.8°C"), f
 srf_TchO:SetColor( unpack(COL_BLACK) )
 srf_TchO:SetFont( fdigit )
 
+srf_TGS = per_srf:SubSurface( 475, 200, 25 + fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
+srf_TGS:SetColor( unpack(COL_BLACK) )
+srf_TGS:SetFont( fdigit )
+
 -- Update functions
 function presrfupdate()
 	per_srf:Flip(SelSurface.FlipFlagsConst("NONE"))
@@ -53,6 +57,11 @@ end
 
 function updateTGrN()
 	UpdDataRight( srf_TGN, SelShared.get('maison/Temperature/Grenier Nord') .. "°C", { 28,104,28, 255 } )
+	SelShared.PushTask( presrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
+function updateTGrS()
+	UpdDataRight( srf_TGS, SelShared.get('maison/Temperature/Grenier Sud') .. "°C", { 76,118,34, 255 } )
 	SelShared.PushTask( presrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
@@ -74,6 +83,7 @@ end
 -- local subscription
 local ltopics = {
 	{ topic = "maison/Temperature/Grenier Nord", trigger=updateTGrN, trigger_once=true },
+	{ topic = "maison/Temperature/Grenier Sud", trigger=updateTGrS, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Joris", trigger=updateTChJ, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Oceane", trigger=updateTChO, trigger_once=true },
 	{ topic = "maison/Temperature/Comble", trigger=updateTComble, trigger_once=true }
