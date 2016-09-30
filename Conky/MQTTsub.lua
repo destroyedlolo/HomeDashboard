@@ -34,6 +34,7 @@ local topics = {	-- Topics to subscribe
 	Dehors = {tpc = 'maison/Temperature/Dehors'},
 	Salon = {tpc = 'maison/Temperature/Salon'},
 	GrenierN= {tpc = 'maison/Temperature/Grenier Nord'},
+	GrenierS= {tpc = 'maison/Temperature/Grenier Sud'},
 	ChJoris= {tpc = 'maison/Temperature/Chambre Joris'},
 	ChOceane= {tpc = 'maison/Temperature/Chambre Oceane'}
 }

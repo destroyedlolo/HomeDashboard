@@ -51,14 +51,14 @@ template1 ${color grey}\1 : ${color}${lua_parse displayvar \2 \4} / ${color}${lu
 
 TEXT
 ${template0 Injecteur Injecteur °C}
-${template0 Congelateur Congelo °C}
 
 ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
 
-${template0 Gr_Nord GrenierN °C}	${template0 Comble Comble °C}
- ${template0 Oceane ChOceane °C}	 ${template0 Joris ChJoris °C}
-  ${template0 Salon Salon °C}	${template0 Bureau Bureau °C}
- ${template0 Dehors Dehors °C}	   ${template0 Cave Cave °C}
+ ${template0 Comble Comble °C} ${template0 Congelo Congelo °C}
+${template0 Gr_Nord GrenierN °C}	 ${template0 Gr_Sud GrenierS °C}	
+ ${template0 Oceane ChOceane °C}	  ${template0 Joris ChJoris °C}
+  ${template0 Salon Salon °C}	 ${template0 Bureau Bureau °C}
+ ${template0 Dehors Dehors °C}	    ${template0 Cave Cave °C}
 
 ${color Green}Electricité${offset 8}${color8}${voffset -2}${hr}
 #${lua_graph getConso 20, 00aa00 aa0000 -t}
