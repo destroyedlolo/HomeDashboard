@@ -1,10 +1,10 @@
 -- Actions manuelles sur les volets
 
 local defVolets = {
-	{ lbl="Océane", grp=1, topic='maison/Volet/chOceane' },
+	{ lbl="Oceane", grp=1, topic='maison/Volet/chOceane' },
 	{ lbl="Joris", grp=1, topic='maison/Volet/chJoris' },
 	{ lbl="Parents", grp=1, topic='maison/Volet/chParents' },
-	{ lbl="Cheminée", grp=2, topic='maison/Volet/Salon/Cheminee' },
+	{ lbl="Cheminee", grp=2, topic='maison/Volet/Salon/Cheminee' },
 	{ lbl="Salon", grp=2, topic='maison/Volet/Salon/Fenetre' },
 	{ lbl="Balcon", grp=2, topic='maison/Volet/Salon/Balcon' },
 	{ lbl="Bureau", grp=3, topic='maison/Volet/Buro' },
