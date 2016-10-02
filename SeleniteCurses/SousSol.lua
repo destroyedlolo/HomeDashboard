@@ -1,31 +1,31 @@
 -- This file define the window related to the basement "Sous sol"
 local x,y
 
-pwnd:print('\nCave: ')
+pwnd:print('\nGarage: ')
 x,y = pwnd:GetXY()
-TCave = pwnd:DerWin(x,y,5,1)
-TCave:attrset( SelCurses.CharAttrConst('BOLD') )
+TGarage = pwnd:DerWin(x,y,5,1)
+TGarage:attrset( SelCurses.CharAttrConst('BOLD') )
 pwnd:print(' ??.?"C,  Congelateur: ')
 x,y = pwnd:GetXY()
 TCongelo = pwnd:DerWin(x,y,5,1)
 TCongelo:attrset( SelCurses.CharAttrConst('BOLD') )
 pwnd:print(' ??.?"C,  Porte: ')
 x,y = pwnd:GetXY()
-TCaveP = pwnd:DerWin(x,y,5,1)
-TCaveP:attrset( SelCurses.CharAttrConst('BOLD') )
+TGarageP = pwnd:DerWin(x,y,5,1)
+TGarageP:attrset( SelCurses.CharAttrConst('BOLD') )
 pwnd:print(' ??.?"C ')
-xSitP, uSitP = pwnd:GetXY()
+xSitPG, uSitPG = pwnd:GetXY()
 
-function updateTCave()
-	TCave:clear()
-	TCave:print( string.format('%4.1f', SelShared.get('maison/Temperature/Cave')) )
-	TCave:refresh()
+function updateTGarage()
+	TGarage:clear()
+	TGarage:print( string.format('%4.1f', SelShared.get('maison/Temperature/Garage')) )
+	TGarage:refresh()
 end
 
-function updateTCaveP()
-	TCaveP:clear()
-	TCaveP:print( string.format('%4.1f', SelShared.get('maison/Temperature/CaveP')) )
-	TCaveP:refresh()
+function updateTGarageP()
+	TGarageP:clear()
+	TGarageP:print( string.format('%4.1f', SelShared.get('maison/Temperature/GarageP')) )
+	TGarageP:refresh()
 end
 
 function updateTCongelo()
@@ -34,19 +34,19 @@ function updateTCongelo()
 	TCongelo:refresh()
 end
 
-function updatePorteCave()
-	pwnd:Move(xSitP, uSitP)
+function updatePorteGarage()
+	pwnd:Move(xSitPG, uSitPG)
 	pwnd:clrtoeol()
-	pwnd:print( SelShared.get('maison/IO/Porte_Cave') )
+	pwnd:print( SelShared.get('maison/IO/Porte_Garage') )
 	pwnd:refresh()
 end
 
 -- local subscription
 local ltopics = {
-	{ topic = 'maison/Temperature/Cave', trigger=updateTCave, trigger_once=true },
-	{ topic = 'maison/Temperature/CaveP', trigger=updateTCaveP, trigger_once=true },
+	{ topic = 'maison/Temperature/Garage', trigger=updateTGarage, trigger_once=true },
+	{ topic = 'maison/Temperature/GarageP', trigger=updateTGarageP, trigger_once=true },
 	{ topic = 'maison/Temperature/Congelateur', trigger=updateTCongelo, trigger_once=true },
-	{ topic = 'maison/IO/Porte_Cave', trigger=updatePorteCave, trigger_once=true }
+	{ topic = 'maison/IO/Porte_Garage', trigger=updatePorteGarage, trigger_once=true }
 }
 
 TableMerge( Topics, ltopics)
