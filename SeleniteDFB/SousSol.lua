@@ -43,6 +43,11 @@ srf_TGarageP:SetFont( fdigit )
 srf_SGarageP = ss_srf:SubSurface( 30, 190, fmdigit:StringWidth("Verrouillee"), fmdigit:GetHeight() )
 srf_SGarageP:SetFont( fmdigit )
 
+srf_iCaveP = ss_srf:SubSurface( 300, 180, 70, 70 )
+-- srf_iCaveP:Clear( unpack(COL_BLACK) )
+-- imgPorteFermee:RenderTo( srf_iCaveP, 70,70 )
+imgPorteOuverte:RenderTo( srf_iCaveP, 70,70 )
+
 ss_srf:SetFont( ftitle1 )
 ss_srf:SetColor( unpack(COL_TITLE) )
 ss_srf:DrawString("Congélateur :", goffx, ftitle:GetHeight() - ftitle1:GetHeight() )
