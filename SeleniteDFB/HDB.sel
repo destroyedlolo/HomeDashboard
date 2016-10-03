@@ -49,14 +49,16 @@ imgPorteOuverte = SelImage.create(SELENE_SCRIPT_DIR .."/Images/PorteOuverte.png"
 assert( imgPorteOuverte )
 imgPorteFermee = SelImage.create(SELENE_SCRIPT_DIR .."/Images/PorteFermee.png")
 assert( imgPorteFermee )
+imgPorteVerouillee = SelImage.create(SELENE_SCRIPT_DIR .."/Images/PorteVerouillee.png")
+assert( imgPorteVerouillee )
 
 winlist = {}	-- List of all windows
 
 require (SELENE_SCRIPT_DIR .. "/Primary")
--- require (SELENE_SCRIPT_DIR .. "/RDC")
+require (SELENE_SCRIPT_DIR .. "/RDC")
 require (SELENE_SCRIPT_DIR .. "/1er")
 require (SELENE_SCRIPT_DIR .. "/SousSol")
--- require (SELENE_SCRIPT_DIR .. "/Meteo")
+require (SELENE_SCRIPT_DIR .. "/Meteo")
 
 -- Broker's stuffs
 function disconnected()

@@ -40,9 +40,7 @@ srf_TGarageP = ss_srf:SubSurface( 30, 280, fdigit:StringWidth("-88.8°C"), fmdig
 srf_TGarageP:SetColor( unpack(COL_BLACK) )
 srf_TGarageP:SetFont( fdigit )
 
-srf_SGarageP = ss_srf:SubSurface( 30, 190, fmdigit:StringWidth("Verrouillee"), fmdigit:GetHeight() )
-srf_SGarageP:SetFont( fmdigit )
-
+srf_SGarageP = ss_srf:SubSurface( 20, 180, 70, 70 )	-- Garage door icon
 srf_iCaveP = ss_srf:SubSurface( 300, 180, 70, 70 )	-- Basement door icon
 
 ss_srf:SetFont( ftitle1 )
@@ -179,15 +177,12 @@ function updatePorteGarage()
 
 	srf_SGarageP:Clear( 26,123,23, 255 )
 	if v == 'Ouverte' then
-		srf_SGarageP:SetColor( unpack(COL_ORANGED) )
+		imgPorteOuverte:RenderTo( srf_SGarageP, 70,70 )
 	elseif v == 'Fermee' then
-		srf_SGarageP:SetColor( unpack(COL_REDD) )
-		v = 'Fermée'
+		imgPorteFermee:RenderTo( srf_SGarageP, 70,70 )
 	else
-		srf_SGarageP:SetColor( unpack(COL_GREEND) )
-		v = 'Verrouillée'
+		imgPorteVerouillee:RenderTo( srf_SGarageP, 70,70 )
 	end
-	srf_SGarageP:DrawString(v, 0,0)
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
