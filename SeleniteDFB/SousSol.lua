@@ -43,10 +43,7 @@ srf_TGarageP:SetFont( fdigit )
 srf_SGarageP = ss_srf:SubSurface( 30, 190, fmdigit:StringWidth("Verrouillee"), fmdigit:GetHeight() )
 srf_SGarageP:SetFont( fmdigit )
 
-srf_iCaveP = ss_srf:SubSurface( 300, 180, 70, 70 )
--- srf_iCaveP:Clear( unpack(COL_BLACK) )
--- imgPorteFermee:RenderTo( srf_iCaveP, 70,70 )
-imgPorteOuverte:RenderTo( srf_iCaveP, 70,70 )
+srf_iCaveP = ss_srf:SubSurface( 300, 180, 70, 70 )	-- Basement door icon
 
 ss_srf:SetFont( ftitle1 )
 ss_srf:SetColor( unpack(COL_TITLE) )
@@ -194,6 +191,19 @@ function updatePorteGarage()
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
+function updatePorteCave()
+	local v = SelShared.get('maison/IO/Porte_Cave')
+
+	srf_iCaveP:Clear( 26,123,23, 255 )
+	if v == 'Ouverte' then
+		imgPorteOuverte:RenderTo( srf_iCaveP, 70,70 )
+	else
+		imgPorteFermee:RenderTo( srf_iCaveP, 70,70 )
+	end
+
+	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
 function updateSaison()
 	UpdDataCentered( srf_Saison, SelShared.get('Majordome/Saison') )
 	SelShared.PushTask( sssrfupdate, SelShared.TaskOnceConst("LAST") )
@@ -232,6 +242,7 @@ local ltopics = {
 	{ topic = "Majordome/HLever", trigger=updateCLeve, trigger_once=true },
 	{ topic = "Majordome/HCoucher", trigger=updateCCouche, trigger_once=true },
 	{ topic = "maison/IO/Porte_Garage", trigger=updatePorteGarage, trigger_once=true },
+	{ topic = "maison/IO/Porte_Cave", trigger=updatePorteCave, trigger_once=true },
 	{ topic = "Majordome/Saison", trigger=updateSaison, trigger_once=true },
 	{ topic = "Majordome/Mode/Force", trigger=updateMForce, trigger_once=true },
 	{ topic = "Majordome/Mode/Enfants", trigger=updateMEnfants, trigger_once=true },
