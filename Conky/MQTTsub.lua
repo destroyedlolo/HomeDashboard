@@ -26,10 +26,15 @@ local topics = {	-- Topics to subscribe
 	ups_load_nom = {tpc = 'onduleur/ups.realpower.nominal'},
 	ups_battery = {tpc = 'onduleur/battery.charge', max=100},
 
+	P_Garage = {tpc = 'maison/IO/Porte_Garage'},
+	P_Cave = {tpc = 'maison/IO/Porte_Cave'},
+	P_GSud = {tpc = 'maison/IO/Porte_GSud'},
+
 	Congelo = {tpc = 'maison/Temperature/Congelateur'},
 	Injecteur = {tpc = 'maison/Temperature/Injecteur'},
 	Bureau = {tpc = 'maison/Temperature/Bureau'},
-	Cave = {tpc = 'maison/Temperature/Cave'},
+	Garage = {tpc = 'maison/Temperature/Garage'},
+	GarageP = {tpc = 'maison/Temperature/GarageP'},
 	Comble = {tpc = 'maison/Temperature/Comble'},
 	Dehors = {tpc = 'maison/Temperature/Dehors'},
 	Salon = {tpc = 'maison/Temperature/Salon'},
@@ -73,7 +78,15 @@ function conky_cleanup()
 	brkc:destroy()
 end
 
-function conky_displayvar( var, unite )
+function conky_displayvar( var )
+	if not _G[ var ] then
+		return '????'
+	else
+		return tostring(_G[ var ])
+	end
+end
+
+function conky_displayvarU( var, unite )
 	if not _G[ var ] then
 		return '????'
 	else

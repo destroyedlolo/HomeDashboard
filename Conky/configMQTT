@@ -46,8 +46,9 @@ use_spacer none
 short_units yes
 pad_percents 2
 
-template0 ${color grey}\1 : ${color}${lua_parse displayvar \2 \3}
-template1 ${color grey}\1 : ${color}${lua_parse displayvar \2 \4} / ${color}${lua_parse displayvar \3 \4}
+template0 ${color grey}\1 : ${color}${lua_parse displayvarU \2 \3}
+template1 ${color grey}\1 : ${color}${lua_parse displayvarU \2 \4} / ${color}${lua_parse displayvar \3 \4}
+template2 ${color grey}\1 : ${color}${lua_parse displayvar \2}
 
 TEXT
 ${template0 Injecteur Injecteur °C}
@@ -58,7 +59,14 @@ ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
  ${template0 Gr_Sud GrenierS °C}	${template0 Gr_Nord GrenierN °C}	 
  ${template0 Oceane ChOceane °C}	  ${template0 Joris ChJoris °C}
   ${template0 Salon Salon °C}	 ${template0 Bureau Bureau °C}
- ${template0 Dehors Dehors °C}	    ${template0 Cave Cave °C}
+ ${template0 Garage Garage °C}	${template0 Prt_Grg GarageP °C}
+ ${template0 Dehors Dehors °C}
+
+${color Green}Portes${offset 8}${color8}${voffset -2}${hr}
+
+${template2 Grenier_Sud P_GSud}
+${template2 Cave P_Cave}
+${template2 Garage P_Garage}
 
 ${color Green}Electricité${offset 8}${color8}${voffset -2}${hr}
 #${lua_graph getConso 20, 00aa00 aa0000 -t}
