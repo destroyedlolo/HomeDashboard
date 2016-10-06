@@ -50,7 +50,7 @@ srf_TGS = per_srf:SubSurface( 475, 250, 25 + fdigit:StringWidth("-88.8°C"), fmd
 srf_TGS:SetColor( unpack(COL_BLACK) )
 srf_TGS:SetFont( fdigit )
 
-srf_iGSP = per_srf:SubSurface( 475, 180, 70, 70 )
+srf_iGSP = per_srf:SubSurface( 475, 175, 41, 70 )
 
 -- Update functions
 function presrfupdate()
@@ -72,9 +72,9 @@ function updatePGrS()
 
 	srf_iGSP:Clear( 26,123,23, 255 )
 	if v == 'Ouverte' then
-		imgPorteOuverte:RenderTo( srf_iGSP, 70,70 )
+		imgPorteOuverte:RenderTo( srf_iGSP, 41,70 )
 	else
-		imgPorteFermee:RenderTo( srf_iGSP, 70,70 )
+		imgPorteFermee:RenderTo( srf_iGSP, 41,70 )
 	end
 
 	SelShared.PushTask( presrfupdate, SelShared.TaskOnceConst("LAST"))
