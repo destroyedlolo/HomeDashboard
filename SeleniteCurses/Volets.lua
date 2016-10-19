@@ -71,5 +71,15 @@ function initVolets()
 	genMenu()
 end
 
-swinLst['V'] = { titre="&Volets", func=initVolets, key=keyVolets }
+function FermeVolets()
+	wmdSub:clear()
+	wmdSub:refresh()
+
+	Mode=''
+	genMenu()
+
+	actWnd = nil
+end
+
+swinLst['V'] = { titre="&Volets", func=initVolets, key=keyVolets, close=FermeVolets }
 

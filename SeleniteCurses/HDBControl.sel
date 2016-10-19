@@ -8,7 +8,7 @@
 -- but it should be took as example to build your own one
 
 assert( SELENE_VERSION >= 3.0100, "HDB requires at least Selene v3.01.00" )
-local stitle = " Home Dashboard Control v0.1.0 (Selene v".. SELENE_VERSION ..") "
+local stitle = " Home Dashboard Control v0.2.0 (Selene v".. SELENE_VERSION ..") "
 
 -- Debug only
 --[[
@@ -87,7 +87,14 @@ while true do
 			if cn < 128 then
 				c = string.char(cn)
 			end
-			if swinLst[c] ~= nil then
+
+			if cn == 127 or cn == SelCurses.Key("BACKSPACE") then -- <- pour fermer la fenetre
+				if 	actWnd then
+					actWnd.close()
+				else
+					SelCurses.flash()
+				end
+			elseif swinLst[c] ~= nil then
 				actWnd = swinLst[c]
 				swinLst[c].func()
 			elseif actWnd ~= nil then
