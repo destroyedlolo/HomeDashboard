@@ -46,6 +46,7 @@ swinLst = {}
 actWnd = nil	-- Fenetre active
 
 require(SELENE_SCRIPT_DIR .. "/Volets")
+require(SELENE_SCRIPT_DIR .. "/Consignes")
 swinLst['Q'] = { titre="&Quitter", func=os.exit }
 
 genMenu()
@@ -89,12 +90,15 @@ while true do
 			end
 
 			if cn == 127 or cn == SelCurses.Key("BACKSPACE") then -- <- pour fermer la fenetre
-				if 	actWnd then
+				if actWnd then
 					actWnd.close()
 				else
 					SelCurses.flash()
 				end
 			elseif swinLst[c] ~= nil then
+				if actWnd then
+					actWnd.close()
+				end
 				actWnd = swinLst[c]
 				swinLst[c].func()
 			elseif actWnd ~= nil then
