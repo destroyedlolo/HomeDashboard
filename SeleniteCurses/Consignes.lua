@@ -16,6 +16,47 @@ function updateMForceEnfants()
 	end
 end
 
+function popupConsMode( Brk, topic )
+	local w,h = wmdSub:GetSize()
+
+	local popup = wmdSub:DerWin((w-15)/2,2, 15,6)
+
+	genTitre(popup, "\n  &Auto\n")
+	genTitre(popup, "  &Manuel\n")
+	genTitre(popup, "  &Travail\n")
+	genTitre(popup, "  &Vacances\n")
+	genTitre(popup, "  A&bsent\n")
+
+	popup:border()
+	popup:refresh()
+
+	local c = string.upper(string.char(popup:getch()))
+
+	if c == 'A' then
+		Brk:Publish( topic, "Auto", true)
+	elseif c == 'M' then
+		Brk:Publish( topic, "Manuel", true)
+	elseif c == 'T' then
+		Brk:Publish( topic, "Travail", true)
+	elseif c == 'V' then
+		Brk:Publish( topic, "Vacances", true)
+	elseif c == 'B' then
+		Brk:Publish( topic, "Absent", true)
+	end
+
+	popup:delwin()
+end
+
+function keyConsignes(Brk, c,cn)
+	if c == 'o' then
+		popupConsMode( Brk, 'Majordome/Mode/Force' )
+	elseif c == 'e' then
+		popupConsMode( Brk, 'Majordome/Mode/Enfants' )
+	end
+
+	initConsignes()
+end
+
 function initConsignes()
 	local x,y
 	Mode='C'
@@ -57,7 +98,7 @@ function FermeConsignes()
 	actWnd = nil
 end
 
-swinLst['C'] = { titre="&Consignes", func=initConsignes, key=keyVolets, close=FermeConsignes }
+swinLst['C'] = { titre="&Consignes", func=initConsignes, key=keyConsignes, close=FermeConsignes }
 
 -- Topics
 
