@@ -109,3 +109,7 @@ local ltopics = {
 
 TableMerge( Topics, ltopics)
 
+-- Valeurs par défauts (pour éviter un crash si elle ne sont pas définies)
+
+SelShared.set('Majordome/Mode/Force', '?')
+SelShared.set('Majordome/Mode/Enfants', '?')
