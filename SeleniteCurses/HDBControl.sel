@@ -8,7 +8,7 @@
 -- but it should be took as example to build your own one
 
 assert( SELENE_VERSION >= 3.0100, "HDB requires at least Selene v3.01.00" )
-local stitle = " Home Dashboard Control v0.2.2 (Selene v".. SELENE_VERSION ..") "
+local stitle = " Home Dashboard Control v0.2.3 (Selene v".. SELENE_VERSION ..") "
 
 -- Debug only
 --[[
