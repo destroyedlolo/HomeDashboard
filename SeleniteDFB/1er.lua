@@ -46,6 +46,10 @@ srf_TchO = per_srf:SubSurface( 330, 250, 25 + fmdigit:StringWidth("-88.8°C"), f
 srf_TchO:SetColor( unpack(COL_BLACK) )
 srf_TchO:SetFont( fdigit )
 
+srf_TchP = per_srf:SubSurface( 280, 147, 25 + fmdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
+srf_TchP:SetColor( unpack(COL_BLACK) )
+srf_TchP:SetFont( fdigit )
+
 srf_TGS = per_srf:SubSurface( 475, 250, 25 + fdigit:StringWidth("-88.8°C"), fmdigit:GetHeight() )
 srf_TGS:SetColor( unpack(COL_BLACK) )
 srf_TGS:SetFont( fdigit )
@@ -90,6 +94,11 @@ function updateTChO()
 	SelShared.PushTask( presrfupdate, SelShared.TaskOnceConst("LAST"))
 end
 
+function updateTChP()
+	UpdDataRight( srf_TchP, SelShared.get('maison/Temperature/Chambre Parents') .. "°C", { 133,37,132, 255 } )
+	SelShared.PushTask( presrfupdate, SelShared.TaskOnceConst("LAST"))
+end
+
 function updateTComble()
 	UpdDataRight( srf_TComble, SelShared.get('maison/Temperature/Comble') .. "°C")
 	SelShared.PushTask( presrfupdate, SelShared.TaskOnceConst("LAST"))
@@ -102,6 +111,7 @@ local ltopics = {
 	{ topic = "maison/IO/Porte_GSud", trigger=updatePGrS, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Joris", trigger=updateTChJ, trigger_once=true },
 	{ topic = "maison/Temperature/Chambre Oceane", trigger=updateTChO, trigger_once=true },
+	{ topic = "maison/Temperature/Chambre Parents", trigger=updateTChP, trigger_once=true },
 	{ topic = "maison/Temperature/Comble", trigger=updateTComble, trigger_once=true }
 }
 
