@@ -1,6 +1,6 @@
 -- Define frequently used colors
 -- (based on HTML color names)
-local function Color( r,g,b,a )
+function Color( r,g,b,a )
 	local self = {}
 
 	-- methods

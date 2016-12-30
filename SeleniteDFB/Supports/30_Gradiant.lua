@@ -1,4 +1,4 @@
-local function Gradiant( colors )
+function Gradiant( colors )
 	local self = {}
 
 	local function linearcolor( val, u1, v1, u2, v2)

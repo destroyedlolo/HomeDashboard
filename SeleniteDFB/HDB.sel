@@ -15,6 +15,8 @@ Selene.UseDirectFB("--dfb:quiet,no-vt,no-cursor")
 
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 
+Topics = {}	-- Topics we are looking for
+
 -- Hide console's cursor
 local f=io.open('/sys/class/graphics/fbcon/cursor_blink', 'w')
 if f then	-- working only using root access
@@ -49,9 +51,6 @@ end
 loaddir( 'Supports' )
 loaddir( 'Gfx' )
 
-print(15, COL_TEMPERATURE.findgradiancolor(15) )
-print(20, COL_TEMPERATURE.findgradiancolor(20) )
-print(40, COL_TEMPERATURE.findgradiancolor(40) )
 os.exit(0)
 
 require (SELENE_SCRIPT_DIR .. "/Colors")		-- Colors used in the GUI
