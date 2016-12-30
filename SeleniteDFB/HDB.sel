@@ -47,6 +47,7 @@ end
 
 -- load modules
 loaddir( 'Supports' )
+loaddir( 'Gfx' )
 
 print(15, COL_TEMPERATURE.findgradiancolor(15) )
 print(20, COL_TEMPERATURE.findgradiancolor(20) )
