@@ -7,10 +7,13 @@
 -- Ensure we're not using obsolete version
 assert( SELENE_VERSION >= 2.0100, "HDB requires at least Selene v2.01.00" )
 
-Selene.UseDirectFB("--dfb:quiet,no-vt,no-cursor")
-
 -- compatibility with newer Lua
 local unpack = unpack or table.unpack
+
+-- initialise graphical environment
+Selene.UseDirectFB("--dfb:quiet,no-vt,no-cursor")
+
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 
 -- Hide console's cursor
 local f=io.open('/sys/class/graphics/fbcon/cursor_blink', 'w')
@@ -19,7 +22,37 @@ if f then	-- working only using root access
 	f:close()
 end
 
-require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Configuration to connect to the broker
+-- modules helpers
+lfs = require "lfs" -- LuaFileSystem
+
+function loaddir( dir )
+	local t={}
+
+	for f in lfs.dir(dir) do
+		local attr = lfs.attributes( dir ..'/'.. f )
+		local found, len, res = f:find("^(.*)%.[^%.]*$")
+		if found and attr.mode == 'file' and res:sub(1,1) ~= '.' and f:match("^.+(%..+)$") ~= '.md' then
+			table.insert( t, res )
+		end
+	end
+
+	table.sort(t)
+
+	for _,res in ipairs( t ) do
+		require(dir ..'/'.. res)
+		print("*L* " .. dir ..'/'.. res .. ' loaded')
+	end
+end
+
+
+-- load modules
+loaddir( 'Supports' )
+
+print(15, COL_TEMPERATURE.findgradiancolor(15) )
+print(20, COL_TEMPERATURE.findgradiancolor(20) )
+print(40, COL_TEMPERATURE.findgradiancolor(40) )
+os.exit(0)
+
 require (SELENE_SCRIPT_DIR .. "/Colors")		-- Colors used in the GUI
 
 -- List of topics to subscribe to
