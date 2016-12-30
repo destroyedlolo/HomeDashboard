@@ -48,12 +48,9 @@ end
 
 
 -- load modules
-loaddir( 'Supports' )
-loaddir( 'Gfx' )
-
-os.exit(0)
-
-require (SELENE_SCRIPT_DIR .. "/Colors")		-- Colors used in the GUI
+loaddir('Supports')
+loaddir('Gfx')
+loaddir('IHM')
 
 -- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.
@@ -68,12 +65,13 @@ Topics = {
 	{ topic = "HomeDashBoard/Tablette/Command", trigger=Command }	-- 'Tablette' has to be changed if several dashboard
 }
 
--- Init the screen
-DirectFB.init( DirectFB.CooperativeConst('NORMAL') )
-layer = SelLayer.GetLayer(0)	-- Get primary layer
-layer:SetCooperativeLevel( SelLayer.CooperativeLevelConst('ADMINISTRATIVE') )
-psrf = layer:GetSurface()
-psrf:Clear( unpack(COL_BLACK) )
+
+-- debug only
+print "Hit 'enter' key to exit"
+io.stdin:read'*l'	-- wait for enter
+
+psrf:destroy()
+os.exit(0)
 
 require (SELENE_SCRIPT_DIR .. "/Helpers")	-- Helper functions to draw data
 
