@@ -13,22 +13,17 @@ function Field(
 	szx,		-- if not null, overwrite computed size
 	bgcolor -- background color
 )
-	local self = {}
 
 	-- initialize
 	if not szx then
 		szx = font:StringWidth( ctxt )
 	end
 
-	local srf = SubSurface(psrf, x,y, szx, font:GetHeight() )
-	srf.get():SetFont( font )
-	srf.setColor( color )
+	local self = SubSurface(psrf, x,y, szx, font:GetHeight() )
+	self.get():SetFont( font )
+	self.setColor( color )
 
 	-- methods
-	function self.getsrf()
-		return srf
-	end
-
 	function self.GetHeight()
 		return font:GetHeight()
 	end
@@ -37,20 +32,16 @@ function Field(
 		srf.get():Clear( bgcolor.get() )
 	end
 
-	function self.refresh()
-		srf.refresh()
-	end
-
 	function self.update( v )
-		local tsrf = srf.get()
+		local srf = self.get()
 		self.Clear()
 
 		if align == ALIGN_LEFT then
-			tsrf:DrawString( v, 0, 0 )
+			srf:DrawString( v, 0, 0 )
 		elseif align == ALIGN_CENTER then
-			tsrf:DrawString( v, (tsrf:GetWidth() - font:StringWidth(v))/2, 0 )
+			srf:DrawString( v, (srf:GetWidth() - font:StringWidth(v))/2, 0 )
 		else	-- right
-			tsrf:DrawString( v, tsrf:GetWidth() - font:StringWidth(v), 0 )
+			srf:DrawString( v, srf:GetWidth() - font:StringWidth(v), 0 )
 		end
 
 		self.refresh()

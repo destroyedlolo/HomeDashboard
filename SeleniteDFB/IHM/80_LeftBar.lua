@@ -20,6 +20,8 @@ local function f()
 	self.refresh()	-- refresh the background
 
 	srf_tension = FieldBackground( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20, COL_BLACK )
+
+
 srf_tension.update('124.0 V')
 
 	return self

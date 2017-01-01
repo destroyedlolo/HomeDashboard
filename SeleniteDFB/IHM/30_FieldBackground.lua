@@ -11,10 +11,10 @@ function FieldBackground(
 )
 	local self = Field( psrf, x,y, font, align, color, ctxt, szx, COL_BLACK )
 
-	local back = self.getsrf().get():clone()
+	local back = self.get():clone()
 
 	function self.Clear()
-		self.getsrf().get():restore(back)
+		self.get():restore(back)
 	end
 
 	return self
