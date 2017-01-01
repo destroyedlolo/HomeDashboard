@@ -38,12 +38,15 @@ function Field(
 	end
 
 	function self.update( v )
+		local tsrf = srf.get()
 		self.Clear()
 
 		if align == ALIGN_LEFT then
-			srf.get():DrawString( v, 0, 0 )
+			tsrf:DrawString( v, 0, 0 )
 		elseif align == ALIGN_CENTER then
+			tsrf:DrawString( v, (tsrf:GetWidth() - font:StringWidth(v))/2, 0 )
 		else	-- right
+			tsrf:DrawString( v, tsrf:GetWidth() - font:StringWidth(v), 0 )
 		end
 
 		self.refresh()
