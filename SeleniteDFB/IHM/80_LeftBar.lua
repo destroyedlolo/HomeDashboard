@@ -19,7 +19,7 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 	self.refresh()	-- refresh the background
 
-	srf_tension = Field( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, COL_BLACK, "888.0 V", w-20 )
+	srf_tension = FieldBackground( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20, COL_BLACK )
 srf_tension.update('124.0 V')
 
 	return self

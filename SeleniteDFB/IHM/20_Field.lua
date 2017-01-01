@@ -9,9 +9,9 @@ function Field(
 	font,	-- font to use
 	align,	-- Alignment (-1 : left, 0 : center, 1 : right)
 	color,	-- initial foreground color
-	bgcolor, -- background color
 	ctxt,	-- text to compute field's size
-	szx		-- if not null, overwrite computed size
+	szx,		-- if not null, overwrite computed size
+	bgcolor -- background color
 )
 	local self = {}
 
@@ -25,6 +25,10 @@ function Field(
 	srf.setColor( color )
 
 	-- methods
+	function self.getsrf()
+		return srf
+	end
+
 	function self.GetHeight()
 		return font:GetHeight()
 	end
