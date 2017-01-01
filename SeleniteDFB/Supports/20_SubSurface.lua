@@ -13,11 +13,7 @@ function SubSurface(parent_surface, x,y,sx,sy )
 		srf:SetColor( c.get() )
 	end
 
-	function self.setFont( f )
-		srf:SetFont( f )
-	end
-
-	function self.update()
+	function self.refresh()
 		srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 	end
 
