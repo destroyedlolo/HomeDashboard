@@ -42,15 +42,18 @@ function loaddir( dir )
 
 	for _,res in ipairs( t ) do
 		require(dir ..'/'.. res)
-		print("*L* " .. dir ..'/'.. res .. ' loaded')
+		SelLog.log("*L* " .. dir ..'/'.. res .. ' loaded')
 	end
 end
 
 
 -- load modules
 loaddir('Supports')
+loaddir('Inputs')
 loaddir('Gfx')
 loaddir('IHM')
+
+SelLog.log("Let's go ...")
 
 -- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.
@@ -58,47 +61,21 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		psrf:Dump('/tmp', 'DashBoard')
 	elseif SelShared.get('HomeDashBoard/Tablette/Command') == 'Tasks' then
 		SelShared.dump()
+	elseif SelShared.get('HomeDashBoard/Tablette/Command') == 'Topics' then
+		for _,v in ipairs(Topics) do
+			print(_,v.topic)
+		end
 	end
 end
 
-Topics = {
+table.insert( Topics, 
 	{ topic = "HomeDashBoard/Tablette/Command", trigger=Command }	-- 'Tablette' has to be changed if several dashboard
-}
+)
 
-
--- debug only
-print "Hit 'enter' key to exit"
-io.stdin:read'*l'	-- wait for enter
-
-psrf:destroy()
-os.exit(0)
-
-require (SELENE_SCRIPT_DIR .. "/Helpers")	-- Helper functions to draw data
-
--- GUI
-imgPorteOuverte = SelImage.create(SELENE_SCRIPT_DIR .."/Images/PorteOuverte.png")
-assert( imgPorteOuverte )
-imgPorteFermee = SelImage.create(SELENE_SCRIPT_DIR .."/Images/PorteFermee.png")
-assert( imgPorteFermee )
-imgPorteVerouillee = SelImage.create(SELENE_SCRIPT_DIR .."/Images/PorteVerouillee.png")
-assert( imgPorteVerouillee )
-
-winlist = {}	-- List of all windows
-
-require (SELENE_SCRIPT_DIR .. "/Primary")
-require (SELENE_SCRIPT_DIR .. "/RDC")
-require (SELENE_SCRIPT_DIR .. "/1er")
-require (SELENE_SCRIPT_DIR .. "/SousSol")
-require (SELENE_SCRIPT_DIR .. "/Meteo")
 
 -- Broker's stuffs
 function disconnected()
-	local skull,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/Red-Skull-icon.png")
-	if err then
-		print (err)
-	end
-	skull:RenderTo( psrf, { psrf:GetWidth() - 50, 0, 50,50 } )
-	SelShared.PushTask( psrfupdate )
+	print('Deconnecté')
 end
 
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
@@ -107,71 +84,20 @@ if err then
 	return
 end
 
---[[
-require("tostring")
-print(universal_tostring(Topics))
-]]
-
 -- Subscribtion
-
 _, err = Brk:subscribe( Topics )
 if err then
-	print( err )
-	return
-end
-
--- Timer for tablet figures
-function updateTablet()
-	local cols = {
-		[1.5] = COL_GREEN,
-		[2.75] = COL_ORANGE,
-		[4] = COL_RED
-	}
-
-	local f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/voltage_now" )
-	local v = f:read('*number') / 1000000
-	f:close()
-	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/axp20-supplyer.28/power_supply/ac/current_now" )
-	v = v * f:read('*number') / 1000000
-	f:close()
-	srf_tabpwr:SetColor( findgradiancolor(v, cols ) )
-	UpdDataRight( srf_tabpwr, string.format('%3.2f', v) .. ' W')
-	dt_pwr:Push( v )
-	local min,max = dt_pwr:MinMax()
-	updgfx( srf_tpwrgfx, dt_pwr )
-
-	cols = {
-		[30] = COL_DIGIT,
-		[40] = COL_ORANGE
-	}
-	f = io.open( "/sys/devices/platform/sunxi-i2c.0/i2c-0/0-0034/temp1_input" )
-	v = f:read('*number') / 1000
-	f:close()
-	srf_ttpmu:SetColor( findgradiancolor(v, cols ) )
-	UpdDataRight( srf_ttpmu, string.format('%3.1f', v) .. '°C')
-end
-
-local tabtimer,err = SelTimer.create { when=1, interval=5, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc=updateTablet}
-if err then
-	print(err)
-	return
-end
-
-wcnt = 0
-function switchwindows()
-	winlist[ (wcnt % #winlist)+1 ]:RaiseToTop()
-	wcnt = wcnt + 1
-end
-
-local switchtimer,err = SelTimer.create { when=10, interval=10, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=switchwindows}
-if err then
-	print(err)
+	print( "Subscribtion", err )
 	return
 end
 
 -- Wait for events
-while true do
-	ret, err = Selene.WaitFor(tabtimer, switchtimer)
+while true do -- Main todo list handler
+	ret, err = Selene.WaitFor( )
+	if err then
+		print(err)
+		return
+	end
 
 	if type(ret) == 'function' then
 		ret()

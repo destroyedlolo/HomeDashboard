@@ -21,13 +21,15 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 	self.refresh()	-- refresh the background
 
-	srf_tension = FieldBackground( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
+	local srf_tension = FieldBackground( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
 	offy = offy + srf_tension:GetHeight()
+	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', nil, srf_tension, ' V' )
 
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
 	srf_consommation = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
 	offy = offy + srf_consommation:GetHeight()
+	local consomation = MQTTDisplay( 'consomation', 'TeleInfo/Consommation/values/PAPP', nil, srf_consommation, ' VA' )
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 	offy = offy + HSGRPH
@@ -44,11 +46,13 @@ local function f()
 
 	self.refresh()
 
+--[[
 srf_tension.update('124.0 V')
 srf_consommation.update('12345')
 srf_maxconso.update('12345')
 srf_production.update('12345')
 srf_maxprod.update('12345')
+]]
 
 	return self
 end

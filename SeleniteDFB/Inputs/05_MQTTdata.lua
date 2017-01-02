@@ -1,6 +1,6 @@
 -- Generic class to handle MQTT stuffs
 
-function MQTTdata( name, tpc )
+function MQTTdata( name, topic )
 	local self = {}
 
 	-- methods
