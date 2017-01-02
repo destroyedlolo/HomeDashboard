@@ -29,7 +29,15 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 	srf_consommation = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
 	offy = offy + srf_consommation:GetHeight()
-	local consomation = MQTTDisplay( 'consomation', 'TeleInfo/Consommation/values/PAPP', nil, srf_consommation, ' VA' )
+	local consomation = MQTTDisplay( 'consomation', 'TeleInfo/Consommation/values/PAPP', nil, srf_consommation, ' VA', 
+		Gradient(
+			{
+				[500] = COL_DIGIT,
+				[1500] = COL_ORANGE,
+				[4500] = COL_RED
+			}
+		) 
+	)
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 	offy = offy + HSGRPH
@@ -39,6 +47,7 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 	srf_production = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
 	offy = offy + srf_production:GetHeight()
+	local production = MQTTDisplay( 'production', 'TeleInfo/Production/values/PAPP', nil, srf_production, ' VA' )
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 	offy = offy + HSGRPH

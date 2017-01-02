@@ -1,4 +1,4 @@
-function Gradiant( colors )
+function Gradient( colors )
 	local self = {}
 
 	local function linearcolor( val, u1, v1, u2, v2)
@@ -15,7 +15,7 @@ function Gradiant( colors )
 	-- Find color b/w 2 known values
 	-- key = known value
 	-- value = corresponding color (table)
-	function self.findgradiancolor( val )
+	function self.findgradientcolor( val )
 		val = tonumber(val)
 		if colors[val] then
 			return colors[val].get()
