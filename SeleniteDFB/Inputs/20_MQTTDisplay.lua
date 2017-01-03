@@ -24,7 +24,7 @@ function MQTTDisplay(
 	end
 
 	-- init
-	self.TaskAdd( self.update )
+	self.TaskOnceAdd( self.update )
 
 	return self
 end

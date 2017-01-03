@@ -11,11 +11,15 @@ function GfxArea(
 	self.setColor( color )
 
 	function self.Clear()
-		srf.get():Clear( bgcolor.get() )
+		self.get():Clear( bgcolor.get() )
 	end
 
 	function self.DrawGfx( data, amin )	-- Minimal graphics
 		self.Clear()
+
+		if not data:GetSize() then
+			return
+		end
 
 		local min,max = data:MinMax()
 		min = amin or min

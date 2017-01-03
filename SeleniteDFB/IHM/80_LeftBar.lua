@@ -25,23 +25,30 @@ local function f()
 	offy = offy + srf_tension:GetHeight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', nil, srf_tension, ' V' )
 
+
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
 	srf_consommation = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
 	offy = offy + srf_consommation:GetHeight()
-	local consomation = MQTTDisplay( 'consomation', 'TeleInfo/Consommation/values/PAPP', nil, srf_consommation, ' VA', 
+
+	x = w - (5 + fsdigit:StringWidth("12345"))
+
+	srf_trndconso = GfxArea( srf, 0, y, x-5, HSGRPH, COL_RED, COL_BGGFX )
+
+	offy = offy + HSGRPH
+	srf_maxconso = FieldBackground( srf, x, offy-fsdigit:GetHeight(), fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
+
+	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, ' VA', 
 		Gradient(
 			{
 				[500] = COL_DIGIT,
 				[1500] = COL_ORANGE,
 				[4500] = COL_RED
 			}
-		) 
+		),
+		srf_trndconso, srf_maxconso, 0
 	)
 
-	x = w - (5 + fsdigit:StringWidth("12345"))
-	offy = offy + HSGRPH
-	srf_maxconso = FieldBackground( srf, x, offy-fsdigit:GetHeight(), fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 
 	srf:DrawString("Production :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
