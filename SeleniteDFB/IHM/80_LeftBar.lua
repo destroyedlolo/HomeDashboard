@@ -19,7 +19,7 @@ local function f()
 	srf:SetFont( ftitle1 )
 	srf:DrawString("Tension EDF :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	self.refresh()	-- refresh the background
+	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
 
 	local srf_tension = FieldBackground( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
 	offy = offy + srf_tension:GetHeight()
@@ -28,14 +28,14 @@ local function f()
 
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	srf_consommation = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
+	local srf_consommation = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
 	offy = offy + srf_consommation:GetHeight()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 
-	srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_RED, COL_BGGFX )
+	local srf_trndconso = GfxAreaBackground( srf, 0, offy, x-5, HSGRPH, COL_RED )
 
-	srf_maxconso = FieldBackground( srf, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
+	local srf_maxconso = FieldBackground( srf, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
 
 	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, ' VA', 
@@ -52,13 +52,18 @@ local function f()
 
 	srf:DrawString("Production :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	srf_production = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
+	local srf_production = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
 	offy = offy + srf_production:GetHeight()
-	local production = MQTTDisplay( 'production', 'TeleInfo/Production/values/PAPP', nil, srf_production, ' VA' )
 
-	x = w - (5 + fsdigit:StringWidth("12345"))
+-- already calculated
+--	x = w - (5 + fsdigit:StringWidth("12345"))
+
+	local srf_trndprod = GfxAreaBackground( srf, 0, offy, x-5, HSGRPH, COL_RED )
+
+	local srf_maxprod = FieldBackground( srf, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
-	srf_maxprod = FieldBackground( srf, x, offy-fsdigit:GetHeight(), fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
+
+	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, ' VA', nil, srf_trndprod, srf_maxprod, 0 )
 
 	self.refresh()
 

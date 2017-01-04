@@ -1,4 +1,4 @@
--- Area du graph some trends
+-- Area to graph some trends
 
 function GfxArea(
 	psrf,	-- mother surface
@@ -7,6 +7,7 @@ function GfxArea(
 	color,	-- initial foreground color
 	bgcolor -- background color
 )
+	
 	local self = SubSurface(psrf, sx,sy, sw,sh )
 	self.setColor( color )
 
