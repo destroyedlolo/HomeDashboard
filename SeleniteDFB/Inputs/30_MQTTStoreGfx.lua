@@ -6,26 +6,31 @@ function MQTTStoreGfx(
 	suffix,	-- string to add to the value (i.e. : unit)
 	gradient,	-- gradient to colorize 
 	sgfx,	-- surface to display the graphic
-	smin,	-- surface to display the miminum
+	smax,	-- surface to display the miminum
 	forced_min
 )
 	local dt = SelCollection.create( sgfx.get():GetWidth() )
 
-	local function adddt( t, v )
-		SelShared.set( t, v )
+	local function adddt( )
+		local v = SelShared.get( topic )
 		dt:Push(v)
-		return true
 	end
 
-	local self = MQTTDisplay( name, topic, adddt, srf, suffix, gradient )
+	local self = MQTTDisplay( name, topic, nil, srf, suffix, gradient )
 
 	local function updgfx()
-print("updgfx")
-dt:dump()
 		sgfx.DrawGfx(dt, forced_min)
+		SelShared.PushTask( sgfx.refresh, SelShared.TaskOnceConst("LAST") )
 	end
 
+	local function updmin()
+		local _,max = dt:MinMax()
+		smax.update( max )
+	end
+
+	self.TaskOnceAdd( adddt )
 	self.TaskOnceAdd( updgfx )
+	self.TaskOnceAdd( updmin )
 
 	return self
 end

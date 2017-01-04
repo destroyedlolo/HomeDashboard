@@ -17,10 +17,6 @@ function GfxArea(
 	function self.DrawGfx( data, amin )	-- Minimal graphics
 		self.Clear()
 
-		if not data:GetSize() then
-			return
-		end
-
 		local min,max = data:MinMax()
 		min = amin or min
 		if max == min then	-- No dynamic data to draw

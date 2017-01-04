@@ -33,10 +33,10 @@ local function f()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 
-	srf_trndconso = GfxArea( srf, 0, y, x-5, HSGRPH, COL_RED, COL_BGGFX )
+	srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_RED, COL_BGGFX )
 
+	srf_maxconso = FieldBackground( srf, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
-	srf_maxconso = FieldBackground( srf, x, offy-fsdigit:GetHeight(), fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 
 	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, ' VA', 
 		Gradient(
