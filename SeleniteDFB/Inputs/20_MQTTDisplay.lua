@@ -13,7 +13,7 @@ function MQTTDisplay(
 		local v = self.get()
 
 		if gradient then
-			srf.get():SetColor( gradient.findgradientcolor(v) )
+			srf.setColorRGB( gradient.findgradientcolor(v) )
 		end
 
 		if suffix then
