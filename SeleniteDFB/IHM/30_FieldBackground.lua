@@ -7,9 +7,10 @@ function FieldBackground(
 	align,	-- Alignment (-1 : left, 0 : center, 1 : right)
 	color,	-- initial foreground color
 	ctxt,	-- text to compute field's size
-	szx		-- if not null, overwrite computed size
+	szx,		-- if not null, overwrite computed size
+	szy	-- if not null, overwrite computed size
 )
-	local self = Field( psrf, x,y, font, align, color, ctxt, szx, COL_BLACK )
+	local self = Field( psrf, x,y, font, align, color, ctxt, szx, szy, COL_BLACK )
 
 	local back = self.get():clone()
 

@@ -10,7 +10,8 @@ function Field(
 	align,	-- Alignment (-1 : left, 0 : center, 1 : right)
 	color,	-- initial foreground color
 	ctxt,	-- text to compute field's size
-	szx,		-- if not null, overwrite computed size
+	szx,	-- if not null, overwrite computed size
+	szy,	-- if not null, overwrite computed size
 	bgcolor -- background color
 )
 
@@ -18,8 +19,11 @@ function Field(
 	if not szx then
 		szx = font:StringWidth( ctxt )
 	end
+	if not szy then
+		szy = font:GetHeight()
+	end
 
-	local self = SubSurface(psrf, x,y, szx, font:GetHeight() )
+	local self = SubSurface(psrf, x,y, szx, szy )
 	self.get():SetFont( font )
 	self.setColor( color )
 
