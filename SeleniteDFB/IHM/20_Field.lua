@@ -47,12 +47,11 @@ function Field(
 		else	-- right
 			srf:DrawString( v, srf:GetWidth() - font:StringWidth(v) + x, y )
 		end
-
-		self.refresh()
 	end
 
 	function self.update( v )
 		self.DrawStringOff(v, 0,0)
+		self.refresh()
 	end
 
 	return self

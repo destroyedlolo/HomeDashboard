@@ -28,7 +28,7 @@ local function f()
 
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	local srf_consommation = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
+	local srf_consommation = FieldBackBorder( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
 	offy = offy + srf_consommation:GetHeight()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
