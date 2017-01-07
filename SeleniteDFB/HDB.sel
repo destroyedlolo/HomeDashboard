@@ -53,6 +53,8 @@ loaddir('Inputs')
 loaddir('GUI')
 loaddir('HDB')
 
+local animTimer = bipTimer(.25)
+
 SelLog.log("Let's go ...")
 
 -- List of topics to subscribe to
@@ -93,7 +95,7 @@ end
 
 -- Wait for events
 while true do -- Main todo list handler
-	ret, err = Selene.WaitFor( )
+	ret, err = Selene.WaitFor( animTimer.getTimer() )
 	if err then
 		print(err)
 		return
