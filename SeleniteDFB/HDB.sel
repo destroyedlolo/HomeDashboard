@@ -50,8 +50,8 @@ end
 -- load modules
 loaddir('Supports')
 loaddir('Inputs')
-loaddir('Gfx')
-loaddir('IHM')
+loaddir('GUI')
+loaddir('HDB')
 
 SelLog.log("Let's go ...")
 
