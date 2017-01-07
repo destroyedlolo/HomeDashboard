@@ -10,6 +10,7 @@ function MQTTStoreGfx(
 	forced_min
 )
 	local dt = SelCollection.create( sgfx.get():GetWidth() )
+	local ansmax
 
 	local function adddt( )
 		local v = SelShared.get( topic )
@@ -23,14 +24,17 @@ function MQTTStoreGfx(
 		SelShared.PushTask( sgfx.refresh, SelShared.TaskOnceConst("LAST") )
 	end
 
-	local function updmin()
+	local function updmax()
 		local _,max = dt:MinMax()
-		smax.update( max )
+		if not ansmax or max > ansmax then
+			smax.update( max )
+			ansmax = max
+		end
 	end
 
 	self.TaskOnceAdd( adddt )
 	self.TaskOnceAdd( updgfx )
-	self.TaskOnceAdd( updmin )
+	self.TaskOnceAdd( updmax )
 
 	return self
 end

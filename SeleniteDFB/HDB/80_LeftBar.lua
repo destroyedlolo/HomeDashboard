@@ -21,8 +21,8 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
 
---	local srf_tension = FieldBackground( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
-	local srf_tension = FieldBlink( srf, animTimer, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20, nil, COL_BLACK )
+	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
+--	local srf_tension = FieldBlink( srf, animTimer, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20, nil, COL_BLACK )
 	offy = offy + srf_tension:GetHeight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', nil, srf_tension, ' V' )
 
@@ -36,7 +36,7 @@ local function f()
 
 	local srf_trndconso = GfxAreaBackground( srf, 0, offy, x-5, HSGRPH, COL_RED )
 
-	local srf_maxconso = FieldBackground( srf, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
+	local srf_maxconso = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
 
 	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, ' VA', 
@@ -61,7 +61,7 @@ local function f()
 
 	local srf_trndprod = GfxAreaBackground( srf, 0, offy, x-5, HSGRPH, COL_RED )
 
-	local srf_maxprod = FieldBackground( srf, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
+	local srf_maxprod = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, ' VA', nil, srf_trndprod, srf_maxprod, 0 )

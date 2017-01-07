@@ -1,19 +1,10 @@
--- Filed that blink when a new value is received
+-- Field that blink when a new value is received
 
-function FieldBlink(
-	psrf,	-- mother surface
+function Blink(
+	self,	-- Base field
 	animTimer, -- Timer to use to animate the display
-	x,y,	-- position in the mother surface
-	font,	-- font to use
-	align,	-- Alignment (-1 : left, 0 : center, 1 : right)
-	color,	-- initial foreground color
-	ctxt,	-- text to compute field's size
-	szx,	-- if not null, overwrite computed size
-	szy,	-- if not null, overwrite computed size
-	bgcolor -- background color
+	color	-- initial foreground color
 )
-	local self = Field( psrf, x,y, font, align, color, ctxt, szx, szy, bgcolor )
-
 	-- Backup of parent functions
 	local parent_update = self.update
 	local parent_setColor = self.setColor
