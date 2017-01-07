@@ -38,18 +38,18 @@ function Field(
 
 	function self.DrawStringOff( v, x,y )	-- Draw a string a the specified offset
 		local srf = self.get()
-		self.Clear()
 
 		if align == ALIGN_LEFT then
 			srf:DrawString( v, x,y )
 		elseif align == ALIGN_CENTER then
-			srf:DrawString( v, (srf:GetWidth() - font:StringWidth(v))/2 + x, y )
+			srf:DrawString( v, (srf:GetWidth() - font:StringWidth(v))/2 - x, y )
 		else	-- right
-			srf:DrawString( v, srf:GetWidth() - font:StringWidth(v) + x, y )
+			srf:DrawString( v, srf:GetWidth() - font:StringWidth(v) - x, y )
 		end
 	end
 
 	function self.update( v )
+		self.Clear()
 		self.DrawStringOff(v, 0,0)
 		self.refresh()
 	end

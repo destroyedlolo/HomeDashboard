@@ -13,26 +13,30 @@ function FieldBackBorder(
 
 		-- Add some room for the border
 	if not szx then
-		szx = font:StringWidth( ctxt ) + 4
+		szx = font:StringWidth( ctxt ) + 2
 	else
-		szx = szx + 4
+		szx = szx + 2
 	end
 	if not szy then
-		szy = font:GetHeight() + 4
+		szy = font:GetHeight() + 2
 	else
-		szy = szy + 4
+		szy = szy + 2
 	end
 
-	local self = FieldBackground( psrf, x-2,y-2, font, align, color, ctxt, szx, szy )
+	local self = FieldBackground( psrf, x-1,y-1, font, align, color, ctxt, szx, szy )
 
 	function self.update(v)
+		self.Clear()
+
 		-- draw borders
 		self.get():SetColor( 0x00, 0x00, 0x00, 0xff)	-- Temporary set to black
 		self.DrawStringOff(v, 0,0)
-		self.DrawStringOff(v, 4,4)
+		self.DrawStringOff(v, 0,2)
+		self.DrawStringOff(v, 2,0)
+		self.DrawStringOff(v, 2,2)
 
 		self.ColorApply()	-- Draw at requested color
-		self.DrawStringOff(v, 2,2)
+		self.DrawStringOff(v, 1,1)
 
 		self.refresh()
 	end
