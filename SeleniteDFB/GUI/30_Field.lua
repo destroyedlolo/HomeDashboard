@@ -33,7 +33,7 @@ function Field(
 	end
 
 	function self.Clear()
-		srf.get():Clear( bgcolor.get() )
+		psrf:Clear( bgcolor.get() )
 	end
 
 	function self.DrawStringOff( v, x,y )	-- Draw a string a the specified offset

@@ -48,12 +48,13 @@ end
 
 
 -- load modules
+
 loaddir('Supports')
+animTimer = bipTimer(.25)	-- Animation timer
+
 loaddir('Inputs')
 loaddir('GUI')
 loaddir('HDB')
-
-local animTimer = bipTimer(.25)
 
 SelLog.log("Let's go ...")
 

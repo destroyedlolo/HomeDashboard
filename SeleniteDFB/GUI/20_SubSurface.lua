@@ -25,6 +25,10 @@ function SubSurface(parent_surface, x,y,sx,sy )
 		self.ColorApply()
 	end
 
+	function self.getColorRGB()
+		return sr,sg,sb,sa
+	end
+
 	function self.refresh()
 		srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 	end

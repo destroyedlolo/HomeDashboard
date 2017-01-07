@@ -21,7 +21,8 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
 
-	local srf_tension = FieldBackground( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
+--	local srf_tension = FieldBackground( srf, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
+	local srf_tension = FieldBlink( srf, animTimer, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20, nil, COL_BLACK )
 	offy = offy + srf_tension:GetHeight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', nil, srf_tension, ' V' )
 
