@@ -26,7 +26,7 @@ function MQTTStoreGfx(
 
 	local function updmax()
 		local _,max = dt:MinMax()
-		if not ansmax or max > ansmax then
+		if not ansmax or max ~= ansmax then
 			smax.update( max )
 			ansmax = max
 		end

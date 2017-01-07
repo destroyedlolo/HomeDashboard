@@ -15,10 +15,10 @@ function Blink(
 	local cons_r,cons_g,cons_b,cons_a -- Consign color
 
 	local function fade()
-		cur_r = math.max( cons_r, cur_r - 10 )
-		cur_g = math.max( cons_g, cur_g - 10 )
-		cur_b = math.max( cons_b, cur_b - 10 )
-		cur_a = math.max( cons_a, cur_a - 10 )
+		cur_r = math.max( cons_r, cur_r - 20 )
+		cur_g = math.max( cons_g, cur_g - 20 )
+		cur_b = math.max( cons_b, cur_b - 20 )
+		cur_a = math.max( cons_a, cur_a - 20 )
 
 		if cur_r - cons_r + cur_g - cons_g + cur_b - cons_b + cur_a - cons_a ~= 0 then	-- Fading
 			parent_setColorRGB( cur_r, cur_g, cur_b, cur_a )

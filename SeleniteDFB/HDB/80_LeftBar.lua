@@ -11,7 +11,7 @@ local function f()
 
 	local ThermImg = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/ElectricityBG.png")
 	local x,y = ThermImg:GetSize()
-	ThermImg:RenderTo( srf, { 10, 40, x,y } )
+	ThermImg:RenderTo( srf, { 20, 40, x,y } )
 	ThermImg:Release()
 
 	local offy = 3
@@ -22,7 +22,6 @@ local function f()
 	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
 
 	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
---	local srf_tension = FieldBlink( srf, animTimer, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20, nil, COL_BLACK )
 	offy = offy + srf_tension:GetHeight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', nil, srf_tension, ' V' )
 
@@ -34,7 +33,8 @@ local function f()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 
-	local srf_trndconso = GfxAreaBackground( srf, 0, offy, x-5, HSGRPH, COL_RED )
+--	local srf_trndconso = GfxAreaBackground( srf, 0, offy, x-5, HSGRPH, COL_RED )
+	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_GFXFG, COL_GFXBG )
 
 	local srf_maxconso = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
@@ -59,7 +59,7 @@ local function f()
 -- already calculated
 --	x = w - (5 + fsdigit:StringWidth("12345"))
 
-	local srf_trndprod = GfxAreaBackground( srf, 0, offy, x-5, HSGRPH, COL_RED )
+	local srf_trndprod = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_GFXFG, COL_GFXBG )
 
 	local srf_maxprod = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
