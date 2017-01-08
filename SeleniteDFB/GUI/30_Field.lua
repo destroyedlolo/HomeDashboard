@@ -22,6 +22,9 @@ function Field(
 	if not szy then
 		szy = font:GetHeight()
 	end
+	if not bgcolor then
+		bgcolor = COL_BLACK
+	end
 
 	local self = SubSurface(psrf, x,y, szx, szy )
 	self.get():SetFont( font )
