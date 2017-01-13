@@ -66,7 +66,7 @@ local function f()
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, ' VA', nil, srf_trndprod, srf_maxprod, 0 )
 
-	local srf_onduleur = Field( srf, 0, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "888.8W")
+	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "888.8W")
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', nil, 'onduleur/ups.realpower.nominal', srf_onduleur)
 
 	self.refresh()
