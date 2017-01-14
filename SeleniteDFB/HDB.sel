@@ -54,7 +54,12 @@ animTimer = bipTimer(.25)	-- Animation timer
 
 loaddir('Inputs')
 loaddir('GUI')
-loaddir('HDB')
+if psrf:GetSize() == 320 then	-- small display
+	loaddir('HDB_320')
+else
+	loaddir('HDB')
+end
+
 
 SelLog.log("Let's go ...")
 
