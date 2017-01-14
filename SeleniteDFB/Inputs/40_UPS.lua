@@ -3,7 +3,8 @@
 function UPSdata( name, topic, 
 	func, 			-- validation function
 	topicnominal,	-- topic for nominal power
-	srf	-- surface to display the value
+	srf,			-- surface to display the value
+	gauge			-- Gauge to display the usage
 )
 	local self = MQTTinput( name, topic, func )
 	local nominal = MQTTinput( name .." nominal", topicnominal)
@@ -16,6 +17,10 @@ function UPSdata( name, topic,
 			srf.update( string.format('%3.1f', v*maxp/100) .. ' W' )
 		else
 			srf.update( v .. '%' )
+		end
+
+		if gauge then
+			gauge.Draw(v)
 		end
 	end
 
