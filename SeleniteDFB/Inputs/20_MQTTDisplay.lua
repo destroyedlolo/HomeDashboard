@@ -7,6 +7,7 @@ function MQTTDisplay(
 )
 --[[ known options  :
 --	vfunction : validation function
+--	gradient : gradient to colorize
 --	suffix : string to add to the value (i.e. : unit)
 --]]
 	if not opts then
@@ -18,8 +19,8 @@ function MQTTDisplay(
 	function self.update()
 		local v = self.get()
 
-		if gradient then
-			srf.setColorRGB( gradient.findgradientcolor(v) )
+		if opts.gradient then
+			srf.setColorRGB( opts.gradient.findgradientcolor(v) )
 		end
 
 		if opts.suffix then

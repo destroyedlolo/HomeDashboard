@@ -91,16 +91,26 @@ local function f()
 	x = srf_onduleur.get():GetWidth()
 	local srf_gaugeOnduleur = Gauge( srf, x+4, offy+4, w-x-8, srf_onduleur.get():GetHeight()-8, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
+	offy = offy + srf_gaugeOnduleur.get():GetHeight() + 6
+--
+-- Key temperatures
+--
+
+	
+	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		align = ALIGN_FRIGHT,
+		sample_text = "-88.8°C"
+	})
+	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°C', gradient = GRD_TEMPERATURE } )
+	offy = offy + srf_TSalon:GetHeight()
+
+	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		align = ALIGN_FRIGHT,
+		sample_text = "-88.8°C"
+	})
+	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°C', gradient = GRD_TEMPERATURE } )
 
 	self.refresh()
-
---[[
-srf_tension.update('124.0 V')
-srf_consommation.update('12345')
-srf_maxconso.update('12345')
-srf_production.update('12345')
-srf_maxprod.update('12345')
-]]
 
 	return self
 end

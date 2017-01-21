@@ -9,7 +9,6 @@ function MQTTStoreGfx(
 )
 --[[ known options  :
 --	suffix : string to add to the value (i.e. : unit)
---	gradient : gradient to colorize
 --	forced_min : force the minimum value to display
 --]]
 	if not opts then

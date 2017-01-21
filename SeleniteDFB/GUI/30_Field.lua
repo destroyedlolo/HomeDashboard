@@ -2,6 +2,7 @@
 ALIGN_LEFT = -1
 ALIGN_CENTER = 0
 ALIGN_RIGHT = 1
+ALIGN_FRIGHT = 2	-- x is the right limit and the real position depend on width
 
 function Field(
 	psrf,	-- mother surface
@@ -33,6 +34,10 @@ function Field(
 		opts.bgcolor = COL_BLACK
 	end
 
+	if opts.align == ALIGN_FRIGHT then
+		x = x - opts.width
+	end
+
 	local self = SubSurface(psrf, x,y, opts.width, opts.height )
 	self.get():SetFont( font )
 	self.setColor( color )
@@ -49,7 +54,7 @@ function Field(
 	function self.DrawStringOff( v, x,y )	-- Draw a string a the specified offset
 		local srf = self.get()
 
-		if opts.align == ALIGN_RIGHT then
+		if opts.align == ALIGN_RIGHT or opts.align == ALIGN_FRIGHT then
 			srf:DrawString( v, srf:GetWidth() - font:StringWidth(v) - x, y )
 		elseif opts.align == ALIGN_CENTER then
 			srf:DrawString( v, (srf:GetWidth() - font:StringWidth(v))/2 - x, y )
