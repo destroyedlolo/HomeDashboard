@@ -1,3 +1,11 @@
+-- Create linear gradient b/w given colors
+-- the argument is an array where :
+-- 	- the index is the input argument
+-- 	- the value is the target color
+--
+-- 	If the argument == a value, a pure target color is returned
+-- 	If the argument doesn't match, an interpolated color b/w the nearest index is returned
+
 function Gradient( colors )
 	local self = {}
 
