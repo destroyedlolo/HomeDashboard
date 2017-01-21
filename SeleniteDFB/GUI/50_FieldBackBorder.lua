@@ -4,26 +4,26 @@ function FieldBackBorder(
 	psrf,	-- mother surface
 	x,y,	-- position in the mother surface
 	font,	-- font to use
-	align,	-- Alignment (-1 : left, 0 : center, 1 : right)
 	color,	-- initial foreground color
-	ctxt,	-- text to compute field's size
-	szx,	-- if not null, overwrite computed size
-	szy	-- if not null, overwrite computed size
+	opts 	-- See Field for known options
 )
+	if not opts then
+		opts = {}
+	end
 
 		-- Add some room for the border
-	if not szx then
-		szx = font:StringWidth( ctxt ) + 4
+	if not opts.width then
+		opts.width = font:StringWidth( ctxt ) + 4
 	else
-		szx = szx + 4
+		opts.width = opts.width + 4
 	end
-	if not szy then
-		szy = font:GetHeight() + 4
+	if not opts.height then
+		opts.height = font:GetHeight() + 4
 	else
-		szy = szy + 4
+		opts.height = opts.height + 4
 	end
 
-	local self = FieldBackground( psrf, x-2,y-2, font, align, color, ctxt, szx, szy )
+	local self = FieldBackground( psrf, x-2,y-2, font, color, opts )
 
 	function self.update(v)
 		self.Clear()

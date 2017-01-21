@@ -3,8 +3,6 @@
 function MQTTStoreGfx(
 	name, topic,
 	srf,	-- surface to display the value
---	suffix,	-- string to add to the value (i.e. : unit)
---	gradient,	-- gradient to colorize 
 	sgfx,	-- surface to display the graphic
 	smax,	-- surface to display the maximum
 	opts
@@ -14,6 +12,9 @@ function MQTTStoreGfx(
 --	gradient : gradient to colorize
 --	forced_min : force the minimum value to display
 --]]
+	if not opts then
+		opts = {}
+	end
 
 	local dt = SelCollection.create( sgfx.get():GetWidth() )
 	local ansmax

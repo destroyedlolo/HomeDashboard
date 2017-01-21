@@ -4,13 +4,10 @@ function FieldBackground(
 	psrf,	-- mother surface
 	x,y,	-- position in the mother surface
 	font,	-- font to use
-	align,	-- Alignment (-1 : left, 0 : center, 1 : right)
 	color,	-- initial foreground color
-	ctxt,	-- text to compute field's size
-	szx,		-- if not null, overwrite computed size
-	szy	-- if not null, overwrite computed size
+	opts 	-- See Field for known options
 )
-	local self = Field( psrf, x,y, font, align, color, ctxt, szx, szy, COL_BLACK )
+	local self = Field( psrf, x,y, font, color, opts )
 
 	local back = self.get():clone()
 

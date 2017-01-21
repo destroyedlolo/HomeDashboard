@@ -22,22 +22,29 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
 
-	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
+	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		width = w-20 
+	})
 	offy = offy + srf_tension:GetHeight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { suffix=' V' } )
 
 
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	local srf_consommation = FieldBackBorder( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
+	local srf_consommation = FieldBackBorder( srf, 10,offy, fdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT, 
+		width = w-20 
+	} )
 	offy = offy + srf_consommation:GetHeight()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
-
---	local srf_trndconso = GfxAreaBackground( srf, 0, offy, x-5, HSGRPH, COL_RED )
 	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_GFXFG, COL_GFXBG )
 
-	local srf_maxconso = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
+	local srf_maxconso = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
 	offy = offy + HSGRPH
 
 	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, srf_maxconso,
@@ -57,7 +64,10 @@ local function f()
 
 	srf:DrawString("Production :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	local srf_production = FieldBackground( srf, 10,offy, fdigit, ALIGN_RIGHT, COL_DIGIT, "12345", w-20 )
+	local srf_production = FieldBackground( srf, 10,offy, fdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT, 
+		width = w-20 
+	} )
 	offy = offy + srf_production:GetHeight()
 
 -- already calculated
@@ -65,17 +75,22 @@ local function f()
 
 	local srf_trndprod = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_GFXFG, COL_GFXBG )
 
-	local srf_maxprod = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
+	local srf_maxprod = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT, 
+		sample_text = "12345"
+	} )
 	offy = offy + HSGRPH
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod, srf_maxprod,
 		{ suffix = ' VA', forced_min = 0 } )
 
-	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "888.8W")
+	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT, 
+		sample_text = "888.8W"
+	} )
 	x = srf_onduleur.get():GetWidth()
 	local srf_gaugeOnduleur = Gauge( srf, x+4, offy+4, w-x-8, srf_onduleur.get():GetHeight()-8, COL_GFXBG, COL_BORDER )
-
-	local onduleur = UPSdata('UPS', 'onduleur/ups.load', nil, 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
+	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
 
 	self.refresh()
 

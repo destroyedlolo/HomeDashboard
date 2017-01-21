@@ -1,12 +1,20 @@
 -- Manage UPS inputs
 
 function UPSdata( name, topic, 
-	func, 			-- validation function
 	topicnominal,	-- topic for nominal power
 	srf,			-- surface to display the value
-	gauge			-- Gauge to display the usage
+	gauge,			-- Gauge to display the usage
+	opts
 )
-	local self = MQTTinput( name, topic, func )
+--[[ known options  :
+--	vfunction : validation function
+--]]
+
+	if not opts then
+		opts = {}
+	end
+
+	local self = MQTTinput( name, topic, opts.vfunction )
 	local nominal = MQTTinput( name .." nominal", topicnominal)
 
 	function self.update()

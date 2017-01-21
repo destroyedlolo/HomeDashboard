@@ -9,6 +9,10 @@ function MQTTDisplay(
 --	vfunction : validation function
 --	suffix : string to add to the value (i.e. : unit)
 --]]
+	if not opts then
+		opts = {}
+	end
+
 	local self = MQTTinput( name, topic, opts.vfunction)
 
 	function self.update()

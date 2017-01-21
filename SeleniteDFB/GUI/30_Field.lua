@@ -7,26 +7,33 @@ function Field(
 	psrf,	-- mother surface
 	x,y,	-- position in the mother surface
 	font,	-- font to use
-	align,	-- Alignment (-1 : left, 0 : center, 1 : right)
 	color,	-- initial foreground color
-	ctxt,	-- text to compute field's size
-	szx,	-- if not null, overwrite computed size
-	szy,	-- if not null, overwrite computed size
-	bgcolor -- background color
+	opts
 )
+--[[ known options  :
+--	align : how to align the text (LEFT by default)
+--	sample_text : text to use to compute the field width
+--	width, height : force the field's geometry
+--	bgcolor : background color
+--
+--	At last one of sample_text or width MUST be provided
+--]]
+	if not opts then
+		opts = {}
+	end
 
 	-- initialize
-	if not szx then
-		szx = font:StringWidth( ctxt )
+	if not opts.width then
+		opts.width = font:StringWidth( opts.sample_text )
 	end
-	if not szy then
-		szy = font:GetHeight()
+	if not opts.height then
+		opts.height = font:GetHeight()
 	end
-	if not bgcolor then
-		bgcolor = COL_BLACK
+	if not opts.bgcolor then
+		opts.bgcolor = COL_BLACK
 	end
 
-	local self = SubSurface(psrf, x,y, szx, szy )
+	local self = SubSurface(psrf, x,y, opts.width, opts.height )
 	self.get():SetFont( font )
 	self.setColor( color )
 
@@ -36,18 +43,18 @@ function Field(
 	end
 
 	function self.Clear()
-		psrf:Clear( bgcolor.get() )
+		psrf:Clear( opts.bgcolor.get() )
 	end
 
 	function self.DrawStringOff( v, x,y )	-- Draw a string a the specified offset
 		local srf = self.get()
 
-		if align == ALIGN_LEFT then
-			srf:DrawString( v, x,y )
-		elseif align == ALIGN_CENTER then
-			srf:DrawString( v, (srf:GetWidth() - font:StringWidth(v))/2 - x, y )
-		else	-- right
+		if opts.align == ALIGN_RIGHT then
 			srf:DrawString( v, srf:GetWidth() - font:StringWidth(v) - x, y )
+		elseif opts.align == ALIGN_CENTER then
+			srf:DrawString( v, (srf:GetWidth() - font:StringWidth(v))/2 - x, y )
+		else	-- left
+			srf:DrawString( v, x,y )
 		end
 	end
 
