@@ -23,7 +23,7 @@ local function f()
 
 	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, ALIGN_RIGHT, COL_DIGIT, "888.0 V", w-20 )
 	offy = offy + srf_tension:GetHeight()
-	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', nil, srf_tension, ' V' )
+	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { suffix=' V' } )
 
 
 	srf:DrawString("Consomation :", 5, offy )
@@ -39,15 +39,18 @@ local function f()
 	local srf_maxconso = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
 
-	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, ' VA', 
-		Gradient(
-			{
-				[500] = COL_DIGIT,
-				[1500] = COL_ORANGE,
-				[4500] = COL_RED
-			}
-		),
-		srf_trndconso, srf_maxconso, 0
+	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, srf_maxconso,
+		{
+			suffix = ' VA', 
+			gradient = Gradient(
+				{
+					[500] = COL_DIGIT,
+					[1500] = COL_ORANGE,
+					[4500] = COL_RED
+				}
+			),
+			forced_min = 0
+		}
 	)
 
 
@@ -64,7 +67,8 @@ local function f()
 	local srf_maxprod = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "12345")
 	offy = offy + HSGRPH
 
-	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, ' VA', nil, srf_trndprod, srf_maxprod, 0 )
+	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod, srf_maxprod,
+		{ suffix = ' VA', forced_min = 0 } )
 
 	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, ALIGN_RIGHT, COL_DIGIT, "888.8W")
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', nil, 'onduleur/ups.realpower.nominal', srf_onduleur)

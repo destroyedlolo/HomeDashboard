@@ -2,12 +2,14 @@
 
 function MQTTDisplay(
 	name, topic,
-	func,	-- validation function
 	srf,	-- surface to display the value
-	suffix,	-- string to add to the value (i.e. : unit)
-	gradient	-- gradient to colorize 
+	opts
 )
-	local self = MQTTinput( name, topic, func )
+--[[ known options  :
+--	vfunction : validation function
+--	suffix : string to add to the value (i.e. : unit)
+--]]
+	local self = MQTTinput( name, topic, opts.vfunction)
 
 	function self.update()
 		local v = self.get()
@@ -16,8 +18,8 @@ function MQTTDisplay(
 			srf.setColorRGB( gradient.findgradientcolor(v) )
 		end
 
-		if suffix then
-			v = v .. suffix
+		if opts.suffix then
+			v = v .. opts.suffix
 		end
 		
 		srf.update(v)
