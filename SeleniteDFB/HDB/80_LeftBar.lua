@@ -82,16 +82,44 @@ local function f()
 		align = ALIGN_RIGHT, 
 		sample_text = "12345"
 	} )
-	offy = offy + HSGRPH
+	offy = offy + HSGRPH + 4
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod, srf_maxprod,
 		{ suffix = ' VA', forced_min = 0 } )
+
 
 	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT, 
 		sample_text = "888.8W"
 	} )
-	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur)
+	x = srf_onduleur.get():GetWidth()
+	local srf_gaugeOnduleur = Gauge( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHeight()-16, COL_GFXBG, COL_BORDER )
+	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
+	offy = offy + srf_onduleur.get():GetHeight() + 4
+
+
+--
+-- Key temperatures
+--
+	
+	offy = offy + ftitle1:GetHeight()
+
+	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		align = ALIGN_FRIGHT,
+		sample_text = "-88.8°C"
+	})
+	srf:DrawString("Salon :", srf_TSalon.get():GetPosition(), offy - ftitle1:GetHeight() )
+	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°C', gradient = GRD_TEMPERATURE } )
+	offy = offy + srf_TSalon:GetHeight()
+
+	offy = offy + ftitle1:GetHeight()
+
+	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		align = ALIGN_FRIGHT,
+		sample_text = "-88.8°C"
+	})
+	srf:DrawString("Extérieur :", srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
+	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°C', gradient = GRD_TEMPERATURE } )
 
 	self.refresh()
 

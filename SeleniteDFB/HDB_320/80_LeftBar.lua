@@ -92,10 +92,11 @@ local function f()
 	local srf_gaugeOnduleur = Gauge( srf, x+4, offy+4, w-x-8, srf_onduleur.get():GetHeight()-8, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
 	offy = offy + srf_gaugeOnduleur.get():GetHeight() + 6
+
+
 --
 -- Key temperatures
 --
-
 	
 	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
