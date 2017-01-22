@@ -1,5 +1,5 @@
 -- Percentage gauge
-function Gauge(
+function GaugeHPercentBg(
 	psrf,	-- mother surface
 	sx,sy,	-- position in the mother surface
 	sw,sh,	-- its size

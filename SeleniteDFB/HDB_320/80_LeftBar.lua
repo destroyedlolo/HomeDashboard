@@ -89,7 +89,7 @@ local function f()
 		sample_text = "888.8W"
 	} )
 	x = srf_onduleur.get():GetWidth()
-	local srf_gaugeOnduleur = Gauge( srf, x+4, offy+4, w-x-8, srf_onduleur.get():GetHeight()-8, COL_GFXBG, COL_BORDER )
+	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+4, w-x-8, srf_onduleur.get():GetHeight()-8, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
 	offy = offy + srf_gaugeOnduleur.get():GetHeight() + 6
 
