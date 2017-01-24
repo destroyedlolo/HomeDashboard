@@ -5,7 +5,7 @@ function GaugePercent(
 	sx,sy,	-- position in the mother surface
 	sw,sh,	-- its size
 	color,	-- graph color
-	bgcolor, -- background color
+	bgcolor,	-- background color
 	opts
 )
 --[[ known options  :
