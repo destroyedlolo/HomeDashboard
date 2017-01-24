@@ -93,14 +93,15 @@ local function f()
 		sample_text = "888.8W"
 	} )
 	x = srf_onduleur.get():GetWidth()
---	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHeight()-16, COL_GFXBG, COL_BORDER )
-	local srf_gaugeOnduleur = GaugePercent( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHeight()-16, COL_RED, COL_GFXBG, { border_color = COL_BORDER } )
+	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHeight()-16, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
 	offy = offy + srf_onduleur.get():GetHeight() + 4
 
 
 --
 -- Key temperatures
+--
+-- A revoir quand la météo et les temperatures seront en place
 --
 
 	offy = offy + ftitle1:GetHeight()
@@ -115,17 +116,24 @@ local function f()
 		sample_text = "-88.8°C"
 	})
 	srf:DrawString("Salon :", srf_TSalon.get():GetPosition(), offy - ftitle1:GetHeight() )
+	local srf_Thermometre = GaugeRange( srf, 14,325, 6, 63, COL_RED, COL_WHITE, 10,40, { vertical = true } )
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°C', gradient = GRD_TEMPERATURE } )
 	offy = offy + srf_TSalon:GetHeight()
 
-	offy = offy + ftitle1:GetHeight()
+-- A mettre avec la temperature du salon
+local function updthermo()
+	srf_Thermometre.Draw( TSalon.get() )
+end
+TSalon.TaskOnceAdd( updthermo )
 
+	offy = offy + ftitle1:GetHeight()
 	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°C"
 	})
 	srf:DrawString("Extérieur :", srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°C', gradient = GRD_TEMPERATURE } )
+
 
 	self.refresh()
 
