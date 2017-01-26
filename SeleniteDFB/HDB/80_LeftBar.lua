@@ -82,10 +82,11 @@ local function f()
 		align = ALIGN_RIGHT, 
 		sample_text = "12345"
 	} )
-	offy = offy + HSGRPH + 4
-
-	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod, srf_maxprod,
-		{ suffix = ' VA', forced_min = 0 } )
+	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', 
+		srf_production, srf_trndprod, srf_maxprod,
+		{ suffix = ' VA', forced_min = 0 }
+	)
+	offy = offy + HSGRPH + 3
 
 
 	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, COL_DIGIT, {
@@ -95,7 +96,7 @@ local function f()
 	x = srf_onduleur.get():GetWidth()
 	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHeight()-16, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
-	offy = offy + srf_onduleur.get():GetHeight() + 4
+	offy = offy + srf_onduleur.get():GetHeight() + 2
 
 
 --
@@ -116,7 +117,7 @@ local function f()
 		sample_text = "-88.8°C"
 	})
 	srf:DrawString("Salon :", srf_TSalon.get():GetPosition(), offy - ftitle1:GetHeight() )
-	local srf_Thermometre = GaugeRange( srf, 14,325, 6, 63, COL_RED, COL_WHITE, 10,40, { vertical = true } )
+	local srf_Thermometre = GaugeRange( srf, 14,325, 6, 63, COL_RED, COL_WHITE, 5,35, { vertical = true } )
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°C', gradient = GRD_TEMPERATURE } )
 	offy = offy + srf_TSalon:GetHeight()
 
@@ -125,6 +126,7 @@ local function updthermo()
 	srf_Thermometre.Draw( TSalon.get() )
 end
 TSalon.TaskOnceAdd( updthermo )
+----
 
 	offy = offy + ftitle1:GetHeight()
 	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
@@ -133,17 +135,13 @@ TSalon.TaskOnceAdd( updthermo )
 	})
 	srf:DrawString("Extérieur :", srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°C', gradient = GRD_TEMPERATURE } )
+	offy = offy + srf_TDehors:GetHeight()
 
+	self.setColor( COL_BORDER )
+	srf:DrawLine( 0, offy, w, offy )
 
 	self.refresh()
 
---[[
-srf_tension.update('124.0 V')
-srf_consommation.update('12345')
-srf_maxconso.update('12345')
-srf_production.update('12345')
-srf_maxprod.update('12345')
-]]
 
 	return self
 end
