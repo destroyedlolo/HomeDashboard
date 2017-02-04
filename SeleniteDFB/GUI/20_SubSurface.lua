@@ -1,3 +1,5 @@
+require("tostring")
+
 function SubSurface(parent_surface, x,y,sx,sy )
 	local self = {}
 
@@ -7,6 +9,15 @@ function SubSurface(parent_surface, x,y,sx,sy )
 	local sr,sg,sb,sa -- stored color
 
 	-- methods
+	local meta = {
+		__index = function (t,k)
+			local tbl = getmetatable(srf)
+print("Calling", k, tbl[k] )
+			return tbl[k]
+		end
+	}
+	setmetatable( self, meta )
+
 	function self.get()
 		return srf
 	end

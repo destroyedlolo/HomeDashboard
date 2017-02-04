@@ -140,8 +140,21 @@ TSalon.TaskOnceAdd( updthermo )
 	self.setColor( COL_BORDER )
 	srf:DrawLine( 0, offy, w, offy )
 
-	self.refresh()
+	offy = offy+2
+	local srf_dATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_CENTER,
+		sample_text = "0000"
+	} )
+	local uWAN = MQTTDisplay( 'dWAN', 'Freebox/DownloadATM', srf_dATM )
+	offy = offy + srf_dATM:GetHeight()
 
+	local srf_uATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_CENTER,
+		sample_text = "0000"
+	} )
+	local uWAN = MQTTDisplay( 'uWAN', 'Freebox/UploadATM', srf_uATM )
+
+	self.refresh()
 
 	return self
 end
