@@ -9,6 +9,10 @@ function SubSurface(parent_surface, x,y,sx,sy )
 	local sr,sg,sb,sa -- stored color
 
 	-- methods
+
+	-- EXPERIMENTAL
+	-- Export Selenite's methods
+	-- to this object
 	local meta = {
 		__index = function (t,k)
 			local tbl = getmetatable(srf)
@@ -17,6 +21,7 @@ print("Calling", k, tbl[k] )
 		end
 	}
 	setmetatable( self, meta )
+	-- EXPERIMENTAL
 
 	function self.get()
 		return srf
