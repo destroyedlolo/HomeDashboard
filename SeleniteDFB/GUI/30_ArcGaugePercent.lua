@@ -5,21 +5,29 @@ function ArcGaugePercent(
 	sx,sy,	-- surrounding box position in the mother surface
 	sw,sh,	-- its size
 	width,	-- arc width
-	bgcolor,	-- background color
 	quarter,	-- quarter number (see Selene's DrawCircle())
 	opts
 )
---[[ known options  :
+--[[ known options :
+--	bgcolor : color outside the gauge
+--	emptycolor : color for empty area
 --]]
 	if not opts then
 		opts = {}
 	end
+	if not opts.bgcolor then
+		opts.bgcolor = COL_BLACK
+	end
+	if not opts.emptycolor then
+		opts.emptycolor = opts.bgcolor
+	end
 
 	local self = SubSurface(psrf, sx,sy, sw,sh )
 
-	function self.Clear()
-		self.get():Clear( bgcolor.get() )
-	end
+	------
+	-- mask
+	-----
+	local mask = SelSurface:create { size = { sw,sh } }
 
 	-- arc stuffs
 	local cx,cy
@@ -38,10 +46,26 @@ function ArcGaugePercent(
 	end
 
 	-- draw arc
-self.setColorRGB(255,255,255,255)
-	self.get():FillCircle( cx,cy, radius, SelSurface.CircleQuarterConst('Q'..quarter) )
-self.setColorRGB(0,0,0,255)
-	self.get():FillCircle( cx,cy, radius-10, SelSurface.CircleQuarterConst('Q'..quarter) )
+	mask:Clear( opts.bgcolor.get() )
+	mask:SetColor( 255,255,255, 0 )
+	mask:FillCircle( cx,cy, radius, SelSurface.CircleQuarterConst('Q'..quarter) )
+	mask:SetColor( opts.bgcolor.get() )
+	mask:FillCircle( cx,cy, radius-10, SelSurface.CircleQuarterConst('Q'..quarter) )
+
+	-------
+	-- Graphics
+	-------
+	function self.Clear()
+		self.get():Clear( opts.emptycolor.get() )
+	end
+
+	function self.ApplyMask()
+		self.get():SetBlittingFlags( SelSurface.BlittingFlagsConst('BLEND_ALPHACHANNEL') )
+		self.get():Blit( mask, nil, 0,0 )
+	end
+
+self.Clear()
+self.ApplyMask()
 
 	return self
 end

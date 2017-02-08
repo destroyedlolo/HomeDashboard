@@ -137,9 +137,10 @@ TSalon.TaskOnceAdd( updthermo )
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°C', gradient = GRD_TEMPERATURE } )
 	offy = offy + srf_TDehors:GetHeight()
 
+--[[
 	self.setColor( COL_BORDER )
 	srf:DrawLine( 0, offy, w, offy )
-
+]]
 
 	offy = offy+2
 	local srf_dATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
@@ -156,10 +157,10 @@ TSalon.TaskOnceAdd( updthermo )
 	local uWAN = MQTTDisplay( 'uWAN', 'Freebox/UploadATM', srf_uATM )
 
 	x,y = srf_dATM.get():GetPosition()
-	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-2, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 15, COL_BLACK, 2)
+	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 2, { emptycolor=COL_RED })
 
-	x = x + srf_dATM.get():GetWidth() + 2
-	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 15, COL_BLACK, 1)
+	x = x + srf_dATM.get():GetWidth() + 4
+	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 1, { emptycolor=COL_RED })
 
 
 	self.refresh()
