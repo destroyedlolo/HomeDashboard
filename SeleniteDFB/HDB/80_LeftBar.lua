@@ -140,6 +140,7 @@ TSalon.TaskOnceAdd( updthermo )
 	self.setColor( COL_BORDER )
 	srf:DrawLine( 0, offy, w, offy )
 
+
 	offy = offy+2
 	local srf_dATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
@@ -153,6 +154,13 @@ TSalon.TaskOnceAdd( updthermo )
 		sample_text = "0000"
 	} )
 	local uWAN = MQTTDisplay( 'uWAN', 'Freebox/UploadATM', srf_uATM )
+
+	x,y = srf_dATM.get():GetPosition()
+	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-2, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 15, COL_BLACK, 2)
+
+	x = x + srf_dATM.get():GetWidth() + 2
+	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 15, COL_BLACK, 1)
+
 
 	self.refresh()
 
