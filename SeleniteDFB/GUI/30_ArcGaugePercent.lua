@@ -27,7 +27,8 @@ function ArcGaugePercent(
 	------
 	-- mask
 	-----
-	local mask = SelSurface:create { size = { sw,sh } }
+		-- ARGB add an alpha layer to the created surface
+	local mask = SelSurface:create { size = { sw,sh }, pixelformat=SelSurface.PixelFormatConst('ARGB') }
 
 	-- arc stuffs
 	local cx,cy
@@ -62,10 +63,14 @@ function ArcGaugePercent(
 	function self.ApplyMask()
 		self.get():SetBlittingFlags( SelSurface.BlittingFlagsConst('BLEND_ALPHACHANNEL') )
 		self.get():Blit( mask, nil, 0,0 )
+		self.get():SetBlittingFlags( SelSurface.BlittingFlagsConst('NONE') )
 	end
 
-self.Clear()
-self.ApplyMask()
+	function self.update( c, t, i )
+		self.Clear()
+		print("c:" .. c, "t:".. t, "i:".. i)
+		self.ApplyMask()
+	end
 
 	return self
 end
