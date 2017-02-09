@@ -48,7 +48,7 @@ function MQTTinput(aname, atpc, afunc)
 	end
 
 	function self.TaskOnceSubmit()
-		SubTasks( tasksonce )
+		SubTasks( tasksonce, true )
 	end
 
 	function self.list()
