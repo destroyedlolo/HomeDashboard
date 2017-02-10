@@ -18,9 +18,10 @@ require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 Topics = {}	-- Topics we are looking for
 
 -- Hide console's cursor
-local f=io.open('/sys/class/graphics/fbcon/cursor_blink', 'w')
-if f then	-- working only using root access
-	f:write('0')
+-- need the current user to be part of tty group
+local f = io.open("/dev/tty1", "w")
+if f then
+	f:write(string.char(0x1b) .. '[?17;0;0c')
 	f:close()
 end
 

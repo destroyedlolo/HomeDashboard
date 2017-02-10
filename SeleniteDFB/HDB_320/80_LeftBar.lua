@@ -102,7 +102,7 @@ local function f()
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°C"
 	})
-	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°C', gradient = GRD_TEMPERATURE } )
+	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°C' } )
 	offy = offy + srf_TSalon:GetHeight()
 
 	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
@@ -110,6 +110,13 @@ local function f()
 		sample_text = "-88.8°C"
 	})
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°C', gradient = GRD_TEMPERATURE } )
+	offy = offy + srf_TDehors:GetHeight()
+
+	local srf_TBureau = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		align = ALIGN_FRIGHT,
+		sample_text = "-88.8°C"
+	})
+	local TBureau = MQTTDisplay( 'TBureau', 'maison/Temperature/Bureau', srf_TBureau, { suffix='°C', gradient = GRD_TEMPERATURE } )
 
 	self.refresh()
 
