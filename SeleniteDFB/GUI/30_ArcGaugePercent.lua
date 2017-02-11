@@ -59,7 +59,7 @@ function ArcGaugePercent(
 	mask:SetColor( 255,255,255, 0 )
 	mask:FillCircle( cx,cy, radius, SelSurface.CircleQuarterConst('Q'..quarter) )
 	mask:SetColor( opts.bgcolor.get() )
-	mask:FillCircle( cx,cy, radius-10, SelSurface.CircleQuarterConst('Q'..quarter) )
+	mask:FillCircle( cx,cy, radius-width, SelSurface.CircleQuarterConst('Q'..quarter) )
 
 	-------
 	-- Graphics
