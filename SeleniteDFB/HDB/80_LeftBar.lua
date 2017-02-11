@@ -155,17 +155,17 @@ TSalon.TaskOnceAdd( updthermo )
 	} )
 
 	x,y = srf_dATM.get():GetPosition()
-	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 2, { emptycolor=COL_GFXBG })
+	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 3, 2, { emptycolor=COL_GFXBG })
 
 	x = x + srf_dATM.get():GetWidth() + 4
-	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 1, { emptycolor=COL_GFXBG })
+	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 3, 1, { emptycolor=COL_GFXBG })
 
 --[[
 	local dWAN = MQTTDisplay( 'dWAN', 'Freebox/DownloadATM', srf_dATM )
 	local uWAN = MQTTDisplay( 'uWAN', 'Freebox/UploadATM', srf_uATM )
 ]]
-	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/DownloadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
-	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/UploadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
+	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
+	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
 
 	self.refresh()
 
