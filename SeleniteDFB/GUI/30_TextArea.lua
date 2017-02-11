@@ -52,8 +52,8 @@ function TextArea(
 
 		csr.y = csr.y + srf:GetFont():GetHeight()
 		csr.x = 0
-	
-		if csr.y > sh then
+
+		if csr.y > sh-srf:GetFont():GetHeight() then
 			self.Scroll()
 			csr.y = csr.y - srf:GetFont():GetHeight()
 		end
@@ -62,12 +62,14 @@ function TextArea(
 	function self.DrawString( t )
 		local w = srf:GetFont():StringWidth( t )
 
-		if csr.x + w > sw then
+		if csr.x ~= 0 and csr.x + w > sw then
 			self.CR()
 		end
 
 		srf:DrawString( t, csr.x, csr.y )
 		csr.x = csr.x + w
+	
+		self.refresh()
 	end
 
 	-- init

@@ -8,23 +8,15 @@ local function f()
 	local sw, sh = self.get():GetSize()
 	local srf = self.get()
 
-	text = TextArea( srf, 30,30, sw-60, sh-60, fdigit, COL_BLACK, { bgcolor=COL_LIGHTGREY } )
-text.DrawString("Truc ")
-text.DrawString("Much")
-text.CR()
-text.DrawString("Machin")
+	text = TextArea( srf, 30,30, sw-60, sh-60, fsdigit, COL_BLACK, { bgcolor=COL_LIGHTGREY } )
+	tlog = MQTTinput('Log', 'Marcel.prod/Log/Information' )
 
-text.setColor( COL_ORANGE )
-for i=1,5
-do
-	text.DrawString("Bla ")
-end
+	local function revLog()
+		text.CR()
+		text.DrawString( SelShared.get('Marcel.prod/Log/Information') )
+	end
 
-for i=1,6
-do
-	text.CR()
-	text.DrawString("gna gna ".. i)
-end
+	tlog.TaskOnceAdd( revLog )
 
 	self.refresh()
 
