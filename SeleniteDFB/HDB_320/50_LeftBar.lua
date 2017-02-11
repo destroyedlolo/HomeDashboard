@@ -118,6 +118,28 @@ local function f()
 	})
 	local TBureau = MQTTDisplay( 'TBureau', 'maison/Temperature/Bureau', srf_TBureau, { suffix='°', gradient = GRD_TEMPERATURE } )
 
+
+	w,y = srf_TSalon.get():GetPosition()	-- Determine remaining room origine
+	offy = srf:GetHeight() - fsdigit:GetHeight()
+	local srf_uATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_CENTER,
+		sample_text = "0000"
+	} )
+	offy = offy - srf_uATM:GetHeight()
+
+	local srf_dATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_CENTER,
+		sample_text = "0000"
+	} )
+	offy = offy - srf_dATM:GetHeight()
+	
+	local srf_dnGfx = ArcGaugePercent(srf, 0, y, w/2, offy-y, 5, 2, { emptycolor=COL_GFXBG })
+	local srf_upGfx = ArcGaugePercent(srf, w/2, y, w/2, offy-y, 5, 1, { emptycolor=COL_GFXBG })
+
+	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
+	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
+
+
 	self.refresh()
 
 	return self
