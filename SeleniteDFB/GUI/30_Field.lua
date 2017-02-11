@@ -48,7 +48,7 @@ function Field(
 	end
 
 	function self.Clear()
-		psrf:Clear( opts.bgcolor.get() )
+		self.get():Clear( opts.bgcolor.get() )
 	end
 
 	function self.DrawStringOff( v, x,y )	-- Draw a string a the specified offset
