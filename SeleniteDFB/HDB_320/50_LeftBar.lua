@@ -39,7 +39,10 @@ local function f()
 	offy = offy + srf_consommation:GetHeight()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
-	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_GFXFG, COL_GFXBG )
+
+	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_TRANSPARENT, COL_GFXBG )
+	srf_trndconso.get():FillGrandient { TopLeft={16,16,16,255}, BottomLeft={16,16,16,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
+	srf_trndconso.FrozeUnder()
 
 	local srf_maxconso = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
@@ -61,7 +64,6 @@ local function f()
 		}
 	)
 
-
 	srf:DrawString("Production :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
 	local srf_production = FieldBackground( srf, 10,offy, fdigit, COL_DIGIT, {
@@ -80,7 +82,6 @@ local function f()
 		sample_text = "12345"
 	} )
 	offy = offy + HSGRPH
-
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod, srf_maxprod,
 		{ suffix = ' VA', forced_min = 0 } )
 
