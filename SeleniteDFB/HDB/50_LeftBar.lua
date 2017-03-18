@@ -9,10 +9,10 @@ local function f()
 	self.setColor( COL_BORDER )
 	srf:DrawLine( w, 0, w, srf:GetHeight() )
 
-	local ThermImg = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/ElectricityBG.png")
-	local x,y = ThermImg:GetSize()
-	ThermImg:RenderTo( srf, { 20, 40, x,y } )
-	ThermImg:Release()
+	local ElecBgImg = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/ElectricityBG.png")
+	local x,y = ElecBgImg:GetSize()
+	ElecBgImg:RenderTo( srf, { 20, 40, x,y } )
+	ElecBgImg:Release()
 
 	local offy = 3
 	self.setColor( COL_TITLE )
@@ -111,6 +111,7 @@ local function f()
 	assert(ThermImg, "Can't load image")
 
 	ThermImg:RenderTo( srf, { 5, offy, 25,90 } )
+	ThermImg:Release()
 
 	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
