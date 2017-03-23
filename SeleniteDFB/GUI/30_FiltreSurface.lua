@@ -34,6 +34,7 @@ function FiltreSurface(
 
 	function self.Update( color )
 		self.get():Clear( color.get() )
+		self.ApplyMask()
 		self.refresh()
 	end
 
@@ -41,5 +42,6 @@ function FiltreSurface(
 	self.ApplyMask()
 	self.refresh()
 
+	self.Update( COL_RED )
 	return self
 end
