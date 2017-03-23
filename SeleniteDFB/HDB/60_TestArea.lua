@@ -8,7 +8,7 @@ local function f()
 	local sw, sh = self.get():GetSize()
 	local srf = self.get()
 
-	local network = FiltreSurface( srf, 0,0, SELENE_SCRIPT_DIR .. "/Images/Network.png" )
+	local network = ImageFiltreSurface( srf, 0,0, SELENE_SCRIPT_DIR .. "/Images/Network.png" )
 
 	self.refresh()
 

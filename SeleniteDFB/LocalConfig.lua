@@ -11,3 +11,6 @@ if err then
 	print("*E* Log creation", err)
 end
 
+-- As toile is in a dedicated directory in my dev environment ...
+package.path = '/home/laurent/Projets/Toile/?.lua;' .. package.path
+
