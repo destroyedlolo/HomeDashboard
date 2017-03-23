@@ -9,11 +9,12 @@ local function f()
 	self.setColor( COL_BORDER )
 	srf:DrawLine( w, 0, w, srf:GetHeight() )
 
+--[[
 	local ElecBgImg = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/ElectricityBG.png")
 	local x,y = ElecBgImg:GetSize()
 	ElecBgImg:RenderTo( srf, { 20, 40, x,y } )
 	ElecBgImg:Release()
-
+--]]
 	local offy = 3
 	self.setColor( COL_TITLE )
 	srf:SetFont( ftitle1 )
@@ -156,10 +157,10 @@ TSalon.TaskOnceAdd( updthermo )
 	} )
 
 	x,y = srf_dATM.get():GetPosition()
-	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 3, 2, { emptycolor=COL_GFXBG })
+	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 2, { emptycolor=COL_GFXBG })
 
 	x = x + srf_dATM.get():GetWidth() + 4
-	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 3, 1, { emptycolor=COL_GFXBG })
+	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 1, { emptycolor=COL_GFXBG })
 
 --[[
 	local dWAN = MQTTDisplay( 'dWAN', 'Freebox/DownloadATM', srf_dATM )
