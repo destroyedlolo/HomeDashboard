@@ -8,8 +8,9 @@ local function f()
 	local sw, sh = self.get():GetSize()
 	local srf = self.get()
 
-	text = TextArea( srf, 30,30, sw-60, sh-60, fsdigit, COL_BLACK, { bgcolor=COL_LIGHTGREY } )
-	tlog = MQTTinput('Log', 'Marcel.prod/Log/Information' )
+	text = TextArea( srf, 10,10, sw-20, sh-20, fsdigit, COL_BLACK, { bgcolor=COL_LIGHTGREY } )
+	-- tlog = MQTTinput('Log', 'Marcel.prod/Log/Information' )
+	tlog = MQTTinput('Log', 'nNotification/#' )
 
 	local function revLog()
 		text.CR()
