@@ -8,12 +8,16 @@ local function f()
 	local sw, sh = self.get():GetSize()
 	local srf = self.get()
 
-	text = TextArea( srf, 10,10, sw-20, sh-20, fsdigit, COL_BLACK, { bgcolor=COL_LIGHTGREY } )
+	-- Put a log of notification at the bottom of the screen
+	text = TextArea( srf, 0, sh-fsdigit:GetHeight()*4 , sw, fsdigit:GetHeight()*4, fsdigit, COL_BLACK, { bgcolor=COL_LIGHTGREY } )
 	-- tlog = MQTTinput('Log', 'Marcel.prod/Log/Information' )
 	tlog = MQTTinput('Log', 'nNotification/#' )
 
 	local function revLog()
-		text.CR()
+		local x,y = text.getCSR()
+		if x~=0 or y~=0 then	-- Scroll only if the display is not empty
+			text.CR()
+		end
 		text.DrawString( SelShared.get('Log') )
 	end
 
