@@ -10,6 +10,8 @@ local function f()
 
 	local network = ImageFiltreSurface( srf, 0,0, SELENE_SCRIPT_DIR .. "/Images/Network.png" )
 
+	local w0 = Weather3H('Meteo3H', 'Nonglard', 0)
+
 	self.refresh()
 
 	return self

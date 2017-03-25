@@ -42,7 +42,9 @@ local function f()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 
-	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_GFXFG, COL_GFXBG )
+	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_TRANSPARENT, COL_GFXBG,{ align=ALIGN_RIGHT } )
+	srf_trndconso.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
+	srf_trndconso.FrozeUnder()
 
 	local srf_maxconso = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
