@@ -14,7 +14,7 @@ local function f()
 
 	local function revLog()
 		text.CR()
-		text.DrawString( SelShared.get('Marcel.prod/Log/Information') )
+		text.DrawString( SelShared.get('Log') )
 	end
 
 	tlog.TaskOnceAdd( revLog )
