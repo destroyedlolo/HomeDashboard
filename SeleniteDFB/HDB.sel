@@ -20,6 +20,8 @@ if f then
 	f:close()
 end
 
+winlist = {}	-- List of all windows
+
 local info = debug.getinfo(1,'S');
 local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 if psrf:GetSize() == 320 then	-- small display
