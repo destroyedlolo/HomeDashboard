@@ -1,8 +1,7 @@
 local function f()
-	self = SubSurface( psrf, 0,0, 160,psrf:GetHeight() )
+	self = SubSurface( psrf, 0,0, LBw, psrf:GetHeight() )
 
 	-- build graphics
-	local HSGRPH = 30	-- Height of small graphs
 
 	local w = self.get():GetWidth()-1
 	local srf = self.get()
