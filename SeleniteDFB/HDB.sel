@@ -22,6 +22,7 @@ end
 
 -- Global objects
 winlist = {}	-- List of all windows
+condlist = {}	-- List of all conditions
 
 -- Loading modules
 local info = debug.getinfo(1,'S');

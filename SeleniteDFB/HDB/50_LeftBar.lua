@@ -27,7 +27,7 @@ local function f()
 		width = w-20 
 	})
 	offy = offy + srf_tension:GetHeight()
-	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { suffix=' V' } )
+	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { suffix=' V', condition=condition_network } )
 
 
 	srf:DrawString("Consomation :", 5, offy )
