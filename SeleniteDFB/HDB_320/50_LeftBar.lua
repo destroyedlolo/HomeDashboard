@@ -59,7 +59,8 @@ local function f()
 					[4500] = COL_RED
 				}
 			),
-			forced_min = 0
+			forced_min = 0,
+			condition=condition_network
 		}
 	)
 
@@ -84,7 +85,7 @@ local function f()
 	} )
 	offy = offy + HSGRPH
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod, srf_maxprod,
-		{ suffix = ' VA', forced_min = 0 } )
+		{ suffix = ' VA', forced_min = 0, condition=condition_network } )
 
 	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT, 

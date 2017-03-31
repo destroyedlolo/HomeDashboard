@@ -4,6 +4,9 @@
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own dashboard
 
+--	Compatibility with newer Lua
+unpack = unpack or table.unpack
+
 -- initialise graphical environment
 Selene.UseDirectFB("--dfb:quiet,no-vt,no-cursor")
 
@@ -21,8 +24,8 @@ if f then
 end
 
 -- Global objects
-winlist = {}	-- List of all windows
-condlist = {}	-- List of all conditions
+winlist = {}		-- List of all windows
+condlisttmr = {}	-- List of all timers for conditions
 
 -- Loading modules
 local info = debug.getinfo(1,'S');
@@ -74,7 +77,7 @@ end
 
 -- Wait for events
 while true do -- Main todo list handler
-	ret, err = Selene.WaitFor( animTimer.getTimer() )
+	ret, err = Selene.WaitFor( animTimer.getTimer(), unpack( condlisttmr ) )
 	if err then
 		print(err)
 		return

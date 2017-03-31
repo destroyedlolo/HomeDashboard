@@ -9,8 +9,8 @@ local function f()
 	local srf = self.get()
 
 	local network = ImageFiltreSurface( srf, 0,0, SELENE_SCRIPT_DIR .. "/Images/Network.png" )
-	condition_network = Condition( network )
-	table.insert( condlist, condition_network )
+	condition_network = Condition( network, .25 )
+	table.insert( condlisttmr, condition_network.getTimer() )
 
 --[[
 	local self = TextArea( psrf, 
