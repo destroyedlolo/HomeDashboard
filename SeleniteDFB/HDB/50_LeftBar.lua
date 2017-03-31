@@ -61,7 +61,8 @@ local function f()
 					[4500] = COL_RED
 				}
 			),
-			forced_min = 0
+			forced_min = 0,
+			condition=condition_network
 		}
 	)
 
@@ -88,7 +89,7 @@ local function f()
 	} )
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', 
 		srf_production, srf_trndprod, srf_maxprod,
-		{ suffix = ' VA', forced_min = 0 }
+		{ suffix = ' VA', forced_min = 0, condition=condition_network }
 	)
 	offy = offy + HSGRPH + 3
 
@@ -99,7 +100,7 @@ local function f()
 	} )
 	x = srf_onduleur.get():GetWidth()
 	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHeight()-16, COL_GFXBG, COL_BORDER )
-	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
+	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur, { condition=condition_network })
 	offy = offy + srf_onduleur.get():GetHeight() + 2
 
 
