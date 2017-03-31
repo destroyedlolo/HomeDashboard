@@ -75,6 +75,10 @@ if err then
 	return
 end
 
+Notification.Log( "Séléné : ".. SELENE_VERSION )
+Notification.Log( "Toile : ".. TOILE_VERSION )
+Notification.setColor( COL_WHITE )
+
 -- Wait for events
 while true do -- Main todo list handler
 	ret, err = Selene.WaitFor( animTimer.getTimer(), unpack( condlisttmr ) )

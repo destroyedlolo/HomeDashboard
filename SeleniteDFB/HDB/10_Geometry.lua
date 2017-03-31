@@ -1,5 +1,6 @@
 LBw = 160 -- Left bar width
 HSGRPH = 30	-- Height of small graphs
+NotLine = 4	-- Nbre of lines in notification area
 
 -- All sub windows geometry
 
