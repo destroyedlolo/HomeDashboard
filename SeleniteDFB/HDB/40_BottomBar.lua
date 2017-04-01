@@ -10,7 +10,7 @@ local function f()
 	condition_network = Condition( network, .25 )
 	table.insert( condlisttmr, condition_network.getTimer() )
 
-	Notification = NotificationArea( srf, 24, 0, 150, sh, fstxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
+	Notification = NotificationArea( srf, 24, 0, 200, sh, fstxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
 
 	self.refresh()
 	return self
