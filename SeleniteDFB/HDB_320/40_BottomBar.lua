@@ -28,12 +28,18 @@ local function f()
 	)
 	srf_trndbPI.get():FillGrandient { TopLeft={40,40,40,255}, BottomLeft={40,40,40,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
 	srf_trndbPI.FrozeUnder()
-	local loadbPI = FieldBlink( srf, animTimer, offx, offy, fsdigit, COL_DIGIT, {
+	local loadbPI = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("bPI :"), 0, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "5.23"
 	} )
 
-	local consomation = MQTTStoreGfx( 'bPI', 'Load/bPI/1', loadbPI, srf_trndbPI, nil,
+	local mloadbPI = FieldBlink( srf, animTimer, offx, offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "5.23",
+		ndecimal = 2,
+	} )
+
+	local consomation = MQTTStoreGfx( 'bPI', 'Load/bPI/1', loadbPI, srf_trndbPI, mloadbPI,
 		{
 			gradient = Gradient(
 				{
@@ -43,7 +49,8 @@ local function f()
 				}
 			),
 			forced_min = 0,
-			condition=condition_network
+			condition=condition_network,
+			force_max_refresh = 1
 		}
 	)
 
