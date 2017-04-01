@@ -75,8 +75,8 @@ if err then
 	return
 end
 
-Notification.Log( "Séléné : ".. SELENE_VERSION )
-Notification.Log( "Toile : ".. TOILE_VERSION )
+Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
+Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
 Notification.setColor( COL_WHITE )
 
 -- Wait for events
