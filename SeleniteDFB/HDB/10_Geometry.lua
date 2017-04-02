@@ -5,8 +5,6 @@ BBh = fstxt:GetHeight() * NotLine	-- BottomBar's height
 
 -- All sub windows geometry
 
-WINx = LBw + 1
-WINy = 0
+WINTOP = { LBw + 1, 0 }
+WINSIZE = { psrf:GetWidth() - WINTOP[1], psrf:GetHeight() - BBh }
 
-WINw = psrf:GetWidth() - WINx
-WINh = psrf:GetHeight() --[[ - BottomBar.get():GetWidth() ]]

@@ -75,13 +75,27 @@ if err then
 	return
 end
 
+-- Windows cycling
+local wcnt = 0
+function switchwindows()
+	winlist[ (wcnt % #winlist)+1 ]:RaiseToTop()
+	wcnt = wcnt + 1
+end
+
+local switchtimer,err = SelTimer.create { when=10, interval=10, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=switchwindows}
+if err then
+	print(err)
+	return
+end
+
+-- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
 Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
 Notification.setColor( COL_WHITE )
 
 -- Wait for events
 while true do -- Main todo list handler
-	ret, err = Selene.WaitFor( animTimer.getTimer(), unpack( condlisttmr ) )
+	ret, err = Selene.WaitFor( switchtimer, animTimer.getTimer(), unpack( condlisttmr ) )
 	if err then
 		print(err)
 		return
