@@ -1,8 +1,5 @@
 local function f()
-	local sw = psrf:GetWidth() - LBw
-	local sh = fstxt:GetHeight() * NotLine
-
-	local self = SubSurface( psrf, LBw, psrf:GetHeight()-sh, sw, sh )
+	local self = SubSurface( psrf, LBw, psrf:GetHeight()-BBh, psrf:GetWidth() - LBw, BBh )
 	local sw, sh = self.get():GetSize()
 	local srf = self.get()
 	local offx=24,offy
