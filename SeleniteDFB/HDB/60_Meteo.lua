@@ -11,11 +11,8 @@ local function meteo()
 	table.insert( winlist, window )
 	local srf = window:GetSurface()
 
-	srf:SetColor( COL_TITLE.get() )
-	srf:SetFont( ftitle )
-	srf:DrawString("Prévisions du jour", 0, 0)
-
-	local w0 = Weather3H('Meteo3H', 'Nonglard', 0)
+	local currentw = cweather( srf, 0,0 )
+	local w0 = Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
 
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
