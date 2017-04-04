@@ -14,13 +14,15 @@ local function f()
 	self.setColor( COL_TITLE )
 	srf:SetFont( ftitle1 )
 	srf:DrawString("bPI :", offx, 0)
-	offy = ftitle1:GetHeight()
+	offy = math.max( ftitle1:GetHeight(), fsdigit:GetHeight() )
+
 	local srf_trndbPI = GfxArea( srf,
 		offx, offy, 
 		100, srf:GetHeight()-offy, 
-		COL_TRANSPARENT, COL_BLACK, { align=ALIGN_RIGHT }
+		COL_TRANSPARENT, COL_BLACK,
+		{ align=ALIGN_RIGHT, stretch = 1 }
 	)
-	srf_trndbPI.get():FillGrandient { TopLeft={40,40,40,255}, BottomLeft={40,40,40,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
+	srf_trndbPI.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
 	srf_trndbPI.FrozeUnder()
 	local loadbPI = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("bPI :"), 0, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
