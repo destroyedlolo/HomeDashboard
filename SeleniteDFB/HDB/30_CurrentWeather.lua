@@ -45,10 +45,22 @@ function cweather(
 	self.temp = FieldBlink( psrf,
 		animTimer, 190, goffy,
 		fdigit, COL_DIGIT, {
+			suffix = '°C',
 			align = ALIGN_RIGHT,
+			ndecimal = 1,
 			sample_text = "-88:8°C"
 		}
 	)
+	goffy = goffy + fdigit:GetHeight()
+
+	self.windspeed = FieldBlink( psrf,
+		animTimer, 190 + fsdigit:GetHeight(), goffy,
+		fsdigit, COL_DIGIT, {
+			align = ALIGN_RIGHT,
+			sample_text = "88:88"
+		}
+	)
+	psrf:DrawString(" km/h", 190 + fsdigit:GetHeight() + fsdigit:StringWidth("88:88"), goffy)
 
 	function self.updtime()
 		local t=os.date("*t", tonumber(SelShared.get(name)) )

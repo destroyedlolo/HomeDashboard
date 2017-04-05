@@ -22,17 +22,20 @@ local function f()
 	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
 
 	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, COL_DIGIT, {
+		suffix=' V',
+		ndecimal=0,
 		align = ALIGN_RIGHT,
-		sample_text = "888.0 V", 
+		sample_text = "888 V", 
 		width = w-20 
 	})
 	offy = offy + srf_tension:GetHeight()
-	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { suffix=' V', condition=condition_network } )
+	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
 
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	local srf_consommation = FieldBackBorder( srf, 10,offy, fdigit, COL_DIGIT, {
+	local srf_consommation = Field( srf, 10,offy, fdigit, COL_DIGIT, {
+		suffix = ' VA', 
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
 		width = w-20 
@@ -53,7 +56,6 @@ local function f()
 
 	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, srf_maxconso,
 		{
-			suffix = ' VA', 
 			gradient = Gradient(
 				{
 					[500] = COL_DIGIT,
@@ -69,7 +71,8 @@ local function f()
 
 	srf:DrawString("Production :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	local srf_production = FieldBackground( srf, 10,offy, fdigit, COL_DIGIT, {
+	local srf_production = Field( srf, 10,offy, fdigit, COL_DIGIT, {
+		suffix = ' VA',
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
 		width = w-20 
@@ -83,13 +86,13 @@ local function f()
 	srf_trndprod.get():FillGrandient { TopLeft={40,40,40,255}, BottomLeft={40,40,40,255}, TopRight={32,255,32,255}, BottomRight={32,255,255,255} }
 	srf_trndprod.FrozeUnder()
 
-	local srf_maxprod = FieldBackgroundBlink( srf, animTimer, x, offy, fsdigit, COL_DIGIT, {
+	local srf_maxprod = FieldBlink( srf, animTimer, x, offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT, 
 		sample_text = "12345"
 	} )
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', 
 		srf_production, srf_trndprod, srf_maxprod,
-		{ suffix = ' VA', forced_min = 0, condition=condition_network }
+		{ forced_min = 0, condition=condition_network }
 	)
 	offy = offy + HSGRPH + 3
 
@@ -119,12 +122,13 @@ local function f()
 	ThermImg:Release()
 
 	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		suffix='°C',
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°C"
 	})
 	srf:DrawString("Salon :", srf_TSalon.get():GetPosition(), offy - ftitle1:GetHeight() )
 	local srf_Thermometre = GaugeRange( srf, 14,325, 6, 63, COL_RED, COL_WHITE, 5,35, { vertical = true } )
-	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°C', gradient = GRD_TEMPERATURE } )
+	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { gradient = GRD_TEMPERATURE } )
 	offy = offy + srf_TSalon:GetHeight()
 
 -- A mettre avec la temperature du salon
@@ -136,11 +140,12 @@ TSalon.TaskOnceAdd( updthermo )
 
 	offy = offy + ftitle1:GetHeight()
 	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		suffix='°C',
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°C"
 	})
 	srf:DrawString("Extérieur :", srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
-	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°C', gradient = GRD_TEMPERATURE } )
+	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { gradient = GRD_TEMPERATURE } )
 	offy = offy + srf_TDehors:GetHeight()
 
 --[[
