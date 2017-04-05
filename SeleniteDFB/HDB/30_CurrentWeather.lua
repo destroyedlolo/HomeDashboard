@@ -57,10 +57,37 @@ function cweather(
 		animTimer, 190 + fsdigit:GetHeight(), goffy,
 		fsdigit, COL_DIGIT, {
 			align = ALIGN_RIGHT,
-			sample_text = "88:88"
+			sample_text = "88.88"
 		}
 	)
-	psrf:DrawString(" km/h", 190 + fsdigit:GetHeight() + fsdigit:StringWidth("88:88"), goffy)
+	psrf:DrawString(" km/h", 190 + fsdigit:GetHeight() + fsdigit:StringWidth("88.88"), goffy)
+	goffy = goffy + fsdigit:GetHeight()
+
+	self.clouds = FieldBlink( psrf,
+		animTimer, 195 + fsdigit:GetHeight(), goffy,
+		fsdigit, COL_DIGIT, {
+			suffix = '%',
+			align = ALIGN_RIGHT,
+			sample_text = "188%"
+		}
+	)
+	goffy = goffy + fsdigit:GetHeight()
+
+	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Goutte.png")
+	assert(img)
+	img:RenderTo( psrf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
+	img:destroy()
+
+	self.humidity = FieldBlink( psrf,
+		animTimer, 195 + fsdigit:GetHeight(), goffy,
+		fsdigit, COL_DIGIT, {
+			suffix = '%',
+			align = ALIGN_RIGHT,
+			sample_text = "188%"
+		}
+	)
+	goffy = goffy + fsdigit:GetHeight()
+
 
 	function self.updtime()
 		local t=os.date("*t", tonumber(SelShared.get(name)) )
