@@ -63,6 +63,7 @@ function cweather(
 	psrf:DrawString(" km/h", 190 + fsdigit:GetHeight() + fsdigit:StringWidth("88.88"), goffy)
 	goffy = goffy + fsdigit:GetHeight()
 
+	WeatherIcons.getImg( '03d' ):RenderTo( psrf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
 	self.clouds = FieldBlink( psrf,
 		animTimer, 195 + fsdigit:GetHeight(), goffy,
 		fsdigit, COL_DIGIT, {
