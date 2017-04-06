@@ -55,6 +55,7 @@ function cweather(
 	goffy = goffy + fdigit:GetHeight()
 	psrf:SetFont( fsdigit )
 
+	self.windd = WindDir( psrf, 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight())
 	self.windspeed = FieldBlink( psrf,
 		animTimer, 190 + fsdigit:GetHeight(), goffy,
 		fsdigit, COL_DIGIT, {
@@ -98,7 +99,6 @@ function cweather(
 	end
 
 	function self.updateIcon()
-print(name..'acode', SelShared.get(name..'acode'))
 		icon.Update( WeatherIcons.getImg( SelShared.get(name..'acode') ) )
 	end
 
