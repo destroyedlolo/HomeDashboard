@@ -45,13 +45,15 @@ function cweather(
 	self.temp = FieldBlink( psrf,
 		animTimer, 190, goffy,
 		fdigit, COL_DIGIT, {
-			suffix = '°C',
 			align = ALIGN_RIGHT,
 			ndecimal = 1,
-			sample_text = "-88:8°C"
+			sample_text = "-88:8"
 		}
 	)
+	psrf:SetFont( fdigit )
+	psrf:DrawString("°C", self.temp.get():GetAfter() )
 	goffy = goffy + fdigit:GetHeight()
+	psrf:SetFont( fsdigit )
 
 	self.windspeed = FieldBlink( psrf,
 		animTimer, 190 + fsdigit:GetHeight(), goffy,

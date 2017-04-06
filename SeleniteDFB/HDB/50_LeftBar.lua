@@ -22,27 +22,30 @@ local function f()
 	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
 
 	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, COL_DIGIT, {
-		suffix=' V',
 		ndecimal=0,
 		align = ALIGN_RIGHT,
-		sample_text = "888 V", 
-		width = w-20 
+		sample_text = "888", 
+		width = w-20 - fmdigit:StringWidth(" V")
 	})
+	srf:SetFont( fmdigit )
+	srf:DrawString(" V", srf_tension.get():GetAfter() )
 	offy = offy + srf_tension:GetHeight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
-
+	srf:SetFont( ftitle1 )
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
+
 	local srf_consommation = Field( srf, 10,offy, fdigit, COL_DIGIT, {
-		suffix = ' VA', 
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
-		width = w-20 
+		width = w-20 - fmdigit:StringWidth(" VA")
 	} )
+	srf:SetFont( fdigit )
+	srf:DrawString(" VA", srf_consommation.get():GetAfter() )
 	offy = offy + srf_consommation:GetHeight()
 
-	x = w - (5 + fsdigit:StringWidth("12345"))
+	local x = w - (5 + fsdigit:StringWidth("12345"))
 
 	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_TRANSPARENT, COL_GFXBG,{ align=ALIGN_RIGHT } )
 	srf_trndconso.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
@@ -69,14 +72,17 @@ local function f()
 	)
 
 
+	srf:SetFont( ftitle1 )
 	srf:DrawString("Production :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
+
 	local srf_production = Field( srf, 10,offy, fdigit, COL_DIGIT, {
-		suffix = ' VA',
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
-		width = w-20 
+		width = w-20 - fmdigit:StringWidth(" VA") 
 	} )
+	srf:SetFont( fdigit )
+	srf:DrawString(" VA", srf_production.get():GetAfter() )
 	offy = offy + srf_production:GetHeight()
 
 -- already calculated
@@ -121,11 +127,11 @@ local function f()
 	ThermImg:RenderTo( srf, { 5, offy, 25,90 } )
 	ThermImg:Release()
 
-	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
-		suffix='°C',
+	local srf_TSalon = FieldBlink( srf, animTimer, w-8 - fmdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
-		sample_text = "-88.8°C"
+		sample_text = "-88.8"
 	})
+	srf:SetFont( ftitle1 )
 	srf:DrawString("Salon :", srf_TSalon.get():GetPosition(), offy - ftitle1:GetHeight() )
 	local srf_Thermometre = GaugeRange( srf, 14,325, 6, 63, COL_RED, COL_WHITE, 5,35, { vertical = true } )
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { gradient = GRD_TEMPERATURE } )
@@ -139,13 +145,16 @@ TSalon.TaskOnceAdd( updthermo )
 ----
 
 	offy = offy + ftitle1:GetHeight()
-	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
-		suffix='°C',
+	local srf_TDehors = FieldBlink( srf, animTimer, w-8 - fmdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
-		sample_text = "-88.8°C"
+		sample_text = "-88.8"
 	})
 	srf:DrawString("Extérieur :", srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { gradient = GRD_TEMPERATURE } )
+
+	srf:SetFont( fdigit )
+	srf:DrawString("°C", srf_TSalon.get():GetAfter() )
+	srf:DrawString("°C", srf_TDehors.get():GetAfter() )
 	offy = offy + srf_TDehors:GetHeight()
 
 --[[
@@ -171,10 +180,6 @@ TSalon.TaskOnceAdd( updthermo )
 	x = x + srf_dATM.get():GetWidth() + 4
 	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 1, { emptycolor=COL_GFXBG })
 
---[[
-	local dWAN = MQTTDisplay( 'dWAN', 'Freebox/DownloadATM', srf_dATM )
-	local uWAN = MQTTDisplay( 'uWAN', 'Freebox/UploadATM', srf_uATM )
-]]
 	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
 
