@@ -1,4 +1,4 @@
 -- Abstract weather's icons
 
-WeatherIcons = WeatherImages('/usr/local/share/WeatherIcons/')
+WeatherIcons = WeatherImages('/usr/local/share/aWeatherIcons/')
 

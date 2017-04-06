@@ -25,7 +25,7 @@ function cweather(
 
 	local goffy = ftitle:GetHeight() + 10
 
-	local icon = psrf:SubSurface( 0, goffy, 184, 128 )
+	local icon = ImageSurface( psrf, 0, goffy, 184, 128 )
 	self.desc = FieldBlink( psrf, animTimer, 0, goffy + 129, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
 		width = 184
@@ -65,7 +65,7 @@ function cweather(
 	psrf:DrawString(" km/h", 190 + fsdigit:GetHeight() + fsdigit:StringWidth("88.88"), goffy)
 	goffy = goffy + fsdigit:GetHeight()
 
-	WeatherIcons.getImg( '03d' ):RenderTo( psrf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
+	WeatherIcons.getImg( '21' ):RenderTo( psrf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
 	self.clouds = FieldBlink( psrf,
 		animTimer, 195 + fsdigit:GetHeight(), goffy,
 		fsdigit, COL_DIGIT, {
@@ -92,9 +92,14 @@ function cweather(
 	goffy = goffy + fsdigit:GetHeight()
 
 
-	function self.updtime()
+	function self.updTime()
 		local t=os.date("*t", tonumber(SelShared.get(name)) )
 		time.update(string.format("%02d:%02d", t.hour, t.min))
+	end
+
+	function self.updateIcon()
+print(name..'acode', SelShared.get(name..'acode'))
+		icon.Update( WeatherIcons.getImg( SelShared.get(name..'acode') ) )
 	end
 
 	return self
