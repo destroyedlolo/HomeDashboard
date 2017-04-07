@@ -24,6 +24,7 @@ function cweather(
 	psrf:DrawString("Prévisions du jour", 0, 0)
 
 	local goffy = ftitle:GetHeight() + 10
+	local goffx = 190
 
 	local icon = ImageSurface( psrf, 0, goffy, 184, 128 )
 	self.desc = FieldBlink( psrf, animTimer, 0, goffy + 129, fsdigit, COL_DIGIT, {
@@ -32,9 +33,9 @@ function cweather(
 	} )
 
 	psrf:SetFont( fsdigit )
-	psrf:DrawString("Pour :", 190, goffy)
+	psrf:DrawString("Pour :", goffx, goffy)
 	local time = FieldBlink( psrf,
-		animTimer, 190 + fsdigit:StringWidth("Pour : "), goffy,
+		animTimer, goffx + fsdigit:StringWidth("Pour : "), goffy,
 		fsdigit, COL_DIGIT, {
 			align = ALIGN_CENTER,
 			sample_text = "88:88"
@@ -43,7 +44,7 @@ function cweather(
 	goffy = goffy + fsdigit:GetHeight()
 
 	self.temp = FieldBlink( psrf,
-		animTimer, 190, goffy,
+		animTimer, goffx, goffy,
 		fdigit, COL_DIGIT, {
 			align = ALIGN_RIGHT,
 			ndecimal = 1,
@@ -55,20 +56,20 @@ function cweather(
 	goffy = goffy + fdigit:GetHeight()
 	psrf:SetFont( fsdigit )
 
-	self.windd = WindDir( psrf, 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight())
+	self.windd = WindDir( psrf, goffx, goffy, fsdigit:GetHeight(), fsdigit:GetHeight())
 	self.windspeed = FieldBlink( psrf,
-		animTimer, 190 + fsdigit:GetHeight(), goffy,
+		animTimer, goffx + fsdigit:GetHeight(), goffy,
 		fsdigit, COL_DIGIT, {
 			align = ALIGN_RIGHT,
 			sample_text = "88.88"
 		}
 	)
-	psrf:DrawString(" km/h", 190 + fsdigit:GetHeight() + fsdigit:StringWidth("88.88"), goffy)
+	psrf:DrawString(" km/h", goffx + fsdigit:GetHeight() + fsdigit:StringWidth("88.88"), goffy)
 	goffy = goffy + fsdigit:GetHeight()
 
-	WeatherIcons.getImg( '21' ):RenderTo( psrf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
+	WeatherIcons.getImg( '21' ):RenderTo( psrf, { goffx, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
 	self.clouds = FieldBlink( psrf,
-		animTimer, 195 + fsdigit:GetHeight(), goffy,
+		animTimer, goffx + fsdigit:GetHeight() + 5, goffy,
 		fsdigit, COL_DIGIT, {
 			suffix = '%',
 			align = ALIGN_RIGHT,
@@ -79,11 +80,11 @@ function cweather(
 
 	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Goutte.png")
 	assert(img)
-	img:RenderTo( psrf, { 190, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
+	img:RenderTo( psrf, { goffx, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
 	img:destroy()
 
 	self.humidity = FieldBlink( psrf,
-		animTimer, 195 + fsdigit:GetHeight(), goffy,
+		animTimer, goffx + fsdigit:GetHeight() + 5, goffy,
 		fsdigit, COL_DIGIT, {
 			suffix = '%',
 			align = ALIGN_RIGHT,
