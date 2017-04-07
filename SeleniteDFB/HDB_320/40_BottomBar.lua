@@ -24,7 +24,7 @@ local function f()
 	local srf_trndbPI = GfxArea( srf,
 		offx, offy, 
 		srf:GetWidth() - offx, srf:GetHeight()-offy, 
-		COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT }
+		COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT, stretch = 1 }
 	)
 	srf_trndbPI.get():FillGrandient { TopLeft={40,40,40,255}, BottomLeft={40,40,40,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
 	srf_trndbPI.FrozeUnder()
@@ -54,21 +54,6 @@ local function f()
 		}
 	)
 
-
---[[
-	local self = TextArea( psrf, 
-		LeftBar.get():GetWidth(),psrf:GetHeight()-sh, sw, sh,	-- Geometry
-		fsdigit, COL_BLACK, { bgcolor=COL_LIGHTGREY } -- Font
-	)
-
-	local function rcvLog()	-- Receiving a log
-		self.SmartCR()
-		self.DrawString( SelShared.get('Log') )
-	end
-
-	tlog = MQTTinput('Log', 'nNotification/#' )
-	tlog.TaskOnceAdd( rcvLog )
---]]
 	self.refresh()
 	return self
 end
