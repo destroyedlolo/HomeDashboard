@@ -23,7 +23,7 @@ function cweather(
 	psrf:SetFont( ftitle1 )
 	psrf:DrawString("Prévisions du jour", 0, 0)
 	local goffy = y + ftitle1:GetHeight() + 5
-	local goffx = x + 115
+	local goffx = x + 110
 
 	local icon = ImageSurface( psrf, 0, goffy, 110, 76 )
 	self.desc = FieldBlink( psrf, animTimer, 0, goffy + 76, fsdigit, COL_DIGIT, {

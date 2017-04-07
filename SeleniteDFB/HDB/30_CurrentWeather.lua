@@ -92,6 +92,12 @@ function cweather(
 		}
 	)
 	goffy = goffy + fsdigit:GetHeight()
+	local _,t = self.desc.get():GetBellow()
+	goffy = math.max( goffy, t )
+
+	function self.getBellow()
+		return goffy
+	end
 
 
 	function self.updTime()
