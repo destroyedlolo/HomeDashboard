@@ -22,8 +22,8 @@ function cweather(
 	psrf:SetColor( COL_TITLE.get() )
 	psrf:SetFont( ftitle1 )
 	psrf:DrawString("Prévisions du jour", 0, 0)
-	local goffy = ftitle1:GetHeight() + 5
-	local goffx = 115
+	local goffy = y + ftitle1:GetHeight() + 5
+	local goffx = x + 115
 
 	local icon = ImageSurface( psrf, 0, goffy, 110, 76 )
 	self.desc = FieldBlink( psrf, animTimer, 0, goffy + 76, fsdigit, COL_DIGIT, {
@@ -91,7 +91,12 @@ function cweather(
 		}
 	)
 	goffy = goffy + fsdigit:GetHeight()
+	local _,t = self.desc.get():GetBellow()
+	goffy = math.max( goffy, t )
 
+	function self.getBellow()
+		return goffy
+	end
 
 	function self.updTime()
 		local t=os.date("*t", tonumber(SelShared.get(name)) )
