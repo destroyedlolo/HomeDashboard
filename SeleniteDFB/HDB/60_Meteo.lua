@@ -11,7 +11,11 @@ local function meteo()
 	table.insert( winlist, window )
 	local srf = window:GetSurface()
 
-	local currentw = cweather( srf, 0,0 )
+	srf:SetColor( COL_TITLE.get() )
+	srf:SetFont( ftitle )
+	srf:DrawString("Nonglard", 0, 0)
+
+	local currentw = cweather( srf, 0, ftitle:GetHeight() + 20 )
 	local w0 = Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
 
 	srf:SetColor( COL_BORDER.get() )

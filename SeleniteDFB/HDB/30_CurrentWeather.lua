@@ -19,17 +19,13 @@ function cweather(
 		name = tp
 	end
 
-	psrf:SetColor( COL_TITLE.get() )
-	psrf:SetFont( ftitle )
-	psrf:DrawString("Prévisions du jour", 0, 0)
+	local goffy = y 
+	local goffx = x + 175
 
-	local goffy = ftitle:GetHeight() + 10
-	local goffx = 190
-
-	local icon = ImageSurface( psrf, 0, goffy, 184, 128 )
-	self.desc = FieldBlink( psrf, animTimer, 0, goffy + 129, fsdigit, COL_DIGIT, {
+	local icon = ImageSurface( psrf, 0, goffy, 156, 109 )
+	self.desc = FieldBlink( psrf, animTimer, 0, goffy + 115, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
-		width = 184
+		width = 174
 	} )
 
 	psrf:SetFont( fsdigit )
