@@ -20,12 +20,12 @@ function cweather(
 	end
 
 	local goffy = y 
-	local goffx = x + 175
+	local goffx = x + 170
 
 	local icon = ImageSurface( psrf, 0, goffy, 156, 109 )
 	self.desc = FieldBlink( psrf, animTimer, 0, goffy + 115, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
-		width = 174
+		width = 170
 	} )
 
 	psrf:SetFont( fsdigit )

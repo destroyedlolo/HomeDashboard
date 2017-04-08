@@ -1,6 +1,7 @@
 -- Weather forcast
 local function meteo()
 	local self = {}
+	local x,y 
 
 	local window = layer:CreateWindow {
 		pos = WINTOP, size = WINSIZE,
@@ -19,7 +20,7 @@ local function meteo()
 	local w0 = Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
 
 	srf:SetColor( COL_BORDER.get() )
-	local y =  currentw.getBellow() + 15
+	y =  currentw.getBellow() + 15
 	srf:DrawLine( 20, y, 270, y )
 	y = y + 15
 
@@ -31,6 +32,33 @@ local function meteo()
 
 	local plus3 = stweather( srf, plus2.getNext() + 5, y )
 	local w3 = Weather3H(plus3, 'Meteo3H', 'Nonglard', 3)
+
+	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Sunrise.png")
+	assert(img)
+	img:RenderTo( srf, { 200 , 0, ftitle:GetHeight(), ftitle:GetHeight() } )
+	img:destroy()
+
+	srf:SetFont( fmdigit )
+	srf:SetColor( COL_TITLE.get() )
+	local sunrise = Field( srf, 210 + ftitle:GetHeight(), 0,
+		fmdigit, COL_DIGIT, {
+			align = ALIGN_CENTER,
+			sample_text = '88:88'
+		}
+	)
+	MQTTDisplay( 'SunriseNonlard', "Meteo/Nonglard/sunrise", sunrise )
+
+	x,y = sunrise.get():GetAfter()
+	srf:DrawString(" - ", x, y)
+	x = x + fmdigit:StringWidth(" - ")
+	local sunset= Field( srf, x, 0,
+		fmdigit, COL_DIGIT, {
+			align = ALIGN_CENTER,
+			sample_text = '88:88'
+		}
+	)
+	MQTTDisplay( 'SunsetNonlard', "Meteo/Nonglard/sunset", sunset )
+
 
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
