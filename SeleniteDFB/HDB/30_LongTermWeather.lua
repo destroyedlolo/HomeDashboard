@@ -28,8 +28,8 @@ function ltweather(
 		return self.getWidth() + x
 	end
 
-	local icon = ImageSurface( psrf, goffx, goffy, 78, 54 )
-	goffy = goffy + 54
+	local icon = ImageSurface( psrf, goffx, goffy, 70, 49 )
+	goffy = goffy + 49
 
 	local time = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
@@ -50,6 +50,9 @@ function ltweather(
 		width = self.getWidth() - 15
 	} )
 
+	function self.getBellow()
+		return self.tmin.get():GetBellow()
+	end
 
 	function self.updateIcon()
 		icon.Update( WeatherIcons.getImg( SelShared.get(name..'acode') ) )
