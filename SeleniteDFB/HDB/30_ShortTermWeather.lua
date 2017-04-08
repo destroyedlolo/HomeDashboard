@@ -30,7 +30,7 @@ function stweather(
 
 	local time = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
-		width = self.getWidth()
+		width = self.getWidth() - 15
 	} )
 	goffx, goffy = time.get():GetBellow()
 
