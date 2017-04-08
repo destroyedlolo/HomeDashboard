@@ -1,0 +1,66 @@
+-- Display short term weather forcast
+
+function ltweather(
+	psrf,	-- parent surface
+	x,y,	-- top left of this area
+	opts
+)
+--[[ known options  :
+--]]
+	if not opts then
+		opts = {}
+	end
+
+	local self = {}
+	local name
+	function self.setName( tp )
+		name = tp
+	end
+
+	local goffx = x
+	local goffy = y
+
+	function self.getWidth()
+		return 100
+	end
+
+	function self.getNext()
+		return self.getWidth() + x
+	end
+
+	local icon = ImageSurface( psrf, goffx, goffy, 78, 54 )
+	goffy = goffy + 54
+
+	local time = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
+		align = ALIGN_CENTER,
+		width = self.getWidth() - 15
+	} )
+	goffx, goffy = time.get():GetBellow()
+
+	self.tmax = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
+		suffix = '°C',
+		align = ALIGN_CENTER,
+		width = self.getWidth() - 15
+	} )
+	goffx, goffy = self.tmax.get():GetBellow()
+
+	self.tmin = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
+		suffix = '°C',
+		align = ALIGN_CENTER,
+		width = self.getWidth() - 15
+	} )
+
+
+	function self.updateIcon()
+		icon.Update( WeatherIcons.getImg( SelShared.get(name..'acode') ) )
+	end
+
+	function self.updTime()
+		local wdays = {'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'}
+
+		local t=os.date("*t", tonumber(SelShared.get(name)) )
+		time.update(wdays[t.wday] ..' '.. t.day ..'/'.. t.month)
+	end
+
+	return self
+end

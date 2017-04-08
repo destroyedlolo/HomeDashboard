@@ -22,6 +22,7 @@ local function meteo()
 	srf:SetColor( COL_BORDER.get() )
 	y =  currentw.getBellow() + 15
 	srf:DrawLine( 20, y, 270, y )
+	srf:DrawLine( 299, ftitle:GetHeight() + 40, 299, WINSIZE[2] - 40 )
 	y = y + 15
 
 	local plus1 = stweather( srf, 0, y )
@@ -32,6 +33,9 @@ local function meteo()
 
 	local plus3 = stweather( srf, plus2.getNext() + 5, y )
 	local w3 = Weather3H(plus3, 'Meteo3H', 'Nonglard', 3)
+
+	local day1 = ltweather( srf, 300, ftitle:GetHeight() + 20 )
+	local d1 = Weather( day1, 'Meteo', 'Nonglard', 1)
 
 	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Sunrise.png")
 	assert(img)
