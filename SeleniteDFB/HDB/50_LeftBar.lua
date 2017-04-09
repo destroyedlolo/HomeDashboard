@@ -145,17 +145,17 @@ TSalon.TaskOnceAdd( updthermo )
 ----
 
 	offy = offy + ftitle1:GetHeight()
-	local srf_TDehors = FieldBlink( srf, animTimer, w-8 - fmdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
+	self.srf_TDehors = FieldBlink( srf, animTimer, w-8 - fmdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8"
 	})
-	srf:DrawString("Extérieur :", srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
-	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { gradient = GRD_TEMPERATURE } )
+	srf:DrawString("Extérieur :", self.srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
+--	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { gradient = GRD_TEMPERATURE } )
 
 	srf:SetFont( fdigit )
 	srf:DrawString("°C", srf_TSalon.get():GetAfter() )
-	srf:DrawString("°C", srf_TDehors.get():GetAfter() )
-	offy = offy + srf_TDehors:GetHeight()
+	srf:DrawString("°C", self.srf_TDehors.get():GetAfter() )
+	offy = offy + self.srf_TDehors:GetHeight()
 
 --[[
 	self.setColor( COL_BORDER )

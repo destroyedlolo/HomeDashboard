@@ -54,6 +54,21 @@ local function meteo()
 	local day6 = ltweather( srf, day5.getNext(), y )
 	local d6 = Weather( day6, 'Meteo', 'Nonglard', 6)
 
+	x,y = day4.getBellow()
+	local gfxTDehors = GfxArea( srf,
+		x, y, WINSIZE[1] - x, WINSIZE[2] - y,
+		COL_GFXFG, COL_GFXBG,
+		{ align=ALIGN_RIGHT }
+	)
+--	gfxTExt.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,96,32,255}, BottomRight={32,255,32,255} }
+	local TDehors = MQTTStoreGfx( 'TDehors', 'maison/Temperature/Dehors', LeftBar.srf_TDehors, gfxTDehors, nil,
+		{
+			gradient = GRD_TEMPERATURE,
+			forced_min = 0,
+			condition=condition_network
+		}
+	)
+
 
 	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Sunrise.png")
 	assert(img)
