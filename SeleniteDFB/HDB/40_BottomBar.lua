@@ -20,7 +20,11 @@ local function f()
 		offx, offy, 
 		100, srf:GetHeight()-offy, 
 		COL_TRANSPARENT, COL_BLACK,
-		{ align=ALIGN_RIGHT, stretch = 1 }
+		{ 
+			align=ALIGN_RIGHT,
+			stretch = 1,
+--			vevrylines={ {1, COL_DARKGREY} }
+		}
 	)
 	srf_trndbPI.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
 	srf_trndbPI.FrozeUnder()
