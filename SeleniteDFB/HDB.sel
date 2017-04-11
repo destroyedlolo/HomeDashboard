@@ -37,25 +37,23 @@ else
 end
 
 
-SelLog.log("Let's go ...")
-
 -- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.
-	if SelShared.get('HomeDashBoard/Tablette/Command') == 'Grab' then
+	if SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
 		psrf:Dump('/tmp', 'DashBoard')
-	elseif SelShared.get('HomeDashBoard/Tablette/Command') == 'Tasks' then
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Tasks' then
 		SelShared.dump()
-	elseif SelShared.get('HomeDashBoard/Tablette/Command') == 'Topics' then
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Topics' then
 		for _,v in ipairs(Topics) do
 			print(_,v.topic)
 		end
-	elseif SelShared.get('HomeDashBoard/Tablette/Command') == 'RefreshGFX' then
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
 		Meteo.refreshGfx()
 	end
 end
 
 table.insert( Topics, 
-	{ topic = "HomeDashBoard/Tablette/Command", trigger=Command }	-- 'Tablette' has to be changed if several dashboard
+	{ topic = 'HomeDashBoard/'.. MQTT_ClientID ..'/Command', trigger=Command }	-- 'Tablette' has to be changed if several dashboard
 )
 
 
@@ -95,7 +93,13 @@ end
 -- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
 Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
+Notification.Log( "Command : HomeDashBoard/".. MQTT_ClientID ..'/Command' )
+
 Notification.setColor( COL_WHITE )
+
+SelLog.log("Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
+SelLog.log("Let's go ...")
+
 
 -- Wait for events
 while true do -- Main todo list handler
