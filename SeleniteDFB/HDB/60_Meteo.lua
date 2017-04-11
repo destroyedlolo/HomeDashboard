@@ -55,6 +55,7 @@ local function meteo()
 	local d6 = Weather( day6, 'Meteo', 'Nonglard', 6)
 
 	x,y = day4.getBellow()
+	y = y+5
 	local gfxTDehors = GfxArea( srf,
 		x, y, WINSIZE[1] - x, WINSIZE[2] - y,
 		COL_GFXFG, COL_GFXBG,
@@ -72,6 +73,9 @@ local function meteo()
 			condition=condition_network
 		}
 	)
+	function self.refreshGfx()
+		gfxTDehors.refresh()
+	end
 
 
 	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Sunrise.png")

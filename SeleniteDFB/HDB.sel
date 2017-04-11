@@ -49,6 +49,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		for _,v in ipairs(Topics) do
 			print(_,v.topic)
 		end
+	elseif SelShared.get('HomeDashBoard/Tablette/Command') == 'RefreshGFX' then
+		Meteo.refreshGfx()
 	end
 end
 
