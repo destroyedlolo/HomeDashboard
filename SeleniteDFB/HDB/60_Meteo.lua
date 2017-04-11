@@ -74,9 +74,15 @@ local function meteo()
 		}
 	)
 	function self.refreshGfx()
-		gfxTDehors.refresh()
+		SelLog.log("*I* TDehors collection size : "..  TDehors.getCollection():HowMany())
+		TDehors.updgfx()
 	end
-
+	local function feedTDehors() -- Feed TDehors collection from a topic : temp,timestamp
+		TDehors.getCollection():Push( string.match(SelShared.get('FeedTDehors'), "([%d%.]+),(%d+)") )
+	end
+	SelLog.log("*I* Feed : HomeDashBoard/".. MQTT_ClientID ..'/Feed/TDehors')
+	local tfeed = MQTTinput('FeedTDehors', 'HomeDashBoard/'.. MQTT_ClientID ..'/Feed/TDehors')
+	tfeed.TaskOnceAdd( feedTDehors )
 
 	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Sunrise.png")
 	assert(img)
@@ -111,3 +117,4 @@ local function meteo()
 end
 
 Meteo = meteo()
+
