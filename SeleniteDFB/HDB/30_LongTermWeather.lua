@@ -21,14 +21,14 @@ function ltweather(
 	local goffy = y
 
 	function self.getWidth()
-		return 100
+		return 105
 	end
 
 	function self.getNext()
 		return self.getWidth() + x
 	end
 
-	local icon = ImageSurface( psrf, goffx, goffy, 70, 49 )
+	local icon = ImageSurface( psrf, goffx+5, goffy, 70, 49 )
 	goffy = goffy + 49
 
 	local time = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
