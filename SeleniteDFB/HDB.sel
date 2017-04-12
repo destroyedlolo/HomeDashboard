@@ -97,7 +97,7 @@ Notification.Log( "Command : HomeDashBoard/".. MQTT_ClientID ..'/Command' )
 
 Notification.setColor( COL_WHITE )
 
-SelLog.log("Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
+SelLog.log("*I* Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
 SelLog.log("Let's go ...")
 
 
