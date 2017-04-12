@@ -66,7 +66,7 @@ local function meteo()
 		}
 	)
 --	gfxTExt.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,96,32,255}, BottomRight={32,255,32,255} }
-	local TDehors = MQTTStoreGfx( 'TDehors', 'maison/Temperature/Dehors', LeftBar.srf_TDehors, gfxTDehors, nil,
+	local TDehors = MQTTStoreGfx( 'TDehors', 'maison/Temperature/Dehors', LeftBar.srf_TDehors, gfxTDehors,
 		{
 			gradient = GRD_TEMPERATURE,
 			forced_min = 0,

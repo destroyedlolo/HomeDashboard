@@ -39,8 +39,9 @@ local function f()
 		ndecimal = 2,
 	} )
 
-	local consomation = MQTTStoreGfx( 'bPI', 'Load/bPI/1', loadbPI, srf_trndbPI, mloadbPI,
+	local consomation = MQTTStoreGfx( 'bPI', 'Load/bPI/1', loadbPI, srf_trndbPI, 
 		{
+			smax = mloadbPI,
 			gradient = Gradient(
 				{
 					[.1] = COL_GREEN,

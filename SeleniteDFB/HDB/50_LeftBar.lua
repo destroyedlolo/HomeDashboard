@@ -57,8 +57,9 @@ local function f()
 	} )
 	offy = offy + HSGRPH
 
-	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, srf_maxconso,
+	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
 		{
+			smax = srf_maxconso,
 			gradient = Gradient(
 				{
 					[500] = COL_DIGIT,
@@ -97,8 +98,8 @@ local function f()
 		sample_text = "12345"
 	} )
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', 
-		srf_production, srf_trndprod, srf_maxprod,
-		{ forced_min = 0, condition=condition_network }
+		srf_production, srf_trndprod,
+		{ smax = srf_maxprod, forced_min = 0, condition=condition_network }
 	)
 	offy = offy + HSGRPH + 3
 
