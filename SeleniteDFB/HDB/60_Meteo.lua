@@ -66,11 +66,28 @@ local function meteo()
 		}
 	)
 --	gfxTExt.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,96,32,255}, BottomRight={32,255,32,255} }
+
+	local MaxTDehors = FieldBlink( srf, animTimer, x+5, y+5, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "-88.88",
+		ndecimal = 2
+	} )
+
+	local MinTDehors = FieldBlink( srf, animTimer, x+5, WINSIZE[2] - fsdigit:GetHeight() - 5, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "-88.88",
+		ndecimal = 2
+	} )
+
 	local TDehors = MQTTStoreGfx( 'TDehors', 'maison/Temperature/Dehors', LeftBar.srf_TDehors, gfxTDehors,
 		{
 			gradient = GRD_TEMPERATURE,
 			forced_min = 0,
-			condition=condition_network
+			condition = condition_network,
+			smax = MaxTDehors,
+			force_max_refresh = 1,
+			smin = MinTDehors,
+			force_min_refresh = 1
 		}
 	)
 	function self.refreshGfx()
