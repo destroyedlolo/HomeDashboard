@@ -61,10 +61,10 @@ local function meteo()
 		COL_GFXFG, COL_GFXBG,
 		{
 			align=ALIGN_RIGHT,
-			vlines={ { 0, COL_DIGIT } },
-			vevrylines={ {5, COL_DARKGREY}, { 10, COL_GREY } },
-			hlinesH=COL_DARKGREY,
-			hlinesD=COL_GREY
+			hlines={ { 0, COL_DIGIT } },
+			heverylines={ {5, COL_DARKGREY}, { 10, COL_GREY } },
+			vlinesH=COL_DARKGREY,
+			vlinesD=COL_GREY
 		}
 	)
 --	gfxTExt.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,96,32,255}, BottomRight={32,255,32,255} }
