@@ -62,7 +62,9 @@ local function meteo()
 		{
 			align=ALIGN_RIGHT,
 			vlines={ { 0, COL_DIGIT } },
-			vevrylines={ {5, COL_DARKGREY}, { 10, COL_GREY } }
+			vevrylines={ {5, COL_DARKGREY}, { 10, COL_GREY } },
+			hlinesH=COL_DARKGREY,
+			hlinesD=COL_GREY
 		}
 	)
 --	gfxTExt.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,96,32,255}, BottomRight={32,255,32,255} }
@@ -95,7 +97,7 @@ local function meteo()
 		TDehors.updgfx()
 	end
 	local function feedTDehors() -- Feed TDehors collection from a topic : temp,timestamp
-		TDehors.getCollection():Push( string.match(SelShared.get('FeedTDehors'), "([%d%.]+),(%d+)") )
+		local v,t = string.match(SelShared.get('FeedTDehors'), "([%d%.]+),(%d+)")			TDehors.getCollection():Push( v,tonumber(t) )
 	end
 	SelLog.log("*I* Feed : HomeDashBoard/".. MQTT_ClientID ..'/Feed/TDehors')
 	local tfeed = MQTTinput('FeedTDehors', 'HomeDashBoard/'.. MQTT_ClientID ..'/Feed/TDehors')
