@@ -49,8 +49,9 @@ local function f()
 	} )
 	offy = offy + HSGRPH
 
-	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, srf_maxconso,
+	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso,
 		{
+			smax = srf_maxconso,
 			suffix = ' VA', 
 			gradient = Gradient(
 				{
@@ -84,8 +85,8 @@ local function f()
 		sample_text = "12345"
 	} )
 	offy = offy + HSGRPH
-	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod, srf_maxprod,
-		{ suffix = ' VA', forced_min = 0, condition=condition_network } )
+	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod, 
+		{ smax=srf_maxprod, suffix = ' VA', forced_min = 0, condition=condition_network } )
 
 	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT, 
@@ -95,7 +96,6 @@ local function f()
 	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+4, w-x-8, srf_onduleur.get():GetHeight()-8, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
 	offy = offy + srf_gaugeOnduleur.get():GetHeight() + 6
-
 
 --
 -- Key temperatures
