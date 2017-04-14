@@ -22,11 +22,11 @@ function cweather(
 	psrf:SetColor( COL_TITLE.get() )
 	psrf:SetFont( ftitle1 )
 	psrf:DrawString("Prévisions du jour", 0, 0)
-	local goffy = y + ftitle1:GetHeight() + 5
-	local goffx = x + 110
+	local goffy = y + ftitle1:GetHeight() + 15
+	local goffx = x + 130
 
-	local icon = ImageSurface( psrf, 0, goffy, 110, 76 )
-	self.desc = FieldBlink( psrf, animTimer, 0, goffy + 76, fsdigit, COL_DIGIT, {
+	local icon = ImageSurface( psrf, x, goffy, 110, 76 )
+	self.desc = FieldBlink( psrf, animTimer, x, goffy + 76, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
 		width = 110
 	} )
