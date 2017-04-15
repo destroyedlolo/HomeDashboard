@@ -128,7 +128,7 @@ local function f()
 	ThermImg:RenderTo( srf, { 5, offy, 25,90 } )
 	ThermImg:Release()
 
-	local srf_TSalon = FieldBlink( srf, animTimer, w-8 - fmdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
+	local srf_TSalon = FieldBlink( srf, animTimer, w-8 - fdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8"
 	})
@@ -146,7 +146,7 @@ TSalon.TaskOnceAdd( updthermo )
 ----
 
 	offy = offy + ftitle1:GetHeight()
-	self.srf_TDehors = FieldBlink( srf, animTimer, w-8 - fmdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
+	self.srf_TDehors = FieldBlink( srf, animTimer, w-8 - fdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8"
 	})
