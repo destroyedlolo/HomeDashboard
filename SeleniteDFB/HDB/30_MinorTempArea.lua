@@ -23,9 +23,9 @@ function MintorTempArea(
 	if opts.title then
 		srf:SetColor( COL_TITLE.get() )
 		srf:SetFont( ftitle1 )
-		srf:DrawString("Grenier Nord", x, y)
+		srf:DrawString(opts.title, x, y)
 		if not opts.size then
-			opts.size = ftitle1:StringWidth("Grenier Nord")
+			opts.size = ftitle1:StringWidth(opts.title)
 		end
 		y = y + ftitle1:GetHeight()
 	end	

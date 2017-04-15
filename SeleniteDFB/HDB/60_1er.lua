@@ -27,34 +27,41 @@ local function upstaire()
 		}
 	)
 
---[[
-	x,y = 35, 150
-	srf:SetColor( COL_TITLE.get() )
-	srf:SetFont( ftitle1 )
-	srf:DrawString("Grenier Nord", x, y)
-	s = ftitle1:StringWidth("Grenier Nord")
-	y = y + ftitle1:GetHeight()
-
-	srf_TGN = FieldBlink( srf, animTimer,
-		x + s - fmdigit:StringWidth("°C"), y, fmdigit, COL_DIGIT, {
-		align = ALIGN_FRIGHT,
-		sample_text = "-88.8"
-	})
-	srf:SetFont( fmdigit )
-	srf:DrawString("°C", srf_TGN.get():GetAfter() )
-	_,y = srf_TGN.get():GetBellow()
-
-	local srf_TGNgfx = GfxArea( srf, x, y, s, HSGRPH, COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT } )
-	srf_TGNgfx.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
-	srf_TGNgfx.FrozeUnder()
-
-	local TGN_dt = MQTTStoreGfx( 'TGN', 'maison/Temperature/Grenier Nord', srf_TGN, srf_TGNgfx, 
+	MintorTempArea( srf, 'TGS', 'maison/Temperature/Grenier Sud', 535,150,
 		{
-			gradient = GRD_TEMPERATURE,
---			forced_min = 0,
+			font = fmdigit,
+			title = "Grenier Nord"
 		}
 	)
---]]
+
+	MintorTempArea( srf, 'TCJ', 'maison/Temperature/Chambre Joris', 140,50,
+		{
+			font = fdigit,
+			title = "Chambre Joris"
+		}
+	)
+
+	MintorTempArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 255,30,
+		{
+			font = fdigit,
+			title = "Chambre Parents"
+		}
+	)
+
+	MintorTempArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 390,50,
+		{
+			font = fdigit,
+			title = "Chambre Océane"
+		}
+	)
+
+	MintorTempArea( srf, 'TComble', 'maison/Temperature/Comble', 535,0,
+		{
+			font = fmdigit,
+			title = "Comble",
+			size = 80
+		}
+	)
 
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
