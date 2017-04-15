@@ -24,8 +24,20 @@ if f then
 end
 
 -- Global objects
-winlist = {}		-- List of all windows
 condlisttmr = {}	-- List of all timers for conditions
+winlist = {}		-- List of all windows
+savedcols = {}		-- Collection to be saved/restored
+local SAVE_DIR = '/tmp/'
+
+function quitHDB()
+	SelLog.log("*I* Saving collections ..")
+	for i,col in ipairs(savedcols) do
+		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
+	end
+
+	os.exit()
+end
+Selene.SigIntTask( quitHDB )
 
 -- Loading modules
 local info = debug.getinfo(1,'S');
@@ -36,6 +48,10 @@ else
 	loaddir(whereiam, 'HDB')
 end
 
+SelLog.log("*I* Restoring collections ..")
+for i,col in ipairs(savedcols) do
+	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
+end
 
 -- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.
@@ -49,6 +65,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		end
 	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
 		Meteo.refreshGfx()
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
+		quitHDB()
 	end
 end
 

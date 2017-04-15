@@ -102,6 +102,7 @@ local function meteo()
 	SelLog.log("*I* Feed : HomeDashBoard/".. MQTT_ClientID ..'/Feed/TDehors')
 	local tfeed = MQTTinput('FeedTDehors', 'HomeDashBoard/'.. MQTT_ClientID ..'/Feed/TDehors')
 	tfeed.TaskOnceAdd( feedTDehors )
+	table.insert( savedcols, TDehors )
 
 	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Sunrise.png")
 	assert(img)

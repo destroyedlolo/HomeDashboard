@@ -46,9 +46,10 @@ function MintorTempArea(
 	local dt = MQTTStoreGfx( name, topic, srf_Temp, srf_gfx, 
 		{
 			gradient = GRD_TEMPERATURE,
---			forced_min = 0,
+			forced_min = 0,
 		}
 	)
+	table.insert( savedcols, dt )
 
 	function self.getBelow()
 		

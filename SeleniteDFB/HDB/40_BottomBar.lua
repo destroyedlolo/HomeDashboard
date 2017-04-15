@@ -54,6 +54,7 @@ local function f()
 			force_max_refresh = 1
 		}
 	)
+	table.insert( savedcols, loadbPI )
 
 	self.refresh()
 	return self
