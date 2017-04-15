@@ -19,8 +19,15 @@ local function upstaire()
 	local s = (WINSIZE[1] - 60 ) / x
 	img:RenderTo( srf, { 30, WINSIZE[2] - y*s - 20, x*s, y*s } )
 	img:destroy()	-- The image is not needed anymore
-print(WINSIZE[2] - y*s)
 
+	MintorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 35,150,
+		{
+			font = fmdigit,
+			title = "Grenier Nord"
+		}
+	)
+
+--[[
 	x,y = 35, 150
 	srf:SetColor( COL_TITLE.get() )
 	srf:SetFont( ftitle1 )
@@ -47,6 +54,7 @@ print(WINSIZE[2] - y*s)
 --			forced_min = 0,
 		}
 	)
+--]]
 
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
