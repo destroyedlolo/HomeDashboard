@@ -135,5 +135,5 @@ local function meteo()
 	return self
 end
 
--- Meteo = meteo()
+Meteo = meteo()
 
