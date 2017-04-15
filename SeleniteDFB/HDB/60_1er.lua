@@ -34,7 +34,7 @@ local function upstaire()
 	MintorTempArea( srf, 'TGS', 'maison/Temperature/Grenier Sud', 535,150,
 		{
 			font = fmdigit,
-			title = "Grenier Nord"
+			title = "Grenier Sud"
 		}
 	)
 
