@@ -20,7 +20,7 @@ local function meteo()
 	local w0 = Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
 
 	srf:SetColor( COL_BORDER.get() )
-	y =  currentw.getBellow() + 15
+	y =  currentw.getBelow() + 15
 	srf:DrawLine( 20, y, 270, y )
 	srf:DrawLine( 305, ftitle:GetHeight() + 40, 305, WINSIZE[2] - 40 )
 	y = y + 15
@@ -44,7 +44,7 @@ local function meteo()
 	local day3 = ltweather( srf, day2.getNext() , y )
 	local d3 = Weather( day3, 'Meteo', 'Nonglard', 3)
 
-	x,y = day1.getBellow()
+	x,y = day1.getBelow()
 	local day4 = ltweather( srf, x, y )
 	local d4 = Weather( day4, 'Meteo', 'Nonglard', 4)
 
@@ -54,7 +54,7 @@ local function meteo()
 	local day6 = ltweather( srf, day5.getNext(), y )
 	local d6 = Weather( day6, 'Meteo', 'Nonglard', 6)
 
-	x,y = day4.getBellow()
+	x,y = day4.getBelow()
 	y = y+5
 	local gfxTDehors = GfxArea( srf,
 		x, y, WINSIZE[1] - x, WINSIZE[2] - y,

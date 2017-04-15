@@ -32,7 +32,7 @@ function stweather(
 		align = ALIGN_CENTER,
 		width = self.getWidth() - 15
 	} )
-	goffx, goffy = time.get():GetBellow()
+	goffx, goffy = time.get():GetBelow()
 
 	local icon = ImageSurface( psrf, goffx, goffy, 78, 54 )
 	goffy = goffy + 54
@@ -45,7 +45,7 @@ function stweather(
 			width = 78
 		}
 	)
-	goffx, goffy = self.temp.get():GetBellow()
+	goffx, goffy = self.temp.get():GetBelow()
 
 	self.windspeed = Field( psrf, goffx, goffy,
 		fsdigit, COL_DIGIT, {
@@ -55,7 +55,7 @@ function stweather(
 	)
 	goffx, goffy = self.windspeed.get():GetAfter()
 	self.windd = WindDir( psrf, goffx, goffy, fsdigit:GetHeight(), fsdigit:GetHeight())
-	goffx, goffy = self.windspeed.get():GetBellow()
+	goffx, goffy = self.windspeed.get():GetBelow()
 
 	self.clouds = Field( psrf, goffx, goffy,
 		fsdigit, COL_DIGIT, {

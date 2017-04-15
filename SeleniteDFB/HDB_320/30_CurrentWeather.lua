@@ -91,10 +91,10 @@ function cweather(
 		}
 	)
 	goffy = goffy + fsdigit:GetHeight()
-	local _,t = self.desc.get():GetBellow()
+	local _,t = self.desc.get():GetBelow()
 	goffy = math.max( goffy, t )
 
-	function self.getBellow()
+	function self.getBelow()
 		return goffy
 	end
 

@@ -35,14 +35,14 @@ function ltweather(
 		align = ALIGN_CENTER,
 		width = self.getWidth() - 15
 	} )
-	goffx, goffy = time.get():GetBellow()
+	goffx, goffy = time.get():GetBelow()
 
 	self.tmax = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
 		suffix = '°C',
 		align = ALIGN_CENTER,
 		width = self.getWidth() - 15
 	} )
-	goffx, goffy = self.tmax.get():GetBellow()
+	goffx, goffy = self.tmax.get():GetBelow()
 
 	self.tmin = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
 		suffix = '°C',
@@ -50,8 +50,8 @@ function ltweather(
 		width = self.getWidth() - 15
 	} )
 
-	function self.getBellow()
-		return self.tmin.get():GetBellow()
+	function self.getBelow()
+		return self.tmin.get():GetBelow()
 	end
 
 	function self.updateIcon()

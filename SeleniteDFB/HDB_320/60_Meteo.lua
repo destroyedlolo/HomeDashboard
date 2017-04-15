@@ -14,13 +14,13 @@ local function meteo()
 	local currentw = cweather( srf, 20,0 )
 	local w0 = Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
 
-	local plus1 = stweather( srf, 20, currentw.getBellow() )
+	local plus1 = stweather( srf, 20, currentw.getBelow() )
 	local w1 = Weather3H(plus1, 'Meteo3H', 'Nonglard', 1)
 
-	local plus2 = stweather( srf, plus1.getNext() + 5, currentw.getBellow() )
+	local plus2 = stweather( srf, plus1.getNext() + 5, currentw.getBelow() )
 	local w2 = Weather3H(plus2, 'Meteo3H', 'Nonglard', 2)
 
-	local plus3 = stweather( srf, plus2.getNext() + 5, currentw.getBellow() )
+	local plus3 = stweather( srf, plus2.getNext() + 5, currentw.getBelow() )
 	local w3 = Weather3H(plus3, 'Meteo3H', 'Nonglard', 3)
 
 		-- refresh window's content

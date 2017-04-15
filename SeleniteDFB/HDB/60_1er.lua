@@ -13,6 +13,10 @@ local function upstaire()
 	table.insert( winlist, window )
 	local srf = window:GetSurface()
 
+	srf:SetColor( COL_TITLE.get() )
+	srf:SetFont( ftitle )
+	srf:DrawString("Premier étage", 0, 0)
+
 	local img,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/1er.png")
 	assert(img)
 	local x,y = img:GetSize()

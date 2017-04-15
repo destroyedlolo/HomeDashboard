@@ -32,7 +32,7 @@ function stweather(
 		align = ALIGN_CENTER,
 		width = self.getWidth()
 	} )
-	_, goffy = time.get():GetBellow()
+	_, goffy = time.get():GetBelow()
 
 	local icon = ImageSurface( psrf, goffx, goffy, 35, 24 )
 

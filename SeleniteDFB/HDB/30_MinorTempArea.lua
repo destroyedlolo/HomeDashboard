@@ -37,7 +37,7 @@ function MintorTempArea(
 	})
 	srf:SetFont( opts.font )
 	srf:DrawString("°C", srf_Temp.get():GetAfter() )
-	_,y = srf_Temp.get():GetBellow()
+	_,y = srf_Temp.get():GetBelow()
 
 	local srf_gfx = GfxArea( srf, x, y, opts.size, HSGRPH, COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT } )
 	srf_gfx.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
@@ -49,6 +49,10 @@ function MintorTempArea(
 --			forced_min = 0,
 		}
 	)
+
+	function self.getBelow()
+		
+	end
 
 	return self
 end
