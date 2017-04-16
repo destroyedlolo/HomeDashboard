@@ -52,7 +52,10 @@ function MintorTempArea(
 	table.insert( savedcols, dt )
 
 	function self.getBelow()
-		
+	end
+
+	function self.getAfter()
+		return x + opts.size
 	end
 
 	return self
