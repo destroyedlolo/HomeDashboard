@@ -24,6 +24,8 @@ local function upstaire()
 	img:RenderTo( srf, { 30, WINSIZE[2] - y*s - 20, x*s, y*s } )
 	img:destroy()	-- The image is not needed anymore
 
+	PorteGS = Porte( srf, 'PorteGS', 'maison/IO/Porte_GSud', x*s - 150, WINSIZE[2] - y*s + 10 )
+
 	MintorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 35,150,
 		{
 			font = fmdigit,
