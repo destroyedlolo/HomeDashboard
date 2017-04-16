@@ -26,6 +26,7 @@ local function upstaire()
 	img:destroy()	-- The image is not needed anymore
 
 	PorteGS = Porte( srf, 'PorteGS', 'maison/IO/Porte_GSud', x*s - 150, WINSIZE[2] - y*s + 10 )
+	PorteGN = Porte( srf, 'PorteGN', 'maison/IO/Porte_GNord', 160, WINSIZE[2] - y*s + 10 )
 
 	MintorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 35,150,
 		{
