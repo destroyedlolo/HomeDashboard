@@ -28,12 +28,14 @@ local function upstaire()
 	PorteGS = Porte( srf, 'PorteGS', 'maison/IO/Porte_GSud', x*s - 150, WINSIZE[2] - y*s + 10 )
 	PorteGN = Porte( srf, 'PorteGN', 'maison/IO/Porte_GNord', 160, WINSIZE[2] - y*s + 10 )
 
-	MintorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 35,150,
+	local tgn = MintorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 35,150,
 		{
 			font = fmdigit,
 			title = "Grenier Nord"
 		}
 	)
+	srf:SetColor( COL_WHITE.get() )
+	srf:DrawLine( tgn.getAfter()+5, 170, tgn.getAfter()+5, 350 )
 
 	MintorTempArea( srf, 'TGS', 'maison/Temperature/Grenier Sud', 535,150,
 		{
@@ -41,20 +43,26 @@ local function upstaire()
 			title = "Grenier Sud"
 		}
 	)
+	srf:SetColor( COL_WHITE.get() )
+	srf:DrawLine( 530, 170, 530, 350 )
 
-	MintorTempArea( srf, 'TCJ', 'maison/Temperature/Chambre Joris', 140,50,
+	local tcj = MintorTempArea( srf, 'TCJ', 'maison/Temperature/Chambre Joris', 135,50,
 		{
 			font = fdigit,
 			title = "Chambre Joris"
 		}
 	)
+	srf:SetColor( COL_WHITE.get() )
+	srf:DrawLine( tcj.getAfter()+5 , 70, tcj.getAfter()+5, 350 )
 
-	MintorTempArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 255,30,
+	MintorTempArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 247,30,
 		{
 			font = fdigit,
 			title = "Chambre Parents"
 		}
 	)
+	srf:SetColor( COL_WHITE.get() )
+	srf:DrawLine( tcj.getAfter()+5 , 50, tcj.getAfter()+5, 270 )
 
 	MintorTempArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 390,50,
 		{
@@ -62,6 +70,8 @@ local function upstaire()
 			title = "Chambre Océane"
 		}
 	)
+	srf:SetColor( COL_WHITE.get() )
+	srf:DrawLine( 385, 70, 385, 350 )
 
 	MintorTempArea( srf, 'TComble', 'maison/Temperature/Comble', 535,0,
 		{
