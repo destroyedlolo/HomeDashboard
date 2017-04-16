@@ -13,7 +13,6 @@ local function upstaire()
 	window:SetOpacity(0xff)	-- Make the window visible
 	table.insert( winlist, window )
 	local srf = window:GetSurface()
-print(SelSurface.PixelFormatConst('ARGB'), srf:GetPixelFormat())
 
 	srf:SetColor( COL_TITLE.get() )
 	srf:SetFont( ftitle )
