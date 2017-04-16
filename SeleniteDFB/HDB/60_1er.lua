@@ -7,11 +7,13 @@ local function upstaire()
 	local window = layer:CreateWindow {
 		pos = WINTOP, size = WINSIZE,
 		caps=SelWindow.CapsConst('NONE'),
-		surface_caps=SelSurface.CapabilityConst('NONE')
+		surface_caps=SelSurface.CapabilityConst('NONE'),
+		pixelformat=SelSurface.PixelFormatConst('ARGB')
 	}
 	window:SetOpacity(0xff)	-- Make the window visible
 	table.insert( winlist, window )
 	local srf = window:GetSurface()
+print(SelSurface.PixelFormatConst('ARGB'), srf:GetPixelFormat())
 
 	srf:SetColor( COL_TITLE.get() )
 	srf:SetFont( ftitle )

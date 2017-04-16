@@ -23,6 +23,8 @@ function Porte(
 
 	local parent_upd = self.Update
 	function self.Update( )
+print(SelSurface.PixelFormatConst('ARGB'), psrf:GetPixelFormat())
+
 		parent_upd( PorteIcons.getImg( SelShared.get(name) ) )
 	end
 
