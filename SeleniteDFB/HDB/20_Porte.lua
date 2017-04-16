@@ -23,9 +23,7 @@ function Porte(
 
 	local parent_upd = self.Update
 	function self.Update( )
-print(SelSurface.PixelFormatConst('ARGB'), psrf:GetPixelFormat())
-
-		parent_upd( PorteIcons.getImg( SelShared.get(name) ) )
+		parent_upd( PorteIcons.getImg( SelShared.get(name) ), PorteIcons.getTransparency() )
 	end
 
 	local dt = MQTTinput( name, topic )
