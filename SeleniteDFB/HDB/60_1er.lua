@@ -28,7 +28,7 @@ local function upstaire()
 	PorteGS = Porte( srf, 'PorteGS', 'maison/IO/Porte_GSud', x*s - 150, WINSIZE[2] - y*s + 10 )
 	PorteGN = Porte( srf, 'PorteGN', 'maison/IO/Porte_GNord', 160, WINSIZE[2] - y*s + 10 )
 
-	local tgn = MintorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 35,150,
+	local tgn = MinorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 35,150,
 		{
 			font = fmdigit,
 			title = "Grenier Nord"
@@ -37,7 +37,7 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( tgn.getAfter()+5, 170, tgn.getAfter()+5, 350 )
 
-	MintorTempArea( srf, 'TGS', 'maison/Temperature/Grenier Sud', 535,150,
+	MinorTempArea( srf, 'TGS', 'maison/Temperature/Grenier Sud', 535,150,
 		{
 			font = fmdigit,
 			title = "Grenier Sud"
@@ -46,7 +46,7 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( 530, 170, 530, 350 )
 
-	local tcj = MintorTempArea( srf, 'TCJ', 'maison/Temperature/Chambre Joris', 135,50,
+	local tcj = MinorTempArea( srf, 'TCJ', 'maison/Temperature/Chambre Joris', 135,50,
 		{
 			font = fdigit,
 			title = "Chambre Joris"
@@ -55,7 +55,7 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( tcj.getAfter()+5 , 70, tcj.getAfter()+5, 350 )
 
-	MintorTempArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 247,30,
+	MinorTempArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 247,30,
 		{
 			font = fdigit,
 			title = "Chambre Parents"
@@ -64,7 +64,7 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( tcj.getAfter()+5 , 50, tcj.getAfter()+5, 270 )
 
-	MintorTempArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 390,50,
+	MinorTempArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 390,50,
 		{
 			font = fdigit,
 			title = "Chambre Océane"
@@ -73,7 +73,7 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( 385, 70, 385, 350 )
 
-	MintorTempArea( srf, 'TComble', 'maison/Temperature/Comble', 535,0,
+	MinorTempArea( srf, 'TComble', 'maison/Temperature/Comble', 535,0,
 		{
 			font = fmdigit,
 			title = "Comble",

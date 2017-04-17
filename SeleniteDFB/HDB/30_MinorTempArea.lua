@@ -1,6 +1,6 @@
 -- Display a minor temperature graphics
 
-function MintorTempArea(
+function MinorTempArea(
 	srf,	-- parent surface
 	name, topic,
 	x,y,	-- top left of this area
@@ -52,6 +52,7 @@ function MintorTempArea(
 	table.insert( savedcols, dt )
 
 	function self.getBelow()
+		return srf_gfx.get():GetBelow()
 	end
 
 	function self.getAfter()
