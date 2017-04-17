@@ -46,7 +46,9 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( 530, 170, 530, 350 )
 
-	local tcj = MinorTempArea( srf, 'TCJ', 'maison/Temperature/Chambre Joris', 135,50,
+	local tcj = RoomArea( srf, 'TCJ', 'maison/Temperature/Chambre Joris', 135,50,
+		'Majordome/Mode/Joris',
+		'Majordome/HLever/Joris',
 		{
 			font = fdigit,
 			title = "Chambre Joris"
@@ -55,7 +57,9 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( tcj.getAfter()+5 , 70, tcj.getAfter()+5, 350 )
 
-	MinorTempArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 247,30,
+	RoomArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 247,30,
+		'Majordome/Mode/Parents',
+		'Majordome/HLever',
 		{
 			font = fdigit,
 			title = "Chambre Parents"
@@ -64,7 +68,9 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( tcj.getAfter()+5 , 50, tcj.getAfter()+5, 270 )
 
-	MinorTempArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 390,50,
+	RoomArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 390,50,
+		'Majordome/Mode/Oceane',
+		'Majordome/HLever/Oceane',
 		{
 			font = fdigit,
 			title = "Chambre Océane"

@@ -30,7 +30,7 @@ function MinorTempArea(
 		y = y + ftitle1:GetHeight()
 	end	
 
-	srf_Temp = FieldBlink( srf, animTimer,
+	local srf_Temp = FieldBlink( srf, animTimer,
 		x + opts.size - opts.font:StringWidth("°C"), y, opts.font, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8"
@@ -43,20 +43,24 @@ function MinorTempArea(
 	srf_gfx.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
 	srf_gfx.FrozeUnder()
 
-	local dt = MQTTStoreGfx( name, topic, srf_Temp, srf_gfx, 
+	local self = MQTTStoreGfx( name, topic, srf_Temp, srf_gfx, 
 		{
 			gradient = GRD_TEMPERATURE,
 			forced_min = 15,
 		}
 	)
-	table.insert( savedcols, dt )
+	table.insert( savedcols, self )
 
 	function self.getBelow()
-		return srf_gfx.get():GetBelow()
+		return srf_gfx.ownsrf():GetBelow()
 	end
 
 	function self.getAfter()
 		return x + opts.size
+	end
+
+	function self.getSize()
+		return opts.size
 	end
 
 	return self
