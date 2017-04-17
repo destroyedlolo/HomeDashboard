@@ -77,7 +77,9 @@ table.insert( Topics,
 
 -- Broker's stuffs
 function disconnected()
-	print('Deconnecté')
+	condition_network.report_issue()
+	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
+	SelLog.log("*F* Deconnecté")
 end
 
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
