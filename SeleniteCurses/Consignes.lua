@@ -11,7 +11,7 @@ end
 function updateMForceEnfants()
 	if Mode == 'C' then
 		MForceE:clear()
-		MForceE:print( SelShared.get('Majordome/Mode/Enfants') )
+		MForceE:print( SelShared.get('Majordome/Mode/Force/Enfants') )
 		MForceE:refresh()
 	end
 end
@@ -51,7 +51,7 @@ function keyConsignes(Brk, c,cn)
 	if c == 'o' then
 		popupConsMode( Brk, 'Majordome/Mode/Force' )
 	elseif c == 'e' then
-		popupConsMode( Brk, 'Majordome/Mode/Enfants' )
+		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants' )
 	end
 
 	initConsignes()
@@ -104,7 +104,7 @@ swinLst['C'] = { titre="&Consignes", func=initConsignes, key=keyConsignes, close
 
 local ltopics = {
 	{ topic = 'Majordome/Mode/Force', trigger=updateMForce, trigger_once=true },
-	{ topic = 'Majordome/Mode/Enfants', trigger=updateMForceEnfants, trigger_once=true },
+	{ topic = 'Majordome/Mode/Force/Enfants', trigger=updateMForceEnfants, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
@@ -112,4 +112,4 @@ TableMerge( Topics, ltopics)
 -- Valeurs par défauts (pour éviter un crash si elle ne sont pas définies)
 
 SelShared.set('Majordome/Mode/Force', '?')
-SelShared.set('Majordome/Mode/Enfants', '?')
+SelShared.set('Majordome/Mode/Force/Enfants', '?')
