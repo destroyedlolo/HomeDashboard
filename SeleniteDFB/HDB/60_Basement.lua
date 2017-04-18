@@ -23,6 +23,8 @@ local function basement()
 	img:RenderTo( srf, { 30, WINSIZE[2] - y*s - 20, x*s, y*s } )
 	img:destroy()	-- The image is not needed anymore
 
+	PorteGarage = Porte( srf, 'PorteGarage', 'maison/IO/Porte_Garage', 60, 320 )
+	PorteGarage = Porte( srf, 'PorteCave', 'maison/IO/Porte_Cave', 350, 235 )
 
 	local tSSporte = MinorTempArea( srf, 'TSSPorte', 'maison/Temperature/GarageP', 35,150,
 		{
@@ -46,6 +48,14 @@ local function basement()
 	MinorTempArea( srf, 'TCongelo', 'maison/Temperature/Congelateur', 490,30,
 		{
 			font = fmdigit,
+			gradient = Gradient(
+				{
+					[-19] = COL_DIGIT,
+					[-16] = COL_GREEN,
+					[-14] = COL_ORANGE,
+					[-10] = COL_RED
+				}
+			),
 			title = "Congélateur",
 			size = 80
 		}
