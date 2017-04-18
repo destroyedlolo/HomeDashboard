@@ -2,13 +2,11 @@
 
 local function upstaire()
 	local self = {}
-	local x,y 
 
 	local window = layer:CreateWindow {
 		pos = WINTOP, size = WINSIZE,
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE'),
---		pixelformat=SelSurface.PixelFormatConst('ARGB')
 	}
 	window:SetOpacity(0xff)	-- Make the window visible
 	table.insert( winlist, window )
