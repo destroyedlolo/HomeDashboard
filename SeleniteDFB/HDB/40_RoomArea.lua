@@ -17,12 +17,20 @@ function RoomArea(
 		align = ALIGN_CENTER, width = self.getSize()
 	})
 	MQTTDisplay( name..' mode', topic_mode, srf_mode )
-	
+
+
+	local function format_time( t, m )
+		SelShared.set(t, string.gsub(m, '%.',':'))
+		return true
+	end
+
 	local offx,offy = srf_mode.get():GetBelow()
 	local srf_hlever = FieldBlink( srf, animTimer, offx,offy,  fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER, width = self.getSize()
 	})
-	MQTTDisplay( name..' hlever', topic_hlever, srf_hlever )
+	MQTTDisplay( topic_hlever, topic_hlever, srf_hlever, {
+		vfunction = format_time
+	})
 
 	return self
 end

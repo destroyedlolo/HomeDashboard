@@ -8,7 +8,7 @@ local function upstaire()
 		pos = WINTOP, size = WINSIZE,
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE'),
-		pixelformat=SelSurface.PixelFormatConst('ARGB')
+--		pixelformat=SelSurface.PixelFormatConst('ARGB')
 	}
 	window:SetOpacity(0xff)	-- Make the window visible
 	table.insert( winlist, window )
@@ -57,7 +57,7 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( tcj.getAfter()+5 , 70, tcj.getAfter()+5, 350 )
 
-	RoomArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 247,30,
+	local tcp = RoomArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 247,30,
 		'Majordome/Mode/Parents',
 		'Majordome/HLever',
 		{
@@ -66,7 +66,7 @@ local function upstaire()
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
-	srf:DrawLine( tcj.getAfter()+5 , 50, tcj.getAfter()+5, 270 )
+	srf:DrawLine( tcp.getAfter()+5 , 50, tcp.getAfter()+5, 270 )
 
 	RoomArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 390,50,
 		'Majordome/Mode/Oceane',

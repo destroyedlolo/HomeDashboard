@@ -39,6 +39,7 @@ function ltweather(
 
 	self.tmax = Field( psrf, goffx, goffy, fsdigit, COL_DIGIT, {
 		suffix = '°C',
+		ndecimal = 1,
 		align = ALIGN_CENTER,
 		width = self.getWidth() - 15
 	} )
