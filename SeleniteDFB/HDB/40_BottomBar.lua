@@ -39,7 +39,7 @@ local function f()
 		ndecimal = 2,
 	} )
 
-	local loadbPI = MQTTStoreGfx( 'bPI', 'Load/bPI/1', loadbPI, srf_trndbPI, 
+	local loadbPI = MQTTStoreGfx( 'bPI', 'Machines/bPI/Load/1', loadbPI, srf_trndbPI, 
 		{
 			smax = mloadbPI,
 			gradient = Gradient(
