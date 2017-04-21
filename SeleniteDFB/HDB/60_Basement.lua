@@ -23,6 +23,8 @@ local function basement()
 	img:RenderTo( srf, { 30, WINSIZE[2] - y*s - 20, x*s, y*s } )
 	img:destroy()	-- The image is not needed anymore
 
+	img,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/bPI.png")
+
 	PorteGarage = Porte( srf, 'PorteGarage', 'maison/IO/Porte_Garage', 60, 320 )
 	PorteGarage = Porte( srf, 'PorteCave', 'maison/IO/Porte_Cave', 350, 235 )
 

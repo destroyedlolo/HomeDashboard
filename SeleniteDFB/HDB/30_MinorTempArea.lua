@@ -19,7 +19,6 @@ function MinorTempArea(
 	if not opts.font then
 		opts.font = fdigit
 	end
-
 	if opts.title then
 		srf:SetColor( COL_TITLE.get() )
 		srf:SetFont( ftitle1 )
@@ -28,11 +27,15 @@ function MinorTempArea(
 			opts.size = ftitle1:StringWidth(opts.title)
 		end
 		y = y + ftitle1:GetHeight()
-	end	
+	end
+	if not opts.gradient then
+		opts.gradient = GRD_TEMPERATURE
+	end
 
 	local srf_Temp = FieldBlink( srf, animTimer,
 		x + opts.size - opts.font:StringWidth("°C"), y, opts.font, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
+		gradient = opts.gradient,
 		sample_text = "-88.8"
 	})
 	srf:SetFont( opts.font )
@@ -45,7 +48,6 @@ function MinorTempArea(
 
 	local self = MQTTStoreGfx( name, topic, srf_Temp, srf_gfx, 
 		{
-			gradient = GRD_TEMPERATURE,
 			forced_min = 15,
 		}
 	)

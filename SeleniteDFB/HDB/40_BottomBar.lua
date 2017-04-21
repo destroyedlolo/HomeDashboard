@@ -30,25 +30,32 @@ local function f()
 	srf_trndbPI.FrozeUnder()
 	local loadbPI = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("bPI :"), 0, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
-		sample_text = "5.23"
+		sample_text = "5.23",
+		gradient = Gradient(
+			{
+				[.1] = COL_GREEN,
+				[1] = COL_ORANGE,
+				[2] = COL_RED
+			}
+		),
 	} )
 
 	local mloadbPI = FieldBlink( srf, animTimer, offx, offy, fstxt, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "15.23",
 		ndecimal = 2,
+		gradient = Gradient(
+			{
+				[.1] = COL_GREEN,
+				[1] = COL_ORANGE,
+				[2] = COL_RED
+			}
+		),
 	} )
 
 	local loadbPI = MQTTStoreGfx( 'bPI', 'Machines/bPI/Load/1', loadbPI, srf_trndbPI, 
 		{
 			smax = mloadbPI,
-			gradient = Gradient(
-				{
-					[.1] = COL_GREEN,
-					[1] = COL_ORANGE,
-					[2] = COL_RED
-				}
-			),
 			forced_min = 0,
 			condition=condition_network,
 			force_max_refresh = 1
