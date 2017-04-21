@@ -35,6 +35,16 @@ function stweather(
 	_, goffy = time.get():GetBelow()
 
 	local icon = ImageSurface( psrf, goffx, goffy, 35, 24 )
+	goffy = goffy + 24
+
+	self.temp = Field( psrf, goffx, goffy,
+		fsdigit, COL_DIGIT, {
+			suffix = '°C',
+			align = ALIGN_CENTER,
+			ndecimal = 1,
+			width = self.getWidth()
+		}
+	)
 
 	function self.updTime()
 		local t=os.date("*t", tonumber(SelShared.get(name)) )
