@@ -39,7 +39,14 @@ local function f()
 	local srf_consommation = Field( srf, 10,offy, fdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
-		width = w-20 - fmdigit:StringWidth(" VA")
+		width = w-20 - fmdigit:StringWidth(" VA"),
+		gradient = Gradient(
+			{
+				[500] = COL_DIGIT,
+				[1500] = COL_ORANGE,
+				[4500] = COL_RED
+			}
+		)
 	} )
 	srf:SetFont( fdigit )
 	srf:DrawString(" VA", srf_consommation.get():GetAfter() )
@@ -60,13 +67,6 @@ local function f()
 	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
 		{
 			smax = srf_maxconso,
-			gradient = Gradient(
-				{
-					[500] = COL_DIGIT,
-					[1500] = COL_ORANGE,
-					[4500] = COL_RED
-				}
-			),
 			forced_min = 0,
 			condition=condition_network
 		}
@@ -87,7 +87,7 @@ local function f()
 	offy = offy + srf_production:GetHeight()
 
 -- already calculated
---	x = w - (5 + fsdigit:StringWidth("12345"))
+-- x = w - (5 + fsdigit:StringWidth("12345"))
 
 	local srf_trndprod = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT } )
 	srf_trndprod.get():FillGrandient { TopLeft={40,40,40,255}, BottomLeft={40,40,40,255}, TopRight={32,255,32,255}, BottomRight={32,255,255,255} }
@@ -103,12 +103,13 @@ local function f()
 	)
 	offy = offy + HSGRPH + 3
 
-
 	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT, 
-		sample_text = "888.8W"
+		sample_text = "888.8 W",
+		suffix = ' W'
 	} )
 	x = srf_onduleur.get():GetWidth()
+
 	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHeight()-16, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur, { condition=condition_network })
 	offy = offy + srf_onduleur.get():GetHeight() + 2
@@ -130,12 +131,13 @@ local function f()
 
 	local srf_TSalon = FieldBlink( srf, animTimer, w-8 - fdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
-		sample_text = "-88.8"
+		sample_text = "-88.8",
+		gradient = GRD_TEMPERATURE
 	})
 	srf:SetFont( ftitle1 )
 	srf:DrawString("Salon :", srf_TSalon.get():GetPosition(), offy - ftitle1:GetHeight() )
 	local srf_Thermometre = GaugeRange( srf, 14,325, 6, 63, COL_RED, COL_WHITE, 5,35, { vertical = true } )
-	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { gradient = GRD_TEMPERATURE } )
+	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
 	offy = offy + srf_TSalon:GetHeight()
 
 -- A mettre avec la temperature du salon
@@ -148,16 +150,16 @@ TSalon.TaskOnceAdd( updthermo )
 	offy = offy + ftitle1:GetHeight()
 	self.srf_TDehors = FieldBlink( srf, animTimer, w-8 - fdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
-		sample_text = "-88.8"
+		sample_text = "-88.8",
+		{ gradient = GRD_TEMPERATURE }
 	})
 	srf:DrawString("Extérieur :", self.srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
---	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { gradient = GRD_TEMPERATURE } )
+--	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors )
 
 	srf:SetFont( fdigit )
 	srf:DrawString("°C", srf_TSalon.get():GetAfter() )
 	srf:DrawString("°C", self.srf_TDehors.get():GetAfter() )
 	offy = offy + self.srf_TDehors:GetHeight()
-
 --[[
 	self.setColor( COL_BORDER )
 	srf:DrawLine( 0, offy, w, offy )
