@@ -18,7 +18,7 @@ local function f()
 
 	local srf_trndbPI = GfxArea( srf,
 		offx, offy, 
-		100, srf:GetHeight()-offy, 
+		ftitle1:StringWidth("bPI :") + fsdigit:StringWidth("15.23 - 88.88°C"), srf:GetHeight()-offy, 
 		COL_TRANSPARENT, COL_BLACK,
 		{ 
 			align=ALIGN_RIGHT,
@@ -30,7 +30,7 @@ local function f()
 	srf_trndbPI.FrozeUnder()
 	local cloadbPI = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("bPI :"), 0, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
-		sample_text = "5.23",
+		sample_text = "15.23",
 		gradient = Gradient(
 			{
 				[.1] = COL_GREEN,
@@ -39,7 +39,6 @@ local function f()
 			}
 		),
 	} )
-print( offx + ftitle1:StringWidth("bPI :"), 0 )
 
 	local mloadbPI = FieldBlink( srf, animTimer, offx, offy, fstxt, COL_DIGIT, {
 		align = ALIGN_RIGHT,
@@ -64,9 +63,8 @@ print( offx + ftitle1:StringWidth("bPI :"), 0 )
 	)
 	table.insert( savedcols, loadbPI )
 
-	offx, offy = cloadbPI.get():GetAfter()
-print(offx, 0)
-	srf:DrawString(" -", offx, 0 )
+	offx, offy = cloadbPI.getAfter()
+	srf:DrawString(" -", offx, offy )
 	offx = offx + fsdigit:StringWidth(" - ")
 
 	local tbPI = FieldBlink( srf, animTimer, offx, 0, fsdigit, COL_DIGIT, {
