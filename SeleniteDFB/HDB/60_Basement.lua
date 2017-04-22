@@ -31,6 +31,7 @@ local function basement()
 	local tSSporte = MinorTempArea( srf, 'TSSPorte', 'maison/Temperature/GarageP', 35,150,
 		{
 			font = fdigit,
+			min_delta = 1,
 			title = "Porte Sous-Sol"
 		}
 	)
@@ -41,6 +42,7 @@ local function basement()
 		{
 			font = fdigit,
 			title = "Sous-Sol",
+			min_delta = 1,
 			size = fdigit:StringWidth("88.8°C")
 		}
 	)
@@ -54,7 +56,7 @@ local function basement()
 				{
 					[-19] = COL_DIGIT,
 					[-16] = COL_GREEN,
-					[-14] = COL_ORANGE,
+					[-12] = COL_ORANGE,
 					[-10] = COL_RED
 				}
 			),

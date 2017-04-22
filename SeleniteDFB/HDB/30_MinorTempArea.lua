@@ -42,7 +42,7 @@ function MinorTempArea(
 	srf:DrawString("°C", srf_Temp.get():GetAfter() )
 	_,y = srf_Temp.get():GetBelow()
 
-	local srf_gfx = GfxArea( srf, x, y, opts.size, HSGRPH, COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT } )
+	local srf_gfx = GfxArea( srf, x, y, opts.size, HSGRPH, COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT, min_delta = opts.min_delta } )
 	srf_gfx.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
 	srf_gfx.FrozeUnder()
 
