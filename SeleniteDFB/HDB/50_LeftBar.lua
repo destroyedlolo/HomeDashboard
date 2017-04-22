@@ -29,7 +29,7 @@ local function f()
 	})
 	srf:SetFont( fmdigit )
 	srf:DrawString(" V", srf_tension.get():GetAfter() )
-	offy = offy + srf_tension:GetHeight()
+	offy = offy + srf_tension.getHeight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
 	srf:SetFont( ftitle1 )
@@ -50,7 +50,7 @@ local function f()
 	} )
 	srf:SetFont( fdigit )
 	srf:DrawString(" VA", srf_consommation.get():GetAfter() )
-	offy = offy + srf_consommation:GetHeight()
+	offy = offy + srf_consommation.getHeight()
 
 	local x = w - (5 + fsdigit:StringWidth("12345"))
 
@@ -84,7 +84,7 @@ local function f()
 	} )
 	srf:SetFont( fdigit )
 	srf:DrawString(" VA", srf_production.get():GetAfter() )
-	offy = offy + srf_production:GetHeight()
+	offy = offy + srf_production.getHeight()
 
 -- already calculated
 -- x = w - (5 + fsdigit:StringWidth("12345"))
@@ -138,7 +138,7 @@ local function f()
 	srf:DrawString("Salon :", srf_TSalon.get():GetPosition(), offy - ftitle1:GetHeight() )
 	local srf_Thermometre = GaugeRange( srf, 14,325, 6, 63, COL_RED, COL_WHITE, 5,35, { vertical = true } )
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
-	offy = offy + srf_TSalon:GetHeight()
+	offy = offy + srf_TSalon.getHeight()
 
 -- A mettre avec la temperature du salon
 local function updthermo()
@@ -159,7 +159,7 @@ TSalon.TaskOnceAdd( updthermo )
 	srf:SetFont( fdigit )
 	srf:DrawString("°C", srf_TSalon.get():GetAfter() )
 	srf:DrawString("°C", self.srf_TDehors.get():GetAfter() )
-	offy = offy + self.srf_TDehors:GetHeight()
+	offy = offy + self.srf_TDehors.getHeight()
 --[[
 	self.setColor( COL_BORDER )
 	srf:DrawLine( 0, offy, w, offy )
@@ -170,7 +170,7 @@ TSalon.TaskOnceAdd( updthermo )
 		align = ALIGN_CENTER,
 		sample_text = "0000"
 	} )
-	offy = offy + srf_dATM:GetHeight()
+	offy = offy + srf_dATM.getHeight()
 
 	local srf_uATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
@@ -178,10 +178,10 @@ TSalon.TaskOnceAdd( updthermo )
 	} )
 
 	x,y = srf_dATM.get():GetPosition()
-	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 2, { emptycolor=COL_GFXBG })
+	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM.getHeight() + srf_uATM.getHeight(), 10, 2, { emptycolor=COL_GFXBG })
 
 	x = x + srf_dATM.get():GetWidth() + 4
-	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM:GetHeight() + srf_uATM:GetHeight(), 10, 1, { emptycolor=COL_GFXBG })
+	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM.getHeight() + srf_uATM.getHeight(), 10, 1, { emptycolor=COL_GFXBG })
 
 	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
