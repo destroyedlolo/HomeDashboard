@@ -23,10 +23,21 @@ local function basement()
 	img:RenderTo( srf, { 30, WINSIZE[2] - y*s - 20, x*s, y*s } )
 	img:destroy()	-- The image is not needed anymore
 
-	img,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/bPI.png")
+--	img,err = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/bPI.png")
 
-	PorteGarage = Porte( srf, 'PorteGarage', 'maison/IO/Porte_Garage', 60, 320 )
-	PorteGarage = Porte( srf, 'PorteCave', 'maison/IO/Porte_Cave', 350, 235 )
+	Porte( srf, 'PorteGarage', 'maison/IO/Porte_Garage', 60, 320 )
+	Porte( srf, 'PorteCave', 'maison/IO/Porte_Cave', 350, 235 )
+
+	local tcvin = MinorTempArea( srf, 'TCVin', 'maison/Temperature/Cave Vin', 350,40,
+		{
+			font = fdigit,
+			min_delta = 1,
+			size = fdigit:StringWidth("88.8°C"), 
+			title = "Cave a vin"
+		}
+	)
+	srf:SetColor( COL_WHITE.get() )
+	srf:DrawLine( tcvin.getAfter()+5, 60, tcvin.getAfter()+5, 250 )
 
 	local tSSporte = MinorTempArea( srf, 'TSSPorte', 'maison/Temperature/GarageP', 35,150,
 		{
