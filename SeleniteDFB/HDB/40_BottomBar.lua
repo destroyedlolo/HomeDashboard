@@ -28,7 +28,7 @@ local function f()
 	)
 	srf_trndbPI.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
 	srf_trndbPI.FrozeUnder()
-	local loadbPI = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("bPI :"), 0, fsdigit, COL_DIGIT, {
+	local cloadbPI = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("bPI :"), 0, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "5.23",
 		gradient = Gradient(
@@ -39,6 +39,7 @@ local function f()
 			}
 		),
 	} )
+print( offx + ftitle1:StringWidth("bPI :"), 0 )
 
 	local mloadbPI = FieldBlink( srf, animTimer, offx, offy, fstxt, COL_DIGIT, {
 		align = ALIGN_RIGHT,
@@ -53,7 +54,7 @@ local function f()
 		),
 	} )
 
-	local loadbPI = MQTTStoreGfx( 'bPI', 'Machines/bPI/Load/1', loadbPI, srf_trndbPI, 
+	local loadbPI = MQTTStoreGfx( 'bPI', 'Machines/bPI/Load/1', cloadbPI, srf_trndbPI, 
 		{
 			smax = mloadbPI,
 			forced_min = 0,
@@ -62,6 +63,26 @@ local function f()
 		}
 	)
 	table.insert( savedcols, loadbPI )
+
+	offx, offy = cloadbPI.get():GetAfter()
+print(offx, 0)
+	srf:DrawString(" -", offx, 0 )
+	offx = offx + fsdigit:StringWidth(" - ")
+
+	local tbPI = FieldBlink( srf, animTimer, offx, 0, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "88.8°C",
+		suffix = '°C',
+		gradient = Gradient(
+			{
+				[20] = COL_GREEN,
+				[30] = COL_ORANGE,
+				[40] = COL_RED
+			}
+		),
+	} )
+
+	MQTTDisplay('temp bPI', 'Machines/bPI/PMUTemp', tbPI )
 
 	self.refresh()
 	return self
