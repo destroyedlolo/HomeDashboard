@@ -25,7 +25,7 @@ local function f()
 		align = ALIGN_RIGHT,
 		width = w-20 
 	})
-	offy = offy + srf_tension:GetHeight()
+	offy = offy + srf_tension.getHeight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { suffix=' V', condition=condition_network } )
 
 
@@ -35,7 +35,7 @@ local function f()
 		align = ALIGN_RIGHT, 
 		width = w-20 
 	} )
-	offy = offy + srf_consommation:GetHeight()
+	offy = offy + srf_consommation.getHeight()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 
@@ -71,7 +71,7 @@ local function f()
 		align = ALIGN_RIGHT, 
 		width = w-20 
 	} )
-	offy = offy + srf_production:GetHeight()
+	offy = offy + srf_production.getHeight()
 
 -- already calculated
 --	x = w - (5 + fsdigit:StringWidth("12345"))
@@ -106,14 +106,14 @@ local function f()
 		sample_text = "-88.8°"
 	})
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°' } )
-	offy = offy + srf_TSalon:GetHeight()
+	offy = offy + srf_TSalon.getHeight()
 
 	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°"
 	})
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°', gradient = GRD_TEMPERATURE } )
-	offy = offy + srf_TDehors:GetHeight()
+	offy = offy + srf_TDehors.getHeight()
 
 	local srf_TBureau = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
@@ -128,13 +128,13 @@ local function f()
 		align = ALIGN_CENTER,
 		sample_text = "0000"
 	} )
-	offy = offy - srf_uATM:GetHeight()
+	offy = offy - srf_uATM.getHeight()
 
 	local srf_dATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
 		sample_text = "0000"
 	} )
-	offy = offy - srf_dATM:GetHeight()
+	offy = offy - srf_dATM.getHeight()
 	
 	local srf_dnGfx = ArcGaugePercent(srf, 0, y, w/2, offy-y, 5, 2, { emptycolor=COL_GFXBG })
 	local srf_upGfx = ArcGaugePercent(srf, w/2, y, w/2, offy-y, 5, 1, { emptycolor=COL_GFXBG })
