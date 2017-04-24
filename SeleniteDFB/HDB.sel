@@ -109,7 +109,7 @@ SelLog.log("Let's go ...")
 while true do -- Main todo list handler
 	local ret, err = Selene.WaitFor( switchtimer, animTimer.getTimer(), unpack( additionnalevents ) )
 	if err then
-		print(err)
+		print("WaitFor", err)
 		return
 	end
 

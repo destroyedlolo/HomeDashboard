@@ -16,3 +16,24 @@ if err then
 	print(err)
 	return
 end
+
+-- Handle keys
+local evt
+
+local function handlekeys()
+	local t, tp, c, v = evt:read()
+
+	if SelEvent.TypeName(tp) == 'KEY' and v == 1 then
+		if SelEvent.KeyName(c) == 'VOLUMEDOWN' then
+print('down')
+		elseif SelEvent.KeyName(c) == 'VOLUMEUP' then
+print('up')
+		elseif SelEvent.KeyName(c) == 'SEARCH' then
+print('search')
+		end
+	end
+end
+
+evt = SelEvent.create('/dev/input/event1', handlekeys)
+
+table.insert( additionnalevents, evt )
