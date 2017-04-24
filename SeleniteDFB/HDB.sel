@@ -25,7 +25,6 @@ end
 
 -- Global objects
 condlisttmr = {}	-- List of all timers for conditions
-winlist = {}		-- List of all windows
 savedcols = {}		-- Collection to be saved/restored
 local SAVE_DIR = '/tmp/'
 
@@ -95,21 +94,6 @@ if err then
 	return
 end
 
--- Windows cycling
-local wcnt = 0
-function switchwindows()
-	if #winlist ~= 0 then
-		winlist[ (wcnt % #winlist)+1 ]:RaiseToTop()
-		wcnt = wcnt + 1
-	end
-end
-
-local switchtimer,err = SelTimer.create { when=10, interval=10, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=switchwindows}
-if err then
-	print(err)
-	return
-end
-
 -- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
 Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
@@ -123,7 +107,7 @@ SelLog.log("Let's go ...")
 
 -- Wait for events
 while true do -- Main todo list handler
-	ret, err = Selene.WaitFor( switchtimer, animTimer.getTimer(), unpack( condlisttmr ) )
+	local ret, err = Selene.WaitFor( switchtimer, animTimer.getTimer(), unpack( condlisttmr ) )
 	if err then
 		print(err)
 		return
