@@ -11,7 +11,7 @@ local function f()
 
 	local network = ImageFiltreSurface( srf, 0,24, SELENE_SCRIPT_DIR .. "/Images/Network.png" )
 	condition_network = Condition( network, .25 )
-	table.insert( condlisttmr, condition_network.getTimer() )
+	table.insert( additionnalevents, condition_network.getTimer() )
 
 	offx = 24
 	Notification = NotificationArea( srf, 24, 0, 100, sh, fstxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
