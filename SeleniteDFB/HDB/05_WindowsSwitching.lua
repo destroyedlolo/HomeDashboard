@@ -6,8 +6,8 @@ winlist = {}		-- Collection of windows to be slided
 local wcnt = 0, err
 function switchwindows()
 	if #winlist ~= 0 then
+		wcnt = (wcnt + 1) % #winlist
 		winlist[ (wcnt % #winlist)+1 ]:RaiseToTop()
-		wcnt = wcnt + 1
 	end
 end
 
@@ -25,11 +25,19 @@ local function handlekeys()
 
 	if SelEvent.TypeName(tp) == 'KEY' and v == 1 then
 		if SelEvent.KeyName(c) == 'VOLUMEDOWN' then
-print('down')
+			wcnt = wcnt - 1	
+			if wcnt < 0 then
+				wcnt = #winlist - 1
+			end
+			Notification.Log('<< ' .. wcnt)
+			winlist[ (wcnt % #winlist)+1 ]:RaiseToTop()
+			switchtimer:Reset()
 		elseif SelEvent.KeyName(c) == 'VOLUMEUP' then
-print('up')
+			Notification.Log('>> ' .. wcnt)
+			switchwindows()
+			switchtimer:Reset()
 		elseif SelEvent.KeyName(c) == 'SEARCH' then
-print('search')
+			Notification.Log('Not implemented ... yet')
 		end
 	end
 end
