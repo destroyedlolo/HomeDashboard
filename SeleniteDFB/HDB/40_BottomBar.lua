@@ -23,7 +23,7 @@ local function f()
 		{ 
 			align=ALIGN_RIGHT,
 			stretch = 1,
---			vevrylines={ {1, COL_DARKGREY} }
+			heverylines={ {0.25, COL_DARKGREY, 2}, { 1, COL_GREY, 10 } }
 		}
 	)
 	srf_trndbPI.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
