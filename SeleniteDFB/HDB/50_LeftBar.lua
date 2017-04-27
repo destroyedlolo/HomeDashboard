@@ -54,7 +54,10 @@ local function f()
 
 	local x = w - (5 + fsdigit:StringWidth("12345"))
 
-	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_TRANSPARENT, COL_GFXBG,{ align=ALIGN_RIGHT } )
+	local srf_trndconso = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_TRANSPARENT, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		align=ALIGN_RIGHT 
+	} )
 	srf_trndconso.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
 	srf_trndconso.FrozeUnder()
 
@@ -89,7 +92,10 @@ local function f()
 -- already calculated
 -- x = w - (5 + fsdigit:StringWidth("12345"))
 
-	local srf_trndprod = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT } )
+	local srf_trndprod = GfxArea( srf, 0, offy, x-5, HSGRPH, COL_TRANSPARENT, COL_GFXBG, {
+		heverylines={ {250, COL_DARKGREY, 1250}, { 1000, COL_GREY } },
+		align=ALIGN_RIGHT
+	} )
 	srf_trndprod.get():FillGrandient { TopLeft={40,40,40,255}, BottomLeft={40,40,40,255}, TopRight={32,255,32,255}, BottomRight={32,255,255,255} }
 	srf_trndprod.FrozeUnder()
 
