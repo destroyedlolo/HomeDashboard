@@ -28,12 +28,15 @@ additionnalevents = {}	-- List of additionnal events to wait for (timers, inputs
 savedcols = {}		-- Collection to be saved/restored
 local SAVE_DIR = '/tmp/'
 
-function quitHDB()
+function SaveCollection()
 	SelLog.log("*I* Saving collections ..")
 	for i,col in ipairs(savedcols) do
 		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
 	end
+end
 
+local function quitHDB()
+	SaveCollection()
 	os.exit()
 end
 Selene.SigIntTask( quitHDB )
@@ -62,6 +65,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		for _,v in ipairs(Topics) do
 			print(_,v.topic)
 		end
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Save' then
+		SaveCollection()
 	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
 		Meteo.refreshGfx()
 	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
@@ -79,6 +84,7 @@ function disconnected()
 	condition_network.report_issue()
 	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
 	SelLog.log("*F* Deconnecté")
+	SaveCollection()
 end
 
 local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
