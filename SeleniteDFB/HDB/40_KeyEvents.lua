@@ -3,9 +3,7 @@
 -- Handle keys
 local evt
 
-local function handlekeys()
-	local t, tp, c, v = evt:read()
-
+function handleevent( tp, c, v )
 	if SelEvent.TypeName(tp) == 'KEY' and v == 1 then
 		if SelEvent.KeyName(c) == 'VOLUMEDOWN' then
 			prevWindow( true )
@@ -15,6 +13,12 @@ local function handlekeys()
 			Notification.Log('Not implemented ... yet')
 		end
 	end
+end
+
+local function handlekeys()
+	local t, tp, c, v = evt:read()
+
+	handleevent( tp, c, v )
 end
 
 evt = SelEvent.create('/dev/input/event1', handlekeys)
