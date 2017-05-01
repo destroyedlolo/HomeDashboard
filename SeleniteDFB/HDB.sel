@@ -44,6 +44,7 @@ Selene.SigIntTask( quitHDB )
 -- Loading modules
 local info = debug.getinfo(1,'S');
 local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
+loaddir(whereiam, 'Shared')
 if psrf:GetSize() == 320 then	-- small display
 	loaddir(whereiam, 'HDB_320')
 else
