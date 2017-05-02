@@ -1,10 +1,10 @@
-Supported key on tablet
-=======================
+Supported keys on tablet
+========================
 
-	Navigation
-	----------
-KEY/VOLUMEDOWN/1
-KEY/VOLUMEUP/1
+	key				fakekey
+	---				-------
+KEY/VOLUMEDOWN/1	VolD
+KEY/VOLUMEUP/1		VolU
 
-KEY/SEARCH/1	-- Selection
-KEY/POWER/1		-- Escape
+KEY/SEARCH/1		S		-- Selection
+KEY/POWER/1			Pwr		-- Escape

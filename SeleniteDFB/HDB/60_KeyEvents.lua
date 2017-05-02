@@ -30,12 +30,10 @@ end
 local evt0, evt1
 
 local function handlekeys0()
-Notification.Log('evt0')
 	handleevent( evt0:read() )
 end
 
 local function handlekeys1()
-Notification.Log('evt1')
 	handleevent( evt1:read() )
 end
 
@@ -54,6 +52,10 @@ local function handlefakekeys()
 		handleevent( 0, t, SelEvent.KeyConst("VOLUMEDOWN"), 1 )
 	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Key') == 'VolU' then -- simulate VOLUMEUP
 		handleevent( 0, t, SelEvent.KeyConst("VOLUMEUP"), 1 )
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Key') == 'S' then -- simulate SEARCH
+		handleevent( 0, t, SelEvent.KeyConst("SEARCH"), 1 )
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Key') == 'Pwr' then -- simulate POWER
+		handleevent( 0, t, SelEvent.KeyConst("POWER"), 1 )
 	end
 end
 
