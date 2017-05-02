@@ -1,16 +1,21 @@
 -- Manage key events
 
+-- Modes
+
+local mode_default = {
+-- type / key_name / value
+	['KEY/VOLUMEDOWN/1'] = function () prevWindow( true ) end,
+	['KEY/VOLUMEUP/1'] = function () nextWindow( true ) end
+}
+
 -- Actions
 
-function handleevent( tp, c, v )
-	if SelEvent.TypeName(tp) == 'KEY' and v == 1 then
-		if SelEvent.KeyName(c) == 'VOLUMEDOWN' then
-			prevWindow( true )
-		elseif SelEvent.KeyName(c) == 'VOLUMEUP' then
-			nextWindow( true )
-		elseif SelEvent.KeyName(c) == 'SEARCH' then
-			Notification.Log('Not implemented ... yet')
-		end
+local mode =  mode_default	-- Active mode
+
+function handleevent( tp, c, v )	-- (public has the function shall be called from elsewhere)
+	local f = mode[ SelEvent.TypeName(tp) ..'/'.. SelEvent.KeyName(c) ..'/'.. v ]
+	if f then
+		f()
 	end
 end
 
