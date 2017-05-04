@@ -5,7 +5,8 @@
 local mode_default = {
 -- type / key_name / value
 	['KEY/VOLUMEDOWN/1'] = function () prevWindow( true ) end,
-	['KEY/VOLUMEUP/1'] = function () nextWindow( true ) end
+	['KEY/VOLUMEUP/1'] = function () nextWindow( true ) end,
+	['KEY/POWER/1'] = function () SaveCollection() end
 }
 
 -- Actions
