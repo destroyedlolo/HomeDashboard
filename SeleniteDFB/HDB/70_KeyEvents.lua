@@ -1,20 +1,21 @@
 -- Manage key events
 
--- Modes
+-- Actions table
 
-local mode_default = {
+local keysactions_default = {
 -- type / key_name / value
 	['KEY/VOLUMEDOWN/1'] = function () prevWindow( true ) end,
 	['KEY/VOLUMEUP/1'] = function () nextWindow( true ) end,
-	['KEY/POWER/1'] = function () SaveCollection() end
+	['KEY/POWER/1'] = function () SaveCollection() end,
+	['KEY/SEARCH/1'] = function () ConfigMenu() end,
 }
 
 -- Actions
 
-local mode =  mode_default	-- Active mode
+keysactions =  keysactions_default	-- Active keys actions table
 
 function handleevent( t, tp, c, v )	-- (public has the function shall be called from elsewhere)
-	local f = mode[ SelEvent.TypeName(tp) ..'/'.. SelEvent.KeyName(c) ..'/'.. v ]
+	local f = keysactions[ SelEvent.TypeName(tp) ..'/'.. SelEvent.KeyName(c) ..'/'.. v ]
 	if f then
 		f()
 	else
