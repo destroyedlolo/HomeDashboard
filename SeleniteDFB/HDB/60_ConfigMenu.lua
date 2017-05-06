@@ -5,36 +5,42 @@
 -- is managed through keys' actions.
 
 function ConfigMenu()
-	local self = {}
-	local oldKA = keysactions	-- Keep old key mapping
-
-	local window = layer:CreateWindow {
-		pos = {300,50}, size = {250,150},
+	local popup = PopUp( {
+		pos = {300,50}, size = {250,250},
 		stacking = SelWindow.StackingConst('UPPER'),
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE')
+	},
+	{
+		keysactions = 'keysactions',	-- Active keysactions table
+		bordercolor = COL_LIGHTGREY
+	})
+
+	popup.setColor( COL_WHITE )
+	popup.get():SetFont( ftitle )
+	popup.get():DrawString("Configuration", 0,0)
+	popup.refresh()
+
+	local lst = vsList( popup, 
+		0, ftitle:GetHeight() + 15, popup.get():GetWidth(),
+		{
+			{ 'Mode générale', nil },
+			{ ' > Mode Enfants', nil },
+			{ ' > > Mode Oceane', nil },
+			{ ' > > Mode Joris', nil },
+			{ ' > Mode Parents', nil }
+		},
+		ftitle1,
+		{
+			unselcolor = COL_TITLE,
+			selcolor = COL_DIGIT
+		}
+	)
+
+	popup.setKeysActions {
+			['KEY/VOLUMEDOWN/1'] = lst.selprev,
+			['KEY/VOLUMEUP/1'] = lst.selnext,
+			['KEY/POWER/1'] = popup.close
 	}
-	window:SetOpacity(0xff)	-- Make the window visible
-	local wsrf = window:GetSurface()
 
-	wsrf:Clear( 0,0,0, 0x90 )
-	wsrf:SetColor( COL_TITLE.get() )
-	wsrf:SetFont( ftitle1 )
-	wsrf:DrawString("Configuration", 3, 3)
-	wsrf:DrawRectangle(0,0, 250,150)
-
-		-- refresh window's content
-	wsrf:Flip(SelSurface.FlipFlagsConst("NONE"))
-
-		-- Keys handling
-	function self.bye()
-		keysactions = oldKA		-- Restore old keys mapping
-		window:Release()
-	end
-
-	keysactions = {
-		['KEY/POWER/1'] = self.bye
-	}
-
-	return self
 end
