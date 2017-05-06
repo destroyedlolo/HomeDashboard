@@ -1,7 +1,12 @@
 -- Top config menu
 
+-- Unlike in other source files, this is not an object :
+-- This function creates the windows (and sub object) and then everything
+-- is managed through keys' actions.
+
 function ConfigMenu()
 	local self = {}
+	local oldKA = keysactions	-- Keep old key mapping
 
 	local window = layer:CreateWindow {
 		pos = {300,50}, size = {250,150},
@@ -21,9 +26,15 @@ function ConfigMenu()
 		-- refresh window's content
 	wsrf:Flip(SelSurface.FlipFlagsConst("NONE"))
 
-print("ConfigMenu()")
-Selene.Sleep(2)
-window:Release()
+		-- Keys handling
+	function self.bye()
+		keysactions = oldKA		-- Restore old keys mapping
+		window:Release()
+	end
+
+	keysactions = {
+		['KEY/POWER/1'] = self.bye
+	}
 
 	return self
 end
