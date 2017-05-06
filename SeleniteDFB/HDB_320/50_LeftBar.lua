@@ -1,25 +1,29 @@
 local function f()
-	self = SubSurface( psrf, 0,0, LBw,psrf:GetHeight() )
+	local self = layer:CreateWindow {
+		pos = {0,0}, size = { LBw,psrf:GetHeight() },
+		caps=SelWindow.CapsConst('NONE'),
+		surface_caps=SelSurface.CapabilityConst('NONE')
+	}
+	self:SetOpacity(0xff)	-- Make the window visible
+	local srf = self:GetSurface()
 
 	-- build graphics
-
-	local w = self.get():GetWidth()-1
-	local srf = self.get()
+	local w = srf:GetWidth()-1
 
 	local ThermImg = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/ElectricityBG.png")
 	local x,y = ThermImg:GetSize()
 	ThermImg:RenderTo( srf, { 0, 0, x,y } )
 	ThermImg:Release()
 
-	self.setColor( COL_BORDER )
+	srf:SetColor( COL_BORDER.get() )
 	srf:DrawLine( w, 0, w, srf:GetHeight() )
 
 	local offy = 3
-	self.setColor( COL_TITLE )
+	srf:SetColor( COL_TITLE.get() )
 	srf:SetFont( ftitle1 )
 	srf:DrawString("Tension EDF :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
-	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
+	srf:Flip(SelSurface.FlipFlagsConst("NONE")) -- refresh the background to let subSurface to backup the background if needed
 
 	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
@@ -143,7 +147,7 @@ local function f()
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
 
 
-	self.refresh()
+	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 
 	return self
 end
