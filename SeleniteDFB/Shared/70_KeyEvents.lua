@@ -1,5 +1,9 @@
 -- Manage key events
 
+-- Normally, should be specific to a particular system ... but both my Tablet
+-- and BananaPI have event0 and 1, even if it's not for the same purpose
+-- it's working like that.
+
 -- Actions table
 
 local keysactions_default = {
@@ -64,4 +68,4 @@ end
 table.insert( Topics, 
 	{ topic = 'HomeDashBoard/'.. MQTT_ClientID ..'/Key', trigger=handlefakekeys }
 )
-SelLog.log("*I* Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Keys')
+SelLog.log("*I* Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Key')

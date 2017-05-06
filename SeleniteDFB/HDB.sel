@@ -81,9 +81,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 end
 
 table.insert( Topics, 
-	{ topic = 'HomeDashBoard/'.. MQTT_ClientID ..'/Command', trigger=Command }	-- 'Tablette' has to be changed if several dashboard
+	{ topic = 'HomeDashBoard/'.. MQTT_ClientID ..'/Command', trigger=Command }
 )
-
 
 -- Broker's stuffs
 function disconnected()
