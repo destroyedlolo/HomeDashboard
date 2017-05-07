@@ -38,8 +38,8 @@ function ConfigMenu()
 	)
 
 	popup.setKeysActions {
-			['KEY/VOLUMEDOWN/1'] = lst.selprev,
-			['KEY/VOLUMEUP/1'] = lst.selnext,
+			['KEY/VOLUMEDOWN/1'] = lst.selnext,
+			['KEY/VOLUMEUP/1'] = lst.selprev,
 			['KEY/POWER/1'] = popup.close
 	}
 
