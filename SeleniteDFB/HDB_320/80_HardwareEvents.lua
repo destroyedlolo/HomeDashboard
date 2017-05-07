@@ -7,7 +7,9 @@ local evt0, evt1
 -- I decided to simply create transcode table here
 local KF_8000X_transcode = {
 	[1] = 'VOLUMEUP',
+	[17] = 'VOLUMEUP',
 	[9] = 'VOLUMEDOWN',
+	[25] = 'VOLUMEDOWN',
 	[64] = 'SEARCH',
 	[31] = 'POWER'
 }
