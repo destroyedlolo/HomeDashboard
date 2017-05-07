@@ -20,7 +20,7 @@ function cweather(
 	end
 
 	psrf:SetColor( COL_TITLE.get() )
-	psrf:SetFont( ftitle1 )
+	psrf:SetFont( ftitle )
 	psrf:DrawString("Prévisions du jour", 0, 0)
 	local goffy = y + ftitle1:GetHeight() + 15
 	local goffx = x + 130
