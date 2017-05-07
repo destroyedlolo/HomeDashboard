@@ -15,11 +15,11 @@ function Porte(
 	if not opts.width then
 		opts.width = 41
 	end
-	if not opts.height then
-		opts.height = 70
+	if not opts.hight then
+		opts.hight = 70
 	end
 
-	local self = ImageSurfaceBackground( psrf, sx,sy, opts.width, opts.height, opts )
+	local self = ImageSurfaceBackground( psrf, sx,sy, opts.width, opts.hight, opts )
 
 	local parent_upd = self.Update
 	function self.Update( )
