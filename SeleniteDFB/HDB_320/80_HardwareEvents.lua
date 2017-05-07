@@ -11,7 +11,8 @@ local KF_8000X_transcode = {
 	[9] = 'VOLUMEDOWN',
 	[25] = 'VOLUMEDOWN',
 	[64] = 'SEARCH',
-	[31] = 'POWER'
+	[31] = 'POWER',
+	[22] = 'EJECTCD'
 }
 
 local function handlekeys0()

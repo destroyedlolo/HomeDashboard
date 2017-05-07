@@ -11,6 +11,7 @@ local keysactions_default = {
 	['KEY/VOLUMEUP/1'] = function () nextWindow( true ) end,
 	['KEY/POWER/1'] = function () SaveCollection() end,
 	['KEY/SEARCH/1'] = function () ConfigMenu() end,
+	['KEY/EJECTCD/1'] = function () quitHDB() end,
 }
 
 -- Actions

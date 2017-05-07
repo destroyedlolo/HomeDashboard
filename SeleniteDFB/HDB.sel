@@ -36,7 +36,7 @@ function SaveCollection()
 	Notification.Log("Collections saved.")
 end
 
-local function quitHDB()
+function quitHDB()
 	SaveCollection()
 	os.exit()
 end
