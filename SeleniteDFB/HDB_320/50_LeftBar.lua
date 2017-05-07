@@ -1,6 +1,6 @@
 local function f()
 	local self = layer:CreateWindow {
-		pos = {0,0}, size = { LBw,psrf:GetHeight() },
+		pos = {0,0}, size = { LBw,psrf:GetHight() },
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	}
@@ -16,7 +16,7 @@ local function f()
 	ThermImg:Release()
 
 	srf:SetColor( COL_BORDER.get() )
-	srf:DrawLine( w, 0, w, srf:GetHeight() )
+	srf:DrawLine( w, 0, w, srf:GetHight() )
 
 	local offy = 3
 	srf:SetColor( COL_TITLE.get() )
@@ -29,7 +29,7 @@ local function f()
 		align = ALIGN_RIGHT,
 		width = w-20 
 	})
-	offy = offy + srf_tension.getHeight()
+	offy = offy + srf_tension.getHight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { suffix=' V', condition=condition_network } )
 
 
@@ -39,7 +39,7 @@ local function f()
 		align = ALIGN_RIGHT, 
 		width = w-20 
 	} )
-	offy = offy + srf_consommation.getHeight()
+	offy = offy + srf_consommation.getHight()
 
 	x = w - (5 + fsdigit:StringWidth("12345"))
 
@@ -75,7 +75,7 @@ local function f()
 		align = ALIGN_RIGHT, 
 		width = w-20 
 	} )
-	offy = offy + srf_production.getHeight()
+	offy = offy + srf_production.getHight()
 
 -- already calculated
 --	x = w - (5 + fsdigit:StringWidth("12345"))
@@ -97,9 +97,9 @@ local function f()
 		sample_text = "888.8W"
 	} )
 	x = srf_onduleur.get():GetWidth()
-	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+4, w-x-8, srf_onduleur.get():GetHeight()-8, COL_GFXBG, COL_BORDER )
+	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+4, w-x-8, srf_onduleur.get():GetHight()-8, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur)
-	offy = offy + srf_gaugeOnduleur.get():GetHeight() + 6
+	offy = offy + srf_gaugeOnduleur.get():GetHight() + 6
 
 --
 -- Key temperatures
@@ -110,14 +110,14 @@ local function f()
 		sample_text = "-88.8°"
 	})
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°' } )
-	offy = offy + srf_TSalon.getHeight()
+	offy = offy + srf_TSalon.getHight()
 
 	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°"
 	})
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°', gradient = GRD_TEMPERATURE } )
-	offy = offy + srf_TDehors.getHeight()
+	offy = offy + srf_TDehors.getHight()
 
 	local srf_TBureau = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
@@ -127,18 +127,18 @@ local function f()
 
 
 	w,y = srf_TSalon.get():GetPosition()	-- Determine remaining room origine
-	offy = srf:GetHeight() - fsdigit:GetHeight()
+	offy = srf:GetHight() - fsdigit:GetHeight()
 	local srf_uATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
 		sample_text = "0000"
 	} )
-	offy = offy - srf_uATM.getHeight()
+	offy = offy - srf_uATM.getHight()
 
 	local srf_dATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
 		sample_text = "0000"
 	} )
-	offy = offy - srf_dATM.getHeight()
+	offy = offy - srf_dATM.getHight()
 	
 	local srf_dnGfx = ArcGaugePercent(srf, 0, y, w/2, offy-y, 5, 2, { emptycolor=COL_GFXBG })
 	local srf_upGfx = ArcGaugePercent(srf, w/2, y, w/2, offy-y, 5, 1, { emptycolor=COL_GFXBG })

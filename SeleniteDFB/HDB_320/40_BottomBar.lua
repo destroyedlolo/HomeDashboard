@@ -4,7 +4,7 @@ local function f()
 	local sw = psrf:GetWidth() - LBw
 	local sh = fstxt:GetHeight()*NotLine
 
-	local self = SubSurface( psrf, LBw, psrf:GetHeight()-sh, sw, sh )
+	local self = SubSurface( psrf, LBw, psrf:GetHight()-sh, sw, sh )
 	local sw, sh = self.get():GetSize()
 	local srf = self.get()
 	local offx,offy
@@ -23,7 +23,7 @@ local function f()
 	offy = ftitle1:GetHeight()
 	local srf_trndbPI = GfxArea( srf,
 		offx, offy, 
-		srf:GetWidth() - offx, srf:GetHeight()-offy, 
+		srf:GetWidth() - offx, srf:GetHight()-offy, 
 		COL_TRANSPARENT, COL_GFXBG, { align=ALIGN_RIGHT, stretch = 1 }
 	)
 	srf_trndbPI.get():FillGrandient { TopLeft={40,40,40,255}, BottomLeft={40,40,40,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
