@@ -10,6 +10,7 @@ local function meteo()
 	window:SetOpacity(0xff)	-- Make the window visible
 	table.insert( winlist, window )
 	local srf = window:GetSurface()
+	srf:Clear( COL_BLACK.get() )
 
 	local currentw = cweather( srf, 20,0 )
 	Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
