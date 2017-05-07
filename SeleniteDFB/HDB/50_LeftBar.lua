@@ -1,12 +1,12 @@
 local function f()
-	self = SubSurface( psrf, 0,0, LBw, psrf:GetHeight() )
+	self = SubSurface( psrf, 0,0, LBw, psrf:GetHight() )
 
 	-- build graphics
 
 	local w = self.get():GetWidth()-1
 	local srf = self.get()
 	self.setColor( COL_BORDER )
-	srf:DrawLine( w, 0, w, srf:GetHeight() )
+	srf:DrawLine( w, 0, w, srf:GetHight() )
 
 --[[
 	local ElecBgImg = SelImage.create(SELENE_SCRIPT_DIR .. "/Images/ElectricityBG.png")
@@ -29,7 +29,7 @@ local function f()
 	})
 	srf:SetFont( fmdigit )
 	srf:DrawString(" V", srf_tension.get():GetAfter() )
-	offy = offy + srf_tension.getHeight()
+	offy = offy + srf_tension.getHight()
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
 	srf:SetFont( ftitle1 )
@@ -50,7 +50,7 @@ local function f()
 	} )
 	srf:SetFont( fdigit )
 	srf:DrawString(" VA", srf_consommation.get():GetAfter() )
-	offy = offy + srf_consommation.getHeight()
+	offy = offy + srf_consommation.getHight()
 
 	local x = w - (5 + fsdigit:StringWidth("12345"))
 
@@ -87,7 +87,7 @@ local function f()
 	} )
 	srf:SetFont( fdigit )
 	srf:DrawString(" VA", srf_production.get():GetAfter() )
-	offy = offy + srf_production.getHeight()
+	offy = offy + srf_production.getHight()
 
 -- already calculated
 -- x = w - (5 + fsdigit:StringWidth("12345"))
@@ -116,9 +116,9 @@ local function f()
 	} )
 	x = srf_onduleur.get():GetWidth()
 
-	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHeight()-16, COL_GFXBG, COL_BORDER )
+	local srf_gaugeOnduleur = GaugeHPercentBg( srf, x+4, offy+8, w-x-8, srf_onduleur.get():GetHight()-16, COL_GFXBG, COL_BORDER )
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur, { condition=condition_network })
-	offy = offy + srf_onduleur.get():GetHeight() + 2
+	offy = offy + srf_onduleur.get():GetHight() + 2
 
 
 --
@@ -144,7 +144,7 @@ local function f()
 	srf:DrawString("Salon :", srf_TSalon.get():GetPosition(), offy - ftitle1:GetHeight() )
 	local srf_Thermometre = GaugeRange( srf, 14,325, 6, 63, COL_RED, COL_WHITE, 5,35, { vertical = true } )
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
-	offy = offy + srf_TSalon.getHeight()
+	offy = offy + srf_TSalon.getHight()
 
 -- A mettre avec la temperature du salon
 local function updthermo()
@@ -165,7 +165,7 @@ TSalon.TaskOnceAdd( updthermo )
 	srf:SetFont( fdigit )
 	srf:DrawString("°C", srf_TSalon.get():GetAfter() )
 	srf:DrawString("°C", self.srf_TDehors.get():GetAfter() )
-	offy = offy + self.srf_TDehors.getHeight()
+	offy = offy + self.srf_TDehors.getHight()
 --[[
 	self.setColor( COL_BORDER )
 	srf:DrawLine( 0, offy, w, offy )
@@ -176,7 +176,7 @@ TSalon.TaskOnceAdd( updthermo )
 		align = ALIGN_CENTER,
 		sample_text = "0000"
 	} )
-	offy = offy + srf_dATM.getHeight()
+	offy = offy + srf_dATM.getHight()
 
 	local srf_uATM = FieldBlink( srf, animTimer, (w-fsdigit:StringWidth("0000"))/2 , offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
@@ -184,10 +184,10 @@ TSalon.TaskOnceAdd( updthermo )
 	} )
 
 	x,y = srf_dATM.get():GetPosition()
-	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM.getHeight() + srf_uATM.getHeight(), 10, 2, { emptycolor=COL_GFXBG })
+	local srf_dnGfx = ArcGaugePercent(srf, 0, y, x-4, srf_dATM.getHight() + srf_uATM.getHight(), 10, 2, { emptycolor=COL_GFXBG })
 
 	x = x + srf_dATM.get():GetWidth() + 4
-	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM.getHeight() + srf_uATM.getHeight(), 10, 1, { emptycolor=COL_GFXBG })
+	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM.getHight() + srf_uATM.getHight(), 10, 1, { emptycolor=COL_GFXBG })
 
 	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )

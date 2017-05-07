@@ -1,5 +1,5 @@
 local function f()
-	local self = SubSurface( psrf, LBw, psrf:GetHeight()-BBh, psrf:GetWidth() - LBw, BBh )
+	local self = SubSurface( psrf, LBw, psrf:GetHight()-BBh, psrf:GetWidth() - LBw, BBh )
 	local sw, sh = self.get():GetSize()
 	local srf = self.get()
 	local offx=24,offy
@@ -18,7 +18,7 @@ local function f()
 
 	local srf_trndbPI = GfxArea( srf,
 		offx, offy, 
-		ftitle1:StringWidth("bPI :") + fsdigit:StringWidth("15.23 - 88.88°C"), srf:GetHeight()-offy, 
+		ftitle1:StringWidth("bPI :") + fsdigit:StringWidth("15.23 - 88.88°C"), srf:GetHight()-offy, 
 		COL_TRANSPARENT, COL_BLACK,
 		{ 
 			align=ALIGN_RIGHT,
