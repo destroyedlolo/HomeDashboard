@@ -21,6 +21,9 @@ local function upstaire()
 	img:RenderTo( srf, { 10, WINSIZE[2] - y*s - 10, x*s, y*s } )
 	img:destroy()	-- The image is not needed anymore
 
+	PorteGS = Porte( srf, 'PorteGS', 'maison/IO/Porte_GSud', x*s - 55, WINSIZE[2] - y*s, { width=14, hight=23 } )
+	PorteGN = Porte( srf, 'PorteGN', 'maison/IO/Porte_GNord', 57, WINSIZE[2] - y*s, { width=14, hight=23 })
+
 	local tgn = MinorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 0,85,
 		{
 			font = fmdigit,
@@ -52,7 +55,7 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( tcp.getAfter()+2 , 28, tcp.getAfter()+2, 130 )
 
-	RoomArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 126,40,
+	RoomArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 128,40,
 		'Majordome/Mode/Oceane',
 		'Majordome/HLever/Oceane',
 		{
@@ -61,16 +64,16 @@ local function upstaire()
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
-	srf:DrawLine( 123, 43, 123, 160 )
+	srf:DrawLine( 125, 43, 125, 160 )
 
-	MinorTempArea( srf, 'TGS', 'maison/Temperature/Grenier Sud', 165,75,
+	MinorTempArea( srf, 'TGS', 'maison/Temperature/Grenier Sud', 168,75,
 		{
 			font = fmdigit,
 			title = "Gr. Sud"
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
-	srf:DrawLine( 163, 78, 163, 155 )
+	srf:DrawLine( 166, 78, 166, 155 )
 
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 	return self
