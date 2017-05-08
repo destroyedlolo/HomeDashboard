@@ -5,42 +5,35 @@
 -- is managed through keys' actions.
 
 function ConfigMenu()
-	local popup = PopUp( {
-		pos = {30,20}, size = {150,150},
-		stacking = SelWindow.StackingConst('UPPER'),
+	local menu = Menu( {
+		pos = {30,20},
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	},
 	{
+		{ 'Mode générale', nil },
+		{ ' > Mode Enfants', nil },
+		{ ' > > Mode Oceane', nil },
+		{ ' > > Mode Joris', nil },
+		{ ' > Mode Parents', nil }
+	}, -- list
+	fmdigit,
+	{
 		keysactions = 'keysactions',	-- Active keysactions table
-		bordercolor = COL_LIGHTGREY
+		bordercolor = COL_LIGHTGREY,
+
+		title = 'Configuration',
+		titlefont = ftitle1,
+		titlecolor = COL_WHITE,
+
+		unselcolor = COL_TITLE,
+		selcolor = COL_DIGIT
 	})
 
-	popup.setColor( COL_WHITE )
-	popup.get():SetFont( ftitle1 )
-	popup.get():DrawString("Configuration", 0,0)
-	popup.refresh()
-
-	local lst = vsList( popup, 
-		0, ftitle1:GetHeight() + 15, popup.get():GetWidth(),
-		{
-			{ 'Mode générale', nil },
-			{ ' > Mode Enfants', nil },
-			{ ' > > Mode Oceane', nil },
-			{ ' > > Mode Joris', nil },
-			{ ' > Mode Parents', nil }
-		},
-		fmdigit,
-		{
-			unselcolor = COL_TITLE,
-			selcolor = COL_DIGIT
-		}
-	)
-
-	popup.setKeysActions {
-			['KEY/VOLUMEDOWN/1'] = lst.selnext,
-			['KEY/VOLUMEUP/1'] = lst.selprev,
-			['KEY/POWER/1'] = popup.close
+	menu.setKeysActions {
+			['KEY/VOLUMEDOWN/1'] = menu.selnext,
+			['KEY/VOLUMEUP/1'] = menu.selprev,
+			['KEY/POWER/1'] = menu.close
 	}
 
 end
