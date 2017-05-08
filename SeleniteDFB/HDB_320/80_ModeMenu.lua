@@ -1,10 +1,10 @@
--- Top config menu
+-- Mode configuration menu
 
 -- Unlike in other source files, this is not an object :
 -- This function creates the windows (and sub object) and then everything
 -- is managed through keys' actions.
 
-function ConfigMenu()
+function ModeMenu()
 	local menu = Menu( {
 		pos = {30,20},
 		caps=SelWindow.CapsConst('NONE'),
