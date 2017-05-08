@@ -4,9 +4,9 @@
 -- This function creates the windows (and sub object) and then everything
 -- is managed through keys' actions.
 
-function ModeMenu()
+function ModeMenu( parent )
 	local menu = Menu( {
-		pos = {30,20},
+		pos = {40,30},
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	},
@@ -27,7 +27,9 @@ function ModeMenu()
 		titlecolor = COL_WHITE,
 
 		unselcolor = COL_TITLE,
-		selcolor = COL_DIGIT
+		selcolor = COL_DIGIT,
+
+		userdata = parent
 	})
 
 	menu.setKeysActions {

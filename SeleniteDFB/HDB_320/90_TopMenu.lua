@@ -11,7 +11,7 @@ function TopMenu()
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	},
 	{
-		{ 'Modes', nil },
+		{ 'Modes', ModeMenu },
 		{ 'Consignes', nil },
 		{ 'Volets', nil },
 	}, -- list
@@ -31,7 +31,8 @@ function TopMenu()
 	menu.setKeysActions {
 			['KEY/VOLUMEDOWN/1'] = menu.selnext,
 			['KEY/VOLUMEUP/1'] = menu.selprev,
-			['KEY/POWER/1'] = menu.close
+			['KEY/POWER/1'] = menu.close,
+			['KEY/SEARCH/1'] = menu.action
 	}
 
 end
