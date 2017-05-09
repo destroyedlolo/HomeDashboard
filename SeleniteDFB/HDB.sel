@@ -6,6 +6,11 @@
 
 --	Compatibility with newer Lua
 unpack = unpack or table.unpack
+if not table.pack then
+    function table.pack (...)
+        return {n=select('#',...); ...}
+    end
+end
 
 -- initialise graphical environment
 Selene.UseDirectFB("--dfb:quiet,no-vt,no-cursor")
@@ -117,14 +122,11 @@ SelLog.log("Let's go ...")
 
 
 -- Wait for events
-while true do -- Main todo list handler
-	local ret, err = Selene.WaitFor( switchtimer, animTimer.getTimer(), unpack( additionnalevents ) )
-	if err then
-		print("WaitFor", err)
-		return
-	end
-
-	if type(ret) == 'function' then
-		ret()
+while true do
+	local rt = table.pack( Selene.WaitFor(tabtimer) )
+	for _,ret in ipairs(rt) do
+		if type(ret) == 'function' then
+			ret()
+		end
 	end
 end
