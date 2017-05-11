@@ -1,0 +1,34 @@
+#!/usr/local/bin/Selene
+
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")
+
+function disconnected()
+	print("disconnected")
+end
+
+local Brk, err = SelMQTT.connect( MQTT_URL, { OnDisconnectTrigger=disconnected } )
+if err then
+	print( "Broker", err )
+	return
+end
+
+print "'?' for help"
+while true do
+	local c = io.stdin:read'*l'
+
+	if c == '?' then
+		print("Broker :", MQTT_URL)
+		print("Fake keys topic :", TOPIC)
+		print '\n8,2 = up & down'
+		print '5 = search'
+		print '0 = power'
+	elseif c == '8' then
+		Brk:Publish( TOPIC, 'VolU')
+	elseif c == '2' then
+		Brk:Publish( TOPIC, 'VolD')
+	elseif c == '5' then
+		Brk:Publish( TOPIC, 'S')
+	elseif c == '0' then
+		Brk:Publish( TOPIC, 'Pwr')
+	end
+end
