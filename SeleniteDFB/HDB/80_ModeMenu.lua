@@ -6,7 +6,7 @@
 
 function ModeMenu( parent )
 	local menu = Menu( {
-		pos = {310,60},
+		pos = {320,70},
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	},
@@ -17,7 +17,7 @@ function ModeMenu( parent )
 		{ ' > > Mode Joris', nil },
 		{ ' > Mode Parents', nil }
 	}, -- list
-	fmdigit,
+	fmenu,
 	{
 		keysactions = 'keysactions',	-- Active keysactions table
 		bordercolor = COL_LIGHTGREY,
