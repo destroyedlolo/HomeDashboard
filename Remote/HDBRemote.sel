@@ -22,6 +22,7 @@ while true do
 		print '\n8,2 = up & down'
 		print '5 = search'
 		print '0 = power'
+		print 'Quit'
 	elseif c == '8' then
 		Brk:Publish( TOPIC, 'VolU')
 	elseif c == '2' then
@@ -30,5 +31,7 @@ while true do
 		Brk:Publish( TOPIC, 'S')
 	elseif c == '0' then
 		Brk:Publish( TOPIC, 'Pwr')
+	elseif c == 'Quit' then
+		Brk:Publish( TOPIC, 'Quit')
 	end
 end
