@@ -11,11 +11,11 @@ function ModeMenu( parent )
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	},
 	{
-		{ 'Mode générale', nil },
-		{ ' > Mode Enfants', nil },
-		{ ' > > Mode Oceane', nil },
-		{ ' > > Mode Joris', nil },
-		{ ' > Mode Parents', nil }
+		{ 'Mode générale', function () ModeItem('Mode générale', 'Majordome/Mode/Force') end },
+		{ ' > Mode Enfants', function () ModeItem('Mode Enfants', 'Majordome/Mode/Force/Enfants') end },
+		{ ' > > Mode Oceane', function () ModeItem('Mode Océane', 'Majordome/Mode/Force/Enfants/Oceane') end },
+		{ ' > > Mode Joris', function () ModeItem('Mode Joris', 'Majordome/Mode/Force/Enfants/Joris') end },
+		{ ' > Mode Parents', function () ModeItem('Mode Parents', 'Majordome/Mode/Force/Parents') end }
 	}, -- list
 	fmdigit,
 	{
@@ -35,7 +35,8 @@ function ModeMenu( parent )
 	menu.setKeysActions {
 			['KEY/VOLUMEDOWN/1'] = menu.selnext,
 			['KEY/VOLUMEUP/1'] = menu.selprev,
-			['KEY/POWER/1'] = menu.close
+			['KEY/POWER/1'] = menu.close,
+			['KEY/SEARCH/1'] = menu.action
 	}
 
 end

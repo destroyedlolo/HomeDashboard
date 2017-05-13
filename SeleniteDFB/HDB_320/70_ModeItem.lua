@@ -1,10 +1,10 @@
 -- Mode's Items sub menu
 
-function ModeItem( titre, topic, y )
+function ModeItem( titre, topic )
 -- topic : topic to send value
 -- y : position of this sub menu
 	local menu = Menu( {
-		pos = {320,y},
+		pos = {50,40},
 	},
 	{
 		{ 'Auto', function () Brk:Publish( topic, 'Auto', true ) end },
@@ -13,7 +13,7 @@ function ModeItem( titre, topic, y )
 		{ 'Vacances', function () Brk:Publish( topic, 'Vacances', true ) end },
 		{ 'Absent', function () Brk:Publish( topic, 'Absent', true ) end },
 	}, -- list
-	fmenu,
+	fmdigit,
 	{
 		keysactions = 'keysactions',	-- Active keysactions table
 		bordercolor = COL_LIGHTGREY,
