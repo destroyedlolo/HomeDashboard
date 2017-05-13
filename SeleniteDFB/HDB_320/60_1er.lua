@@ -31,7 +31,7 @@ local function upstaire()
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
-	srf:DrawLine( tgn.getAfter()+2, 87, tgn.getAfter()+3, 155 )
+	srf:DrawLine( tgn.getAfter()+3, 87, tgn.getAfter()+3, 155 )
 
 	local tcj = RoomArea( srf, 'TCJ', 'maison/Temperature/Chambre Joris', 45,40,
 		'Majordome/Mode/Joris',
