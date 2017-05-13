@@ -98,7 +98,8 @@ function disconnected()
 	SaveCollection()
 end
 
-local Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
+local err
+Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
 if err then
 	print( "Broker", err )
 	return
