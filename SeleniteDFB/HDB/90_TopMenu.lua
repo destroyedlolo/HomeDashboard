@@ -6,7 +6,7 @@
 
 function TopMenu()
 	local menu = Menu( {
-		pos = {300,50},
+		pos = {280,50},
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	},

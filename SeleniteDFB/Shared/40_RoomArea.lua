@@ -16,7 +16,7 @@ function RoomArea(
 	local srf_mode = FieldBlink( srf, animTimer, offx,offy,  fsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER, width = self.getSize()
 	})
-	MQTTDisplay( name..' mode', topic_mode, srf_mode )
+	MQTTDisplay( topic_mode, topic_mode, srf_mode )
 
 
 	local function format_time( t, m )
