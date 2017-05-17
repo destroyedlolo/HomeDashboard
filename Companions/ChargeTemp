@@ -1,11 +1,11 @@
 #!/bin/bash
 # Ce script charge sur les dashboards l'historique des températures
 
-TOPIC=HomeDashBoard/Tablette/TExtFeed
+TOPIC=HomeDashBoard/Tablette-dev/Feed/TDehors
 
 # C'est parti
 
 for l in $( psql -F',' -A -t www -c "WITH t AS ( select * FROM domestik.probe_hardware WHERE host='Maison' AND probe='Exterieur' ORDER BY sample_time DESC LIMIT 300 ) SELECT value, extract( epoch from sample_time) from t ORDER BY sample_time;" )
 do
 	echo $l
-done | mosquitto_pub -t HomeDashBoard/Tablette-dev/Feed/TDehors -l 
+done | mosquitto_pub -t $TOPIC -l 
