@@ -5,4 +5,4 @@ TOPIC=Domestik/Electricite/Mensuel
 
 psql -F',' -A -t www -c "select probe, to_char(time, 'YYYY') as year, to_char(time, 'MM') as month, sum(increase)
 from domestik.probe_counter_archive group by year, month, probe
-order by year desc, month desc, probe;" | mosquitto_pub -t $TOPIC -s
+order by year desc, month desc, probe;" | mosquitto_pub -t $TOPIC -r -s
