@@ -17,10 +17,11 @@ local function energy()
 
 	cdt = MQTTCounterStatGfx(srf,
 		'Stat mensuelle', 'Domestik/Electricite/Mensuel', 
-		35, ftitle:GetHeight()+10, 350,250, {
+		95, ftitle:GetHeight()+60, 425,250, {
 			bordercolor = COL_GREY ,
 			consumption_border = COL_ORANGED,
-			production_border = COL_GREEND
+			production_border = COL_GREEND,
+			maxyears = 3
 		} 
 	)
 
