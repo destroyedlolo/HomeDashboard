@@ -11,7 +11,6 @@ function nextWindow( force )
 	end
 
 	if force then
-		Notification.Log('>> ' .. wcnt)
 		switchtimer:Reset()
 	end
 end
@@ -26,7 +25,6 @@ function prevWindow( force)
 	end
 
 	if force then
-		Notification.Log('<< ' .. wcnt)
 		switchtimer:Reset()
 	end
 end
