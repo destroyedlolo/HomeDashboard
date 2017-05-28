@@ -21,7 +21,8 @@ local function energy()
 			bordercolor = COL_GREY ,
 			consumption_border = COL_ORANGED,
 			production_border = COL_GREEND,
-			maxyears = 3
+			maxyears = 3,
+			fadeyears = 25,
 		} 
 	)
 
