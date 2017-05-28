@@ -20,8 +20,11 @@ local function energy()
 		5, ftitle:GetHeight()+5, 200,150, {
 			bordercolor = COL_GREY ,
 			consumption_border = COL_ORANGED,
-			production_border = COL_GREEND,
-			maxyears = 3
+			xproduction_border = COL_GREEND,
+			maxyears = 3,
+			barrespace = 0,
+			yearXoffset = 3,
+			production_offset = 2
 		} 
 	)
 
