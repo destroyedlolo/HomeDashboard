@@ -22,6 +22,7 @@ local function energy()
 			consumption_border = COL_ORANGED,
 			xproduction_border = COL_GREEND,
 			maxyears = 3,
+			fadeyears = 20,
 			barrespace = 0,
 			yearXoffset = 3,
 			production_offset = 2
