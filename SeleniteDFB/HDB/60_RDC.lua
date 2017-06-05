@@ -28,7 +28,8 @@ local function ground()
 		{
 			font = fdigit,
 			title = "Bureau",
-			size = fdigit:StringWidth("88.8°C")
+			size = fdigit:StringWidth("88.8°C"),
+			min_delta = 1
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -38,7 +39,8 @@ local function ground()
 		{
 			font = fdigit,
 			title = "Salon",
-			size = fdigit:StringWidth("88.8°C")
+			size = fdigit:StringWidth("88.8°C"),
+			min_delta = 1
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )

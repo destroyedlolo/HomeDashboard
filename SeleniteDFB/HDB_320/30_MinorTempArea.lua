@@ -12,6 +12,8 @@ function MinorTempArea(
 	size : size of the area
 
 	Ether title or size have to be present
+
+	group : groups data by 'group' seconds
 --]]
 	if not opts then
 		opts = {}
@@ -46,7 +48,7 @@ function MinorTempArea(
 
 	local self = MQTTStoreGfx( name, topic, srf_Temp, srf_gfx, 
 		{
-			forced_min = 15,
+			group = opts.group
 		}
 	)
 	table.insert( savedcols, self )

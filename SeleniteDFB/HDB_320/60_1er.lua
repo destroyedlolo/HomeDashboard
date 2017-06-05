@@ -27,7 +27,8 @@ local function upstaire()
 	local tgn = MinorTempArea( srf, 'TGN', 'maison/Temperature/Grenier Nord', 0,85,
 		{
 			font = fmdigit,
-			title = "Gr Nord"
+			title = "Gr Nord",
+			min_delta = 1
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -38,7 +39,8 @@ local function upstaire()
 		'Majordome/HLever/Joris',
 		{
 			font = fmdigit,
-			title = "Ch Joris"
+			title = "Ch Joris",
+			min_delta = 1
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -49,7 +51,8 @@ local function upstaire()
 		'Majordome/HLever',
 		{
 			font = fmdigit,
-			title = "Parents"
+			title = "Parents",
+			min_delta = 1
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -60,7 +63,8 @@ local function upstaire()
 		'Majordome/HLever/Oceane',
 		{
 			font = fmdigit,
-			title = "Océane"
+			title = "Océane",
+			min_delta = 1
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -69,7 +73,8 @@ local function upstaire()
 	MinorTempArea( srf, 'TGS', 'maison/Temperature/Grenier Sud', 168,75,
 		{
 			font = fmdigit,
-			title = "Gr. Sud"
+			title = "Gr. Sud",
+			min_delta = 1
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
