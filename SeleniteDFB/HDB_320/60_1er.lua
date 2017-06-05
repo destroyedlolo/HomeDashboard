@@ -74,7 +74,7 @@ local function upstaire()
 		{
 			font = fmdigit,
 			title = "Gr. Sud",
-			min_delta = 0.75
+			min_delta = 1
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )

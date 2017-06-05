@@ -31,7 +31,7 @@ local function basement()
 	local tcvin = MinorTempArea( srf, 'TCVin', 'maison/Temperature/Cave Vin', 350,40,
 		{
 			font = fdigit,
-			min_delta = 1,
+			min_delta = 0.75,
 			size = fdigit:StringWidth("88.8°C"), 
 			title = "Cave a vin"
 		}
@@ -42,7 +42,7 @@ local function basement()
 	local tSSporte = MinorTempArea( srf, 'TSSPorte', 'maison/Temperature/GarageP', 35,150,
 		{
 			font = fdigit,
-			min_delta = 1,
+			min_delta = 0.75,
 			title = "Porte Sous-Sol"
 		}
 	)
@@ -53,7 +53,7 @@ local function basement()
 		{
 			font = fdigit,
 			title = "Sous-Sol",
-			min_delta = 1,
+			min_delta = 0.75,
 			size = fdigit:StringWidth("88.8°C")
 		}
 	)

@@ -30,7 +30,7 @@ local function upstaire()
 		{
 			font = fmdigit,
 			title = "Grenier Nord",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -40,7 +40,7 @@ local function upstaire()
 		{
 			font = fmdigit,
 			title = "Grenier Sud",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -52,7 +52,7 @@ local function upstaire()
 		{
 			font = fdigit,
 			title = "Chambre Joris",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -64,7 +64,7 @@ local function upstaire()
 		{
 			font = fdigit,
 			title = "Chambre Parents",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -76,7 +76,7 @@ local function upstaire()
 		{
 			font = fdigit,
 			title = "Chambre Océane",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -87,7 +87,7 @@ local function upstaire()
 			font = fmdigit,
 			title = "Comble",
 			size = 80,
-			min_delta = 2
+			min_delta = 0.75
 		}
 	)
 
