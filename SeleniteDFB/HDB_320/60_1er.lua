@@ -40,7 +40,7 @@ local function upstaire()
 		{
 			font = fmdigit,
 			title = "Ch Joris",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -52,7 +52,7 @@ local function upstaire()
 		{
 			font = fmdigit,
 			title = "Parents",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -64,7 +64,7 @@ local function upstaire()
 		{
 			font = fmdigit,
 			title = "Océane",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
@@ -74,7 +74,7 @@ local function upstaire()
 		{
 			font = fmdigit,
 			title = "Gr. Sud",
-			min_delta = 1
+			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
