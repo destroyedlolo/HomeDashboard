@@ -32,6 +32,8 @@ local function energy()
 
 	local srf_ctrndconso = GfxArea( srf, x,y, (WINSIZE[1]-x)/2-20, WINSIZE[2] -y-15, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
 	srf_ctrndconso.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
@@ -40,10 +42,12 @@ local function energy()
 	local conso2 = MQTTStoreGfx( 'consomation2', 'TeleInfo/Consommation/values/PAPP', nil, srf_ctrndconso, 
 		{
 			forced_min = 0,
-			group = srf_ctrndconso.get():GetWidth()/12*60*60	-- 12h retention
+			group = 12*60*60 / srf_ctrndconso.get():GetWidth()	-- 12h retention
 		}
 	)
 	table.insert( savedcols, conso2 )
+
+	SelLog.log("*I* Consummation grouped by ".. 12*60*60 / srf_ctrndconso.get():GetWidth())
 
 	return self
 end
