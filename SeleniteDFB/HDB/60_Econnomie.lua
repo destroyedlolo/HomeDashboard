@@ -17,7 +17,7 @@ local function energy()
 
 	cdt = MQTTCounterStatGfx(srf,
 		'Stat mensuelle', 'Domestik/Electricite/Mensuel', 
-		95, ftitle:GetHeight()+60, 425,250, {
+		95, ftitle:GetHeight()+40, 425,250, {
 			bordercolor = COL_GREY ,
 			consumption_border = COL_ORANGED,
 			production_border = COL_GREEND,
@@ -25,6 +25,25 @@ local function energy()
 			fadeyears = 25,
 		} 
 	)
+
+	local x, y = cdt.get():GetBelow()
+	x = x-20
+	y = y+20
+
+	local srf_ctrndconso = GfxArea( srf, x,y, (WINSIZE[1]-x)/2-20, WINSIZE[2] -y-15, COL_TRANSPARENT, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		align=ALIGN_RIGHT 
+	} )
+	srf_ctrndconso.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
+	srf_ctrndconso.FrozeUnder()
+
+	local conso2 = MQTTStoreGfx( 'consomation2', 'TeleInfo/Consommation/values/PAPP', nil, srf_ctrndconso, 
+		{
+			forced_min = 0,
+			group = srf_ctrndconso.get():GetWidth()/12*60*60	-- 12h retention
+		}
+	)
+	table.insert( savedcols, conso2 )
 
 	return self
 end
