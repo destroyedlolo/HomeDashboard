@@ -17,7 +17,7 @@ local function energy()
 
 	cdt = MQTTCounterStatGfx(srf,
 		'Stat mensuelle', 'Domestik/Electricite/Mensuel', 
-		95, ftitle:GetHeight()+40, 425,250, {
+		95, ftitle:GetHeight()+10, 425,260, {
 			bordercolor = COL_GREY ,
 			consumption_border = COL_ORANGED,
 			production_border = COL_GREEND,
@@ -27,8 +27,13 @@ local function energy()
 	)
 
 	local x, y = cdt.get():GetBelow()
-	x = x-20
-	y = y+20
+	x = 20
+	y = y+15
+	srf:SetColor( COL_TITLE.get() )
+	srf:SetFont( ftitle1 )
+	srf:DrawString("Consommation", x,y)
+	srf:DrawString("Production", x + (WINSIZE[1]-x)/2,y)
+	y = y+ftitle1:GetHeight()
 
 	local srf_ctrndconso = GfxArea( srf, x,y, (WINSIZE[1]-x)/2-20, WINSIZE[2] -y-15, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
@@ -47,7 +52,24 @@ local function energy()
 	)
 	table.insert( savedcols, conso2 )
 
-	SelLog.log("*I* Consummation grouped by ".. 12*60*60 / srf_ctrndconso.get():GetWidth())
+	local srf_ctrndprod = GfxArea( srf, x + (WINSIZE[1]-x)/2,y, (WINSIZE[1]-x)/2-20, WINSIZE[2] -y-15, COL_TRANSPARENT, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+	srf_ctrndprod.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
+	srf_ctrndprod.FrozeUnder()
+
+	local prod2 = MQTTStoreGfx( 'production2', 'TeleInfo/Production/values/PAPP', nil, srf_ctrndprod, 
+		{
+			forced_min = 0,
+			group = 12*60*60 / srf_ctrndprod.get():GetWidth()	-- 12h retention
+		}
+	)
+	table.insert( savedcols, prod2 )
+
+	SelLog.log("*I* Consummation / Production grouped by ".. 12*60*60 / srf_ctrndprod.get():GetWidth())
 
 	return self
 end
