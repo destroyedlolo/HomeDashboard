@@ -44,9 +44,16 @@ local function energy()
 	srf_ctrndconso.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
 	srf_ctrndconso.FrozeUnder()
 
+	local maxTConso = FieldBlink( srf, animTimer, x+2, y+2, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
+
 	local conso2 = MQTTStoreGfx( 'consomation2', 'TeleInfo/Consommation/values/PAPP', nil, srf_ctrndconso, 
 		{
 			forced_min = 0,
+			smax = maxTConso,
+			force_max_refresh = true,
 			group = 12*60*60 / srf_ctrndconso.get():GetWidth()	-- 12h retention
 		}
 	)
@@ -61,8 +68,15 @@ local function energy()
 	srf_ctrndprod.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
 	srf_ctrndprod.FrozeUnder()
 
+	local maxTProd= FieldBlink( srf, animTimer, x + (WINSIZE[1]-x)/2 +2, y+2, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
+
 	local prod2 = MQTTStoreGfx( 'production2', 'TeleInfo/Production/values/PAPP', nil, srf_ctrndprod, 
 		{
+			smax = maxTProd,
+			force_max_refresh = true,
 			forced_min = 0,
 			group = 12*60*60 / srf_ctrndprod.get():GetWidth()	-- 12h retention
 		}
