@@ -69,14 +69,16 @@ local function meteo()
 	)
 --	gfxTExt.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,96,32,255}, BottomRight={32,255,32,255} }
 
-	local MaxTDehors = FieldBlink( srf, animTimer, x+5, y+5, fsdigit, COL_DIGIT, {
+	local MaxTDehors = FieldBackBorder( srf, x+5, y+5, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
+		keepbackground = true,
 		sample_text = "-88.88",
 		ndecimal = 2
 	} )
 
-	local MinTDehors = FieldBlink( srf, animTimer, x+5, WINSIZE[2] - fsdigit:GetHeight() - 5, fsdigit, COL_DIGIT, {
+	local MinTDehors = FieldBackBorder( srf, x+5, WINSIZE[2] - fsdigit:GetHeight() - 5, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
+		keepbackground = true,
 		sample_text = "-88.88",
 		ndecimal = 2
 	} )
