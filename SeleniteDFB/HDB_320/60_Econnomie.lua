@@ -55,7 +55,7 @@ local function energy()
 	)
 	table.insert( savedcols, conso2 )
 
-	local srf_ctrndprod = GfxArea( srf, 102, y, 98, 48, COL_TRANSPARENT, COL_GFXBG,{
+	local srf_ctrndprod = GfxArea( srf, x+102, y, 98, 48, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
