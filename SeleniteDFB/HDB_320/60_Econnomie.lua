@@ -40,7 +40,8 @@ local function energy()
 	srf_ctrndconso.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
 	srf_ctrndconso.FrozeUnder()
 
-	local maxTConso = FieldBlink( srf, animTimer, x+2, y+2, fsdigit, COL_DIGIT, {
+	local maxTConso = FieldBackBorder( srf, x+2, y+2, fsdigit, COL_DIGIT, {
+		keepbackground = true,
 		align = ALIGN_RIGHT,
 		sample_text = "12345"
 	} )
@@ -64,7 +65,8 @@ local function energy()
 	srf_ctrndprod.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
 	srf_ctrndprod.FrozeUnder()
 
-	local maxTProd= FieldBlink( srf, animTimer, 104, y+2, fsdigit, COL_DIGIT, {
+	local maxTProd= FieldBackBorder( srf, x+104, y+2, fsdigit, COL_DIGIT, {
+		keepbackground = true,
 		align = ALIGN_RIGHT,
 		sample_text = "12345"
 	} )
