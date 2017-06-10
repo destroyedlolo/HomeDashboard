@@ -33,8 +33,9 @@ local function f()
 		sample_text = "5.23"
 	} )
 
-	local mloadbPI = FieldBlink( srf, animTimer, offx, offy, fsdigit, COL_DIGIT, {
+	local mloadbPI = FieldBackBorder( srf, offx, offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
+		keepbackground = true,
 		sample_text = "5.23",
 		ndecimal = 2,
 	} )
