@@ -82,6 +82,9 @@ local function f()
 
 	MQTTDisplay('temp bPI', 'Machines/bPI/PMUTemp', tbPI )
 
+	offx, offy = srf_trndbPI.getAfter()
+	Saison( srf, 'Saison', 'Majordome/Saison', offx, 0 )
+
 	self.refresh()
 	return self
 end
