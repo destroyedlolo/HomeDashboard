@@ -146,12 +146,10 @@ local function f()
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
 	offy = offy + srf_TSalon.getHight()
 
--- A mettre avec la temperature du salon
-local function updthermo()
-	srf_Thermometre.Draw( TSalon.get() )
-end
-TSalon.TaskOnceAdd( updthermo )
-----
+	local function updthermo()
+		srf_Thermometre.Draw( TSalon.get() )
+	end
+	TSalon.TaskOnceAdd( updthermo )
 
 	offy = offy + ftitle1:GetHeight()
 	self.srf_TDehors = FieldBlink( srf, animTimer, w-8 - fdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
@@ -189,8 +187,15 @@ TSalon.TaskOnceAdd( updthermo )
 	x = x + srf_dATM.get():GetWidth() + 4
 	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM.getHight() + srf_uATM.getHight(), 10, 1, { emptycolor=COL_GFXBG })
 
-	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
+	local wdfreebox, _ = SelTimer.create { when=40, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc= function ()
+			Notification.setColor( COL_RED )
+			Notification.Log( "Freebox muette")
+			Notification.setColor( COL_WHITE )
+		end
+	}
+	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx, { watchdog=wdfreebox } )
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
+	table.insert( additionnalevents, wdfreebox )
 
 	self.refresh()
 
