@@ -9,6 +9,7 @@ local function f()
 	table.insert( additionnalevents, condition_network.getTimer() )
 
 	Notification = NotificationArea( srf, 24, 0, 200, sh, fstxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
+	MQTTLog(nil, 'messages', Notification)
 	offx = offx + 200
 
 	self.setColor( COL_TITLE )

@@ -13,12 +13,9 @@ function NotificationArea(
 		self.DrawString( msg )
 	end
 
-	local function rcvLog()	-- Receiving a log
-		self.Log( SelShared.get('Log') )
+	function self.Display( txt, udt )
+		self.Log(txt)
 	end
-
-	tlog = MQTTinput('Log', 'Messages' )
-	tlog.TaskOnceAdd( rcvLog )
 
 	return self
 end
