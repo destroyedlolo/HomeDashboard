@@ -8,3 +8,13 @@ KEY/VOLUMEUP/1		VolU
 
 KEY/SEARCH/1		S		-- Selection
 KEY/POWER/1			Pwr		-- Escape
+
+
+****
+Dans Selene :
+FIFO:create() ajouter un nom
+SelShared:findFIFO() trouve le FIFO en fonction du nom
+
+Toile / 20_MQTTLog.lua :
+self.fifoname() : provoque une erreur. DOIT ETRE DERIVE POUR FOURNIR UN NOM UNIQUE
+
