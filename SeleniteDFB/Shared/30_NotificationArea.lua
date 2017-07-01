@@ -15,9 +15,13 @@ function NotificationArea(
 
 	function self.Display( txt, udt )
 		if udt == 0 then
-			self.setColor( COL_WHITE )
+			self.setColor( tcolor )
 		elseif udt == 1 then
+			self.setColor( COL_WHITE )
+		elseif udt == 2 then
 			self.setColor( COL_GREEN )
+		elseif udt == 3 then
+			self.setColor( COL_RED )
 		else
 			self.setColor( tcolor )
 		end
