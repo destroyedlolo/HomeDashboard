@@ -14,6 +14,13 @@ function NotificationArea(
 	end
 
 	function self.Display( txt, udt )
+		if udt == 0 then
+			self.setColor( COL_WHITE )
+		elseif udt == 1 then
+			self.setColor( COL_GREEN )
+		else
+			self.setColor( tcolor )
+		end
 		self.Log(txt)
 	end
 
