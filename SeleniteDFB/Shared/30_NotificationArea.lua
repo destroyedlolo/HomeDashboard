@@ -21,6 +21,8 @@ function NotificationArea(
 		elseif udt == 2 then
 			self.setColor( COL_GREEN )
 		elseif udt == 3 then
+			self.setColor( COL_ORANGE )
+		elseif udt == 4 then
 			self.setColor( COL_RED )
 		else
 			self.setColor( tcolor )
