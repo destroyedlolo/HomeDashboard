@@ -5,4 +5,5 @@ fdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=35} 
 fmdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=26} )
 fsdigit = SelFont.create("/usr/local/share/fonts/Abel-Regular.ttf", { height=20} )
 fstxt = SelFont.create("/usr/local/share/fonts/firasanscompressed-light.otf", { height=8} )
+fmtxt = SelFont.create("/usr/local/share/fonts/firasanscompressed-light.otf", { height=12} )
 fmenu = SelFont.create("/usr/local/share/fonts/firasanscompressed-light.otf", { height=24} )

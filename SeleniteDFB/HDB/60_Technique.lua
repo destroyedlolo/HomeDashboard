@@ -19,7 +19,7 @@ local function tech()
 	local img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Marcel.png")
 	assert(img)
 	local w,h = img:GetSize()
-	img:RenderTo( srf, { WINSIZE[1]/4 - w/2 , ftitle:GetHeight() + 10, w/5,h/5 } )
+	img:RenderTo( srf, { WINSIZE[1]/4 - w/10 , ftitle:GetHeight() + 10, w/5,h/5 } )
 	img:destroy()
 	local offy = h/5
 
@@ -27,15 +27,18 @@ local function tech()
 	assert(img)
 	w,h = img:GetSize()
 	_ = h/offy
-	img:RenderTo( srf, { WINSIZE[1]*3/4 - w/2 , ftitle:GetHeight() + 10, w/_, h/_ } )
+	img:RenderTo( srf, { WINSIZE[1]*3/4 - w/2/_ , ftitle:GetHeight() + 10, w/_, h/_ } )
 	img:destroy()
-	offy = offy + ftitle:GetHeight() + 20
+	offy = offy + ftitle:GetHeight() + 10
 
-	local MarcelTxt = NotificationArea( srf, 20, offy, WINSIZE[1]/2 - 40, 100, fstxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
+	local MarcelTxt = NotificationArea( srf, 20, offy, WINSIZE[1]/2 - 40, 200, fmtxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
 	local MarcelLog = MQTTLog('marcelW', 'Marcel.prod/Log/Warning', MarcelTxt, { udata=1 } )
 	MarcelLog.RegisterTopic( 'marcelE', 'Marcel.prod/Log/Erreur', { udata=3 } )
 	MarcelLog.RegisterTopic( 'marcelF', 'Marcel.prod/Log/Fatal', { udata=4 } )
+	MarcelTxt.Log("Marcel")
 
+	local MajordomeTxt = NotificationArea( srf, WINSIZE[1]/2 + 20, offy, WINSIZE[1]/2 - 40, 200, fmtxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
+	local MajordomeLog = MQTTLog('Majordome', 'Majordome/Log', MajordomeTxt, { udata=1 } )
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 
