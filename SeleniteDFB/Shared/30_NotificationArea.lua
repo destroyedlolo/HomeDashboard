@@ -24,6 +24,8 @@ function NotificationArea(
 			self.setColor( COL_ORANGE )
 		elseif udt == 4 then
 			self.setColor( COL_RED )
+		elseif udt == 5 then
+			self.setColor( COL_DIGIT )
 		else
 			self.setColor( tcolor )
 		end
