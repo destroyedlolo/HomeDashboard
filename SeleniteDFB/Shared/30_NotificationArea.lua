@@ -8,13 +8,23 @@ function NotificationArea(
 )
 	local self = TextArea( psrf, x,y, w,h, font, tcolor, opts )
 
+	local flipcol = true	-- Color flipping flag
+
 	function self.Log( msg )
 		self.SmartCR()
 		self.DrawString( msg )
 	end
 
 	function self.Display( txt, udt )
-		if udt == 0 then
+		if udt == -1 then
+			if flipcol == true then
+				flipcol = false
+				self.setColor( COL_GREY )
+			else
+				flipcol = true
+				self.setColor( COL_LIGHTGREY )
+			end
+		elseif udt == 0 then
 			self.setColor( tcolor )
 		elseif udt == 1 then
 			self.setColor( COL_WHITE )

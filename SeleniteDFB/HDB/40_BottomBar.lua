@@ -8,8 +8,8 @@ local function f()
 	condition_network = Condition( network, .25 )
 	table.insert( additionnalevents, condition_network.getTimer() )
 
-	Notification = NotificationArea( srf, 24, 0, 200, sh, fstxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
-	local log = MQTTLog('messages', 'messages', Notification, { udata=1 } )
+	Notification = NotificationArea( srf, 24, 0, 200, sh, fstxt, COL_GREEND, { bgcolor=COL_GFXBG } )
+	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
 	offx = offx + 200
 
 	self.setColor( COL_TITLE )
