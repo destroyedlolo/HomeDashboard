@@ -8,6 +8,10 @@ local function f()
 	condition_network = Condition( network, .25 )
 	table.insert( additionnalevents, condition_network.getTimer() )
 
+	local freeboxicn = ImageFiltreSurface( srf, 0,0, SELENE_SCRIPT_DIR .. "/Images/FreeboxL.png" )
+	condition_freebox = Condition(freeboxicn, .5 )
+	table.insert( additionnalevents, condition_freebox.getTimer() )
+
 	Notification = NotificationArea( srf, 24, 0, 200, sh, fstxt, COL_GREEND, { bgcolor=COL_GFXBG } )
 	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
 	offx = offx + 200

@@ -193,7 +193,7 @@ local function f()
 			Notification.setColor( COL_WHITE )
 		end
 	}
-	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx, { watchdog=wdfreebox } )
+	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx, { watchdog=wdfreebox, condition=condition_freebox } )
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
 	table.insert( additionnalevents, wdfreebox )
 
