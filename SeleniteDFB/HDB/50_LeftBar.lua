@@ -191,6 +191,7 @@ local function f()
 			Notification.setColor( COL_RED )
 			Notification.Log( "Freebox muette")
 			Notification.setColor( COL_WHITE )
+			condition_freebox.report_issue()
 		end
 	}
 	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx, { watchdog=wdfreebox, condition=condition_freebox } )
