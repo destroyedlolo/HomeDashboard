@@ -12,7 +12,7 @@ local function f()
 	condition_freebox = Condition(freeboxicn, .5, { autorecover=true, issue_color=COL_RED } )
 	table.insert( additionnalevents, condition_freebox.getTimer() )
 
-	Notification = NotificationArea( srf, 24, 0, 200, sh, fstxt, COL_GREEND, { bgcolor=COL_GFXBG } )
+	Notification = NotificationArea( srf, 24, 0, 200, sh, fstxt, COL_DARKGREEN, { bgcolor=COL_GFXBG } )
 	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
 	offx = offx + 200
 
