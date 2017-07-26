@@ -33,7 +33,7 @@ local function tech()
 
 	local MarcelTxt = NotificationArea( srf, 20, offy, WINSIZE[1]/2 - 40, 250, fmtxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
 	local MarcelLog = MQTTLog('marcelW', 'Marcel.prod/Log/Warning', MarcelTxt, { udata=1 } )
-	MarcelLog.RegisterTopic( 'marcelE', 'Marcel.prod/Log/Erreur', { udata=3 } )
+	MarcelLog.RegisterTopic( 'marcelE', 'Marcel.prod/Log/Error', { udata=3 } )
 	MarcelLog.RegisterTopic( 'marcelF', 'Marcel.prod/Log/Fatal', { udata=4 } )
 	MarcelTxt.Log("Marcel")
 
