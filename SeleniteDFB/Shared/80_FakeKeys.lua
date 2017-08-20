@@ -14,6 +14,13 @@ local function handlefakekeys()
 		handleevent( 0, t, SelEvent.KeyConst("POWER"), 1 )
 	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Key') == 'Quit' then -- simulate POWER
 		handleevent( 0, t, SelEvent.KeyConst("EJECTCD"), 1 )
+			--
+			-- Not key simulation but usefull functions
+			--
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Key') == 'Grab' then
+		psrf:Dump('/tmp', 'DashBoard')
+	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Key') == 'Save' then
+		SaveCollection()
 	end
 end
 
