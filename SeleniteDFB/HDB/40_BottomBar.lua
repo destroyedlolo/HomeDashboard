@@ -5,7 +5,7 @@ local function f()
 	local offx=24,offy
 
 	local network = ImageFiltreSurface( srf, 0,24, SELENE_SCRIPT_DIR .. "/Images/Network.png" )
-	condition_network = Condition( network, .25 )
+	condition_network = Condition( network, .25, { issue_color=COL_RED } )
 	table.insert( additionnalevents, condition_network.getTimer() )
 
 	local freeboxicn = ImageFiltreSurface( srf, 0,0, SELENE_SCRIPT_DIR .. "/Images/FreeboxL.png" )
@@ -16,6 +16,10 @@ local function f()
 	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
 	log.RegisterTopic('messagesE', 'messages/Erreur', { udata=3 } )
 	offx = offx + 200
+
+	local lvdonotif = ImageFiltreSurface( srf, offx, 24, SELENE_SCRIPT_DIR .. "/Images/Mail.png" )
+	condition_lvdo = Condition( lvdonotif, 0 ) 
+	offx = offx + 24
 
 	self.setColor( COL_TITLE )
 	srf:SetFont( ftitle1 )
