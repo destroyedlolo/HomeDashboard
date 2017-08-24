@@ -21,6 +21,7 @@ local function tech()
 	local w,h = img:GetSize()
 	img:RenderTo( srf, { WINSIZE[1]/2 - w/5 - 30 , 0, w/5,h/5 } )
 	img:destroy()
+	local offx
 	local offy = h/5
 
 	img,err = SelImage.create(SELENE_SCRIPT_DIR .."/Images/Majordome.png")
@@ -43,6 +44,13 @@ local function tech()
 	MajordomeLog.RegisterTopic( 'MajordomeE', 'Majordome/Log/Erreur', { udata=3 } )
 	MajordomeLog.RegisterTopic( 'MajordomeA', 'Majordome/Log/Action', { udata=5 } )
 	MajordomeTxt.Log("Majordome")
+
+	offx, offy = MarcelTxt.get():GetBelow()
+	offy = offy + 10
+	srf:SetFont( ftitle1 )
+	srf:DrawString("CRC", offx,offy)
+
+--	local CRCu = 
 
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
