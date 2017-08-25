@@ -15,8 +15,8 @@ local function f()
 
 	offx = 24
 	Notification = NotificationArea( srf, 24, 0, 100, sh, fstxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
-	local log = MQTTLog('marcel', 'Marcel.prod/Log/Information', Notification)
-	log.RegisterTopic( 'message', 'messages2', { udata=1 } )
+	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
+	log.RegisterTopic('messagesE', 'messages/Erreur', { udata=3 } )
 	offx = offx + 100
 
 	self.setColor( COL_TITLE )
