@@ -13,6 +13,9 @@ local function f()
 	condition_network = Condition( network, .25 )
 	table.insert( additionnalevents, condition_network.getTimer() )
 
+	local lvdonotif = ImageFiltreSurface( srf, 0, 0, SELENE_SCRIPT_DIR .. "/Images/Mail.png" )
+	condition_lvdo = Condition( lvdonotif, 0 ) 
+
 	offx = 24
 	Notification = NotificationArea( srf, 24, 0, 100, sh, fstxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
 	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
