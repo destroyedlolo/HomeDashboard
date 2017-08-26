@@ -48,9 +48,33 @@ local function tech()
 	offx, offy = MarcelTxt.get():GetBelow()
 	offy = offy + 10
 	srf:SetFont( ftitle1 )
-	srf:DrawString("CRC", offx,offy)
+	srf:DrawString("FEC", offx,offy)
+	offy = offy + ftitle1:GetHeight() + 5
 
---	local CRCu = 
+	local srf_FEC = GfxArea( srf, offx,offy, (WINSIZE[1]-offx)/3-20, WINSIZE[2] -offy-15, COL_RED, COL_GFXBG,{
+		mode = 'delta',
+		heverylines={ {100, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+--	srf_CRC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
+
+	local maxFECu = FieldBackBorder( srf, offx+2, offy+2, fsdigit, COL_DIGIT, {
+		keepbackground = true,
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
+
+	local FECu = MQTTStoreGfx( 'FECu', 'Freebox/UploadFEC', nil, srf_FEC,
+		{
+			forced_min = 0,
+			smax = maxTConso,
+			force_max_refresh = true,
+			group = 300
+		}
+	)
+	table.insert( savedcols, FECu )
 
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
