@@ -46,12 +46,15 @@ local function tech()
 	MajordomeTxt.Log("Majordome")
 
 	offx, offy = MarcelTxt.get():GetBelow()
+	local szx, szy = (WINSIZE[1]-offx)/3, WINSIZE[2] - offy - BBh - 15
 	offy = offy + 10
 	srf:SetFont( ftitle1 )
 	srf:DrawString("FEC", offx,offy)
+	srf:DrawString("CRC", offx + szx, offy)
+	srf:DrawString("HEC", offx + 2*szx, offy)
 	offy = offy + ftitle1:GetHeight() + 5
 
-	local srf_FEC = GfxArea( srf, offx,offy, (WINSIZE[1]-offx)/3-20, WINSIZE[2] -offy-15, COL_RED, COL_GFXBG,{
+	local srf_FEC = GfxArea( srf, offx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
 		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
