@@ -46,7 +46,7 @@ local function tech()
 	MajordomeTxt.Log("Majordome")
 
 	offx, offy = MarcelTxt.get():GetBelow()
-	local szx, szy = (WINSIZE[1]-offx)/3, WINSIZE[2] - offy - BBh - 15
+	local szx, szy = (WINSIZE[1]-offx)/3, WINSIZE[2] - offy - BBh - 5
 	offy = offy + 10
 	srf:SetFont( ftitle1 )
 	srf:DrawString("FEC", offx,offy)
@@ -78,6 +78,56 @@ local function tech()
 		}
 	)
 	table.insert( savedcols, FECu )
+
+	local srf_CRC = GfxArea( srf, offx + szx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
+		mode = 'delta',
+		heverylines={ {100, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+--	srf_CRC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
+
+	local maxCRCu = FieldBackBorder( srf, offx+2, offy+2, fsdigit, COL_DIGIT, {
+		keepbackground = true,
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
+
+	local CRCu = MQTTStoreGfx( 'CRCu', 'Freebox/UploadCRC', nil, srf_CRC,
+		{
+			forced_min = 0,
+			smax = maxTConso,
+			force_max_refresh = true,
+			group = 300
+		}
+	)
+	table.insert( savedcols, CRCu )
+
+	local srf_HEC = GfxArea( srf, offx + 2*szx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
+		mode = 'delta',
+		heverylines={ {100, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+--	srf_HEC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
+
+	local maxHECu = FieldBackBorder( srf, offx+2, offy+2, fsdigit, COL_DIGIT, {
+		keepbackground = true,
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
+
+	local HECu = MQTTStoreGfx( 'HECu', 'Freebox/UploadHEC', nil, srf_HEC,
+		{
+			forced_min = 0,
+			smax = maxTConso,
+			force_max_refresh = true,
+			group = 300
+		}
+	)
+	table.insert( savedcols, HECu )
 
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
