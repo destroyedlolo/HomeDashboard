@@ -52,6 +52,26 @@ local function tech()
 	srf:DrawString("FEC", offx,offy)
 	srf:DrawString("CRC", offx + szx, offy)
 	srf:DrawString("HEC", offx + 2*szx, offy)
+
+	local maxFECu = FieldBlink( srf, animTimer, offx + 5 + ftitle1:StringWidth('FEC'),
+		offy, fsdigit, COL_RED, {
+			align = ALIGN_RIGHT,
+			sample_text = "12345",
+		}
+	)
+	local maxCRCu = FieldBlink( srf, animTimer, offx + 5 + szx + ftitle1:StringWidth('CRC'),
+		offy, fsdigit, COL_RED, {
+			align = ALIGN_RIGHT,
+			sample_text = "12345",
+		}
+	)
+	local maxHECu = FieldBlink( srf, animTimer, offx + 5 + 2*szx + ftitle1:StringWidth('CRC'),
+		offy, fsdigit, COL_RED, {
+			align = ALIGN_RIGHT,
+			sample_text = "12345",
+		}
+	)
+
 	offy = offy + ftitle1:GetHeight() + 5
 
 	local srf_FEC = GfxArea( srf, offx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
@@ -61,20 +81,13 @@ local function tech()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
---	srf_CRC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
-
-	local maxFECu = FieldBackBorder( srf, offx+2, offy+2, fsdigit, COL_DIGIT, {
-		keepbackground = true,
-		align = ALIGN_RIGHT,
-		sample_text = "12345"
-	} )
 
 	local FECu = MQTTStoreGfx( 'FECu', 'Freebox/UploadFEC', nil, srf_FEC,
 		{
 			forced_min = 0,
-			smax = maxTConso,
+			smax = maxFECu,
 			force_max_refresh = true,
-			group = 300
+			group = 900
 		}
 	)
 	table.insert( savedcols, FECu )
@@ -86,18 +99,11 @@ local function tech()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
---	srf_CRC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
-
-	local maxCRCu = FieldBackBorder( srf, offx+2, offy+2, fsdigit, COL_DIGIT, {
-		keepbackground = true,
-		align = ALIGN_RIGHT,
-		sample_text = "12345"
-	} )
 
 	local CRCu = MQTTStoreGfx( 'CRCu', 'Freebox/UploadCRC', nil, srf_CRC,
 		{
 			forced_min = 0,
-			smax = maxTConso,
+			smax = maxCRCu,
 			force_max_refresh = true,
 			group = 300
 		}
@@ -111,18 +117,11 @@ local function tech()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
---	srf_HEC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
-
-	local maxHECu = FieldBackBorder( srf, offx+2, offy+2, fsdigit, COL_DIGIT, {
-		keepbackground = true,
-		align = ALIGN_RIGHT,
-		sample_text = "12345"
-	} )
 
 	local HECu = MQTTStoreGfx( 'HECu', 'Freebox/UploadHEC', nil, srf_HEC,
 		{
 			forced_min = 0,
-			smax = maxTConso,
+			smax = maxHECu,
 			force_max_refresh = true,
 			group = 300
 		}
