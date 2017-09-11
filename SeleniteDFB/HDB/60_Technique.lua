@@ -66,20 +66,27 @@ local function tech()
 		}
 	)
 
-	local maxCRCu = FieldBlink( srf, animTimer, offx + 5 + szx + ftitle1:StringWidth('CRC') + fsdigit:StringWidth('12345'),
+	local maxCRCu = FieldBlink( srf, animTimer, offx + 25 + szx + ftitle1:StringWidth('CRC'),
+		offy, fsdigit, COL_RED, {
+			align = ALIGN_RIGHT,
+			sample_text = "12345",
+		}
+	)
+	local maxCRCd = FieldBlink( srf, animTimer, offx + 5 + szx + ftitle1:StringWidth('CRC') + fsdigit:StringWidth('12345'),
 		offy, fsdigit, COL_GREEN, {
 			align = ALIGN_RIGHT,
 			sample_text = "12345",
 		}
 	)
-	local maxCRCd = FieldBlink( srf, animTimer, offx + 25 + szx + ftitle1:StringWidth('CRC'),
+
+	local maxHECu = FieldBlink( srf, animTimer, offx + 5 + 2*szx + ftitle1:StringWidth('HEC'),
 		offy, fsdigit, COL_RED, {
 			align = ALIGN_RIGHT,
 			sample_text = "12345",
 		}
 	)
-	local maxHECu = FieldBlink( srf, animTimer, offx + 5 + 2*szx + ftitle1:StringWidth('CRC'),
-		offy, fsdigit, COL_RED, {
+	local maxHECd = FieldBlink( srf, animTimer, offx + 5 + 2*szx + ftitle1:StringWidth('HEC') + fsdigit:StringWidth('12345'),
+		offy, fsdigit, COL_GREEN, {
 			align = ALIGN_RIGHT,
 			sample_text = "12345",
 		}
@@ -155,7 +162,7 @@ local function tech()
 	)
 	table.insert( savedcols, CRCd )
 
-	local srf_HEC = GfxArea( srf, offx + 2*szx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
+	local srf_HECu = GfxArea( srf, offx + 2*szx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
 		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
@@ -163,7 +170,7 @@ local function tech()
 		align=ALIGN_RIGHT 
 	} )
 
-	local HECu = MQTTStoreGfx( 'HECu', 'Freebox/UploadHEC', nil, srf_HEC,
+	local HECu = MQTTStoreGfx( 'HECu', 'Freebox/UploadHEC', nil, srf_HECu,
 		{
 			forced_min = 0,
 			smax = maxHECu,
@@ -172,6 +179,23 @@ local function tech()
 		}
 	)
 	table.insert( savedcols, HECu )
+
+	local srf_HECd = GfxArea( srf, offx + 2*szx, offy + szy + 5, szx-20, szy, COL_GREEN, COL_GFXBG,{
+		mode = 'delta',
+		heverylines={ {100, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+
+	local HECd = MQTTStoreGfx( 'CRCd', 'Freebox/DownloadHEC', nil, srf_CRCd,
+		{
+			forced_min = 0,
+			smax = maxHECd,
+			group = 300
+		}
+	)
+	table.insert( savedcols, HECd )
 
 		-- refresh window's content
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
