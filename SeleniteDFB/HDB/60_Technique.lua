@@ -66,7 +66,7 @@ local function tech()
 		}
 	)
 
-	local maxCRCd = FieldBlink( srf, animTimer, offx + 5 + szx + ftitle1:StringWidth('CRC') + fsdigit:StringWidth('12345'),
+	local maxCRCu = FieldBlink( srf, animTimer, offx + 5 + szx + ftitle1:StringWidth('CRC') + fsdigit:StringWidth('12345'),
 		offy, fsdigit, COL_GREEN, {
 			align = ALIGN_RIGHT,
 			sample_text = "12345",
