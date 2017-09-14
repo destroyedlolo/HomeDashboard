@@ -66,13 +66,13 @@ local function tech()
 		}
 	)
 
-	local maxCRCu = FieldBlink( srf, animTimer, offx + 25 + szx + ftitle1:StringWidth('CRC'),
+	local maxCRCu = FieldBlink( srf, animTimer, offx + 5 + szx + ftitle1:StringWidth('CRC'),
 		offy, fsdigit, COL_RED, {
 			align = ALIGN_RIGHT,
 			sample_text = "12345",
 		}
 	)
-	local maxCRCd = FieldBlink( srf, animTimer, offx + 5 + szx + ftitle1:StringWidth('CRC') + fsdigit:StringWidth('12345'),
+	local maxCRCd = FieldBlink( srf, animTimer, offx + 25 + szx + ftitle1:StringWidth('CRC') + fsdigit:StringWidth('12345'),
 		offy, fsdigit, COL_GREEN, {
 			align = ALIGN_RIGHT,
 			sample_text = "12345",
@@ -85,7 +85,7 @@ local function tech()
 			sample_text = "12345",
 		}
 	)
-	local maxHECd = FieldBlink( srf, animTimer, offx + 5 + 2*szx + ftitle1:StringWidth('HEC') + fsdigit:StringWidth('12345'),
+	local maxHECd = FieldBlink( srf, animTimer, offx + 25 + 2*szx + ftitle1:StringWidth('HEC') + fsdigit:StringWidth('12345'),
 		offy, fsdigit, COL_GREEN, {
 			align = ALIGN_RIGHT,
 			sample_text = "12345",
@@ -188,7 +188,7 @@ local function tech()
 		align=ALIGN_RIGHT 
 	} )
 
-	local HECd = MQTTStoreGfx( 'CRCd', 'Freebox/DownloadHEC', nil, srf_CRCd,
+	local HECd = MQTTStoreGfx( 'HECd', 'Freebox/DownloadHEC', nil, srf_HECd,
 		{
 			forced_min = 0,
 			smax = maxHECd,
