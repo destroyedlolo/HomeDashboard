@@ -96,7 +96,7 @@ local function tech()
 
 	local srf_FECu = GfxArea( srf, offx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
@@ -113,7 +113,7 @@ local function tech()
 
 	local srf_FECd = GfxArea( srf, offx, offy + szy + 5, szx-20, szy, COL_GREEN, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
@@ -130,7 +130,7 @@ local function tech()
 
 	local srf_CRCu = GfxArea( srf, offx + szx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
@@ -147,7 +147,7 @@ local function tech()
 
 	local srf_CRCd = GfxArea( srf, offx + szx, offy + szy + 5, szx-20, szy, COL_GREEN, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
