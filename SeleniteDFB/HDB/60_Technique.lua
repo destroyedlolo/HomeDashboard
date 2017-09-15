@@ -164,7 +164,7 @@ local function tech()
 
 	local srf_HECu = GfxArea( srf, offx + 2*szx,offy, szx-20, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
@@ -182,7 +182,7 @@ local function tech()
 
 	local srf_HECd = GfxArea( srf, offx + 2*szx, offy + szy + 5, szx-20, szy, COL_GREEN, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
