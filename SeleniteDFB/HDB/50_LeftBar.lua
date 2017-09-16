@@ -21,11 +21,18 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 	self.refresh()	-- refresh the background to let subSurface to backup the background if needed
 
-	local srf_tension = FieldBackgroundBlink( srf, animTimer, 10,offy, fmdigit, COL_DIGIT, {
+	local euroicn = ImageFiltreSurface( srf, 0,offy+3, SELENE_SCRIPT_DIR .. "/Images/Euro.png" )
+	condition_EDF = Condition( euroicn,0, {
+		ok_color = COL_DARKORANGE,
+		issue_color = COL_DARKGREEN
+	} )
+
+	
+	local srf_tension = FieldBackgroundBlink( srf, animTimer, 30,offy, fmdigit, COL_DIGIT, {
 		ndecimal=0,
 		align = ALIGN_RIGHT,
 		sample_text = "888", 
-		width = w-20 - fmdigit:StringWidth(" V")
+		width = w-40 - fmdigit:StringWidth(" V")
 	})
 	srf:SetFont( fmdigit )
 	srf:DrawString(" V", srf_tension.get():GetAfter() )
