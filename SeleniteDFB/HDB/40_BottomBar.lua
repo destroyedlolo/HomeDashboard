@@ -2,24 +2,30 @@ local function f()
 	local self = SubSurface( psrf, LBw, psrf:GetHight()-BBh, psrf:GetWidth() - LBw, BBh )
 	local sw, sh = self.get():GetSize()
 	local srf = self.get()
-	local offx=24,offy
+	local offx=0,offy
 
-	local network = ImageFiltreSurface( srf, 0,24, SELENE_SCRIPT_DIR .. "/Images/Network.png" )
+	local lvdonotif = ImageFiltreSurface( srf, offx, 24, SELENE_SCRIPT_DIR .. "/Images/Mail.png" )
+	condition_lvdo = Condition( lvdonotif, 0 )
+	local poolnotif = ImageFiltreSurface( srf, offx, 0, SELENE_SCRIPT_DIR .. "/Images/Piscine.png" )
+	condition_pool = Condition( poolnotif, 0, {
+		ok_color = COL_DARKGREEN,
+		issue_color = COL_DARKRED
+	} )
+	offx = offx + 24
+
+	local network = ImageFiltreSurface( srf, offx,24, SELENE_SCRIPT_DIR .. "/Images/Network.png" )
 	condition_network = Condition( network, .25, { issue_color=COL_RED } )
 	table.insert( additionnalevents, condition_network.getTimer() )
 
-	local freeboxicn = ImageFiltreSurface( srf, 0,0, SELENE_SCRIPT_DIR .. "/Images/FreeboxL.png" )
+	local freeboxicn = ImageFiltreSurface( srf, offx,0, SELENE_SCRIPT_DIR .. "/Images/FreeboxL.png" )
 	condition_freebox = Condition(freeboxicn, .5, { autorecover=true, issue_color=COL_RED } )
 	table.insert( additionnalevents, condition_freebox.getTimer() )
+	offx = offx + 24
 
-	Notification = NotificationArea( srf, 24, 0, 200, sh, fstxt, COL_DARKGREEN, { bgcolor=COL_GFXBG } )
+	Notification = NotificationArea( srf, offx, 0, 200, sh, fstxt, COL_DARKGREEN, { bgcolor=COL_GFXBG } )
 	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
 	log.RegisterTopic('messagesE', 'messages/Erreur', { udata=3 } )
 	offx = offx + 200
-
-	local lvdonotif = ImageFiltreSurface( srf, offx, 24, SELENE_SCRIPT_DIR .. "/Images/Mail.png" )
-	condition_lvdo = Condition( lvdonotif, 0 ) 
-	offx = offx + 24
 
 	self.setColor( COL_TITLE )
 	srf:SetFont( ftitle1 )
