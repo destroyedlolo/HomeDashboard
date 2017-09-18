@@ -1,21 +1,24 @@
--- Mode configuration menu
+-- Rolling shutter menu
 
--- Unlike in other source files, this is not an object :
--- This function creates the windows (and sub object) and then everything
--- is managed through keys' actions.
-
-function TopMenu()
-	local menu = Menu( {
-		pos = {280,50},
+function VoletsMenu( parent )
+		local menu = Menu( {
+		pos = {300,70},
 		caps=SelWindow.CapsConst('NONE'),
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	},
 	{
-		{ 'Modes', ModeMenu },
-		{ 'Consignes', nil },
-		{ 'Volets', VoletsMenu },
+		{ 'Chambre Océane', nil },
+		{ 'Chambre Joris', nil },
+		{ 'Chambre Parents', nil },
+		{ 'Cheminée', nil },
+		{ 'Salon', nil },
+		{ 'Balcon', nil },
+		{ 'Bureau', nil },
+		{ 'Chambre Amis', nil },
+		{ 'Cuisine', nil },
+		{ 'Chat', nil },
 	}, -- list
-	fmdigit,
+	fmenu,
 	{
 		keysactions = 'keysactions',	-- Active keysactions table
 		bordercolor = COL_LIGHTGREY,
@@ -25,7 +28,9 @@ function TopMenu()
 		titlecolor = COL_WHITE,
 
 		unselcolor = COL_TITLE,
-		selcolor = COL_DIGIT
+		selcolor = COL_DIGIT,
+
+		userdata = parent
 	})
 
 	menu.setKeysActions {
