@@ -23,10 +23,10 @@ function ActionVolet( titre, topic, y )
 	})
 
 	menu.setKeysActions {
-		['KEY/VOLUMEDOWN/1'] = function () print 'bas' end,
-		['KEY/VOLUMEUP/1'] = function () print 'haut' end,
+		['KEY/VOLUMEDOWN/1'] = function () Brk:Publish( topic, 'Down' ) end,
+		['KEY/VOLUMEUP/1'] = function () Brk:Publish( topic, 'Up' ) end,
 		['KEY/POWER/1'] = menu.close,
-		['KEY/SEARCH/1'] = function () print 'My' end,
+		['KEY/SEARCH/1'] = function () Brk:Publish( topic, 'My' ) end,
 	}
 
 end
