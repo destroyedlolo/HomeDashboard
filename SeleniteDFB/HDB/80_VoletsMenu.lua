@@ -7,16 +7,16 @@ function VoletsMenu( parent )
 		surface_caps=SelSurface.CapabilityConst('NONE')
 	},
 	{
-		{ 'Chambre Océane', nil },
-		{ 'Chambre Joris', nil },
-		{ 'Chambre Parents', nil },
-		{ 'Cheminée', nil },
-		{ 'Salon', nil },
-		{ 'Balcon', nil },
-		{ 'Bureau', nil },
-		{ 'Chambre Amis', nil },
-		{ 'Cuisine', nil },
-		{ 'Chat', nil },
+		{ 'Chambre Océane', function () ActionVolet('Chambre Océane', 'maison/Volet/chOceane') end },
+		{ 'Chambre Joris', function () ActionVolet('Chambre Joris', 'maison/Volet/chJoris') end },
+		{ 'Chambre Parents', function () ActionVolet('Chambre Parents', 'maison/Volet/chParents') end },
+		{ 'Cheminée', function () ActionVolet('Cheminée', 'maison/Volet/Salon/Cheminee') end },
+		{ 'Salon', function () ActionVolet('Salon', 'maison/Volet/Salon/Fenetre') end },
+		{ 'Balcon', function () ActionVolet('Balcon', 'maison/Volet/Salon/Balcon') end },
+		{ 'Bureau', function () ActionVolet('Bureau', 'maison/Volet/Buro') end },
+		{ 'Chambre Amis', function () ActionVolet('Chambre Amis', 'maison/Volet/chAmis') end },
+		{ 'Cuisine', function () ActionVolet('Cuisine', 'maison/Volet/Cuisine/Fenetre') end },
+		{ 'Chat', function () ActionVolet('Chat', 'maison/Volet/Cuisine/Chat') end },
 	}, -- list
 	fmenu,
 	{
