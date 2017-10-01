@@ -44,6 +44,7 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 
 	local srf_consommation = Field( srf, 10,offy, fdigit, COL_DIGIT, {
+		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
 		width = w-20 - fmdigit:StringWidth(" VA"),
@@ -88,6 +89,7 @@ local function f()
 	offy = offy + ftitle1:GetHeight()
 
 	local srf_production = Field( srf, 10,offy, fdigit, COL_DIGIT, {
+		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
 		width = w-20 - fmdigit:StringWidth(" VA") 
@@ -117,6 +119,7 @@ local function f()
 	offy = offy + HSGRPH + 3
 
 	local srf_onduleur = FieldBlink( srf, animTimer, 0, offy, fsdigit, COL_DIGIT, {
+		timeout = 30,
 		align = ALIGN_RIGHT, 
 		sample_text = "888.8 W",
 		suffix = ' W'
@@ -143,6 +146,7 @@ local function f()
 	ThermImg:Release()
 
 	local srf_TSalon = FieldBlink( srf, animTimer, w-8 - fdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
+		timeout = 360,
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8",
 		gradient = GRD_TEMPERATURE
@@ -160,9 +164,10 @@ local function f()
 
 	offy = offy + ftitle1:GetHeight()
 	self.srf_TDehors = FieldBlink( srf, animTimer, w-8 - fdigit:StringWidth("°C"), offy, fdigit, COL_DIGIT, {
+		timeout = 360,
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8",
-		{ gradient = GRD_TEMPERATURE }
+		gradient = GRD_TEMPERATURE
 	})
 	srf:DrawString("Extérieur :", self.srf_TDehors.get():GetPosition(), offy - ftitle1:GetHeight() )
 --	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors )

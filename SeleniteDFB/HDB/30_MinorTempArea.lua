@@ -34,9 +34,10 @@ function MinorTempArea(
 
 	local srf_Temp = FieldBlink( srf, animTimer,
 		x + opts.size - opts.font:StringWidth("°C"), y, opts.font, COL_DIGIT, {
-		align = ALIGN_FRIGHT,
-		gradient = opts.gradient,
-		sample_text = "-88.8"
+			timeout = 360,
+			align = ALIGN_FRIGHT,
+			gradient = opts.gradient,
+			sample_text = "-88.8"
 	})
 	srf:SetFont( opts.font )
 	srf:DrawString("°C", srf_Temp.get():GetAfter() )

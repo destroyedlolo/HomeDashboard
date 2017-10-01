@@ -115,6 +115,7 @@ local function meteo()
 	srf:SetColor( COL_TITLE.get() )
 	local sunrise = Field( srf, 210 + ftitle:GetHeight(), 0,
 		fmdigit, COL_DIGIT, {
+			timeout = 87000,
 			align = ALIGN_CENTER,
 			sample_text = '88:88'
 		}

@@ -45,6 +45,7 @@ local function f()
 	srf_trndbPI.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,200,32,255}, BottomRight={32,255,32,255} }
 	srf_trndbPI.FrozeUnder()
 	local cloadbPI = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("bPI :"), 0, fsdigit, COL_DIGIT, {
+		timeout = 60,
 		align = ALIGN_RIGHT,
 		sample_text = "15.23",
 		gradient = Gradient(
