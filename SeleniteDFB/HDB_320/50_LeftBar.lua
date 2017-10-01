@@ -36,6 +36,14 @@ local function f()
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
 	local srf_consommation = FieldBackBorder( srf, 10,offy, fdigit, COL_DIGIT, {
+		suffix = ' VA', 
+		gradient = Gradient(
+			{
+				[500] = COL_DIGIT,
+				[1500] = COL_ORANGE,
+				[4500] = COL_RED
+			}
+		),
 		align = ALIGN_RIGHT, 
 		width = w-20 
 	} )
@@ -56,14 +64,6 @@ local function f()
 	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso,
 		{
 			smax = srf_maxconso,
-			suffix = ' VA', 
-			gradient = Gradient(
-				{
-					[500] = COL_DIGIT,
-					[1500] = COL_ORANGE,
-					[4500] = COL_RED
-				}
-			),
 			forced_min = 0,
 			condition=condition_network
 		}
@@ -72,6 +72,7 @@ local function f()
 	srf:DrawString("Production :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
 	local srf_production = FieldBackground( srf, 10,offy, fdigit, COL_DIGIT, {
+		suffix = ' VA', 
 		align = ALIGN_RIGHT, 
 		width = w-20 
 	} )
@@ -106,24 +107,30 @@ local function f()
 --
 	
 	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		timeout = 10,
 		align = ALIGN_FRIGHT,
-		sample_text = "-88.8°"
+		sample_text = "-88.8°",
+		suffix='°'
 	})
-	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon, { suffix='°' } )
+	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
 	offy = offy + srf_TSalon.getHight()
 
 	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
-		sample_text = "-88.8°"
+		sample_text = "-88.8°",
+		suffix='°',
+		gradient = GRD_TEMPERATURE
 	})
-	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors, { suffix='°', gradient = GRD_TEMPERATURE } )
+	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', srf_TDehors )
 	offy = offy + srf_TDehors.getHight()
 
 	local srf_TBureau = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
 		align = ALIGN_FRIGHT,
-		sample_text = "-88.8°"
+		sample_text = "-88.8°",
+		suffix='°',
+		gradient = GRD_TEMPERATURE
 	})
-	local TBureau = MQTTDisplay( 'TBureau', 'maison/Temperature/Bureau', srf_TBureau, { suffix='°', gradient = GRD_TEMPERATURE } )
+	local TBureau = MQTTDisplay( 'TBureau', 'maison/Temperature/Bureau', srf_TBureau )
 
 
 	w,y = srf_TSalon.get():GetPosition()	-- Determine remaining room origine
