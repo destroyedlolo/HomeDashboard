@@ -107,6 +107,7 @@ local function f()
 --
 	
 	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		timeout = 10,
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°",
 		suffix='°'
