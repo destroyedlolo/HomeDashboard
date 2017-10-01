@@ -126,7 +126,7 @@ SelLog.log("Let's go ...")
 
 -- Wait for events
 while true do
-	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), unpack( additionnalevents )) )
+	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
 	for _,ret in ipairs(rt) do
 		if type(ret) == 'function' then
 			ret()
