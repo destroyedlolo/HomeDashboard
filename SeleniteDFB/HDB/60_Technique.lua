@@ -140,7 +140,7 @@ local function tech()
 		{
 			forced_min = 0,
 			smax = maxCRCu,
-			group = 300
+			group = 900
 		}
 	)
 	table.insert( savedcols, CRCu )
@@ -157,7 +157,7 @@ local function tech()
 		{
 			forced_min = 0,
 			smax = maxCRCd,
-			group = 300
+			group = 900
 		}
 	)
 	table.insert( savedcols, CRCd )
@@ -175,7 +175,7 @@ local function tech()
 			forced_min = 0,
 			smax = maxHECu,
 			force_max_refresh = true,
-			group = 300
+			group = 900
 		}
 	)
 	table.insert( savedcols, HECu )
@@ -192,7 +192,7 @@ local function tech()
 		{
 			forced_min = 0,
 			smax = maxHECd,
-			group = 300
+			group = 900
 		}
 	)
 	table.insert( savedcols, HECd )
