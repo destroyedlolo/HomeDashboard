@@ -36,6 +36,7 @@ local function f()
 	srf:DrawString("Consomation :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
 	local srf_consommation = FieldBackBorder( srf, 10,offy, fdigit, COL_DIGIT, {
+		timeout = 10,
 		suffix = ' VA', 
 		gradient = Gradient(
 			{
@@ -72,6 +73,7 @@ local function f()
 	srf:DrawString("Production :", 5, offy )
 	offy = offy + ftitle1:GetHeight()
 	local srf_production = FieldBackground( srf, 10,offy, fdigit, COL_DIGIT, {
+		timeout=10,
 		suffix = ' VA', 
 		align = ALIGN_RIGHT, 
 		width = w-20 
@@ -107,7 +109,7 @@ local function f()
 --
 	
 	local srf_TSalon = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
-		timeout = 10,
+		timeout = 360,
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°",
 		suffix='°'
@@ -116,6 +118,7 @@ local function f()
 	offy = offy + srf_TSalon.getHight()
 
 	local srf_TDehors = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		timeout = 360,
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°",
 		suffix='°',
@@ -125,6 +128,7 @@ local function f()
 	offy = offy + srf_TDehors.getHight()
 
 	local srf_TBureau = FieldBlink( srf, animTimer, w-8, offy, fdigit, COL_DIGIT, {
+		timeout = 360,
 		align = ALIGN_FRIGHT,
 		sample_text = "-88.8°",
 		suffix='°',

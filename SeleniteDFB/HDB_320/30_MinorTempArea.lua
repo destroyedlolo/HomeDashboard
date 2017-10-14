@@ -36,9 +36,10 @@ function MinorTempArea(
 
 	local srf_Temp = FieldBlink( srf, animTimer,
 		x + opts.size, y, opts.font, COL_DIGIT, {
-		align = ALIGN_FRIGHT,
-		gradient = opts.gradient,
-		sample_text = "-88.8"
+			timeout = 360,
+			align = ALIGN_FRIGHT,
+			gradient = opts.gradient,
+			sample_text = "-88.8"
 	})
 	_,y = srf_Temp.get():GetBelow()
 
