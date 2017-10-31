@@ -24,7 +24,7 @@ local function poulailler()
 
 	srf:SetFont( ftitle1 )
 	srf:DrawString("Tension répéteur :", 0, offy)
-	local srf_tRep = Field( srf, 5 + ftitle1:StringWidth("Tension répéteur :"), offy, fsdigit, COL_DIGIT, {
+	local srf_vRep = Field( srf, 5 + ftitle1:StringWidth("Tension répéteur :"), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333 mV"
 	} )
@@ -98,7 +98,7 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local WiFi = MQTTStoreGfx( 'WiFi', 'Poulailler/WiFi', srf_WiFi, srfg_WiFi, 
+	local WiFi = MQTTStoreGfx( 'WiFi', 'Poulailler/Wifi', srf_WiFi, srfg_WiFi, 
 		{ xsmax=srf_maxprod, forced_min = 0}
 	)
 	table.insert( savedcols, WiFi)
