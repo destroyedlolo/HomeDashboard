@@ -65,7 +65,7 @@ local function poulailler()
 	table.insert( savedcols, vPoul)
 
 	local srfg_tPoul = GfxArea( srf, szx/2,offy, szx/2, szy, COL_RED, COL_GFXBG,{
-		heverylines={ {1, COL_DARKGREY} },
+		heverylines={ {5, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
