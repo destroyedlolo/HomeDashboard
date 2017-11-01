@@ -85,14 +85,32 @@ local function poulailler()
 		sample_text = "-99.99 °"
 	} )
 	offy = offy + ftitle1:GetHeight()
+
 	local srfg_tPoul = GfxArea( srf, 310, offy, 320, 70, COL_RED, COL_GFXBG,{
 		heverylines={ {5, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	local srf_MaxTPool = FieldBackBorder( srf, 315, offy+5, fsdigit, COL_ORANGE, {
+		align = ALIGN_RIGHT,
+		keepbackground = true,
+		sample_text = "-88.88",
+		ndecimal = 2
+	} )
+	local srf_MinTPool = FieldBackBorder( srf, 315, offy + 68 - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		keepbackground = true,
+		sample_text = "-88.88",
+		ndecimal = 2
+	} )
+
 	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/2882b25e09000015', srf_tPoul, srfg_tPoul, 
-		{ xsmax=srf_maxprod, suffix = ' °', forced_min = 0}
+		{
+			smax=srf_MaxTPool, smin=srf_MinTPool,
+			force_max_refresh = 1, force_min_refresh = 1,
+			suffix = ' °', forced_min = 0
+		}
 	)
 	table.insert( savedcols, tPoul)
 	offy = offy + 75
