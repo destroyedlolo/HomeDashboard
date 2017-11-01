@@ -115,6 +115,58 @@ local function poulailler()
 	table.insert( savedcols, tPoul)
 	offy = offy + 75
 
+	x = 310
+	y = offy + ftitle1:GetHeight()
+	srf:DrawString("WiFi :", x, offy)
+	local srf_WiFi = Field( srf, x + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "3333"
+	} )
+	local srfg_WiFi = GfxArea( srf, x, y, 102, 70, COL_RED, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+	local WiFi = MQTTStoreGfx( 'WiFi', 'Poulailler/Wifi', srf_WiFi, srfg_WiFi, 
+		{ xsmax=srf_maxprod, forced_min = 0}
+	)
+	table.insert( savedcols, WiFi)
+
+	x = x + 106
+	srf:DrawString("MQTT :", x, offy)
+	local srf_MQTT = Field( srf, x + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "3333"
+	} )
+	local srfg_MQTT = GfxArea( srf, x, y, 102, 70, COL_RED, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+	local MQTT = MQTTStoreGfx( 'MQTT', 'Poulailler/MQTT/Connection', srf_MQTT, srfg_MQTT, 
+		{ xsmax=srf_maxprod, forced_min = 0}
+	)
+	table.insert( savedcols, MQTT)
+
+	x = x + 106
+	srf:DrawString("Pub :", x, offy)
+	local srf_Pub = Field( srf, x + ftitle1:StringWidth("Pub : "), offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "3333"
+	} )
+	local srfg_Pub = GfxArea( srf, x, y, 102, 70, COL_RED, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+	local Pub = MQTTStoreGfx( 'Pub', 'Poulailler/MQTT', srf_Pub, srfg_Pub, 
+		{ xsmax=srf_maxprod, forced_min = 0}
+	)
+	table.insert( savedcols, Pub)
+
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 	return self
 end
