@@ -127,6 +127,7 @@ local function meteo()
 	x = x + fmdigit:StringWidth(" - ")
 	local sunset= Field( srf, x, 0,
 		fmdigit, COL_DIGIT, {
+			timeout = 87000,
 			align = ALIGN_CENTER,
 			sample_text = '88:88'
 		}
