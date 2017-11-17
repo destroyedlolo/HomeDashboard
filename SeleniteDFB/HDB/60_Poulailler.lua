@@ -122,12 +122,14 @@ local function poulailler()
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srfg_WiFi = GfxArea( srf, x, y, 102, 70, COL_RED, COL_GFXBG,{
+	local srfg_WiFi = GfxArea( srf, x, y, 102, 70, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_WiFi.get():FillGrandient { TopLeft={0x5d,0x07,0x07, 0xff}, BottomLeft={0x5d,0x07,0x07, 0xff}, BottomRight={0xff,0x0f,0x0f, 0xff} ,TopRight={0xff,0x0f,0x0f, 0xff} }
+	srfg_WiFi.FrozeUnder()
 	local WiFi = MQTTStoreGfx( 'WiFi', 'Poulailler/Wifi', srf_WiFi, srfg_WiFi, 
 		{ xsmax=srf_maxprod, forced_min = 0}
 	)
@@ -139,12 +141,14 @@ local function poulailler()
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srfg_MQTT = GfxArea( srf, x, y, 102, 70, COL_RED, COL_GFXBG,{
+	local srfg_MQTT = GfxArea( srf, x, y, 102, 70, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_MQTT.get():FillGrandient { TopLeft={0x5d,0x07,0x07, 0xff}, BottomLeft={0x5d,0x07,0x07, 0xff}, BottomRight={0xff,0x0f,0x0f, 0xff} ,TopRight={0xff,0x0f,0x0f, 0xff} }
+	srfg_MQTT.FrozeUnder()
 	local MQTT = MQTTStoreGfx( 'MQTT', 'Poulailler/MQTT/Connection', srf_MQTT, srfg_MQTT, 
 		{ xsmax=srf_maxprod, forced_min = 0}
 	)
@@ -156,12 +160,14 @@ local function poulailler()
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srfg_Pub = GfxArea( srf, x, y, 102, 70, COL_RED, COL_GFXBG,{
+	local srfg_Pub = GfxArea( srf, x, y, 102, 70, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_Pub.get():FillGrandient { TopLeft={0x5d,0x07,0x07, 0xff}, BottomLeft={0x5d,0x07,0x07, 0xff}, BottomRight={0xff,0x0f,0x0f, 0xff} ,TopRight={0xff,0x0f,0x0f, 0xff} }
+	srfg_Pub.FrozeUnder()
 	local Pub = MQTTStoreGfx( 'Pub', 'Poulailler/MQTT', srf_Pub, srfg_Pub, 
 		{ xsmax=srf_maxprod, forced_min = 0}
 	)
