@@ -27,8 +27,8 @@ local function poulailler()
 	local grTension = Gradient(
 		{
 			[2500] = COL_RED,
-			[2800] = COL_ORANGE,
-			[3000] = COL_GREEN,
+			[2600] = COL_ORANGE,
+			[2900] = COL_GREEN,
 			[3500] = COL_RED
 		}
 	)
@@ -55,7 +55,7 @@ local function poulailler()
 	srf:SetColor( COL_TITLE.get() )
 	offy = 34
 	srf:DrawString("Alimentation :", 310, offy)
-	local srf_vPoul = FieldBlink( srf, animTimer, 315 + ftitle1:StringWidth("Alimentation :"), offy, fsdigit, COL_DIGIT, {
+	local srf_vPoul = FieldBlink( srf, animTimer, 315 + ftitle1:StringWidth("Alimentation :"), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
 		timeout = 360,
 		gradient = grTension,
 		align = ALIGN_RIGHT,
@@ -92,22 +92,22 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local srf_MaxTPool = FieldBackBorder( srf, 315, offy+5, fsdigit, COL_ORANGE, {
+	local srf_MaxTPoul = FieldBackBorder( srf, 315, offy+5, fsdigit, COL_ORANGE, {
 		align = ALIGN_RIGHT,
 		keepbackground = true,
 		sample_text = "-88.88",
 		ndecimal = 2
 	} )
-	local srf_MinTPool = FieldBackBorder( srf, 315, offy + 68 - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
+	local srf_MinTPoul = FieldBackBorder( srf, 315, offy + 68 - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		keepbackground = true,
 		sample_text = "-88.88",
 		ndecimal = 2
 	} )
 
-	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/2882b25e09000015', srf_tPoul, srfg_tPoul, 
+	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/TestTemp', srf_tPoul, srfg_tPoul, 
 		{
-			smax=srf_MaxTPool, smin=srf_MinTPool,
+			smax=srf_MaxTPoul, smin=srf_MinTPoul,
 			force_max_refresh = 1, force_min_refresh = 1,
 			suffix = ' °', forced_min = 0
 		}
