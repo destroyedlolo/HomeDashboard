@@ -46,7 +46,7 @@ local function poulailler()
 	srf:DrawString("Temp. Poulailler :", szx/2, offy)
 	local srf_vPoul = Field( srf, 5 + ftitle1:StringWidth("Tens. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
-		sample_text = "3333 mV"
+		sample_text = "3333"
 	} )
 	local srf_tPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Temp. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
@@ -70,7 +70,7 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/2882b25e09000015', srf_tPoul, srfg_tPoul, 
+	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/TestTemp', srf_tPoul, srfg_tPoul, 
 		{ xsmax=srf_maxprod, suffix = ' °', forced_min = 0}
 	)
 	table.insert( savedcols, tPoul)
