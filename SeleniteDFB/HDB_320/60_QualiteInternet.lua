@@ -19,20 +19,29 @@ local function internetfg()
 	local offy = ftitle:GetHeight()
 
 	local szx, szy = 
-		WINSIZE[1],
+		WINSIZE[1]/2,
 		(WINSIZE[2] - offy - BBh - ftitle1:GetHeight())/3
 
 	srf:SetFont( ftitle1 )
 	srf:DrawString("FEC :", 0, offy)
 	offy = offy + ftitle1:GetHeight()
 
-	local srf_FEC = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
+	local srf_FECu = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+
+	local srf_FECd = GfxArea( srf, szx, offy, szx, szy, COL_GREEN, COL_GFXBG,{
+		mode = 'delta',
+--		heverylines={ {100, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+
 --	srf_FEC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
 
 	local maxFECu = FieldBackBorder( srf, 2, offy+2, fsdigit, COL_DIGIT, {
@@ -41,24 +50,40 @@ local function internetfg()
 		sample_text = "12345"
 	} )
 
-	local FECu = MQTTStoreGfx( 'FECu', 'Freebox/UploadFEC', nil, srf_FEC,
+	local maxFECd = FieldBackBorder( srf, szx+2, offy+2, fsdigit, COL_DIGIT, {
+		keepbackground = true,
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
+
+	local FECu = MQTTStoreGfx( 'FECu', 'Freebox/UploadFEC', nil, srf_FECu,
 		{
 			forced_min = 0,
-			smax = maxTConso,
+			smax = maxFECu,
 			force_max_refresh = true,
-			group = 300
+			group = 900
 		}
 	)
 	table.insert( savedcols, FECu )
+
+	local FECd = MQTTStoreGfx( 'FECd', 'Freebox/UploadFEC', nil, srf_FECd,
+		{
+			forced_min = 0,
+			smax = maxFECd,
+			force_max_refresh = true,
+			group = 900
+		}
+	)
+	table.insert( savedcols, FECd )
 	offy = offy + szy
 
 	srf:SetFont( ftitle1 )
 	srf:DrawString("CRC :", 0, offy)
 	offy = offy + ftitle1:GetHeight()
 
-	local srf_CRC = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
+	local srf_CRCu = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
@@ -71,12 +96,12 @@ local function internetfg()
 		sample_text = "12345"
 	} )
 
-	local CRCu = MQTTStoreGfx( 'CRCu', 'Freebox/UploadCRC', nil, srf_FEC,
+	local CRCu = MQTTStoreGfx( 'CRCu', 'Freebox/UploadCRC', nil, srf_CRCu,
 		{
 			forced_min = 0,
-			smax = maxTConso,
+			smax = maxCRCu,
 			force_max_refresh = true,
-			group = 300
+			group = 900
 		}
 	)
 	table.insert( savedcols, CRCu )
@@ -86,7 +111,7 @@ local function internetfg()
 	srf:DrawString("HEC :", 0, offy)
 	offy = offy + ftitle1:GetHeight()
 
-	local srf_HEC = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
+	local srf_HECu = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
 		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
@@ -101,12 +126,12 @@ local function internetfg()
 		sample_text = "12345"
 	} )
 
-	local HECu = MQTTStoreGfx( 'HECu', 'Freebox/UploadHEC', nil, srf_FEC,
+	local HECu = MQTTStoreGfx( 'HECu', 'Freebox/UploadHEC', nil, srf_HECu,
 		{
 			forced_min = 0,
-			smax = maxTConso,
+			smax = maxHECu,
 			force_max_refresh = true,
-			group = 300
+			group = 900
 		}
 	)
 	table.insert( savedcols, HECu )
