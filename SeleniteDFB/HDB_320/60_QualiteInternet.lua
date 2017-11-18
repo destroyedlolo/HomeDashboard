@@ -88,9 +88,23 @@ local function internetfg()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+
+	local srf_CRCd = GfxArea( srf, szx,offy, szx, szy, COL_GREEN, COL_GFXBG,{
+		mode = 'delta',
+--		heverylines={ {100, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+
 --	srf_CRC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
 
 	local maxCRCu = FieldBackBorder( srf, 2, offy+2, fsdigit, COL_DIGIT, {
+		keepbackground = true,
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
+	local maxCRCd = FieldBackBorder( srf, szx+2, offy+2, fsdigit, COL_DIGIT, {
 		keepbackground = true,
 		align = ALIGN_RIGHT,
 		sample_text = "12345"
@@ -105,6 +119,15 @@ local function internetfg()
 		}
 	)
 	table.insert( savedcols, CRCu )
+	local CRCd = MQTTStoreGfx( 'CRCd', 'Freebox/DownloadCRC', nil, srf_CRCd,
+		{
+			forced_min = 0,
+			smax = maxCRCd,
+			force_max_refresh = true,
+			group = 900
+		}
+	)
+	table.insert( savedcols, CRCd )
 	offy = offy + szy
 
 	srf:SetFont( ftitle1 )
@@ -113,14 +136,27 @@ local function internetfg()
 
 	local srf_HECu = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
 		mode = 'delta',
-		heverylines={ {100, COL_DARKGREY} },
+--		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	local srf_HECd = GfxArea( srf, szx,offy, szx, szy, COL_RED, COL_GFXBG,{
+		mode = 'delta',
+--		heverylines={ {100, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+
 --	srf_HEC.get():FillGrandient { TopLeft={48,48,48,255}, BottomLeft={48,48,48,255}, TopRight={255,32,32,255}, BottomRight={32,255,32,255} }
 
 	local maxHECu = FieldBackBorder( srf, 2, offy+2, fsdigit, COL_DIGIT, {
+		keepbackground = true,
+		align = ALIGN_RIGHT,
+		sample_text = "12345"
+	} )
+	local maxHECd = FieldBackBorder( srf, szx+2, offy+2, fsdigit, COL_DIGIT, {
 		keepbackground = true,
 		align = ALIGN_RIGHT,
 		sample_text = "12345"
@@ -135,6 +171,15 @@ local function internetfg()
 		}
 	)
 	table.insert( savedcols, HECu )
+	local HECd = MQTTStoreGfx( 'HECd', 'Freebox/DownloadHEC', nil, srf_HECd,
+		{
+			forced_min = 0,
+			smax = maxHECd,
+			force_max_refresh = true,
+			group = 900
+		}
+	)
+	table.insert( savedcols, HECd )
 
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 	return self
