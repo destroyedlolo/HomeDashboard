@@ -77,7 +77,7 @@ local function poulailler()
 	offy = offy + 75
 
 	srf:DrawString("Température :", 310, offy)
-	local srf_tPoul = FieldBlink( srf, animTimer, 315 + ftitle1:StringWidth("Température :"), offy, fsdigit, COL_DIGIT, {
+	local srf_tPoul = FieldBlink( srf, animTimer, 315 + ftitle1:StringWidth("Température :"), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
 		timeout = 360,
 		gradient = GRD_TEMPERATURE,
 		align = ALIGN_RIGHT,
@@ -118,7 +118,7 @@ local function poulailler()
 	x = 310
 	y = offy + ftitle1:GetHeight()
 	srf:DrawString("WiFi :", x, offy)
-	local srf_WiFi = Field( srf, x + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
+	local srf_WiFi = Field( srf, x + ftitle1:StringWidth("WiFi : "), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
@@ -137,7 +137,7 @@ local function poulailler()
 
 	x = x + 106
 	srf:DrawString("MQTT :", x, offy)
-	local srf_MQTT = Field( srf, x + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
+	local srf_MQTT = Field( srf, x + ftitle1:StringWidth("MQTT : "), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
