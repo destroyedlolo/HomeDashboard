@@ -23,14 +23,19 @@ local function poulailler()
 		(WINSIZE[2] - offy - BBh - ftitle1:GetHeight())/3
 
 	srf:SetFont( ftitle1 )
-	srf:DrawString("Tension répéteur :", 0, offy)
-	local srf_vRep = Field( srf, 5 + ftitle1:StringWidth("Tension répéteur :"), offy, fsdigit, COL_DIGIT, {
+	srf:DrawString("Tens. répéteur :", 0, offy)
+	srf:DrawString("Tens. Poulailler :", szx/2, offy)
+	local srf_vRep = Field( srf, 5 + ftitle1:StringWidth("Tens. répéteur :"), offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "3333 mV"
+	} )
+	local srf_vPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Tens. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333 mV"
 	} )
 	offy = offy + ftitle1:GetHeight()
 
-	local srfg_vRep = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
+	local srfg_vRep = GfxArea( srf, 0,offy, szx/2 - 5, szy, COL_RED, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
@@ -40,20 +45,7 @@ local function poulailler()
 		{ xsmax=srf_maxprod, suffix = ' mV', forced_min = 0}
 	)
 	table.insert( savedcols, vRep)
-	offy = offy + szy
-
-	srf:DrawString("Tens. Poulailler :", 0, offy)
-	srf:DrawString("Temp. Poulailler :", szx/2, offy)
-	local srf_vPoul = Field( srf, 5 + ftitle1:StringWidth("Tens. Poulailler :"), offy, fsdigit, COL_DIGIT, {
-		align = ALIGN_RIGHT,
-		sample_text = "3333"
-	} )
-	local srf_tPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Temp. Poulailler :"), offy, fsdigit, COL_DIGIT, {
-		align = ALIGN_RIGHT,
-		sample_text = "20.31 °"
-	} )
-	offy = offy + ftitle1:GetHeight()
-	local srfg_vPoul = GfxArea( srf, 0,offy, szx/2 - 5, szy, COL_RED, COL_GFXBG,{
+	local srfg_vPoul = GfxArea( srf, szx/2,offy, szx/2 - 5, szy, COL_RED, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
@@ -64,13 +56,38 @@ local function poulailler()
 	)
 	table.insert( savedcols, vPoul)
 
+	
+	offy = offy + szy
+
+	srf:DrawString("Hydro. Poulailler :", 0, offy)
+	srf:DrawString("Temp. Poulailler :", szx/2, offy)
+	local srf_hPoul = Field( srf, 5 + ftitle1:StringWidth("Hydro. Poulailler :"), offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "20.31 %"
+	} )
+	local srf_tPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Temp. Poulailler :"), offy, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "20.31 °"
+	} )
+	offy = offy + ftitle1:GetHeight()
+	local srfg_hPoul = GfxArea( srf, 0,offy, szx/2 - 5, szy, COL_BLUE, COL_GFXBG,{
+		heverylines={ {15, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+	local hPoul = MQTTStoreGfx( 'hPoul', 'Poulailler/Perchoir/Humidite', srf_hPoul, srfg_hPoul, 
+		{ xsmax=srf_maxprod, suffix = ' %', forced_min = 0}
+	)
+	table.insert( savedcols, hPoul)
+
 	local srfg_tPoul = GfxArea( srf, szx/2,offy, szx/2, szy, COL_RED, COL_GFXBG,{
 		heverylines={ {5, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/TestTemp', srf_tPoul, srfg_tPoul, 
+	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/Perchoir/Temperature', srf_tPoul, srfg_tPoul, 
 		{ xsmax=srf_maxprod, suffix = ' °', forced_min = 0}
 	)
 	table.insert( savedcols, tPoul)
