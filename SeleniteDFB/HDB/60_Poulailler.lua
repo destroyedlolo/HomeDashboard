@@ -53,7 +53,7 @@ local function poulailler()
 
 	srf:SetFont( ftitle1 )
 	srf:SetColor( COL_TITLE.get() )
-	offy = 34
+	offy = 0
 	srf:DrawString("Alimentation :", 310, offy)
 	local srf_vPoul = FieldBlink( srf, animTimer, 315 + ftitle1:StringWidth("Alimentation :"), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
 		timeout = 360,
@@ -105,7 +105,7 @@ local function poulailler()
 		ndecimal = 2
 	} )
 
-	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/TestTemp', srf_tPoul, srfg_tPoul, 
+	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/Perchoir/Temperature', srf_tPoul, srfg_tPoul, 
 		{
 			smax=srf_MaxTPoul, smin=srf_MinTPoul,
 			force_max_refresh = 1, force_min_refresh = 1,
@@ -113,6 +113,44 @@ local function poulailler()
 		}
 	)
 	table.insert( savedcols, tPoul)
+	offy = offy + 75
+
+	srf:DrawString("Humidité :", 310, offy)
+	local srf_hPoul = FieldBlink( srf, animTimer, 315 + ftitle1:StringWidth("Humidité :"), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
+		timeout = 360,
+		align = ALIGN_RIGHT,
+		suffix = ' %',
+		sample_text = "100.00 %"
+	} )
+	offy = offy + ftitle1:GetHeight()
+
+	local srfg_hPoul = GfxArea( srf, 310, offy, 320, 70, COL_BLUE, COL_GFXBG,{
+		heverylines={ {5, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+	local srf_MaxHPoul = FieldBackBorder( srf, 315, offy+5, fsdigit, COL_ORANGE, {
+		align = ALIGN_RIGHT,
+		keepbackground = true,
+		sample_text = "100.00",
+		ndecimal = 2
+	} )
+	local srf_MinHPoul = FieldBackBorder( srf, 315, offy + 68 - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		keepbackground = true,
+		sample_text = "100.88",
+		ndecimal = 2
+	} )
+
+	local hPoul = MQTTStoreGfx( 'hPoul', 'Poulailler/Perchoir/Humidite', srf_hPoul, srfg_hPoul, 
+		{
+			smax=srf_MaxHPoul, smin=srf_MinHPoul,
+			force_max_refresh = 1, force_min_refresh = 1,
+			suffix = ' %', forced_min = 0
+		}
+	)
+	table.insert( savedcols, hPoul)
 	offy = offy + 75
 
 	x = 310
