@@ -23,11 +23,11 @@ local function poulailler()
 		(WINSIZE[2] - offy - BBh - ftitle1:GetHeight())/3
 
 	srf:SetFont( ftitle1 )
-	srf:DrawString("Tens. répéteur :", 0, offy)
+	srf:DrawString("Stations rép. :", 0, offy)
 	srf:DrawString("Tens. Poulailler :", szx/2, offy)
-	local srf_vRep = Field( srf, 5 + ftitle1:StringWidth("Tens. répéteur :"), offy, fsdigit, COL_DIGIT, {
+	local srf_vRep = Field( srf, 5 + ftitle1:StringWidth("Stations rép. :"), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
-		sample_text = "3333 mV"
+		sample_text = "8"
 	} )
 	local srf_vPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Tens. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
@@ -41,8 +41,8 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local vRep = MQTTStoreGfx( 'vRep', 'ESPRouter_Domo/Vdd', srf_vRep, srfg_vRep, 
-		{ xsmax=srf_maxprod, suffix = ' mV', forced_min = 0}
+	local vRep = MQTTStoreGfx( 'vRep', 'ESPRouter_Domo/NoStations', srf_vRep, srfg_vRep, 
+		{ forced_min = 0}
 	)
 	table.insert( savedcols, vRep)
 	local srfg_vPoul = GfxArea( srf, szx/2,offy, szx/2 - 5, szy, COL_RED, COL_GFXBG,{
