@@ -33,7 +33,7 @@ local function poulailler()
 		}
 	)
 
-	local srfg_nRep = GfxArea( srf, 75, 39, 126, 58, COL_GREEN, COL_GFXBG,{
+	local srfg_nRep = GfxArea( srf, 75, 59, 126, 38, COL_GREEN, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
