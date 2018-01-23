@@ -33,23 +33,22 @@ local function poulailler()
 		}
 	)
 
-	local srfg_vRep = GfxArea( srf, 75, 39, 126, 58, COL_GREEN, COL_GFXBG,{
+	local srfg_nRep = GfxArea( srf, 75, 39, 126, 58, COL_GREEN, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local srf_vRep = Field( srf, 93,103, fsdigit, COL_DIGIT, {
+	local srf_nRep = Field( srf, 145,103, fsdigit, COL_DIGIT, {
 		timeout = 70,
 		gradient = grTension,
 		align = ALIGN_RIGHT,
-		suffix = ' mV',
-		sample_text = "3333 mV"
+		sample_text = "33"
 	} )
-	local vRep = MQTTStoreGfx( 'vRep', 'ESPRouter_Domo/Vdd', srf_vRep, srfg_vRep, 
-		{ xsmax=srf_maxprod, forced_min = 0}
+	local nRep = MQTTStoreGfx( 'nRep', 'ESPRouter_Domo/NoStations', srf_nRep, srfg_nRep, 
+		{ forced_min = 0}
 	)
-	table.insert( savedcols, vRep)
+	table.insert( savedcols, nRep)
 
 	srf:SetFont( ftitle1 )
 	srf:SetColor( COL_TITLE.get() )
