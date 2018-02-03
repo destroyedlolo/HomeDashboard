@@ -101,7 +101,7 @@ local function poulailler()
 		align=ALIGN_RIGHT 
 	} )
 	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/Perchoir/Temperature', srf_tPoul, srfg_tPoul, 
-		{ xsmax=srf_maxprod, suffix = ' °', forced_min = 0}
+		{ suffix = ' °', forced_min = 0, rangeMin = -100, rangeMax = 100 }
 	)
 	table.insert( savedcols, tPoul)
 	offy = offy + szy

@@ -108,7 +108,8 @@ local function poulailler()
 		{
 			smax=srf_MaxTPoul, smin=srf_MinTPoul,
 			force_max_refresh = 1, force_min_refresh = 1,
-			suffix = ' °', forced_min = 0
+			suffix = ' °', forced_min = 0,
+			rangeMin = -100, rangeMax = 100
 		}
 	)
 	table.insert( savedcols, tPoul)
