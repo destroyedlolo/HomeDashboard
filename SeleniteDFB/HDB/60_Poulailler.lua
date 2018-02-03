@@ -26,10 +26,10 @@ local function poulailler()
 
 	local grTension = Gradient(
 		{
-			[2500] = COL_RED,
-			[2600] = COL_ORANGE,
-			[2900] = COL_GREEN,
-			[3500] = COL_RED
+			[4500] = COL_RED,
+			[4600] = COL_ORANGE,
+			[4900] = COL_GREEN,
+			[5500] = COL_RED
 		}
 	)
 

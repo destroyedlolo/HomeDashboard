@@ -27,7 +27,7 @@ local function poulailler()
 			[4500] = COL_RED,
 			[4600] = COL_ORANGE,
 			[4900] = COL_GREEN,
-			[4500] = COL_RED
+			[5500] = COL_RED
 		}
 	)
 
