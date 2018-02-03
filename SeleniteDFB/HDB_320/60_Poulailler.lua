@@ -22,16 +22,27 @@ local function poulailler()
 		WINSIZE[1],
 		(WINSIZE[2] - offy - BBh - ftitle1:GetHeight())/3
 
+	local grTension = Gradient(
+		{
+			[4500] = COL_RED,
+			[4600] = COL_ORANGE,
+			[4900] = COL_GREEN,
+			[4500] = COL_RED
+		}
+	)
+
 	srf:SetFont( ftitle1 )
 	srf:DrawString("Stations rép. :", 0, offy)
 	srf:DrawString("Tens. Poulailler :", szx/2, offy)
-	local srf_vRep = Field( srf, 5 + ftitle1:StringWidth("Stations rép. :"), offy, fsdigit, COL_DIGIT, {
+	local srf_vRep = FieldBlink( srf, animTimer, 5 + ftitle1:StringWidth("Stations rép. :"), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "8"
 	} )
-	local srf_vPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Tens. Poulailler :"), offy, fsdigit, COL_DIGIT, {
+	local srf_vPoul = FieldBlink( srf, animTimer, szx/2 + 5 + ftitle1:StringWidth("Tens. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
-		sample_text = "3333 mV"
+		timeout = 360,
+		gradient = grTension,
+		sample_text = "3333"
 	} )
 	offy = offy + ftitle1:GetHeight()
 
@@ -52,7 +63,7 @@ local function poulailler()
 		align=ALIGN_RIGHT 
 	} )
 	local vPoul = MQTTStoreGfx( 'vPoul', 'Poulailler/Alim', srf_vPoul, srfg_vPoul, 
-		{ xsmax=srf_maxprod, suffix = ' mV', forced_min = 0}
+		{ forced_min = 0}
 	)
 	table.insert( savedcols, vPoul)
 
@@ -62,12 +73,14 @@ local function poulailler()
 	srf:DrawString("Hydro. Poulailler :", 0, offy)
 	srf:DrawString("Temp. Poulailler :", szx/2, offy)
 	local srf_hPoul = Field( srf, 5 + ftitle1:StringWidth("Hydro. Poulailler :"), offy, fsdigit, COL_DIGIT, {
+		timeout = 360,
 		align = ALIGN_RIGHT,
-		sample_text = "20.31 %"
+		sample_text = "20.31"
 	} )
 	local srf_tPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Temp. Poulailler :"), offy, fsdigit, COL_DIGIT, {
+		timeout = 360,
 		align = ALIGN_RIGHT,
-		sample_text = "20.31 °"
+		sample_text = "20.31"
 	} )
 	offy = offy + ftitle1:GetHeight()
 	local srfg_hPoul = GfxArea( srf, 0,offy, szx/2 - 5, szy, COL_BLUE, COL_GFXBG,{
@@ -94,17 +107,17 @@ local function poulailler()
 	offy = offy + szy
 
 	srf:DrawString("WiFi :", 0, offy)
-	srf:DrawString("MQTT :", szx/3, offy)
-	srf:DrawString("pub :", 2 * szx/3, offy)
+	srf:DrawString("N/A :", szx/3, offy)
+	srf:DrawString("MQTT :", 2 * szx/3, offy)
 	local srf_WiFi = Field( srf, ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srf_MQTT = Field( srf, szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
+	local srf_MQTT = Field( srf, szx/3 + ftitle1:StringWidth("N/A : "), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srf_Pub = Field( srf, 2*szx/3 + ftitle1:StringWidth("pub : "), offy, fsdigit, COL_DIGIT, {
+	local srf_Pub = Field( srf, 2*szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
