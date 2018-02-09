@@ -70,17 +70,27 @@ local function poulailler()
 	
 	offy = offy + szy
 
+	local grHydro = Gradient(
+		{
+			[80] = COL_RED,
+			[70] = COL_ORANGE,
+			[65] = COL_GREEN,
+			[50] = COL_RED
+		}
+	)
+
 	srf:DrawString("Hydro. Poulailler :", 0, offy)
 	srf:DrawString("Temp. Poulailler :", szx/2, offy)
 	local srf_hPoul = Field( srf, 5 + ftitle1:StringWidth("Hydro. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		timeout = 360,
+		gradient = grHydro,
 		align = ALIGN_RIGHT,
-		sample_text = "20.31"
+		sample_text = "100.31 %"
 	} )
 	local srf_tPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Temp. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		timeout = 360,
 		align = ALIGN_RIGHT,
-		sample_text = "20.31"
+		sample_text = "20.31 °"
 	} )
 	offy = offy + ftitle1:GetHeight()
 	local srfg_hPoul = GfxArea( srf, 0,offy, szx/2 - 5, szy, COL_BLUE, COL_GFXBG,{
@@ -113,11 +123,11 @@ local function poulailler()
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srf_MQTT = Field( srf, szx/3 + ftitle1:StringWidth("N/A : "), offy, fsdigit, COL_DIGIT, {
+	local srf_NA = Field( srf, szx/3 + ftitle1:StringWidth("N/A : "), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srf_Pub = Field( srf, 2*szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
+	local srf_MQTT = Field( srf, 2*szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
@@ -132,26 +142,27 @@ local function poulailler()
 		{ xsmax=srf_maxprod, forced_min = 0}
 	)
 	table.insert( savedcols, WiFi)
-	local srfg_MQTT = GfxArea( srf, szx/3,offy, szx/3, szy, COL_RED, COL_GFXBG,{
+	local srfg_NA = GfxArea( srf, szx/3,offy, szx/3, szy, COL_RED, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local MQTT = MQTTStoreGfx( 'MQTT', 'Poulailler/MQTT/Connection', srf_MQTT, srfg_MQTT, 
+	local NA = MQTTStoreGfx( 'NA', 'Poulailler/MQTT/Connection', srf_MQTT, srfg_MQTT, 
 		{ xsmax=srf_maxprod, forced_min = 0}
+	)
+--	table.insert( savedcols, NA)
+--
+	local srfg_MQTT = GfxArea( srf, 2*szx/3,offy, szx/3, szy, COL_RED, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+	local MQTT = MQTTStoreGfx( 'MQTT', 'Poulailler/MQTT', srf_Pub, srfg_Pub, 
+		{ forced_min = 0}
 	)
 	table.insert( savedcols, MQTT)
-	local srfg_Pub = GfxArea( srf, 2*szx/3,offy, szx/3, szy, COL_RED, COL_GFXBG,{
-		heverylines={ {1000, COL_DARKGREY} },
-		vlinesH=COL_DARKGREY,
-		vlinesD=COL_GREY,
-		align=ALIGN_RIGHT 
-	} )
-	local Pub = MQTTStoreGfx( 'Pub', 'Poulailler/MQTT', srf_Pub, srfg_Pub, 
-		{ xsmax=srf_maxprod, forced_min = 0}
-	)
-	table.insert( savedcols, Pub)
 
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 	return self

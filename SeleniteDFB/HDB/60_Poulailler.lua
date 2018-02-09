@@ -115,9 +115,19 @@ local function poulailler()
 	table.insert( savedcols, tPoul)
 	offy = offy + 75
 
+	local grHydro = Gradient(
+		{
+			[80] = COL_RED,
+			[70] = COL_ORANGE,
+			[65] = COL_GREEN,
+			[50] = COL_RED
+		}
+	)
+
 	srf:DrawString("Humidité :", 310, offy)
 	local srf_hPoul = FieldBlink( srf, animTimer, 315 + ftitle1:StringWidth("Humidité :"), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
 		timeout = 360,
+		gradient = grHydro,
 		align = ALIGN_RIGHT,
 		suffix = ' %',
 		sample_text = "100.00 %"
@@ -174,8 +184,27 @@ local function poulailler()
 	table.insert( savedcols, WiFi)
 
 	x = x + 106
+	srf:DrawString("N/A :", x, offy)
+	local srf_NA = Field( srf, x + ftitle1:StringWidth("MQTT : "), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "3333"
+	} )
+	local srfg_NA = GfxArea( srf, x, y, 102, 70, COL_TRANSPARENT, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		align=ALIGN_RIGHT 
+	} )
+	srfg_NA.get():FillGrandient { TopLeft={0x5d,0x07,0x07, 0xff}, BottomLeft={0x5d,0x07,0x07, 0xff}, BottomRight={0xff,0x0f,0x0f, 0xff} ,TopRight={0xff,0x0f,0x0f, 0xff} }
+	srfg_NA.FrozeUnder()
+	local NA = MQTTStoreGfx( 'NA', 'Poulailler/MQTT/Connection', srf_NA, srfg_NA, 
+		{ forced_min = 0}
+	)
+--	table.insert( savedcols, NA)
+
+	x = x + 106
 	srf:DrawString("MQTT :", x, offy)
-	local srf_MQTT = Field( srf, x + ftitle1:StringWidth("MQTT : "), offy + ftitle1:GetHeight() - fsdigit:GetHeight(), fsdigit, COL_DIGIT, {
+	local srf_MQTT = Field( srf, x + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
@@ -187,29 +216,10 @@ local function poulailler()
 	} )
 	srfg_MQTT.get():FillGrandient { TopLeft={0x5d,0x07,0x07, 0xff}, BottomLeft={0x5d,0x07,0x07, 0xff}, BottomRight={0xff,0x0f,0x0f, 0xff} ,TopRight={0xff,0x0f,0x0f, 0xff} }
 	srfg_MQTT.FrozeUnder()
-	local MQTT = MQTTStoreGfx( 'MQTT', 'Poulailler/MQTT/Connection', srf_MQTT, srfg_MQTT, 
+	local MQTT = MQTTStoreGfx( 'MQTT', 'Poulailler/MQTT', srf_MQTT, srfg_MQTT, 
 		{ xsmax=srf_maxprod, forced_min = 0}
 	)
 	table.insert( savedcols, MQTT)
-
-	x = x + 106
-	srf:DrawString("Pub :", x, offy)
-	local srf_Pub = Field( srf, x + ftitle1:StringWidth("Pub : "), offy, fsdigit, COL_DIGIT, {
-		align = ALIGN_RIGHT,
-		sample_text = "3333"
-	} )
-	local srfg_Pub = GfxArea( srf, x, y, 102, 70, COL_TRANSPARENT, COL_GFXBG,{
-		heverylines={ {1000, COL_DARKGREY} },
-		vlinesH=COL_DARKGREY,
-		vlinesD=COL_GREY,
-		align=ALIGN_RIGHT 
-	} )
-	srfg_Pub.get():FillGrandient { TopLeft={0x5d,0x07,0x07, 0xff}, BottomLeft={0x5d,0x07,0x07, 0xff}, BottomRight={0xff,0x0f,0x0f, 0xff} ,TopRight={0xff,0x0f,0x0f, 0xff} }
-	srfg_Pub.FrozeUnder()
-	local Pub = MQTTStoreGfx( 'Pub', 'Poulailler/MQTT', srf_Pub, srfg_Pub, 
-		{ xsmax=srf_maxprod, forced_min = 0}
-	)
-	table.insert( savedcols, Pub)
 
 	srf:Flip(SelSurface.FlipFlagsConst("NONE"))
 	return self
