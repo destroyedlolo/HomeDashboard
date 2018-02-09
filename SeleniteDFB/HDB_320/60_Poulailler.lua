@@ -52,6 +52,7 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+
 	local vRep = MQTTStoreGfx( 'vRep', 'ESPRouter_Domo/NoStations', srf_vRep, srfg_vRep, 
 		{ forced_min = 0}
 	)
@@ -62,6 +63,7 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+
 	local vPoul = MQTTStoreGfx( 'vPoul', 'Poulailler/Alim', srf_vPoul, srfg_vPoul, 
 		{ forced_min = 0}
 	)
@@ -99,6 +101,7 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+
 	local hPoul = MQTTStoreGfx( 'hPoul', 'Poulailler/Perchoir/Humidite', srf_hPoul, srfg_hPoul, 
 		{ xsmax=srf_maxprod, suffix = ' %', forced_min = 0}
 	)
@@ -110,6 +113,7 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+
 	local tPoul = MQTTStoreGfx( 'tPoul', 'Poulailler/Perchoir/Temperature', srf_tPoul, srfg_tPoul, 
 		{ suffix = ' °', forced_min = 0, rangeMin = -100, rangeMax = 100 }
 	)
@@ -138,6 +142,7 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+
 	local WiFi = MQTTStoreGfx( 'WiFi', 'Poulailler/Wifi', srf_WiFi, srfg_WiFi, 
 		{ xsmax=srf_maxprod, forced_min = 0}
 	)
@@ -148,18 +153,18 @@ local function poulailler()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local NA = MQTTStoreGfx( 'NA', 'Poulailler/MQTT/Connection', srf_MQTT, srfg_MQTT, 
+	local NA = MQTTStoreGfx( 'NA', 'Poulailler/MQTT/Connection', srf_NA, srfg_NA, 
 		{ xsmax=srf_maxprod, forced_min = 0}
 	)
 --	table.insert( savedcols, NA)
---
+
 	local srfg_MQTT = GfxArea( srf, 2*szx/3,offy, szx/3, szy, COL_RED, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	local MQTT = MQTTStoreGfx( 'MQTT', 'Poulailler/MQTT', srf_Pub, srfg_Pub, 
+	local MQTT = MQTTStoreGfx( 'MQTT', 'Poulailler/MQTT', srf_MQTT, srfg_MQTT, 
 		{ forced_min = 0}
 	)
 	table.insert( savedcols, MQTT)
