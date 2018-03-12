@@ -13,7 +13,7 @@ function Lvdo(
 
 		if m == 'CREATE' then
 			condition.report_issue()
-		elseif m == 'DELETE' then
+		elseif m == 'DELETE' or m == 'MOVED_FROM' then
 			condition.issue_corrected()
 		end
 	end
