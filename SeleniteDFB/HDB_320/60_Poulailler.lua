@@ -83,16 +83,16 @@ local function poulailler()
 
 	srf:DrawString("Hydro. Poulailler :", 0, offy)
 	srf:DrawString("Temp. Poulailler :", szx/2, offy)
-	local srf_hPoul = Field( srf, 5 + ftitle1:StringWidth("Hydro. Poulailler :"), offy, fsdigit, COL_DIGIT, {
+	local srf_hPoul = Field( srf, 2 + ftitle1:StringWidth("Hydro. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		timeout = 360,
 		gradient = grHydro,
 		align = ALIGN_RIGHT,
-		sample_text = "100.31 %"
+		sample_text = "100.31%"
 	} )
-	local srf_tPoul = Field( srf, szx/2 + 5 + ftitle1:StringWidth("Temp. Poulailler :"), offy, fsdigit, COL_DIGIT, {
+	local srf_tPoul = Field( srf, szx/2 + 2 + ftitle1:StringWidth("Temp. Poulailler :"), offy, fsdigit, COL_DIGIT, {
 		timeout = 360,
 		align = ALIGN_RIGHT,
-		sample_text = "20.31 °"
+		sample_text = "20.31°"
 	} )
 	offy = offy + ftitle1:GetHeight()
 	local srfg_hPoul = GfxArea( srf, 0,offy, szx/2 - 5, szy, COL_BLUE, COL_GFXBG,{
@@ -103,7 +103,7 @@ local function poulailler()
 	} )
 
 	local hPoul = MQTTStoreGfx( 'hPoul', 'Poulailler/Perchoir/Humidite', srf_hPoul, srfg_hPoul, 
-		{ xsmax=srf_maxprod, suffix = ' %', forced_min = 0}
+		{ xsmax=srf_maxprod, suffix = '%', forced_min = 0}
 	)
 	table.insert( savedcols, hPoul)
 
