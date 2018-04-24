@@ -42,6 +42,7 @@ local function piscine()
 	srf:SetColor( COL_TITLE.get() )
 	srf:DrawString("Température Piscine :", 0, offy)
 	local srf_tPiscine = FieldBlink( srf, animTimer, 5 + ftitle1:StringWidth("Temperature Piscine :"), offy, fsdigit, COL_DIGIT, {
+		suffix = ' °C',
 		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "20.31 °C"
@@ -57,7 +58,7 @@ local function piscine()
 	szx = szx - offx - 5
 
 	local tPiscine = MQTTStoreGfx( 'tPiscine', 'SondePiscine/TempPiscine', srf_tPiscine, srfg_tPiscine, 
-		{ suffix = ' °C', forced_min = 15, rangeMin = -100, rangeMax = 100 }
+		{ forced_min = 15, rangeMin = -100, rangeMax = 100 }
 	)
 	table.insert( savedcols, tPiscine)
 	offy = offy + szy
@@ -66,6 +67,7 @@ local function piscine()
 	srf:DrawString("WiFi :", offx + szx/3, offy)
 	srf:DrawString("MQTT :", offx + 2 * szx/3, offy)
 	local srf_Tens = FieldBlink( srf, animTimer, offx - 100 + ftitle1:StringWidth("Vcc : "), offy, fsdigit, COL_DIGIT, {
+		suffix = ' mV',
 		timeout = 2100,		-- 35 minutes
 		gradient = grTension,
 		align = ALIGN_RIGHT,
@@ -105,7 +107,6 @@ local function piscine()
 	local Tens = MQTTStoreGfx( 'PTens', 'SondePiscine/Vcc', srf_Tens, srfg_Tens, 
 		{ 
 			smax=srf_MaxTens, smin=srf_MinTens,
-			suffix = ' mV',
 			force_max_refresh = 1, force_min_refresh = 1,
 			xforced_min = 2.5
 		}
@@ -136,6 +137,7 @@ local function piscine()
 
 	srf:DrawString("Température Sonde :", offx, offy)
 	local srf_tSonde = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("Temperature Sonde :"), offy, fsdigit, COL_DIGIT, {
+		suffix = ' °C',
 		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "20.31 °C"
@@ -150,7 +152,7 @@ local function piscine()
 	} )
 
 	local tSonde = MQTTStoreGfx( 'tSonde', 'SondePiscine/TempInterne', srf_tSonde, srfg_tSonde, 
-		{ suffix = ' °C', forced_min = 0, rangeMin = -100, rangeMax = 100 }
+		{ forced_min = 0, rangeMin = -100, rangeMax = 100 }
 	)
 	table.insert( savedcols, tSonde)
 
