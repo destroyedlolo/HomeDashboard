@@ -63,13 +63,13 @@ local function piscine()
 		align = ALIGN_RIGHT,
 		gradient = grTempPiscine,
 		keepbackground = true,
-		sample_text = "8888"
+		sample_text = "20.31"
 	} )
 	local srf_MinTPisc = FieldBackBorder( srf, 5, offy + szy - fsdigit:GetHeight() - 5, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		gradient = grTempPiscine,
 		keepbackground = true,
-		sample_text = "8888"
+		sample_text = "20.31"
 	} )
 
 	local srfg_tPiscine = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
@@ -104,12 +104,12 @@ local function piscine()
 	local srf_WiFi = FieldBlink( srf, animTimer, offx + szx/3 + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
 		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
-		sample_text = "3333"
+		sample_text = "33333"
 	} )
 	local srf_MQTT = FieldBlink( srf, animTimer, offx + 2*szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
 		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
-		sample_text = "3333"
+		sample_text = "33333"
 	} )
 	offy = offy + ftitle1:GetHeight()
 
@@ -146,19 +146,47 @@ local function piscine()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	local srf_MaxWiFi = FieldBackBorder( srf, offx+szx/3+2, offy+2, fstxt, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		keepbackground = true,
+		sample_text = "33333"
+	} )
+	local srf_MinWiFi = FieldBackBorder( srf, offx+szx/3+2, offy + szy - fstxt:GetHeight() - 2, fstxt, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		keepbackground = true,
+		sample_text = "33333"
+	} )
 	local WiFi = MQTTStoreGfx( 'PWiFi', 'SondePiscine/WiFi', srf_WiFi, srfg_WiFi, 
-		{ xsmax=srf_maxprod, forced_min = 0}
+		{
+			smax=srf_MaxWiFi, smin=srf_MinWiFi,
+			force_max_refresh = 1, force_min_refresh = 1,	
+			forced_min = 0
+		}
 	)
 	table.insert( savedcols, WiFi)
 
-	local srfg_MQTT = GfxArea( srf, offx+2*szx/3,offy +5, szx/3-5, szy, COL_RED, COL_GFXBG,{
+	local srfg_MQTT = GfxArea( srf, offx+2*szx/3,offy, szx/3-5, szy, COL_RED, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	local srf_MaxMQTT = FieldBackBorder( srf, offx+2*szx/3+2, offy+2, fstxt, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		keepbackground = true,
+		sample_text = "33333"
+	} )
+	local srf_MinMQTT = FieldBackBorder( srf, offx+2*szx/3+2, offy + szy - fstxt:GetHeight() - 2, fstxt, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		keepbackground = true,
+		sample_text = "33333"
+	} )
 	local MQTT = MQTTStoreGfx( 'PMQTT', 'SondePiscine/MQTT', srf_MQTT, srfg_MQTT, 
-		{ forced_min = 0}
+		{ 
+			smax=srf_MaxMQTT, smin=srf_MinMQTT,
+			force_max_refresh = 1, force_min_refresh = 1,
+			forced_min = 0
+		}
 	)
 	table.insert( savedcols, MQTT)
 	offy = offy + szy
