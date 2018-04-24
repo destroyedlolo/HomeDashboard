@@ -41,8 +41,8 @@ local function piscine()
 	srf:SetFont( ftitle1 )
 	srf:SetColor( COL_TITLE.get() )
 	srf:DrawString("Température Piscine :", 0, offy)
-	local srf_tPiscine = Field( srf, 5 + ftitle1:StringWidth("Temperature Piscine :"), offy, fsdigit, COL_DIGIT, {
-		timeout = 360,
+	local srf_tPiscine = FieldBlink( srf, animTimer, 5 + ftitle1:StringWidth("Temperature Piscine :"), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "20.31 °C"
 	} )
@@ -65,15 +65,19 @@ local function piscine()
 	srf:DrawString("Vcc :", offx - 100, offy)
 	srf:DrawString("WiFi :", offx + szx/3, offy)
 	srf:DrawString("MQTT :", offx + 2 * szx/3, offy)
-	local srf_Tens = Field( srf, offx - 100 + ftitle1:StringWidth("Vcc : "), offy, fsdigit, COL_DIGIT, {
+	local srf_Tens = FieldBlink( srf, animTimer, offx - 100 + ftitle1:StringWidth("Vcc : "), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
+		gradient = grTension,
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srf_WiFi = Field( srf, offx + szx/3 + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
+	local srf_WiFi = FieldBlink( srf, animTimer, offx + szx/3 + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srf_MQTT = Field( srf, offx + 2*szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
+	local srf_MQTT = FieldBlink( srf, animTimer, offx + 2*szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
@@ -113,8 +117,8 @@ local function piscine()
 	offy = offy + szy
 
 	srf:DrawString("Température Sonde :", offx, offy)
-	local srf_tSonde = Field( srf, offx + ftitle1:StringWidth("Temperature Sonde :"), offy, fsdigit, COL_DIGIT, {
-		timeout = 360,
+	local srf_tSonde = FieldBlink( srf, animTimer, offx + ftitle1:StringWidth("Temperature Sonde :"), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "20.31 °C"
 	} )
