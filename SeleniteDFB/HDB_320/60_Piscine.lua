@@ -33,8 +33,8 @@ local function piscine()
 
 	srf:SetFont( ftitle1 )
 	srf:DrawString("Temp Sonde :", 0, offy)
-	local srf_tSonde = Field( srf, 5 + ftitle1:StringWidth("Temp Sonde :"), offy, fsdigit, COL_DIGIT, {
-		timeout = 360,
+	local srf_tSonde = FieldBlink( srf, animTimer, 5 + ftitle1:StringWidth("Temp Sonde :"), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "20.31 °"
 	} )
@@ -54,8 +54,8 @@ local function piscine()
 	offy = offy + szy
 
 	srf:DrawString("Temp Piscine :", 0, offy)
-	local srf_tPiscine = Field( srf, 5 + ftitle1:StringWidth("Temp Piscine :"), offy, fsdigit, COL_DIGIT, {
-		timeout = 360,
+	local srf_tPiscine = FieldBlink( srf, animTimer, 5 + ftitle1:StringWidth("Temp Piscine :"), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "20.31 °"
 	} )
@@ -77,28 +77,32 @@ local function piscine()
 	srf:DrawString("Vcc :", 0, offy)
 	srf:DrawString("WiFi :", szx/3, offy)
 	srf:DrawString("MQTT :", 2 * szx/3, offy)
-	local srf_Tens = Field( srf, ftitle1:StringWidth("Vcc : "), offy, fsdigit, COL_DIGIT, {
+	local srf_Tens = FieldBlink( srf, animTimer, ftitle1:StringWidth("Vcc : "), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
+		align = ALIGN_RIGHT,
+		gradient = grTension,
+		sample_text = "3333"
+	} )
+	local srf_WiFi = FieldBlink( srf, animTimer, szx/3 + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
-	local srf_WiFi = Field( srf, szx/3 + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
-		align = ALIGN_RIGHT,
-		sample_text = "3333"
-	} )
-	local srf_MQTT = Field( srf, 2*szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
+	local srf_MQTT = FieldBlink( srf, animTimer, 2*szx/3 + ftitle1:StringWidth("MQTT : "), offy, fsdigit, COL_DIGIT, {
+		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "3333"
 	} )
 	offy = offy + ftitle1:GetHeight()
 	local srfg_Tens = GfxArea( srf, 0,offy, szx/3, szy, COL_RED, COL_GFXBG,{
-		heverylines={ {1000, COL_DARKGREY} },
+		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
 
 	local Tens = MQTTStoreGfx( 'PTens', 'SondePiscine/Vcc', srf_Tens, srfg_Tens, 
-		{ xsmax=srf_maxprod, forced_min = 2}
+		{ xsmax=srf_maxprod }
 	)
 	table.insert( savedcols, Tens)
 	local srfg_WiFi = GfxArea( srf, szx/3,offy, szx/3, szy, COL_RED, COL_GFXBG,{
