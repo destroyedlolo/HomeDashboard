@@ -69,7 +69,7 @@ local function piscine()
 		timeout = 2100,		-- 35 minutes
 		gradient = grTension,
 		align = ALIGN_RIGHT,
-		sample_text = "3333"
+		sample_text = "3333 mV"
 	} )
 	local srf_WiFi = FieldBlink( srf, animTimer, offx + szx/3 + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
 		timeout = 2100,		-- 35 minutes
@@ -82,15 +82,33 @@ local function piscine()
 		sample_text = "3333"
 	} )
 	offy = offy + ftitle1:GetHeight()
+
+	local srf_MaxTens = FieldBackBorder( srf, offx - 95, offy+5, fsdigit, COL_ORANGE, {
+		align = ALIGN_RIGHT,
+		gradient = grTension,
+		keepbackground = true,
+		sample_text = "8888"
+	} )
+	local srf_MinTens = FieldBackBorder( srf, offx - 95, offy + szy - fsdigit:GetHeight() - 5, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		gradient = grTension,
+		keepbackground = true,
+		sample_text = "8888"
+	} )
 	local srfg_Tens = GfxArea( srf, offx - 100, offy, szx/3+95, szy, COL_RED, COL_GFXBG,{
-		heverylines={ {1000, COL_DARKGREY} },
+		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
 
 	local Tens = MQTTStoreGfx( 'PTens', 'SondePiscine/Vcc', srf_Tens, srfg_Tens, 
-		{ xsmax=srf_maxprod, forced_min = 2.5}
+		{ 
+			smax=srf_MaxTens, smin=srf_MinTens,
+			suffix = ' mV',
+			force_max_refresh = 1, force_min_refresh = 1,
+			xforced_min = 2.5
+		}
 	)
 	table.insert( savedcols, Tens)
 	local srfg_WiFi = GfxArea( srf, offx+szx/3,offy, szx/3-5, szy, COL_RED, COL_GFXBG,{
