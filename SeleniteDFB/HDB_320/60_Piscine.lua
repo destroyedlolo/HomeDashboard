@@ -80,10 +80,11 @@ local function piscine()
 	srf:DrawString("WiFi :", szx/3, offy)
 	srf:DrawString("MQTT :", 2 * szx/3, offy)
 	local srf_Tens = FieldBlink( srf, animTimer, ftitle1:StringWidth("Vcc : "), offy, fsdigit, COL_DIGIT, {
+		suffix = ' mV',
 		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		gradient = grTension,
-		sample_text = "3333"
+		sample_text = "3333 mV"
 	} )
 	local srf_WiFi = FieldBlink( srf, animTimer, szx/3 + ftitle1:StringWidth("WiFi : "), offy, fsdigit, COL_DIGIT, {
 		timeout = 2100,		-- 35 minutes
