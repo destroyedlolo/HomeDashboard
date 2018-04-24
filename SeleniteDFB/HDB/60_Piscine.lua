@@ -38,16 +38,39 @@ local function piscine()
 		}
 	)
 
+	local grTempPiscine = Gradient(
+		{
+			[15] = COL_BLUE,
+			[20] = COL_DIGIT,
+			[25] = COL_GREEN,
+			[35] = COL_ORANGE
+		}
+	)
+
 	srf:SetFont( ftitle1 )
 	srf:SetColor( COL_TITLE.get() )
 	srf:DrawString("Température Piscine :", 0, offy)
 	local srf_tPiscine = FieldBlink( srf, animTimer, 5 + ftitle1:StringWidth("Temperature Piscine :"), offy, fsdigit, COL_DIGIT, {
 		suffix = ' °C',
+		gradient = grTempPiscine,
 		timeout = 2100,		-- 35 minutes
 		align = ALIGN_RIGHT,
 		sample_text = "20.31 °C"
 	} )
 	offy = offy + ftitle1:GetHeight()
+
+	local srf_MaxTPisc = FieldBackBorder( srf, 5, offy+5, fsdigit, COL_ORANGE, {
+		align = ALIGN_RIGHT,
+		gradient = grTempPiscine,
+		keepbackground = true,
+		sample_text = "8888"
+	} )
+	local srf_MinTPisc = FieldBackBorder( srf, 5, offy + szy - fsdigit:GetHeight() - 5, fsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		gradient = grTempPiscine,
+		keepbackground = true,
+		sample_text = "8888"
+	} )
 
 	local srfg_tPiscine = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
 		heverylines={ {5, COL_DARKGREY} },
@@ -55,12 +78,17 @@ local function piscine()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	szx = szx - offx - 5
 
 	local tPiscine = MQTTStoreGfx( 'tPiscine', 'SondePiscine/TempPiscine', srf_tPiscine, srfg_tPiscine, 
-		{ forced_min = 15, rangeMin = -100, rangeMax = 100 }
+		{
+			forced_min = 15, 
+			rangeMin = -100, rangeMax = 100,
+			smax=srf_MaxTPisc, smin=srf_MinTPisc,
+			force_max_refresh = 1, force_min_refresh = 1,
+		}
 	)
 	table.insert( savedcols, tPiscine)
+	szx = szx - offx - 5
 	offy = offy + szy
 
 	srf:DrawString("Vcc :", offx - 100, offy)
