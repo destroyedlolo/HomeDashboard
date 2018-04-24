@@ -41,7 +41,6 @@ local function poulailler()
 	} )
 	local srf_nRep = Field( srf, 145,103, fsdigit, COL_DIGIT, {
 		timeout = 70,
-		gradient = grTension,
 		align = ALIGN_RIGHT,
 		sample_text = "33"
 	} )
