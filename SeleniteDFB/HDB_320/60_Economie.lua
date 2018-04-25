@@ -13,7 +13,7 @@ local function energy()
 
 	srf:SetColor( COL_TITLE.get() )
 	srf:SetFont( ftitle )
-	srf:DrawString("Econnomies d'énergie", 0, 0)
+	srf:DrawString("Economies d'énergie", 0, 0)
 
 	cdt = MQTTCounterStatGfx(srf,
 		'Stat mensuelle', 'Domestik/Electricite/Mensuel', 
