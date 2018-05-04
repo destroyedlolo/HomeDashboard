@@ -29,7 +29,7 @@ function prevWindow( force)
 	end
 end
 
-switchtimer,err = SelTimer.create { when=10, interval=10, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=nextWindow}
+switchtimer,err = SelTimer.Create { when=10, interval=10, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=nextWindow}
 if err then
 	print(err)
 	return

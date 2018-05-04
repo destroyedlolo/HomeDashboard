@@ -100,14 +100,14 @@ function disconnected()
 end
 
 local err
-Brk, err = SelMQTT.connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
+Brk, err = SelMQTT.Connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
 if err then
 	print( "Broker", err )
 	return
 end
 
 -- Subscribtion
-_, err = Brk:subscribe( Topics )
+_, err = Brk:Subscribe( Topics )
 if err then
 	print( "Subscribtion", err )
 	return
