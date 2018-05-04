@@ -23,7 +23,7 @@ function Porte(
 
 	local parent_upd = self.Update
 	function self.Update( )
-		parent_upd( PorteIcons.getImg( SelShared.get(name) ), PorteIcons.getTransparency() )
+		parent_upd( PorteIcons.getImg( SelShared.Get(name) ), PorteIcons.getTransparency() )
 	end
 
 	local dt = MQTTinput( name, topic )
