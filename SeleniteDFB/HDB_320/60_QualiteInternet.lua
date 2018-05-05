@@ -66,7 +66,7 @@ local function internetfg()
 	)
 	table.insert( savedcols, FECu )
 
-	local FECd = MQTTStoreGfx( 'FECd', 'Freebox/UploadFEC', nil, srf_FECd,
+	local FECd = MQTTStoreGfx( 'FECd', 'Freebox/DownloadFEC', nil, srf_FECd,
 		{
 			forced_min = 0,
 			smax = maxFECd,
