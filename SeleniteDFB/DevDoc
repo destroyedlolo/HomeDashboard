@@ -18,3 +18,6 @@ FIFO:find() trouve le FIFO en fonction du nom
 Toile / 20_MQTTLog.lua :
 self.fifoname() : provoque une erreur. DOIT ETRE DERIVE POUR FOURNIR UN NOM UNIQUE
 
+*** Migration Selene V4
+
+50_LeftBar : "Create" pour le Timer
