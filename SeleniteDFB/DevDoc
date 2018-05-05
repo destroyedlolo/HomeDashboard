@@ -21,3 +21,5 @@ self.fifoname() : provoque une erreur. DOIT ETRE DERIVE POUR FOURNIR UN NOM UNIQ
 *** Migration Selene V4
 
 50_LeftBar : "Create" pour le Timer
+
+Les MQTTLog est a revoir : voir avec le menu des modes
