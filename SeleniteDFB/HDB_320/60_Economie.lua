@@ -55,7 +55,6 @@ local function energy()
 		}
 	)
 	table.insert( savedcols, conso2 )
---[[
 
 	local srf_ctrndprod = GfxArea( srf, x+102, y, 98, 48, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
@@ -83,7 +82,6 @@ local function energy()
 	table.insert( savedcols, prod2 )
 
 	SelLog.log("*I* Consummation / Production grouped by ".. 6*60*60 / srf_ctrndconso.get():GetWidth())
---]]
 	return self
 end
 
