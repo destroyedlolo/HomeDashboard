@@ -6,7 +6,7 @@ function disconnected()
 	print("disconnected")
 end
 
-local Brk, err = SelMQTT.connect( MQTT_URL, { OnDisconnectTrigger=disconnected } )
+local Brk, err = SelMQTT.Connect( MQTT_URL, { OnDisconnectTrigger=disconnected } )
 if err then
 	print( "Broker", err )
 	return
