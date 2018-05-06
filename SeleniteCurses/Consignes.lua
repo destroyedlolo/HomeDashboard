@@ -3,7 +3,7 @@
 function updateMForce()
 	if Mode == 'C' then
 		MForce:clear()
-		MForce:print( SelShared.get('Majordome/Mode/Force') )
+		MForce:print( SelShared.Get('Majordome/Mode/Force') )
 		MForce:refresh()
 	end
 end
@@ -11,7 +11,7 @@ end
 function updateMForceEnfants()
 	if Mode == 'C' then
 		MForceE:clear()
-		MForceE:print( SelShared.get('Majordome/Mode/Force/Enfants') )
+		MForceE:print( SelShared.Get('Majordome/Mode/Force/Enfants') )
 		MForceE:refresh()
 	end
 end
@@ -111,5 +111,5 @@ TableMerge( Topics, ltopics)
 
 -- Valeurs par défauts (pour éviter un crash si elle ne sont pas définies)
 
-SelShared.set('Majordome/Mode/Force', '?')
-SelShared.set('Majordome/Mode/Force/Enfants', '?')
+SelShared.Set('Majordome/Mode/Force', '?')
+SelShared.Set('Majordome/Mode/Force/Enfants', '?')

@@ -33,37 +33,37 @@ pwnd:print(' ??.?"C')
 
 function updateTGrS()
 	TChGS:clear()
-	TChGS:print( string.format('%4.1f', SelShared.get('maison/Temperature/Grenier Sud')) )
+	TChGS:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Grenier Sud')) )
 	TChGS:refresh()
 end
 
 function updateTGrN()
 	TChGN:clear()
-	TChGN:print( string.format('%4.1f', SelShared.get('maison/Temperature/Grenier Nord')) )
+	TChGN:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Grenier Nord')) )
 	TChGN:refresh()
 end
 
 function updateTChJ()
 	TChJoris:clear()
-	TChJoris:print( string.format('%4.1f', SelShared.get('maison/Temperature/Chambre Joris')) )
+	TChJoris:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Chambre Joris')) )
 	TChJoris:refresh()
 end
 
 function updateTChO()
 	TChOceane:clear()
-	TChOceane:print( string.format('%4.1f', SelShared.get('maison/Temperature/Chambre Oceane')) )
+	TChOceane:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Chambre Oceane')) )
 	TChOceane:refresh()
 end
 
 function updateTChP()
 	TChParents:clear()
-	TChParents:print( string.format('%4.1f', SelShared.get('maison/Temperature/Chambre Parents')) )
+	TChParents:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Chambre Parents')) )
 	TChParents:refresh()
 end
 
 function updateTComble()
 	srf_TComble:clear()
-	srf_TComble:print( string.format('%4.1f', SelShared.get('maison/Temperature/Comble')) )
+	srf_TComble:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Comble')) )
 	srf_TComble:refresh()
 end
 

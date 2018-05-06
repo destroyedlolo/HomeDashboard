@@ -18,26 +18,26 @@ xSitPG, uSitPG = pwnd:GetXY()
 
 function updateTGarage()
 	TGarage:clear()
-	TGarage:print( string.format('%4.1f', SelShared.get('maison/Temperature/Garage')) )
+	TGarage:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Garage')) )
 	TGarage:refresh()
 end
 
 function updateTGarageP()
 	TGarageP:clear()
-	TGarageP:print( string.format('%4.1f', SelShared.get('maison/Temperature/GarageP')) )
+	TGarageP:print( string.format('%4.1f', SelShared.Get('maison/Temperature/GarageP')) )
 	TGarageP:refresh()
 end
 
 function updateTCongelo()
 	TCongelo:clear()
-	TCongelo:print( string.format('%4.1f', SelShared.get('maison/Temperature/Congelateur')) )
+	TCongelo:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Congelateur')) )
 	TCongelo:refresh()
 end
 
 function updatePorteGarage()
 	pwnd:Move(xSitPG, uSitPG)
 	pwnd:clrtoeol()
-	pwnd:print( SelShared.get('maison/IO/Porte_Garage') )
+	pwnd:print( SelShared.Get('maison/IO/Porte_Garage') )
 	pwnd:refresh()
 end
 
