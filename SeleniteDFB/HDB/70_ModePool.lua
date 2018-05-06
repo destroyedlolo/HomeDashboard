@@ -22,7 +22,7 @@ function ModePool( titre, topic, y )
 
 		unselcolor = COL_TITLE,
 		selcolor = COL_DIGIT,
-		default = SelShared.get(topic),
+		default = SelShared.Get(topic),
 
 		userdata = parent
 	})

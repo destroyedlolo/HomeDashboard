@@ -68,12 +68,12 @@ function stweather(
 	WeatherIcons.getImg( '21' ):RenderTo( psrf, { goffx, goffy, fsdigit:GetHeight(), fsdigit:GetHeight() } )
 
 	function self.updTime()
-		local t=os.date("*t", tonumber(SelShared.get(name)) )
+		local t=os.date("*t", tonumber(SelShared.Get(name)) )
 		time.update(string.format("%02d:%02d", t.hour, t.min))
 	end
 
 	function self.updateIcon()
-		icon.Update( WeatherIcons.getImg( SelShared.get(name..'acode') ) )
+		icon.Update( WeatherIcons.getImg( SelShared.Get(name..'acode') ) )
 	end
 
 	return self

@@ -56,13 +56,13 @@ function ltweather(
 	end
 
 	function self.updateIcon()
-		icon.Update( WeatherIcons.getImg( SelShared.get(name..'acode') ) )
+		icon.Update( WeatherIcons.getImg( SelShared.Get(name..'acode') ) )
 	end
 
 	function self.updTime()
 		local wdays = {'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'}
 
-		local t=os.date("*t", tonumber(SelShared.get(name)) )
+		local t=os.date("*t", tonumber(SelShared.Get(name)) )
 		time.update(wdays[t.wday] ..' '.. t.day ..'/'.. t.month)
 	end
 

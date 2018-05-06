@@ -99,7 +99,7 @@ local function meteo()
 		TDehors.updgfx()
 	end
 	local function feedTDehors() -- Feed TDehors collection from a topic : temp,timestamp
-		local v,t = string.match(SelShared.get('FeedTDehors'), "([%d%.]+),(%d+)")			TDehors.getCollection():Push( v,tonumber(t) )
+		local v,t = string.match(SelShared.Get('FeedTDehors'), "([%d%.]+),(%d+)")			TDehors.getCollection():Push( v,tonumber(t) )
 	end
 	SelLog.log("*I* Feed : HomeDashBoard/".. MQTT_ClientID ..'/Feed/TDehors')
 	local tfeed = MQTTinput('FeedTDehors', 'HomeDashBoard/'.. MQTT_ClientID ..'/Feed/TDehors')
