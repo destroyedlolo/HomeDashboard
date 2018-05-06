@@ -20,7 +20,7 @@ function RoomArea(
 
 
 	local function format_time( t, m )
-		SelShared.set(t, string.gsub(m, '%.',':'))
+		SelShared.Set(t, string.gsub(m, '%.',':'))
 		return true
 	end
 
