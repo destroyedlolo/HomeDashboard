@@ -34,7 +34,7 @@ function updateVPoul()
 	VPoul:refresh()
 end
 
-pwnd:print(' ?.?? V\n')
+pwnd:print(' ?.?? V')
 
 
 
