@@ -19,7 +19,7 @@ end
 function popupConsMode( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
-	local popup = wmdSub:DerWin((w-15)/2,2, 15,6)
+	local popup = wmdSub:DerWin((w-15)/2,2, 15,7)
 
 	genTitre(popup, "\n  &Auto\n")
 	genTitre(popup, "  &Manuel\n")
