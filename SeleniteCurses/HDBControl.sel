@@ -34,6 +34,7 @@ pwnd:Move(0,1)
 require(SELENE_SCRIPT_DIR .. "/1er")
 require(SELENE_SCRIPT_DIR .. "/RDC")
 require(SELENE_SCRIPT_DIR .. "/SousSol")
+require(SELENE_SCRIPT_DIR .. "/Pouailler")
 
 pwnd:print("\n\n")
 pwnd:HLine(w,'-')
