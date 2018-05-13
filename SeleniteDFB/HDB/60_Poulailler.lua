@@ -69,7 +69,7 @@ local function poulailler()
 		align=ALIGN_RIGHT 
 	} )
 	local vPoul = MQTTStoreGfx( 'vPoul', 'Poulailler/Alim', srf_vPoul, srfg_vPoul, 
-		{ xsmax=srf_maxprod, suffix = ' mV', forced_min = 0}
+		{ xsmax=srf_maxprod, suffix = ' mV', xforced_min = 0}
 	)
 	table.insert( savedcols, vPoul)
 	offy = offy + 75

@@ -199,7 +199,7 @@ local function f()
 	x = x + srf_dATM.get():GetWidth() + 4
 	local srf_upGfx = ArcGaugePercent(srf, x, y, w - x, srf_dATM.getHight() + srf_uATM.getHight(), 10, 1, { emptycolor=COL_GFXBG })
 
-	local wdfreebox, _ = SelTimer.create { when=40, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc= function ()
+	local wdfreebox, _ = SelTimer.Create { when=40, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc= function ()
 			Notification.setColor( COL_RED )
 			Notification.Log( "Freebox muette")
 			Notification.setColor( COL_WHITE )

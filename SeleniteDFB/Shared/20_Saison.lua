@@ -23,7 +23,7 @@ function Saison(
 
 	local parent_upd = self.Update
 	function self.Update( )
-		parent_upd( SaisonIcons.getImg( SelShared.get(name) ), SaisonIcons.getTransparency() )
+		parent_upd( SaisonIcons.getImg( SelShared.Get(name) ), SaisonIcons.getTransparency() )
 	end
 
 	local dt = MQTTinput( name, topic )
