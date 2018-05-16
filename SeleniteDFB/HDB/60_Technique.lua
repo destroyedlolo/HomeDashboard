@@ -33,16 +33,16 @@ local function tech()
 	offy = ftitle:GetHeight() + 5
 
 	local MarcelTxt = NotificationArea( srf, 20, offy, WINSIZE[1]/2 - 40, 250, fmtxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
-	local MarcelLog = MQTTLog('marcelW', 'Marcel.prod/Log/Warning', MarcelTxt, { udata=1 } )
-	MarcelLog.RegisterTopic( 'marcelE', 'Marcel.prod/Log/Error', { udata=3 } )
-	MarcelLog.RegisterTopic( 'marcelF', 'Marcel.prod/Log/Fatal', { udata=4 } )
+	local MarcelLog = MQTTLog('marcel', 'Marcel.prod/Log/Warning', MarcelTxt, { udata=1 } )
+	MarcelLog.RegisterTopic( 'marcel', 'Marcel.prod/Log/Error', { udata=3 } )
+	MarcelLog.RegisterTopic( 'marcel', 'Marcel.prod/Log/Fatal', { udata=4 } )
 	MarcelTxt.Log("Marcel")
 
 	local MajordomeTxt = NotificationArea( srf, WINSIZE[1]/2 + 20, offy, WINSIZE[1]/2 - 40, 250, fmtxt, COL_LIGHTGREY, { bgcolor=COL_GFXBG } )
 	local MajordomeLog = MQTTLog('Majordome', 'Majordome/Log', MajordomeTxt, { udata=1 } )
-	MajordomeLog.RegisterTopic( 'MajordomeM', 'Majordome/Log/Mode', { udata=2 } )
-	MajordomeLog.RegisterTopic( 'MajordomeE', 'Majordome/Log/Erreur', { udata=3 } )
-	MajordomeLog.RegisterTopic( 'MajordomeA', 'Majordome/Log/Action', { udata=5 } )
+	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Mode', { udata=2 } )
+	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Erreur', { udata=3 } )
+	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Action', { udata=5 } )
 	MajordomeTxt.Log("Majordome")
 
 	offx, offy = MarcelTxt.get():GetBelow()
