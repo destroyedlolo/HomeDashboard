@@ -70,19 +70,19 @@ end
 
 -- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.
-	if SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
+	if SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
 		psrf:Dump('/tmp', 'DashBoard')
-	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Tasks' then
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Tasks' then
 		SelShared.dump()
-	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Topics' then
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Topics' then
 		for _,v in ipairs(Topics) do
 			print(_,v.topic)
 		end
-	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Save' then
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Save' then
 		SaveCollection()
-	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
 		Meteo.refreshGfx()
-	elseif SelShared.get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
 		quitHDB()
 	end
 end
