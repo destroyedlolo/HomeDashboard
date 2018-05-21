@@ -32,6 +32,14 @@ function updateMForceEJoris()
 	end
 end
 
+function updateMForceParents()
+	if Mode == 'C' then
+		MForceP:clear()
+		MForceP:print( SelShared.get('Majordome/Mode/Force/Parents') )
+		MForceP:refresh()
+	end
+end
+
 function popupConsMode( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
@@ -72,6 +80,8 @@ function keyConsignes(Brk, c,cn)
 		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants/Oceane' )
 	elseif c == 'o' then
 		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants/Joris' )
+	elseif c == 'p' then
+		popupConsMode( Brk, 'Majordome/Mode/Force/Parents' )
 	end
 
 	initConsignes()
@@ -118,11 +128,12 @@ function initConsignes()
 	MForceEJ:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceEJoris()
 
---[[
-	wmdSub:Move(2,4)
+	wmdSub:Move(2,6)
 	genTitre(wmdSub, 'Force &parents: ')
 	x,y = wmdSub:GetXY()
---]]
+	MForceP = wmdSub:DerWin(x,y,8,1)
+	MForceP:attrset( SelCurses.CharAttrConst('BOLD') )
+	updateMForceParents()
 
 	wmdSub:refresh()
 	genMenu()
@@ -147,6 +158,7 @@ local ltopics = {
 	{ topic = 'Majordome/Mode/Force/Enfants', trigger=updateMForceEnfants, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants/Oceane', trigger=updateMForceEOceane, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants/Joris', trigger=updateMForceEJoris, trigger_once=true },
+	{ topic = 'Majordome/Mode/Force/Parents', trigger=updateMForceParents, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
