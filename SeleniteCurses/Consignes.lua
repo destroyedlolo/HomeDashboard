@@ -40,6 +40,19 @@ function updateMForceParents()
 	end
 end
 
+function updateMPiscine()
+	if Mode == 'C' then
+		MPiscine:clear()
+		local v = SelShared.get('Majordome/Mode/Piscine')
+		if v == 'Forcé' then
+			MPiscine:print('Force')
+		else
+		MPiscine:print(v)
+		end
+		MPiscine:refresh()
+	end
+end
+
 function popupConsMode( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
@@ -71,6 +84,31 @@ function popupConsMode( Brk, topic )
 	popup:delwin()
 end
 
+function popupConsPiscine( Brk, topic )
+	local w,h = wmdSub:GetSize()
+
+	local popup = wmdSub:DerWin((w-15)/2,2, 18,5)
+
+	genTitre(popup, "\n  &Heures Creuses\n")
+	genTitre(popup, "  &Arret\n")
+	genTitre(popup, "  &Force\n")
+
+	popup:border()
+	popup:refresh()
+
+	local c = string.upper(string.char(popup:getch()))
+
+	if c == 'H' then
+		Brk:Publish( topic, "Heures Creuses", true)
+	elseif c == 'A' then
+		Brk:Publish( topic, "Arret", true)
+	elseif c == 'F' then
+		Brk:Publish( topic, "Forcé", true)
+	end
+
+	popup:delwin()
+end
+
 function keyConsignes(Brk, c,cn)
 	if c == 'r' then
 		popupConsMode( Brk, 'Majordome/Mode/Force' )
@@ -82,6 +120,8 @@ function keyConsignes(Brk, c,cn)
 		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants/Joris' )
 	elseif c == 'p' then
 		popupConsMode( Brk, 'Majordome/Mode/Force/Parents' )
+	elseif c == 'i' then
+		popupConsPiscine( Brk, 'Majordome/Mode/Piscine' )
 	end
 
 	initConsignes()
@@ -135,6 +175,13 @@ function initConsignes()
 	MForceP:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceParents()
 
+	wmdSub:Move(2,8)
+	genTitre(wmdSub, 'P&iscine : ')
+	x,y = wmdSub:GetXY()
+	MPiscine = wmdSub:DerWin(x,y,14,1)
+	MPiscine:attrset( SelCurses.CharAttrConst('BOLD') )
+	updateMPiscine()
+
 	wmdSub:refresh()
 	genMenu()
 end
@@ -159,6 +206,7 @@ local ltopics = {
 	{ topic = 'Majordome/Mode/Force/Enfants/Oceane', trigger=updateMForceEOceane, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants/Joris', trigger=updateMForceEJoris, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Parents', trigger=updateMForceParents, trigger_once=true },
+	{ topic = 'Majordome/Mode/Piscine', trigger=updateMPiscine, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
@@ -170,3 +218,4 @@ SelShared.set('Majordome/Mode/Force/Enfants', '?')
 SelShared.set('Majordome/Mode/Force/Enfants/Oceane', '?')
 SelShared.set('Majordome/Mode/Force/Enfants/Joris', '?')
 SelShared.set('Majordome/Mode/Force/Parents', '?')
+SelShared.set('Majordome/Mode/Piscine', 'Heures Creuses')
