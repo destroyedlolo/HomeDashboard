@@ -72,12 +72,14 @@ local function piscine()
 		sample_text = "20.31"
 	} )
 
-	local srfg_tPiscine = GfxArea( srf, 0,offy, szx, szy, COL_RED, COL_GFXBG,{
+	local srfg_tPiscine = GfxArea( srf, 0,offy, szx, szy, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {5, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_tPiscine.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
+	srfg_tPiscine.FrozeUnder()
 
 	local tPiscine = MQTTStoreGfx( 'tPiscine', 'SondePiscine/TempPiscine', srf_tPiscine, srfg_tPiscine, 
 		{
