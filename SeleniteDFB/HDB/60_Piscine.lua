@@ -78,7 +78,7 @@ local function piscine()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	srfg_tPiscine.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
+	srfg_tPiscine.get():FillGrandient { TopLeft={20,0x40,0x40,255}, BottomLeft={20,0x10,0x40,255}, TopRight={20,0xff,0xff,255}, BottomRight={20,0x80,0xff,255} }
 	srfg_tPiscine.FrozeUnder()
 
 	local tPiscine = MQTTStoreGfx( 'tPiscine', 'SondePiscine/TempPiscine', srf_tPiscine, srfg_tPiscine, 
@@ -208,7 +208,7 @@ local function piscine()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
-	srfg_tSonde.get():FillGrandient { TopLeft={60,20,20,255}, BottomLeft={20,60,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
+	srfg_tSonde.get():FillGrandient { TopLeft={0x40,0x10,0x05,255}, BottomLeft={0x05,0x40,0x10,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
 	srfg_tSonde.FrozeUnder()
 
 
