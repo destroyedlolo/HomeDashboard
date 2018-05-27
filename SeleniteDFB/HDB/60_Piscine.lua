@@ -202,12 +202,15 @@ local function piscine()
 	} )
 	offy = offy + ftitle1:GetHeight()
 
-	local srfg_tSonde = GfxArea( srf, offx,offy, szx, szy, COL_RED, COL_GFXBG,{
+	local srfg_tSonde = GfxArea( srf, offx,offy, szx, szy, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {5, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_tSonde.get():FillGrandient { TopLeft={60,20,20,255}, BottomLeft={20,60,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
+	srfg_tSonde.FrozeUnder()
+
 
 	local tSonde = MQTTStoreGfx( 'tSonde', 'SondePiscine/TempInterne', srf_tSonde, srfg_tSonde, 
 		{ forced_min = 0, rangeMin = -100, rangeMax = 100 }
