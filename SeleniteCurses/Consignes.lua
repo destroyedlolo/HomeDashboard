@@ -17,22 +17,17 @@ function updateMForceEnfants()
 end
 
 function updateMForceEOceane()
-SelLog.log(">>> FEO")
 	if Mode == 'C' then
-SelLog.log(">>> FEO 1")
 		MForceEO:clear()
-SelLog.log(">>> FEO 2")
-		MForceEO:print( SelShared.get('Majordome/Mode/Force/Enfants/Oceane') )
-SelLog.log(">>> FEO 3")
+		MForceEO:print( SelShared.Get('Majordome/Mode/Force/Enfants/Oceane') )
 		MForceEO:refresh()
-SelLog.log(">>> FEO f")
 	end
 end
 
 function updateMForceEJoris()
 	if Mode == 'C' then
 		MForceEJ:clear()
-		MForceEJ:print( SelShared.get('Majordome/Mode/Force/Enfants/Joris') )
+		MForceEJ:print( SelShared.Get('Majordome/Mode/Force/Enfants/Joris') )
 		MForceEJ:refresh()
 	end
 end
@@ -40,7 +35,7 @@ end
 function updateMForceParents()
 	if Mode == 'C' then
 		MForceP:clear()
-		MForceP:print( SelShared.get('Majordome/Mode/Force/Parents') )
+		MForceP:print( SelShared.Get('Majordome/Mode/Force/Parents') )
 		MForceP:refresh()
 	end
 end
@@ -48,7 +43,7 @@ end
 function updateMPiscine()
 	if Mode == 'C' then
 		MPiscine:clear()
-		local v = SelShared.get('Majordome/Mode/Piscine')
+		local v = SelShared.Get('Majordome/Mode/Piscine')
 		if v == 'Forcé' then
 			MPiscine:print('Force')
 		else
@@ -136,15 +131,12 @@ function initConsignes()
 	local x,y
 	Mode='C'
 
-SelLog.log("*** i0 ***")
 	wmdSub:clear()
 	wmdSub:border()
-SelLog.log("*** i1 ***")
 
 	wmdSub:attrset( SelCurses.CharAttrConst("UNDERLINE") )
 	wmdSub:PrintAt(12,1, 'Modes')
 	wmdSub:attrset( SelCurses.CharAttrConst("NORMAL") )
-SelLog.log("*** i2 ***")
 
 	wmdSub:Move(2,2)
 	genTitre(wmdSub, 'Fo&rce : ')
@@ -154,7 +146,6 @@ SelLog.log("*** i2 ***")
 		MForce:attrset( SelCurses.CharAttrConst('BOLD') )
 	end
 	updateMForce()
-SelLog.log("*** i3 ***")
 
 	wmdSub:Move(2,3)
 	genTitre(wmdSub, 'Force &enfants : ')
@@ -162,20 +153,13 @@ SelLog.log("*** i3 ***")
 	MForceE = wmdSub:DerWin(x,y,8,1)
 	MForceE:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceEnfants()
-SelLog.log("*** i4 ***")
 
 	wmdSub:Move(5,4)
-SelLog.log("*** i41 ***")
 	genTitre(wmdSub, 'O&ceane : ')
-SelLog.log("*** i42 ***")
 	x,y = wmdSub:GetXY()
-SelLog.log("*** i43 ***")
 	MForceEO = wmdSub:DerWin(x,y,8,1)
-SelLog.log("*** i44 ***")
 	MForceEO:attrset( SelCurses.CharAttrConst('BOLD') )
-SelLog.log("*** i45 ***")
 	updateMForceEOceane()
-SelLog.log("*** i5 ***")
 
 	wmdSub:Move(6,5)
 	genTitre(wmdSub, 'J&oris : ')
@@ -197,7 +181,6 @@ SelLog.log("*** i5 ***")
 	MPiscine = wmdSub:DerWin(x,y,14,1)
 	MPiscine:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMPiscine()
-SelLog.log("*** if ***")
 
 	wmdSub:refresh()
 	genMenu()

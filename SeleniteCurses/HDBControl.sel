@@ -8,11 +8,13 @@
 -- but it should be took as example to build your own one
 
 assert( SELENE_VERSION >= 4.0300, "HDB requires at least Selene v4.03.00, using " .. SELENE_VERSION )
-local stitle = " Home Dashboard Control v0.4.0 (Selene v".. SELENE_VERSION ..") "
+local stitle = " Home Dashboard Control v0.4.1 (Selene v".. SELENE_VERSION ..") "
 
 -- Debug only
--- require("tostring")
+--[[
+require("tostring")
 SelLog.init("hdb.log")
+--]]
 
 require(SELENE_SCRIPT_DIR .. "/LocalConfig")
 require(SELENE_SCRIPT_DIR .. "/Helpers")
@@ -99,11 +101,8 @@ while true do
 				if actWnd then
 					actWnd.close()
 				end
-SelLog.log("*** 1 *** : "..c)
 				actWnd = swinLst[c]
-SelLog.log("*** 2 ***")
 				swinLst[c].func()
-SelLog.log("*** 3 ***")
 			elseif actWnd ~= nil then
 				if actWnd.key ~= nil then
 					actWnd.key(Brk, c,cn)
