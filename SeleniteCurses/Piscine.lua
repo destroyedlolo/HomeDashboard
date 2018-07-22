@@ -8,7 +8,7 @@ TPiscine:attrset( SelCurses.CharAttrConst('BOLD') )
 
 function updateTPiscine()
 	TPiscine:clear()
-	TPiscine:print( string.format('%4.1f', SelShared.get('SondePiscine/TempPiscine')) )
+	TPiscine:print( string.format('%4.1f', SelShared.Get('SondePiscine/TempPiscine')) )
 	TPiscine:refresh()
 end
 
@@ -19,7 +19,7 @@ TSonde:attrset( SelCurses.CharAttrConst('BOLD') )
 
 function updateTSonde()
 	TSonde:clear()
-	TSonde:print( string.format('%4.1f', SelShared.get('SondePiscine/TempInterne')) )
+	TSonde:print( string.format('%4.1f', SelShared.Get('SondePiscine/TempInterne')) )
 	TSonde:refresh()
 end
 
@@ -30,7 +30,7 @@ VPiscine:attrset( SelCurses.CharAttrConst('BOLD') )
 
 function updateVPoul()
 	VPiscine:clear()
-	VPiscine:print( string.format('%2.2f', SelShared.get('SondePiscine/Vcc')/1000) )
+	VPiscine:print( string.format('%2.2f', SelShared.Get('SondePiscine/Vcc')/1000) )
 	VPiscine:refresh()
 end
 
