@@ -22,6 +22,22 @@ local function f()
 	table.insert( additionnalevents, condition_freebox.getTimer() )
 	offx = offx + 24
 
+	local WiFi = ImageFiltreSurface( srf, offx,24, SELENE_SCRIPT_DIR .. "/Images/WiFi.png" )
+	condition_WiFi = Condition(WiFi, .5, { autorecover=true, issue_color=COL_RED } )
+	table.insert( additionnalevents, condition_WiFi.getTimer() )
+
+	local wdWiFi, _ = SelTimer.Create { when=150, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc= function ()
+			Notification.setColor( COL_RED )
+			Notification.Log( "Répéteur WiFi muet")
+			Notification.setColor( COL_WHITE )
+			condition_WiFi.report_issue()
+		end
+	}
+	table.insert( additionnalevents, wdWiFi )
+
+	local WiFiNoStations = MQTTinput('WiFiNoStations', 'ESPRouter_Domo/NoStations', nil, { condition=condition_WiFi, watchdog=wdWiFi } )
+	offx = offx + 24
+
 	Notification = NotificationArea( srf, offx, 0, 200, sh, fstxt, COL_DARKGREEN, { bgcolor=COL_GFXBG } )
 	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
 	log.RegisterTopic('messages', 'messages/Erreur', { udata=3 } )
