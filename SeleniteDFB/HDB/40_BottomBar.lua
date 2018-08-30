@@ -34,8 +34,10 @@ local function f()
 		end
 	}
 	table.insert( additionnalevents, wdWiFi )
-
 	local WiFiNoStations = MQTTinput('WiFiNoStations', 'ESPRouter_Domo/NoStations', nil, { condition=condition_WiFi, watchdog=wdWiFi } )
+
+	local barriere = ImageFiltreSurface( srf, offx,0, SELENE_SCRIPT_DIR .. "/Images/BarrierePoule.png" )
+	condition_BarrierePoule = Condition( barriere, 0, {issue_color=COL_RED } )
 	offx = offx + 24
 
 	Notification = NotificationArea( srf, offx, 0, 200, sh, fstxt, COL_DARKGREEN, { bgcolor=COL_GFXBG } )
