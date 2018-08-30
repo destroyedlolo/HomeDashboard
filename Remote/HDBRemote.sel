@@ -6,7 +6,7 @@ function disconnected()
 	print("disconnected")
 end
 
-local Brk, err = SelMQTT.Connect( MQTT_URL, { OnDisconnectTrigger=disconnected } )
+local Brk, err = SelMQTT.Connect( MQTT_URL, { OnDisconnectTrigger=disconnected, clientID="HDBRemote_"..Selene.getHostname().."_"..Selene.getPid() } )
 if err then
 	print( "Broker", err )
 	return

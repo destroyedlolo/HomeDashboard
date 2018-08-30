@@ -78,9 +78,14 @@ local function piscine()
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+<<<<<<< HEAD
 	srfg_tPiscine.get():FillGrandient { TopLeft={20,20,20,255}, BottomLeft={20,20,20,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
 	srfg_tPiscine.FrozeUnder()
 
+=======
+	srfg_tPiscine.get():FillGrandient { TopLeft={20,0x40,0x40,255}, BottomLeft={20,0x10,0x40,255}, TopRight={20,0xff,0xff,255}, BottomRight={20,0x80,0xff,255} }
+	srfg_tPiscine.FrozeUnder()
+>>>>>>> 73626aa2013985d0409ff8222e21adb8d54c263a
 
 	local tPiscine = MQTTStoreGfx( 'tPiscine', 'SondePiscine/TempPiscine', srf_tPiscine, srfg_tPiscine, 
 		{
@@ -116,24 +121,26 @@ local function piscine()
 	} )
 	offy = offy + ftitle1:GetHeight()
 
-	local srf_MaxTens = FieldBackBorder( srf, offx - 95, offy+5, fsdigit, COL_ORANGE, {
+	local srf_MaxTens = FieldBackBorder( srf, offx - 115, offy+5, fsdigit, COL_ORANGE, {
 		align = ALIGN_RIGHT,
 		gradient = grTension,
 		keepbackground = true,
 		sample_text = "8888"
 	} )
-	local srf_MinTens = FieldBackBorder( srf, offx - 95, offy + szy - fsdigit:GetHeight() - 5, fsdigit, COL_DIGIT, {
+	local srf_MinTens = FieldBackBorder( srf, offx - 115, offy + szy - fsdigit:GetHeight() - 5, fsdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		gradient = grTension,
 		keepbackground = true,
 		sample_text = "8888"
 	} )
-	local srfg_Tens = GfxArea( srf, offx - 100, offy, szx/3+95, szy, COL_RED, COL_GFXBG,{
+	local srfg_Tens = GfxArea( srf, offx - 118, offy, szx/3+115, szy, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {100, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_Tens.get():FillGrandient { TopLeft={8,85,8,255}, BottomLeft={85,33,8,255}, TopRight={32,255,32,255}, BottomRight={255,100,32,255} }
+	srfg_Tens.FrozeUnder()
 
 	local Tens = MQTTStoreGfx( 'PTens', 'SondePiscine/Vcc', srf_Tens, srfg_Tens, 
 		{ 
@@ -143,12 +150,15 @@ local function piscine()
 		}
 	)
 	table.insert( savedcols, Tens)
-	local srfg_WiFi = GfxArea( srf, offx+szx/3,offy, szx/3-5, szy, COL_RED, COL_GFXBG,{
+	local srfg_WiFi = GfxArea( srf, offx+szx/3,offy, szx/3-5, szy, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_WiFi.get():FillGrandient { BottomLeft={128,8,8,255}, TopLeft={128,8,8,255}, TopRight={255,15,15,255}, BottomRight={255,15,15,255} }
+	srfg_WiFi.FrozeUnder()
+
 	local srf_MaxWiFi = FieldBackBorder( srf, offx+szx/3+2, offy+2, fstxt, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		keepbackground = true,
@@ -168,12 +178,15 @@ local function piscine()
 	)
 	table.insert( savedcols, WiFi)
 
-	local srfg_MQTT = GfxArea( srf, offx+2*szx/3,offy, szx/3-5, szy, COL_RED, COL_GFXBG,{
+	local srfg_MQTT = GfxArea( srf, offx+2*szx/3,offy, szx/3-5, szy, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_MQTT.get():FillGrandient { BottomLeft={128,8,8,255}, TopLeft={128,8,8,255}, TopRight={255,15,15,255}, BottomRight={255,15,15,255} }
+	srfg_MQTT.FrozeUnder()
+
 	local srf_MaxMQTT = FieldBackBorder( srf, offx+2*szx/3+2, offy+2, fstxt, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		keepbackground = true,
@@ -203,12 +216,15 @@ local function piscine()
 	} )
 	offy = offy + ftitle1:GetHeight()
 
-	local srfg_tSonde = GfxArea( srf, offx,offy, szx, szy, COL_RED, COL_GFXBG,{
+	local srfg_tSonde = GfxArea( srf, offx,offy, szx, szy, COL_TRANSPARENT, COL_GFXBG,{
 		heverylines={ {5, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
 		align=ALIGN_RIGHT 
 	} )
+	srfg_tSonde.get():FillGrandient { TopLeft={0x40,0x10,0x05,255}, BottomLeft={0x05,0x40,0x10,255}, TopRight={255,100,32,255}, BottomRight={32,255,32,255} }
+	srfg_tSonde.FrozeUnder()
+
 
 	local tSonde = MQTTStoreGfx( 'tSonde', 'SondePiscine/TempInterne', srf_tSonde, srfg_tSonde, 
 		{ forced_min = 0, rangeMin = -100, rangeMax = 100 }

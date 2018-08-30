@@ -7,14 +7,14 @@
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own one
 
-assert( SELENE_VERSION >= 4.0100, "HDB requires at least Selene v4.01.00" )
-local stitle = " Home Dashboard Control v0.3.0 (Selene v".. SELENE_VERSION ..") "
+assert( SELENE_VERSION >= 4.0300, "HDB requires at least Selene v4.03.00, using " .. SELENE_VERSION )
+local stitle = " Home Dashboard Control v0.4.1 (Selene v".. SELENE_VERSION ..") "
 
 -- Debug only
 --[[
 require("tostring")
 SelLog.init("hdb.log")
-]]
+--]]
 
 require(SELENE_SCRIPT_DIR .. "/LocalConfig")
 require(SELENE_SCRIPT_DIR .. "/Helpers")
@@ -34,6 +34,8 @@ pwnd:Move(0,1)
 require(SELENE_SCRIPT_DIR .. "/1er")
 require(SELENE_SCRIPT_DIR .. "/RDC")
 require(SELENE_SCRIPT_DIR .. "/SousSol")
+require(SELENE_SCRIPT_DIR .. "/Poulailler")
+require(SELENE_SCRIPT_DIR .. "/Piscine")
 
 pwnd:print("\n\n")
 pwnd:HLine(w,'-')
@@ -58,7 +60,7 @@ pwnd:refresh()
 function disconnected()
 end
 
-local Brk, err = SelMQTT.Connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
+local Brk, err = SelMQTT.Connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID.."_"..Selene.getHostname().."_"..Selene.getPid(), OnDisconnectTrigger=disconnected } )
 if err then
 	print( "Broker", err )
 	return
