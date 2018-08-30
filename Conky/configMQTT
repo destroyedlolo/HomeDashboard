@@ -47,17 +47,28 @@ conky.config = {
 	short_units = true,
 	pad_percents = 2,
 
+-- Title, var, unit
 	template0 = [[
 ${color grey}\1 : ${color}${lua_parse displayvarU \2 \3}]],
+
+-- Internet
+-- Title, Down, Up, Unit
 	template1 = [[
 ${color grey}\1 : ${color}${lua_parse displayvarU \2 \4} / ${color}${lua_parse displayvar \3 \4}]],
+
+-- Raw value
+-- Title, var
 	template2 = [[
 ${color grey}\1 : ${color}${lua_parse displayvar \2}]],
 
+-- Congelo
+-- Title, var, unit
+	template3 = [[
+${color grey}\1 : ${color}${lua_parse displayvarCongelo \2 \3}]],
 };
 
 conky.text = [[
-${template0 Congelo Congelo °C}
+${template3 Congelo Congelo °C}
 
 ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
 

@@ -47,6 +47,7 @@ local topics = {	-- Topics to subscribe
 }
 
 ---- End of configurable area ----
+os.setlocale('C') -- otherwise, fail with locale where ',' is the decimal separator (FR)
 
 -- Unfortunately, paho lib doesn't like keyed tables 
 -- so we have to build a temporary collection
@@ -85,6 +86,18 @@ function conky_displayvar( var )
 		return '????'
 	else
 		return tostring(_G[ var ])
+	end
+end
+
+function conky_displayvarCongelo( var, unite )
+	if not _G[ var ] then
+		return '????'
+	else
+		local ret = ""
+		if tonumber(_G[ var ]) > -10 then
+			ret = "${color red}"
+		end
+		return ret..tostring(_G[ var ]).."${color grey} "..unite
 	end
 end
 
