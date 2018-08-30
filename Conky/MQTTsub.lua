@@ -31,6 +31,8 @@ local topics = {	-- Topics to subscribe
 	P_Garage = {tpc = 'maison/IO/Porte_Garage'},
 	P_Cave = {tpc = 'maison/IO/Porte_Cave'},
 	P_GSud = {tpc = 'maison/IO/Porte_GSud'},
+	P_GNord = {tpc = 'maison/IO/Porte_GNord'},
+	B_Poules = {tpc = 'maison/IO/Barriere_Poules'},
 
 	Congelo = {tpc = 'maison/Temperature/Congelateur'},
 	Piscine = {tpc = 'SondePiscine/TempPiscine'},
@@ -89,6 +91,19 @@ function conky_displayvar( var )
 	end
 end
 
+function conky_displayAccess( var )
+	if not _G[ var ] then
+		return '????'
+	else
+		if _G[ var ] == "Ouverte" then
+			ret = "${color red}"
+		else
+			ret = "${color}"
+		end
+		return ret .. _G[ var ]
+	end
+end
+
 function conky_displayvarCongelo( var, unite )
 	if not _G[ var ] then
 		return '????'
@@ -96,10 +111,13 @@ function conky_displayvarCongelo( var, unite )
 		local ret = ""
 		if tonumber(_G[ var ]) > -10 then
 			ret = "${color red}"
+		else
+			ret = "${color}"
 		end
 		return ret..tostring(_G[ var ]).."${color grey} "..unite
 	end
 end
+
 
 function conky_displayvarU( var, unite )
 	if not _G[ var ] then
@@ -118,6 +136,10 @@ function conky_getProd( )
 end
 
 function conky_getprc( var )
+	if not _G[ var ] then
+		return 0
+	end
+
 	if not topics[ var ].min then
 		return 100*_G[ var ]/topics[ var ].max
 	else

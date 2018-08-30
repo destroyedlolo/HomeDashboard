@@ -64,7 +64,13 @@ ${color grey}\1 : ${color}${lua_parse displayvar \2}]],
 -- Congelo
 -- Title, var, unit
 	template3 = [[
-${color grey}\1 : ${color}${lua_parse displayvarCongelo \2 \3}]],
+${color grey}\1 : ${lua_parse displayvarCongelo \2 \3}]],
+
+-- Access
+-- Title, var
+	template4 = [[
+${color grey}\1 : ${lua_parse displayAccess \2 \3}]],
+
 };
 
 conky.text = [[
@@ -85,9 +91,9 @@ Piscine : ${lua_parse getVPiscine} V ${lua_bar getprc vPiscine}
 
 ${color Green}Portes${offset 8}${color8}${voffset -2}${hr}
 
-${template2 Grenier_Sud P_GSud}
-${template2 Cave P_Cave}
-${template2 Garage P_Garage}
+${color grey}Grenier ${template4 Sud P_GSud} ${template4 Nord P_GNord}
+${template4 Cave P_Cave} ${template4 Garage P_Garage}
+${template4 Barriere_Poules B_Poules}
 
 ${color Green}Electricité${offset 8}${color8}${voffset -2}${hr}
 #${lua_graph getConso 20, 00aa00 aa0000 -t}
