@@ -21,6 +21,8 @@ local topics = {	-- Topics to subscribe
 	Consomation = {tpc = 'TeleInfo/Consommation/values/PAPP', max=13200}, -- 220v * 60a
 	Production = {tpc = 'TeleInfo/Production/values/PAPP', max=1900},
 
+	vPiscine = {tpc='SondePiscine/Vcc', max=3300, min=2500},
+
 	ups_voltage = {tpc = 'onduleur/input.voltage'},
 	ups_load = {tpc = 'onduleur/ups.load', max=100},
 	ups_load_nom = {tpc = 'onduleur/ups.realpower.nominal'},
@@ -31,7 +33,7 @@ local topics = {	-- Topics to subscribe
 	P_GSud = {tpc = 'maison/IO/Porte_GSud'},
 
 	Congelo = {tpc = 'maison/Temperature/Congelateur'},
-	Injecteur = {tpc = 'maison/Temperature/Injecteur'},
+	Piscine = {tpc = 'SondePiscine/TempPiscine'},
 	Bureau = {tpc = 'maison/Temperature/Bureau'},
 	Garage = {tpc = 'maison/Temperature/Garage'},
 	GarageP = {tpc = 'maison/Temperature/GarageP'},
@@ -103,7 +105,17 @@ function conky_getProd( )
 end
 
 function conky_getprc( var )
-	return 100*_G[ var ]/topics[ var ].max
+	if not topics[ var ].min then
+		return 100*_G[ var ]/topics[ var ].max
+	else
+		local t = _G[ var ] - topics[ var ].min
+		local delta = topics[ var ].max - topics[ var ].min
+		if t < 0 then
+			return 0
+		else
+			return 100 * t / delta
+		end
+	end
 end
 
 function conky_getCharge( )
@@ -111,6 +123,14 @@ function conky_getCharge( )
 		return '????'
 	else
 		return ups_load * ups_load_nom / 100
+	end
+end
+
+function conky_getVPiscine( )
+	if not vPiscine then
+		return '????'
+	else
+		return vPiscine / 1000
 	end
 end
 

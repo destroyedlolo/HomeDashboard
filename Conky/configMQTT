@@ -1,57 +1,62 @@
-#configuration pour Conky écoutant un broker MQTT
+conky.config = {
+--configuration pour Conky écoutant un broker MQTT
 
-lua_load /usr/local/share/conky/MQTTsub.lua
-lua_startup_hook init
-lua_shutdown_hook cleanup
-lua_draw_hook_pre handlebroker
+	lua_load = '/usr/local/share/conky/MQTTsub.lua',
+	lua_startup_hook = 'init',
+	lua_shutdown_hook = 'cleanup',
+	lua_draw_hook_pre = 'handlebroker',
 
-alignment bottom_left
-double_buffer yes
-default_color white
-default_shade_color black
-default_outline_color grey
+	alignment = 'bottom_left',
+	double_buffer = true,
+	default_color = 'white',
+	default_shade_color = 'black',
+	default_outline_color = 'grey',
 
-background no
-border_width 1
-cpu_avg_samples 2
+	background = false,
+	border_width = 1,
+	cpu_avg_samples = 2,
 
-draw_borders no
-draw_graph_borders yes
-draw_outline no
-draw_shades yes
-use_xft yes
-xftfont DejaVu Sans Mono:size=7
-gap_x 5
-gap_y 60
-minimum_size 5 5
-net_avg_samples 2
+	draw_borders = false,
+	draw_graph_borders = true,
+	draw_outline = false,
+	draw_shades = true,
+	use_xft = true,
+	font = 'DejaVu Sans Mono:size=7',
+	gap_x = 5,
+	gap_y = 60,
+	minimum_width = 5, minimum_height = 5,
+	net_avg_samples = 2,
 
-no_buffers yes
-out_to_console no
-out_to_stderr no
-extra_newline no
-own_window yes
-own_window_class Conky
-#own_window_type desktop
-own_window_type normal
-own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
-own_window_transparent yes
-#own_window_transparent no
-#own_window_argb_value 30
-stippled_borders 0
-update_interval 1.0
-uppercase no
-use_spacer none
+	no_buffers = true,
+	out_to_console = false,
+	out_to_stderr = false,
+	extra_newline = false,
+	own_window = true,
+	own_window_class = 'Conky',
+--own_window_type desktop
+	own_window_type = 'normal',
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+	own_window_transparent = true,
+--own_window_transparent no
+--own_window_argb_value 30
+	stippled_borders = 0,
+	update_interval = 1.0,
+	uppercase = false,
+	use_spacer = 'none',
 
-short_units yes
-pad_percents 2
+	short_units = true,
+	pad_percents = 2,
 
-template0 ${color grey}\1 : ${color}${lua_parse displayvarU \2 \3}
-template1 ${color grey}\1 : ${color}${lua_parse displayvarU \2 \4} / ${color}${lua_parse displayvar \3 \4}
-template2 ${color grey}\1 : ${color}${lua_parse displayvar \2}
+	template0 = [[
+${color grey}\1 : ${color}${lua_parse displayvarU \2 \3}]],
+	template1 = [[
+${color grey}\1 : ${color}${lua_parse displayvarU \2 \4} / ${color}${lua_parse displayvar \3 \4}]],
+	template2 = [[
+${color grey}\1 : ${color}${lua_parse displayvar \2}]],
 
-TEXT
-${template0 Injecteur Injecteur °C}
+};
+
+conky.text = [[
 ${template0 Congelo Congelo °C}
 
 ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
@@ -61,6 +66,11 @@ ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
  ${template0 Oceane ChOceane °C}	  ${template0 Joris ChJoris °C}
   ${template0 Salon Salon °C}	 ${template0 Bureau Bureau °C}
  ${template0 Garage Garage °C}	${template0 Prt_Grg GarageP °C}
+
+${color Green}Piscine${offset 8}${color8}${voffset -2}${hr}
+
+${template0 Température Piscine °C}
+Piscine : ${lua_parse getVPiscine} V ${lua_bar getprc vPiscine}
 
 ${color Green}Portes${offset 8}${color8}${voffset -2}${hr}
 
@@ -89,3 +99,4 @@ ${color Green}Internet${offset 8}${color8}${voffset -2}${hr}
 ${template1 Internet EWANd EWANu Ko}
       ${template1 TV ETVd ETVu Ko}
      ${template1 Lan ELand ELanu Ko}
+]];
