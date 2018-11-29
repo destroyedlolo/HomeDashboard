@@ -22,6 +22,8 @@ local topics = {	-- Topics to subscribe
 	Production = {tpc = 'TeleInfo/Production/values/PAPP', max=1900},
 
 	vPiscine = {tpc='SondePiscine/Vcc', max=3300, min=2500},
+	vPoulailler = {tpc='Poulailler/Alim', max=5000, min=4500},
+	hPoulailler = {tpc='Poulailler/Perchoir/Humidite'},
 
 	ups_voltage = {tpc = 'onduleur/input.voltage'},
 	ups_load = {tpc = 'onduleur/ups.load', max=100},
@@ -36,6 +38,7 @@ local topics = {	-- Topics to subscribe
 
 	Congelo = {tpc = 'maison/Temperature/Congelateur'},
 	Piscine = {tpc = 'SondePiscine/TempPiscine'},
+	Poulailler = {tpc = 'Poulailler/Perchoir/Temperature'},
 	Bureau = {tpc = 'maison/Temperature/Bureau'},
 	Garage = {tpc = 'maison/Temperature/Garage'},
 	GarageP = {tpc = 'maison/Temperature/GarageP'},
@@ -166,6 +169,22 @@ function conky_getVPiscine( )
 		return '????'
 	else
 		return vPiscine / 1000
+	end
+end
+
+function conky_getVPoulailler( )
+	if not vPoulailler then
+		return '????'
+	else
+		return vPoulailler / 1000
+	end
+end
+
+function conky_getHPoulailler( )
+	if not hPoulailler then
+		return '????'
+	else
+		return hPoulailler
 	end
 end
 

@@ -74,8 +74,6 @@ ${color grey}\1 : ${lua_parse displayAccess \2 \3}]],
 };
 
 conky.text = [[
-${template3 Congelo Congelo °C}
-
 ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
 
  ${template0 Comble Comble °C}  ${template0 Dehors Dehors °C}
@@ -84,10 +82,17 @@ ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
   ${template0 Salon Salon °C}	 ${template0 Bureau Bureau °C}
  ${template0 Garage Garage °C}	${template0 Prt_Grg GarageP °C}
 
+${template3 Congelo Congelo °C}
+
+${color Green}Poulailler${offset 8}${color8}${voffset -2}${hr}
+
+${template0 Température Poulailler °C} Humidité : ${lua_parse getHPoulailler}
+${color grey}Batterie : ${lua_parse getVPoulailler} V ${lua_bar getprc vPoulailler}
+
 ${color Green}Piscine${offset 8}${color8}${voffset -2}${hr}
 
 ${template0 Température Piscine °C}
-Piscine : ${lua_parse getVPiscine} V ${lua_bar getprc vPiscine}
+${color grey}Batterie : ${lua_parse getVPiscine} V ${lua_bar getprc vPiscine}
 
 ${color Green}Portes${offset 8}${color8}${voffset -2}${hr}
 
