@@ -86,13 +86,13 @@ ${template3 Congelo Congelo °C}
 
 ${color Green}Poulailler${offset 8}${color8}${voffset -2}${hr}
 
-${template0 Température Poulailler °C} Humidité : ${lua_parse getHPoulailler}
-${color grey}Batterie : ${lua_parse getVPoulailler} V ${lua_bar getprc vPoulailler}
+${template0 Température Poulailler °C} Humidité : ${color}${lua_parse getHPoulailler}
+${color grey}Batterie : ${color}${lua_parse getVPoulailler} V ${lua_bar getprc vPoulailler}
 
 ${color Green}Piscine${offset 8}${color8}${voffset -2}${hr}
 
 ${template0 Température Piscine °C}
-${color grey}Batterie : ${lua_parse getVPiscine} V ${lua_bar getprc vPiscine}
+${color grey}Batterie : ${color}${lua_parse getVPiscine} V ${lua_bar getprc vPiscine}
 
 ${color Green}Portes${offset 8}${color8}${voffset -2}${hr}
 
@@ -112,7 +112,7 @@ ${template0 Production Production VA}	${lua_bar getprc Production}
 ${color Green}Onduleur${offset 8}${color8}${voffset -2}${hr}
 
 ${template0 Réseau ups_voltage V}
-Charge : ${lua_parse getCharge} W ${lua_bar getprc ups_load}
+Charge : ${color}${lua_parse getCharge} W ${lua_bar getprc ups_load}
 
 ${color Green}Internet${offset 8}${color8}${voffset -2}${hr}
 
