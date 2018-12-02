@@ -40,6 +40,14 @@ function updateMForceParents()
 	end
 end
 
+function updateMForceChAmis()
+	if Mode == 'C' then
+		MForceP:clear()
+		MForceP:print( SelShared.Get('Majordome/Mode/Force/ChAmis') )
+		MForceP:refresh()
+	end
+end
+
 function updateMPiscine()
 	if Mode == 'C' then
 		MPiscine:clear()
@@ -120,6 +128,8 @@ function keyConsignes(Brk, c,cn)
 		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants/Joris' )
 	elseif c == 'p' then
 		popupConsMode( Brk, 'Majordome/Mode/Force/Parents' )
+	elseif c == 'm' then
+		popupConsMode( Brk, 'Majordome/Mode/Force/ChAmis' )
 	elseif c == 'i' then
 		popupConsPiscine( Brk, 'Majordome/Mode/Piscine' )
 	end
@@ -175,6 +185,13 @@ function initConsignes()
 	MForceP:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceParents()
 
+	wmdSub:Move(2,7)
+	genTitre(wmdSub, 'Force A&mis: ')
+	x,y = wmdSub:GetXY()
+	MForceP = wmdSub:DerWin(x,y,8,1)
+	MForceP:attrset( SelCurses.CharAttrConst('BOLD') )
+	updateMForceChAmis()
+
 	wmdSub:Move(2,8)
 	genTitre(wmdSub, 'P&iscine : ')
 	x,y = wmdSub:GetXY()
@@ -206,6 +223,7 @@ local ltopics = {
 	{ topic = 'Majordome/Mode/Force/Enfants/Oceane', trigger=updateMForceEOceane, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants/Joris', trigger=updateMForceEJoris, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Parents', trigger=updateMForceParents, trigger_once=true },
+	{ topic = 'Majordome/Mode/Force/ChAmis', trigger=updateMForceChAmis, trigger_once=true },
 	{ topic = 'Majordome/Mode/Piscine', trigger=updateMPiscine, trigger_once=true },
 }
 
@@ -218,4 +236,5 @@ SelShared.Set('Majordome/Mode/Force/Enfants', '?')
 SelShared.Set('Majordome/Mode/Force/Enfants/Oceane', '?')
 SelShared.Set('Majordome/Mode/Force/Enfants/Joris', '?')
 SelShared.Set('Majordome/Mode/Force/Parents', '?')
+SelShared.Set('Majordome/Mode/Force/ChAmis', '?')
 SelShared.Set('Majordome/Mode/Piscine', 'Heures Creuses')
