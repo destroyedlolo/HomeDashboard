@@ -51,6 +51,7 @@ actWnd = nil	-- Fenetre active
 
 require(SELENE_SCRIPT_DIR .. "/Volets")
 require(SELENE_SCRIPT_DIR .. "/Consignes")
+require(SELENE_SCRIPT_DIR .. "/Automatisme")
 swinLst['Q'] = { titre="&Quitter", func=os.exit }
 
 genMenu()
