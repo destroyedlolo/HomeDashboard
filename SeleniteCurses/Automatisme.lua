@@ -36,6 +36,12 @@ function initAuto()
 	ModeR:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateModeR()
 
+	wmdSub:Move(2,3)
+	wmdSub:print('Suivi solaire : ')
+	x,y = wmdSub:GetXY()
+	SuiviSol = wmdSub:DerWin(x,y,25,1)
+	SuiviSol:attrset( SelCurses.CharAttrConst('BOLD') )
+
 	wmdSub:refresh()
 	genMenu()
 end
@@ -71,10 +77,29 @@ function updateModeR()
 	end
 end
 
+function updateSuiviSol()
+	if Mode == 'A' then
+		SuiviSol:clear()
+		local r = SelShared.Get('Majordome/Traces/SuiviCoucherSoleil')
+		if r:byte() == 70 then -- 'F'
+			local h,m,hd,md = r:match( "(%d+):(%d+);(%d+):(%d+)" )
+			SuiviSol:print( string.format("Fini a %02d:%02d contre %02d:%d02d", h,m, hd, md) )
+		elseif r:byte() == 68 then -- 'D'
+			local h,m = r:match( "(%d+):(%d+)" )
+			SuiviSol:print( string.format("Debut a %02d:%02d", h,m) )
+		elseif r:byte() == 69 then -- 'D'
+			local h,m = r:match( "(%d+):(%d+)" )
+			SuiviSol:print( string.format("Depuis %02d:%02d", h,m) )
+		end
+		SuiviSol:refresh()
+	end
+end
+
 local ltopics = {
 	{ topic = 'Majordome/Saison', trigger=updateSaison, trigger_once=true },
 	{ topic = 'Majordome/Saison/Hier', trigger=updateSaisonH, trigger_once=true },
 	{ topic = 'Majordome/Mode', trigger=updateModeR, trigger_once=true },
+	{ topic = 'Majordome/Traces/SuiviCoucherSoleil', trigger=updateSuiviSol, trigger_once=true },
 }
 TableMerge( Topics, ltopics)
 
