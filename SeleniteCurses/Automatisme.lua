@@ -41,6 +41,7 @@ function initAuto()
 	x,y = wmdSub:GetXY()
 	SuiviSol = wmdSub:DerWin(x,y,25,1)
 	SuiviSol:attrset( SelCurses.CharAttrConst('BOLD') )
+	updateSuiviSol()
 
 	wmdSub:refresh()
 	genMenu()
