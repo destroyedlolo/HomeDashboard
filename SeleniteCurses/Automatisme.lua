@@ -82,15 +82,17 @@ function updateSuiviSol()
 	if Mode == 'A' then
 		SuiviSol:clear()
 		local r = SelShared.Get('Majordome/Traces/SuiviCoucherSoleil')
-		if r:byte() == 70 then -- 'F'
-			local h,m,hd,md = r:match( "(%d+):(%d+);(%d+):(%d+)" )
-			SuiviSol:print( string.format("Fini a %02d:%02d contre %02d:%d02d", h,m, hd, md) )
-		elseif r:byte() == 68 then -- 'D'
-			local h,m = r:match( "(%d+):(%d+)" )
-			SuiviSol:print( string.format("Debut a %02d:%02d", h,m) )
-		elseif r:byte() == 69 then -- 'D'
-			local h,m = r:match( "(%d+):(%d+)" )
-			SuiviSol:print( string.format("Depuis %02d:%02d", h,m) )
+		if r ~= nil then
+			if r:byte() == 70 then -- 'F'
+				local h,m,hd,md = r:match( "(%d+):(%d+);(%d+):(%d+)" )
+				SuiviSol:print( string.format("Fini a %02d:%02d contre %02d:%d02d", h,m, hd, md) )
+			elseif r:byte() == 68 then -- 'D'
+				local h,m = r:match( "(%d+):(%d+)" )
+				SuiviSol:print( string.format("Debut a %02d:%02d", h,m) )
+			elseif r:byte() == 69 then -- 'D'
+				local h,m = r:match( "(%d+):(%d+)" )
+				SuiviSol:print( string.format("Depuis %02d:%02d", h,m) )
+			end
 		end
 		SuiviSol:refresh()
 	end
