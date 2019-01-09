@@ -1,0 +1,110 @@
+#!/home/laurent/Projets/Selene/Selene
+-- HomeDashBoard, OLED version, targeting a tiny 128x32 screen
+-- This tool is configured for my own usage and is matching my home configuration
+-- but it should be took as example to build your own dashboard
+
+-- Configuration
+local SAVE_DIR = '/var/tmp/'
+local SCRN_ID = 2				-- Screen identifier
+local I2C_DEV = '/dev/i2c-2'	-- Where to find the screen
+
+--	Compatibility with newer Lua
+unpack = unpack or table.unpack
+if not table.pack then
+    function table.pack (...)
+        return {n=select('#',...); ...}
+    end
+end
+
+-- initialise graphical environment
+Selene.UseOLED()
+
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
+require "Toile"
+
+Topics = {}	-- Topics we are looking for
+
+additionnalevents = {}	-- List of additionnal events to wait for (timers, inputs, ...)
+savedcols = {}		-- Collection to be saved/restored
+
+function SaveCollection()
+	SelLog.log("*I* Saving collections ..")
+	for i,col in ipairs(savedcols) do
+		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
+	end
+end
+
+function quitHDB()
+	SaveCollection()
+	os.exit()
+end
+Selene.SigIntTask( quitHDB )
+
+-- Loading modules
+local info = debug.getinfo(1,'S');
+local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
+
+SelLog.log('Loading HDBOLed ...')
+local linclude = MultiDirRequire(whereiam)
+linclude.loaddir('GUI')
+linclude.requirefiles()
+
+SelLog.log("*I* Restoring collections ..")
+for i,col in ipairs(savedcols) do
+	print('*I* ' .. col.getName() ..' ...')
+	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
+end
+
+-- Broker's stuffs
+function disconnected()
+	condition_network.report_issue()
+	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
+	SelLog.log("*F* Deconnecté")
+	SaveCollection()
+end
+
+local err
+Brk, err = SelMQTT.Connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
+if err then
+	print( "Broker", err )
+	return
+end
+
+-- Subscribtion
+_, err = Brk:Subscribe( Topics )
+if err then
+	print( "Subscribtion", err )
+	return
+end
+
+-- Starting gfx environment
+if SelOLED.Init( SCRN_ID, I2C_DEV ) == false then
+	error("Can't open I2C Device\n")
+end
+SelOLED.Flip(true)	-- If needed
+
+-- Versions
+
+SelOLED.Clear()
+SelOLED.SetTextColor(1)
+SelOLED.SetTextSize(2)
+SelOLED.SetCursor(0,0)
+SelOLED.Print(MQTT_ClientID)
+
+SelOLED.SetTextSize(1)
+SelOLED.SetCursor(0,19)
+SelOLED.Print("Selene : ".. string.format("%.4f", SELENE_VERSION) .."\n\n")
+SelOLED.Print("Toile : ".. string.format("%.4f", TOILE_VERSION) .."\n")
+
+SelOLED.Display()
+
+-- Wait for events
+SelLog.log("Let's go ...")
+while true do
+	local rt = table.pack( Selene.WaitFor(switchtimer, wdTimer.getTimer(), unpack( additionnalevents )) )
+	for _,ret in ipairs(rt) do
+		if type(ret) == 'function' then
+			ret()
+		end
+	end
+end
