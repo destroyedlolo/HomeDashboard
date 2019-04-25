@@ -8,6 +8,14 @@ function updateMForce()
 	end
 end
 
+function updateMActif()
+	if Mode == 'C' then
+		MActif:clear()
+		MActif:print( SelShared.Get('Majordome/Mode') )
+		MActif:refresh()
+	end
+end
+
 function updateMForceEnfants()
 	if Mode == 'C' then
 		MForceE:clear()
@@ -164,6 +172,14 @@ function initConsignes()
 		MForce:attrset( SelCurses.CharAttrConst('BOLD') )
 	end
 	updateMForce()
+	wmdSub:Move(x+10,y)
+	wmdSub:print('(')
+	x,y = wmdSub:GetXY()
+	MActif = wmdSub:DerWin(x,y,8,1)
+	MActif:attrset( SelCurses.CharAttrConst('BOLD') )
+	wmdSub:Move(x+10,y)
+	wmdSub:print(')')
+	updateMActif()
 
 	wmdSub:Move(2,3)
 	genTitre(wmdSub, 'Force &enfants : ')
@@ -235,6 +251,7 @@ swinLst['C'] = { titre="&Consignes", func=initConsignes, key=keyConsignes, close
 
 local ltopics = {
 	{ topic = 'Majordome/Mode/Force', trigger=updateMForce, trigger_once=true },
+	{ topic = 'Majordome/Mode', trigger=updateMActif, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants', trigger=updateMForceEnfants, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants/Oceane', trigger=updateMForceEOceane, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants/Joris', trigger=updateMForceEJoris, trigger_once=true },
