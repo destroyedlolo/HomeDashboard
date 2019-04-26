@@ -8,6 +8,14 @@ function updateMForce()
 	end
 end
 
+function updateMActif()
+	if Mode == 'C' then
+		MActif:clear()
+		MActif:print( SelShared.Get('Majordome/Mode') )
+		MActif:refresh()
+	end
+end
+
 function updateMForceEnfants()
 	if Mode == 'C' then
 		MForceE:clear()
@@ -42,9 +50,17 @@ end
 
 function updateMForceChAmis()
 	if Mode == 'C' then
-		MForceP:clear()
-		MForceP:print( SelShared.Get('Majordome/Mode/Force/ChAmis') )
-		MForceP:refresh()
+		MForceA:clear()
+		MForceA:print( SelShared.Get('Majordome/Mode/Force/ChAmis') )
+		MForceA:refresh()
+	end
+end
+
+function updateMChAmis()
+	if Mode == 'C' then
+		MForceAr:clear()
+		MForceAr:print( SelShared.Get('Majordome/Mode/ChAmis') )
+		MForceAr:refresh()
 	end
 end
 
@@ -156,6 +172,14 @@ function initConsignes()
 		MForce:attrset( SelCurses.CharAttrConst('BOLD') )
 	end
 	updateMForce()
+	wmdSub:Move(x+10,y)
+	wmdSub:print('(')
+	x,y = wmdSub:GetXY()
+	MActif = wmdSub:DerWin(x,y,8,1)
+	MActif:attrset( SelCurses.CharAttrConst('BOLD') )
+	wmdSub:Move(x+10,y)
+	wmdSub:print(')')
+	updateMActif()
 
 	wmdSub:Move(2,3)
 	genTitre(wmdSub, 'Force &enfants : ')
@@ -188,9 +212,17 @@ function initConsignes()
 	wmdSub:Move(2,7)
 	genTitre(wmdSub, 'Force A&mis: ')
 	x,y = wmdSub:GetXY()
-	MForceP = wmdSub:DerWin(x,y,8,1)
-	MForceP:attrset( SelCurses.CharAttrConst('BOLD') )
+	MForceA = wmdSub:DerWin(x,y,8,1)
+	MForceA:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceChAmis()
+	wmdSub:Move(x+10,y)
+	wmdSub:print('(')
+	x,y = wmdSub:GetXY()
+	MForceAr = wmdSub:DerWin(x,y,8,1)
+	MForceAr:attrset( SelCurses.CharAttrConst('BOLD') )
+	wmdSub:Move(x+10,y)
+	wmdSub:print(')')
+	updateMChAmis()
 
 	wmdSub:Move(2,8)
 	genTitre(wmdSub, 'P&iscine : ')
@@ -219,11 +251,13 @@ swinLst['C'] = { titre="&Consignes", func=initConsignes, key=keyConsignes, close
 
 local ltopics = {
 	{ topic = 'Majordome/Mode/Force', trigger=updateMForce, trigger_once=true },
+	{ topic = 'Majordome/Mode', trigger=updateMActif, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants', trigger=updateMForceEnfants, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants/Oceane', trigger=updateMForceEOceane, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Enfants/Joris', trigger=updateMForceEJoris, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/Parents', trigger=updateMForceParents, trigger_once=true },
 	{ topic = 'Majordome/Mode/Force/ChAmis', trigger=updateMForceChAmis, trigger_once=true },
+	{ topic = 'Majordome/Mode/ChAmis', trigger=updateMChAmis, trigger_once=true },
 	{ topic = 'Majordome/Mode/Piscine', trigger=updateMPiscine, trigger_once=true },
 }
 
@@ -237,4 +271,5 @@ SelShared.Set('Majordome/Mode/Force/Enfants/Oceane', '?')
 SelShared.Set('Majordome/Mode/Force/Enfants/Joris', '?')
 SelShared.Set('Majordome/Mode/Force/Parents', '?')
 SelShared.Set('Majordome/Mode/Force/ChAmis', '?')
+SelShared.Set('Majordome/Mode/ChAmis', '?')
 SelShared.Set('Majordome/Mode/Piscine', 'Heures Creuses')

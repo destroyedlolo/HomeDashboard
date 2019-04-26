@@ -11,7 +11,7 @@ end
 
 function initAuto()
 	local x,y
-	Mode='A'
+	Mode='M'
 
 	wmdSub:clear()
 	wmdSub:border()
@@ -55,7 +55,7 @@ swinLst['M'] = { titre="&Majordome", func=initAuto, key=keyAuto, close=FermeAuto
 -- Topics
 
 function updateSaison()
-	if Mode == 'A' then
+	if Mode == 'M' then
 		Saison:clear()
 		Saison:print(SelShared.Get('Majordome/Saison'))
 		Saison:refresh()
@@ -63,7 +63,7 @@ function updateSaison()
 end
 
 function updateSaisonH()
-	if Mode == 'A' then
+	if Mode == 'M' then
 		SaisonH:clear()
 		SaisonH:print(SelShared.Get('Majordome/Saison/Hier'))
 		SaisonH:refresh()
@@ -71,7 +71,7 @@ function updateSaisonH()
 end
 
 function updateModeR()
-	if Mode == 'A' then
+	if Mode == 'M' then
 		ModeR:clear()
 		ModeR:print(SelShared.Get('Majordome/Mode'))
 		ModeR:refresh()
@@ -79,7 +79,7 @@ function updateModeR()
 end
 
 function updateSuiviSol()
-	if Mode == 'A' then
+	if Mode == 'M' then
 		SuiviSol:clear()
 		local r = SelShared.Get('Majordome/Traces/SuiviCoucherSoleil')
 		if r ~= nil then
