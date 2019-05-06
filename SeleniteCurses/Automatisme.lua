@@ -17,7 +17,7 @@ function initAuto()
 	wmdSub:border()
 
 	wmdSub:Move(2,1)
-	genTitre(wmdSub, '&Saison : ')
+	genTitre(wmdSub, 'S&aison : ')
 	x,y = wmdSub:GetXY()
 	Saison = wmdSub:DerWin(x,y,14,1)
 	Saison:attrset( SelCurses.CharAttrConst('BOLD') )
@@ -47,7 +47,36 @@ function initAuto()
 	genMenu()
 end
 
+function popupSaison(Brk, topic)
+	local w,h = wmdSub:GetSize()
+	local popup = wmdSub:DerWin((w-15)/2,2, 18,5)
+
+	genTitre(popup, "\n  &Intersaison\n")
+	genTitre(popup, "  &Ete\n")
+	genTitre(popup, "  &Hiver\n")
+
+	popup:border()
+	popup:refresh()
+
+	local c = string.upper(string.char(popup:getch()))
+
+	if c == 'I' then
+		_,err = Brk:Publish( topic, "Intersaison", true)
+	elseif c == 'E' then
+		Brk:Publish( topic, "Ete", true)
+	elseif c == 'H' then
+		Brk:Publish( topic, "Hiver", true)
+	end
+
+	popup:delwin()
+end
+
 function keyAuto(Brk, c,cn)
+	if c == 'a' then
+		popupSaison(Brk,'Majordome/Saison')
+	end
+
+	initAuto()
 end
 
 swinLst['M'] = { titre="&Majordome", func=initAuto, key=keyAuto, close=FermeAuto }
