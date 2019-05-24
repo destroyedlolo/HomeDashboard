@@ -85,6 +85,30 @@ function updateCCoucher()
 	end
 end
 
+function updateCLvO()
+	if Mode == 'C' then
+		CLvO:clear()
+		CLvO:print( SelShared.Get('Majordome/HLever/Oceane') )
+		CLvO:refresh()
+	end
+end
+
+function updateCLvJ()
+	if Mode == 'C' then
+		CLvJ:clear()
+		CLvJ:print( SelShared.Get('Majordome/HLever/Joris') )
+		CLvJ:refresh()
+	end
+end
+
+function updateCLvP()
+	if Mode == 'C' then
+		CLvP:clear()
+		CLvP:print( SelShared.Get('Majordome/HLever') )
+		CLvP:refresh()
+	end
+end
+
 function popupConsMode( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
@@ -208,6 +232,12 @@ function initConsignes()
 	MForceEO = wmdSub:DerWin(x,y,8,1)
 	MForceEO:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceEOceane()
+	wmdSub:Move(x+10,y)
+	genTitre(wmdSub, 'Lever : ')
+	x,y = wmdSub:GetXY()
+	CLvO = wmdSub:DerWin(x,y,5,1)
+	CLvO:attrset( SelCurses.CharAttrConst('BOLD') )
+	updateCLvO()
 
 	wmdSub:Move(6,5)
 	genTitre(wmdSub, 'J&oris : ')
@@ -215,6 +245,12 @@ function initConsignes()
 	MForceEJ = wmdSub:DerWin(x,y,8,1)
 	MForceEJ:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceEJoris()
+	wmdSub:Move(x+10,y)
+	genTitre(wmdSub, 'Lever : ')
+	x,y = wmdSub:GetXY()
+	CLvJ = wmdSub:DerWin(x,y,5,1)
+	CLvJ:attrset( SelCurses.CharAttrConst('BOLD') )
+	updateCLvJ()
 
 	wmdSub:Move(2,6)
 	genTitre(wmdSub, 'Force &parents: ')
@@ -222,6 +258,12 @@ function initConsignes()
 	MForceP = wmdSub:DerWin(x,y,8,1)
 	MForceP:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceParents()
+	wmdSub:Move(x+10,y)
+	genTitre(wmdSub, 'Lever : ')
+	x,y = wmdSub:GetXY()
+	CLvP = wmdSub:DerWin(x,y,5,1)
+	CLvP:attrset( SelCurses.CharAttrConst('BOLD') )
+	updateCLvP()
 
 	wmdSub:Move(2,7)
 	genTitre(wmdSub, 'Force A&mis: ')
@@ -274,6 +316,9 @@ local ltopics = {
 	{ topic = 'Majordome/Mode/ChAmis', trigger=updateMChAmis, trigger_once=true },
 	{ topic = 'Majordome/Mode/Piscine', trigger=updateMPiscine, trigger_once=true },
 	{ topic = 'Majordome/HCoucher', trigger=updateCCoucher, trigger_once=true },
+	{ topic = 'Majordome/HLever/Oceane', trigger=updateCLvO, trigger_once=true },
+	{ topic = 'Majordome/HLever/Joris', trigger=updateCLvJ, trigger_once=true },
+	{ topic = 'Majordome/HLever', trigger=updateCLvP, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
@@ -289,3 +334,6 @@ SelShared.Set('Majordome/Mode/Force/ChAmis', '?')
 SelShared.Set('Majordome/Mode/ChAmis', '?')
 SelShared.Set('Majordome/Mode/Piscine', 'Heures Creuses')
 SelShared.Set('Majordome/HCoucher', '??.??')
+SelShared.Set('Majordome/HLever/Oceane', '??.??')
+SelShared.Set('Majordome/HLever/Joris', '??.??')
+SelShared.Set('Majordome/HLever', '??.??')
