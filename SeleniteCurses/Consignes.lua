@@ -77,6 +77,14 @@ function updateMPiscine()
 	end
 end
 
+function updateCCoucher()
+	if Mode == 'C' then
+		CCoucher:clear()
+		CCoucher:print( SelShared.Get('Majordome/HCoucher') )
+		CCoucher:refresh()
+	end
+end
+
 function popupConsMode( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
@@ -187,6 +195,12 @@ function initConsignes()
 	MForceE = wmdSub:DerWin(x,y,8,1)
 	MForceE:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceEnfants()
+	wmdSub:Move(x+10,y)
+	genTitre(wmdSub, 'Couc&her : ')
+	x,y = wmdSub:GetXY()
+	CCoucher = wmdSub:DerWin(x,y,5,1)
+	CCoucher:attrset( SelCurses.CharAttrConst('BOLD') )
+	updateCCoucher()
 
 	wmdSub:Move(5,4)
 	genTitre(wmdSub, 'O&ceane : ')
@@ -259,6 +273,7 @@ local ltopics = {
 	{ topic = 'Majordome/Mode/Force/ChAmis', trigger=updateMForceChAmis, trigger_once=true },
 	{ topic = 'Majordome/Mode/ChAmis', trigger=updateMChAmis, trigger_once=true },
 	{ topic = 'Majordome/Mode/Piscine', trigger=updateMPiscine, trigger_once=true },
+	{ topic = 'Majordome/HCoucher', trigger=updateCCoucher, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
@@ -273,3 +288,4 @@ SelShared.Set('Majordome/Mode/Force/Parents', '?')
 SelShared.Set('Majordome/Mode/Force/ChAmis', '?')
 SelShared.Set('Majordome/Mode/ChAmis', '?')
 SelShared.Set('Majordome/Mode/Piscine', 'Heures Creuses')
+SelShared.Set('Majordome/HCoucher', '??.??')
