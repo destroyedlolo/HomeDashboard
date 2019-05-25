@@ -166,13 +166,13 @@ function popupConsPiscine( Brk, topic )
 end
 
 function keyConsignes(Brk, c,cn)
-	if c == 'r' then
+	if c == 'o' then
 		popupConsMode( Brk, 'Majordome/Mode/Force' )
-	elseif c == 'e' then
+	elseif c == 'n' then
 		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants' )
 	elseif c == 'c' then
 		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants/Oceane' )
-	elseif c == 'o' then
+	elseif c == 's' then
 		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants/Joris' )
 	elseif c == 'p' then
 		popupConsMode( Brk, 'Majordome/Mode/Force/Parents' )
@@ -197,7 +197,7 @@ function initConsignes()
 	wmdSub:attrset( SelCurses.CharAttrConst("NORMAL") )
 
 	wmdSub:Move(2,2)
-	genTitre(wmdSub, 'Fo&rce : ')
+	genTitre(wmdSub, 'F&orce : ')
 	x,y = wmdSub:GetXY()
 	if not MForce then
 		MForce = wmdSub:DerWin(x,y,8,1)
@@ -214,7 +214,7 @@ function initConsignes()
 	updateMActif()
 
 	wmdSub:Move(2,3)
-	genTitre(wmdSub, 'Force &enfants : ')
+	genTitre(wmdSub, 'Force e&nfants : ')
 	x,y = wmdSub:GetXY()
 	MForceE = wmdSub:DerWin(x,y,8,1)
 	MForceE:attrset( SelCurses.CharAttrConst('BOLD') )
@@ -233,40 +233,40 @@ function initConsignes()
 	MForceEO:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceEOceane()
 	wmdSub:Move(x+10,y)
-	genTitre(wmdSub, 'Lever : ')
+	genTitre(wmdSub, 'Le&ver : ')
 	x,y = wmdSub:GetXY()
 	CLvO = wmdSub:DerWin(x,y,5,1)
 	CLvO:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateCLvO()
 
 	wmdSub:Move(6,5)
-	genTitre(wmdSub, 'J&oris : ')
+	genTitre(wmdSub, 'Jori&s : ')
 	x,y = wmdSub:GetXY()
 	MForceEJ = wmdSub:DerWin(x,y,8,1)
 	MForceEJ:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceEJoris()
 	wmdSub:Move(x+10,y)
-	genTitre(wmdSub, 'Lever : ')
+	genTitre(wmdSub, 'Leve&r : ')
 	x,y = wmdSub:GetXY()
 	CLvJ = wmdSub:DerWin(x,y,5,1)
 	CLvJ:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateCLvJ()
 
 	wmdSub:Move(2,6)
-	genTitre(wmdSub, 'Force &parents: ')
+	genTitre(wmdSub, 'Force &parents : ')
 	x,y = wmdSub:GetXY()
 	MForceP = wmdSub:DerWin(x,y,8,1)
 	MForceP:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateMForceParents()
 	wmdSub:Move(x+10,y)
-	genTitre(wmdSub, 'Lever : ')
+	genTitre(wmdSub, 'L&ever : ')
 	x,y = wmdSub:GetXY()
 	CLvP = wmdSub:DerWin(x,y,5,1)
 	CLvP:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateCLvP()
 
 	wmdSub:Move(2,7)
-	genTitre(wmdSub, 'Force A&mis: ')
+	genTitre(wmdSub, 'Force A&mis : ')
 	x,y = wmdSub:GetXY()
 	MForceA = wmdSub:DerWin(x,y,8,1)
 	MForceA:attrset( SelCurses.CharAttrConst('BOLD') )
