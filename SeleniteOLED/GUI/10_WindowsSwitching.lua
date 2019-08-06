@@ -8,7 +8,7 @@ local err
 function nextWindow( force )
 	if #winlist ~= 0 then
 		wcnt = (wcnt + 1) % #winlist
-		winlist[ (wcnt % #winlist)+1 ]()
+		winlist[ (wcnt % #winlist)+1 ].display()
 	end
 
 	if force then
@@ -22,7 +22,7 @@ function prevWindow( force )
 		if wcnt < 0 then
 			wcnt = #winlist - 1
 		end
-		winlist[ (wcnt % #winlist)+1 ]()
+		winlist[ (wcnt % #winlist)+1 ].display()
 	end
 
 	if force then
@@ -35,5 +35,4 @@ if err then
 	print(err)
 	return
 end
-
 
