@@ -1,4 +1,4 @@
-function Electricite()
+function f()
 	local self = {}
 
 	self.name = "Electricite"
@@ -14,14 +14,23 @@ function Electricite()
 		SelOLED.SetCursor(0,19)
 		SelOLED.Print("conso\n")
 --	SelOLED.SetCursor(0,27)
-		SelOLED.Print("____\n\n")
+		SelOLED.Print( (SelShared.Get('TeleInfo/Consommation/values/PAPP') or "____") .."\n\n")
 		SelOLED.Print("Prod\n")
 --	SelOLED.SetCursor(0,51)
-		SelOLED.Print("____\n\n")
+		SelOLED.Print( (SelShared.Get('TeleInfo/Production/values/PAPP') or "____") .."\n\n")
 
 		SelOLED.Display()
 	end
 
 	return self
 end
-table.insert( winlist, Electricite() )
+
+Electricite = f()
+table.insert( winlist, Electricite )
+
+local ltopics = {
+	{ topic = 'TeleInfo/Consommation/values/PAPP', trigger=Electricite.display, trigger_once=true },
+	{ topic = 'TeleInfo/Production/values/PAPP', trigger=Electricite.display, trigger_once=true },
+}
+
+TableMerge( Topics, ltopics)
