@@ -4,6 +4,12 @@ function f()
 	self.name = "Electricite"
 
 	function self.display ()
+		-- Refresh only if we are displaying the right window
+
+		if winlist[wcnt+1].name ~= self.name then
+			return
+		end
+
 		SelOLED.Clear()
 		SelOLED.SetTextColor(1)
 		SelOLED.SetTextSize(2)
