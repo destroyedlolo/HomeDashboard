@@ -45,8 +45,7 @@ end
 
 function quitHDB()
 	SaveCollection()
-	SelOLED.Clear()
-	SelOLED.Display()
+	SelOLED.OnOff(false)
 	os.exit()
 end
 Selene.SigIntTask( quitHDB )
