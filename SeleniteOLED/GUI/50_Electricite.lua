@@ -19,6 +19,13 @@ function f()
 		{ width=SelOLED.Width()-36 }
 	)
 
+	local gprod = GfxArea( 35, 44, 
+		SelOLED.Width()-36, 16,
+		{ bbottom_pattern=0x8282, bleft_pattern=0x8282 }
+	)
+	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', nil, nil,
+		{ width=SelOLED.Width()-36 }
+	)
 
 	function self.display ()
 		-- Refresh only if we are displaying the right window
@@ -39,6 +46,7 @@ function f()
 		end
 		SelOLED.Print(l .. " V")
 		gvolt.DrawGfx(voltage.getCollection(), voltage.getOpts().forced_min)
+		gprod.DrawGfx(production.getCollection(), production.getOpts().forced_min)
 		gconso.DrawGfx(consomation.getCollection(), consomation.getOpts().forced_min)
 --[[
 	SelOLED.Line(50, 19, SelOLED.Width(), 19)
