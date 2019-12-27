@@ -23,7 +23,13 @@ function f()
 		SelOLED.SetTextColor(1)
 		SelOLED.SetTextSize(2)
 		SelOLED.SetCursor(0,0)
-		SelOLED.Print("ElectriciT")
+		local l=SelShared.Get('onduleur/input.voltage')
+		if l then
+			l = string.match(l, "%d+")
+		else
+			l = "___"
+		end
+		SelOLED.Print(l .. " V")
 		gconso.DrawGfx(consomation.getCollection(), consomation.getOpts().forced_min)
 --[[
 	SelOLED.Line(50, 19, SelOLED.Width(), 19)
@@ -32,7 +38,7 @@ function f()
 
 		SelOLED.SetTextSize(1)
 		SelOLED.SetCursor(0,19)
-		SelOLED.Print("conso\n")
+		SelOLED.Print("Conso\n")
 --	SelOLED.SetCursor(0,27)
 		SelOLED.Print( (SelShared.Get('consommation') or "____") .."\n\n")
 		SelOLED.Print("Prod\n")
@@ -49,11 +55,12 @@ end
 Electricite = f()
 table.insert( winlist, Electricite )
 
---[[
 local ltopics = {
+	{ topic = 'onduleur/input.voltage' },
+--[[
 	{ topic = 'TeleInfo/Consommation/values/PAPP', trigger=Electricite.display, trigger_once=true },
 	{ topic = 'TeleInfo/Production/values/PAPP', trigger=Electricite.display, trigger_once=true },
+--]]
 }
 
 TableMerge( Topics, ltopics)
---]]
