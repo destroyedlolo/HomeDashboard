@@ -16,10 +16,15 @@ if not table.pack then
     end
 end
 
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
+
 -- initialise graphical environment
 Selene.UseOLED()
+if SelOLED.Init( SCRN_ID, I2C_DEV ) == false then
+	error("Can't open I2C Device\n")
+end
+SelOLED.Flip(true)	-- If needed
 
-require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 require "Toile"
 
 -- merge t2 in t1
@@ -87,11 +92,6 @@ if err then
 	return
 end
 
--- Starting gfx environment
-if SelOLED.Init( SCRN_ID, I2C_DEV ) == false then
-	error("Can't open I2C Device\n")
-end
-SelOLED.Flip(true)	-- If needed
 
 -- Versions
 
