@@ -3,9 +3,17 @@ function f()
 
 	self.name = "Electricite"
 
+	local gvolt = GfxArea( 66, 0,
+		SelOLED.Width()-66, 16,
+		{ bbottom_pattern=0x8282, bleft_pattern=0x8282 }
+	)
+	local voltage = MQTTStoreGfx( 'voltage', 'onduleur/input.voltage', nil, nil,
+		{ width=SelOLED.Width()-66 }
+	)
+
 	local gconso = GfxArea( 35, 19, 
 		SelOLED.Width()-36, 16,
-		{ bbottom_pattern=0x8888, bleft_pattern=0x8888 }
+		{ bbottom_pattern=0x8282, bleft_pattern=0x8282 }
 	)
 	local consomation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', nil, nil,
 		{ width=SelOLED.Width()-36 }
@@ -23,13 +31,14 @@ function f()
 		SelOLED.SetTextColor(1)
 		SelOLED.SetTextSize(2)
 		SelOLED.SetCursor(0,0)
-		local l=SelShared.Get('onduleur/input.voltage')
+		local l=SelShared.Get('voltage')
 		if l then
 			l = string.match(l, "%d+")
 		else
 			l = "___"
 		end
 		SelOLED.Print(l .. " V")
+		gvolt.DrawGfx(voltage.getCollection(), voltage.getOpts().forced_min)
 		gconso.DrawGfx(consomation.getCollection(), consomation.getOpts().forced_min)
 --[[
 	SelOLED.Line(50, 19, SelOLED.Width(), 19)
@@ -55,12 +64,12 @@ end
 Electricite = f()
 table.insert( winlist, Electricite )
 
+--[[
 local ltopics = {
 	{ topic = 'onduleur/input.voltage' },
---[[
 	{ topic = 'TeleInfo/Consommation/values/PAPP', trigger=Electricite.display, trigger_once=true },
 	{ topic = 'TeleInfo/Production/values/PAPP', trigger=Electricite.display, trigger_once=true },
---]]
 }
 
 TableMerge( Topics, ltopics)
+--]]
