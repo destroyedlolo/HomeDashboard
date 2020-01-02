@@ -65,9 +65,9 @@ local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('GUI')
 linclude.requirefiles()
 
-SelLog.log("*I* Restoring collections ..")
+SelLog.log("Restoring collections ..")
 for i,col in ipairs(savedcols) do
-	print('*I* ' .. col.getName() ..' ...')
+	SelLog.log('\t' .. col.getName() ..' ...')
 	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbodt' )	-- we don't check return code as these data are not mandatory
 end
 
