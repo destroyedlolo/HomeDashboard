@@ -3,12 +3,12 @@ function f()
 
 	self.name = "Electricite"
 
-	local gvolt = GfxArea( 66, 0,
-		SelOLED.Width()-66, 16,
+	local gvolt = GfxArea( 68, 0,
+		SelOLED.Width()-68, 16,
 		{ bbottom_pattern=0x8282, bleft_pattern=0x8282 }
 	)
 	local voltage = MQTTStoreGfx( 'voltage', 'onduleur/input.voltage', nil, nil,
-		{ width=SelOLED.Width()-66 }
+		{ width=SelOLED.Width()-68 }
 	)
 	table.insert( savedcols, voltage )
 
@@ -47,10 +47,18 @@ function f()
 		else
 			l = "___"
 		end
-		SelOLED.Print(l .. " V")
+		SelOLED.Print(l .. "V")
+		local min,max = voltage.getCollection():MinMax()
+		SelOLED.SetTextSize(1)
+		SelOLED.SetCursor(49,0)
+		if min then
+			SelOLED.Print(max or "---")
+		else
+			SelOLED.Print("---")
+		end
+		SelOLED.SetCursor(49,8)
+		SelOLED.Print(min or "---")
 		gvolt.DrawGfx(voltage.getCollection(), voltage.getOpts().forced_min)
-		gprod.DrawGfx(production.getCollection(), production.getOpts().forced_min)
-		gconso.DrawGfx(consomation.getCollection(), consomation.getOpts().forced_min)
 --[[
 	SelOLED.Line(50, 19, SelOLED.Width(), 19)
 	SelOLED.Line(50, 19, 50, 36)
@@ -61,9 +69,11 @@ function f()
 		SelOLED.Print("Conso\n")
 --	SelOLED.SetCursor(0,27)
 		SelOLED.Print( (SelShared.Get('consommation') or "____") .."\n\n")
+		gprod.DrawGfx(production.getCollection(), production.getOpts().forced_min)
 		SelOLED.Print("Prod\n")
 --	SelOLED.SetCursor(0,51)
 		SelOLED.Print( (SelShared.Get('production') or "____") .."\n\n")
+		gconso.DrawGfx(consomation.getCollection(), consomation.getOpts().forced_min)
 
 		SelOLED.Display()
 SelOLED.SaveToPBM("/tmp/tst.pbm")
