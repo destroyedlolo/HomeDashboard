@@ -10,6 +10,7 @@ function f()
 	local voltage = MQTTStoreGfx( 'voltage', 'onduleur/input.voltage', nil, nil,
 		{ width=SelOLED.Width()-66 }
 	)
+	table.insert( savedcols, voltage )
 
 	local gconso = GfxArea( 35, 19, 
 		SelOLED.Width()-36, 16,
@@ -18,6 +19,7 @@ function f()
 	local consomation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', nil, nil,
 		{ width=SelOLED.Width()-36 }
 	)
+	table.insert( savedcols, consomation )
 
 	local gprod = GfxArea( 35, 44, 
 		SelOLED.Width()-36, 16,
@@ -26,6 +28,7 @@ function f()
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', nil, nil,
 		{ width=SelOLED.Width()-36 }
 	)
+	table.insert( savedcols, production )
 
 	function self.display ()
 		-- Refresh only if we are displaying the right window
@@ -60,7 +63,7 @@ function f()
 		SelOLED.Print( (SelShared.Get('consommation') or "____") .."\n\n")
 		SelOLED.Print("Prod\n")
 --	SelOLED.SetCursor(0,51)
-		SelOLED.Print( (SelShared.Get('TeleInfo/Production/values/PAPP') or "____") .."\n\n")
+		SelOLED.Print( (SelShared.Get('production') or "____") .."\n\n")
 
 		SelOLED.Display()
 SelOLED.SaveToPBM("/tmp/tst.pbm")
