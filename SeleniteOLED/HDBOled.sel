@@ -44,7 +44,8 @@ savedcols = {}		-- Collection to be saved/restored
 function SaveCollection()
 	SelLog.log("Saving collections ..")
 	for i,col in ipairs(savedcols) do
-		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
+		SelLog.log("\tSaving ".. col.getName())
+		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbodt' )
 	end
 end
 
@@ -67,7 +68,7 @@ linclude.requirefiles()
 SelLog.log("*I* Restoring collections ..")
 for i,col in ipairs(savedcols) do
 	print('*I* ' .. col.getName() ..' ...')
-	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
+	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbodt' )	-- we don't check return code as these data are not mandatory
 end
 
 -- Broker's stuffs
