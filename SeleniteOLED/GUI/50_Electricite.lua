@@ -76,7 +76,7 @@ function f()
 		gconso.DrawGfx(consomation.getCollection(), consomation.getOpts().forced_min)
 
 		SelOLED.Display()
-SelOLED.SaveToPBM("/tmp/tst.pbm")
+-- SelOLED.SaveToPBM("/tmp/tst.pbm")
 	end
 
 	return self
