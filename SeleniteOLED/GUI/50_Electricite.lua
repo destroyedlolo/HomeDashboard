@@ -3,7 +3,7 @@ function f()
 
 	self.name = "Electricite"
 
-	local gvolt = GfxArea( 68, 0,
+	local gvolt = GfxVBar( 68, 0,
 		SelOLED.Width()-68, 16,
 		{ bbottom_pattern=0x8282, bleft_pattern=0x8282 }
 	)
@@ -32,7 +32,6 @@ function f()
 
 	function self.display ()
 		-- Refresh only if we are displaying the right window
-
 		if winlist[wcnt+1].name ~= self.name then
 			return
 		end
@@ -59,19 +58,13 @@ function f()
 		SelOLED.SetCursor(49,8)
 		SelOLED.Print(min or "---")
 		gvolt.DrawGfx(voltage.getCollection(), voltage.getOpts().forced_min)
---[[
-	SelOLED.Line(50, 19, SelOLED.Width(), 19)
-	SelOLED.Line(50, 19, 50, 36)
-]]
 
 		SelOLED.SetTextSize(1)
 		SelOLED.SetCursor(0,19)
 		SelOLED.Print("Conso\n")
---	SelOLED.SetCursor(0,27)
 		SelOLED.Print( (SelShared.Get('consommation') or "____") .."\n\n")
 		gprod.DrawGfx(production.getCollection(), production.getOpts().forced_min)
 		SelOLED.Print("Prod\n")
---	SelOLED.SetCursor(0,51)
 		SelOLED.Print( (SelShared.Get('production') or "____") .."\n\n")
 		gconso.DrawGfx(consomation.getCollection(), consomation.getOpts().forced_min)
 
