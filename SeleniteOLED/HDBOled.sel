@@ -75,7 +75,7 @@ end
 function disconnected()
 	condition_network.report_issue()
 	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
-	SelLog.log("*F* Deconnecté")
+	SelLog.log('F', "Deconnecté")
 	SaveCollection()
 end
 
