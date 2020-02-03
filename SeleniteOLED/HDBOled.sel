@@ -63,6 +63,7 @@ local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 SelLog.log('Loading HDBOLed ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('GUI')
+linclude.loaddir('Commands')
 linclude.requirefiles()
 
 SelLog.log("Restoring collections ..")
