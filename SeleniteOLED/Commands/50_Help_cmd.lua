@@ -13,5 +13,5 @@ function cmd_help()
 end
 
 -- register the function to let threaded func to add it in the todo list
-local ref = SelShared.RegisterFunction( cmd_help)
+local ref = SelShared.RegisterFunction( cmd_help )
 SelShared.RegisterRef( ref, "Help" )

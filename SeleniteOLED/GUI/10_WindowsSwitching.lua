@@ -30,9 +30,17 @@ function prevWindow( force )
 	end
 end
 
+switchtimerconsign = 3 -- consign for windows switching
 switchtimer,err = SelTimer.Create { when=3, interval=3, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=nextWindow}
 if err then
 	print(err)
 	return
 end
 
+function disableWSwitchTimer()
+	switchtimer:Set { when=0, interval=0 }
+end
+
+function enableWSwitchTimer()
+	switchtimer:Set { when=switchtimerconsign, interval=switchtimerconsign }
+end
