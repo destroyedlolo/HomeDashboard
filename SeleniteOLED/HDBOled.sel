@@ -113,7 +113,7 @@ SelOLED.Display()
 -- Wait for events
 SelLog.log("Let's go ...")
 while true do
-	local rt = table.pack( Selene.WaitFor(switchtimer, wdTimer.getTimer(), unpack( additionnalevents )) )
+	local rt = table.pack( Selene.WaitFor(switchtimer, screenWDtimer, wdTimer.getTimer(), unpack( additionnalevents )) )
 	for _,ret in ipairs(rt) do
 		if type(ret) == 'function' then
 			ret()
