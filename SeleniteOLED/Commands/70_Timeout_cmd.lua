@@ -7,7 +7,6 @@ function cmd_timeout()
 	SelLog.log("Timeout consign set to ".. screenWDconsign .." s")
 	if screenWDtimer:Get() ~= 0 and screenWDtimer:Get() > screenWDconsign then
 		screenWDtimer:Set { when=screenWDconsign }
-		enableWSwitchTimer()	-- set new consign
 		screenWDtimer:Reset()
 	end
 --	SelShared.dump()
