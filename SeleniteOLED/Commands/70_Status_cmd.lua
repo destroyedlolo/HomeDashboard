@@ -7,7 +7,7 @@ function cmd_status()
 	SelLog.log('Switch timer : ' .. switchtimer:Get())
 	SelLog.log('\tconsign : ' .. switchtimerconsign)
 	SelLog.log('Screen timeout : ' .. screenWDtimer:Get())
-	SelLog.log('\tconsign : ' .. sceenWDconsign)
+	SelLog.log('\tconsign : ' .. screenWDconsign)
 end
 
 local ref = SelShared.RegisterFunction( cmd_status )

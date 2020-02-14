@@ -4,8 +4,8 @@ function screentimeout()
 	SelLog.log("Inactivity timeout")
 end
 
-sceenWDconsign = 60 -- consign for windows switching
-screenWDtimer,err = SelTimer.Create { when=sceenWDconsign, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=screentimeout, once=true}
+screenWDconsign = 60 -- consign for windows switching
+screenWDtimer,err = SelTimer.Create { when=screenWDconsign, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=screentimeout, once=true}
 if err then
 	print(err)
 	return

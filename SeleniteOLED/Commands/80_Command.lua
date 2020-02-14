@@ -3,8 +3,10 @@ function Command(topic, msg)
 	local cmd = topic:match(".*/(.*)")
 	local func = SelShared.FindRef( cmd )
 	if func then
+		SelShared.Set("cmd_"..cmd, msg)	-- keep argument for command needing it
 		SelShared.PushTaskByRef( func )
 	end
+	return true
 end
 
 SelLog.log('C', 'Command topic : "HomeDashBoard/'.. MQTT_ClientID .. '/#"')
