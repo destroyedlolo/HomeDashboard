@@ -4,7 +4,7 @@ cmd_desc.Timeout = "Change screen timeout consign (0 to disable)"
 
 function cmd_timeout()
 	screenWDconsign = tonumber(SelShared.Get('cmd_Timeout'))
-	SelLog.log("Switch timer consign set to ".. screenWDconsign .." s")
+	SelLog.log("Timeout consign set to ".. screenWDconsign .." s")
 	if screenWDtimer:Get() ~= 0 and screenWDtimer:Get() > screenWDconsign then
 		screenWDtimer:Set { when=screenWDconsign }
 		enableWSwitchTimer()	-- set new consign
