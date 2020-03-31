@@ -247,6 +247,10 @@ function keyConsignes(Brk, c,cn)
 		popupConsignH( Brk, 'Majordome/HCoucher', 'Heure coucher' )
 	elseif c == 'v' then
 		popupConsignH( Brk, 'Majordome/HLever/Oceane', 'Heure lever Oceane' )
+	elseif c == 'r' then
+		popupConsignH( Brk, 'Majordome/HLever/Joris', 'Heure lever Joris' )
+	elseif c == 'e' then
+		popupConsignH( Brk, 'Majordome/HLever', 'Heure lever Parents' )
 	end
 
 	initConsignes()
