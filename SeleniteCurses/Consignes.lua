@@ -167,7 +167,7 @@ end
 
 function popupConsignH( Brk, topic, titre )
 	local w,h = wmdSub:GetSize()
-	local popup = wmdSub:DerWin((w-15)/2,2, 18,4)
+	local popup = wmdSub:DerWin((w-20)/2,2, 22,4)
 	local res = ""
 	
 	popup:clear()
@@ -184,7 +184,7 @@ function popupConsignH( Brk, topic, titre )
 
 		if c == 27 or c == 113 then	-- Escape or 'q'
 			break
-		elseif c == 10 then
+		elseif c == 10 and len == 5 then
 			Brk:Publish( topic, res )
 			break
 		elseif c == 127 then -- backspace
@@ -245,6 +245,8 @@ function keyConsignes(Brk, c,cn)
 		popupConsPiscine( Brk, 'Majordome/Mode/Piscine' )
 	elseif c == 'h' then
 		popupConsignH( Brk, 'Majordome/HCoucher', 'Heure coucher' )
+	elseif c == 'v' then
+		popupConsignH( Brk, 'Majordome/HLever/Oceane', 'Heure lever Oceane' )
 	end
 
 	initConsignes()
