@@ -165,6 +165,69 @@ function popupConsPiscine( Brk, topic )
 	popup:delwin()
 end
 
+function popupConsignH( Brk, topic, titre )
+	local w,h = wmdSub:GetSize()
+	local popup = wmdSub:DerWin((w-15)/2,2, 18,4)
+	local res = ""
+	
+	popup:clear()
+	popup:border()
+	popup:PrintAt(1,1, titre)
+
+	while(1) do
+		popup:refresh()
+
+		local c = popup:getch()
+		local len = res:len()
+
+-- popup:PrintAt(1,2, tonumber(c) .. ' ' .. len)
+
+		if c == 27 or c == 113 then	-- Escape or 'q'
+			break
+		elseif c == 10 then
+			Brk:Publish( topic, res )
+			break
+		elseif c == 127 then -- backspace
+			if len == 3 then
+				res = res:sub(1,1)
+			elseif len > 0 then
+				res = res:sub(1, len-1 )
+			end
+		elseif c >= 0x30 and c <= 0x39 and len < 5 then -- number
+			c = string.char(c)
+			if len == 0 then	-- dizaine
+				if c >= '0' and c <= '2' then
+					res = res .. c
+				end
+			elseif len == 1 then -- heure
+				if tonumber(res) == 2 then
+					if c <= '3' then
+						res = res .. c .. '.'
+					end
+				else
+					res = res .. c .. '.'
+				end
+			elseif len == 3 then	-- dizaine de minutes
+				if c <= '5' then
+					res = res .. c
+				end
+			else -- minutes
+				res = res .. c
+			end
+		end
+
+		popup:clear()
+		popup:border()
+		popup:PrintAt(1,1, titre)
+	
+		popup:attrset( SelCurses.CharAttrConst("BOLD") )
+		popup:PrintAt(4,2, res)
+		popup:attrset( SelCurses.CharAttrConst("NORMAL") )
+	end
+
+	popup:delwin()
+end
+
 function keyConsignes(Brk, c,cn)
 	if c == 'o' then
 		popupConsMode( Brk, 'Majordome/Mode/Force' )
@@ -180,6 +243,8 @@ function keyConsignes(Brk, c,cn)
 		popupConsMode( Brk, 'Majordome/Mode/Force/ChAmis' )
 	elseif c == 'i' then
 		popupConsPiscine( Brk, 'Majordome/Mode/Piscine' )
+	elseif c == 'h' then
+		popupConsignH( Brk, 'Majordome/HCoucher', 'Heure coucher' )
 	end
 
 	initConsignes()
