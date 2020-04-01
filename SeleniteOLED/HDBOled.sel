@@ -16,11 +16,25 @@ if not table.pack then
     end
 end
 
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
+
 -- initialise graphical environment
 Selene.UseOLED()
+if SelOLED.Init( SCRN_ID, I2C_DEV ) == false then
+	error("Can't open I2C Device\n")
+end
+SelOLED.Flip(true)	-- If needed
 
-require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 require "Toile"
+
+-- merge t2 in t1
+function TableMerge( t1, t2 )
+	for _,v in ipairs(t2) do
+		table.insert(t1, v)
+	end
+
+	return t1
+end
 
 Topics = {}	-- Topics we are looking for
 
@@ -28,14 +42,16 @@ additionnalevents = {}	-- List of additionnal events to wait for (timers, inputs
 savedcols = {}		-- Collection to be saved/restored
 
 function SaveCollection()
-	SelLog.log("*I* Saving collections ..")
+	SelLog.log("Saving collections ..")
 	for i,col in ipairs(savedcols) do
-		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
+		SelLog.log("\tSaving ".. col.getName())
+		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbodt' )
 	end
 end
 
 function quitHDB()
 	SaveCollection()
+	SelOLED.OnOff(false)
 	os.exit()
 end
 Selene.SigIntTask( quitHDB )
@@ -47,19 +63,20 @@ local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 SelLog.log('Loading HDBOLed ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('GUI')
+linclude.loaddir('Commands')
 linclude.requirefiles()
 
-SelLog.log("*I* Restoring collections ..")
+SelLog.log("Restoring collections ..")
 for i,col in ipairs(savedcols) do
-	print('*I* ' .. col.getName() ..' ...')
-	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
+	SelLog.log('\t' .. col.getName() ..' ...')
+	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbodt' )	-- we don't check return code as these data are not mandatory
 end
 
 -- Broker's stuffs
 function disconnected()
 	condition_network.report_issue()
 	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
-	SelLog.log("*F* Deconnecté")
+	SelLog.log('F', "Deconnecté")
 	SaveCollection()
 end
 
@@ -77,11 +94,6 @@ if err then
 	return
 end
 
--- Starting gfx environment
-if SelOLED.Init( SCRN_ID, I2C_DEV ) == false then
-	error("Can't open I2C Device\n")
-end
-SelOLED.Flip(true)	-- If needed
 
 -- Versions
 
@@ -101,7 +113,7 @@ SelOLED.Display()
 -- Wait for events
 SelLog.log("Let's go ...")
 while true do
-	local rt = table.pack( Selene.WaitFor(switchtimer, wdTimer.getTimer(), unpack( additionnalevents )) )
+	local rt = table.pack( Selene.WaitFor(switchtimer, screenWDtimer, wdTimer.getTimer(), unpack( additionnalevents )) )
 	for _,ret in ipairs(rt) do
 		if type(ret) == 'function' then
 			ret()
