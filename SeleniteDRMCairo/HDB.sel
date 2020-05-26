@@ -1,0 +1,139 @@
+#!/usr/local/bin/Selene
+-- HomeDashBoard, Selenite version
+--
+-- This tool is configured for my own usage and is matching my home configuration
+-- but it should be took as example to build your own dashboard
+
+--	Compatibility with newer Lua
+unpack = unpack or table.unpack
+if not table.pack then
+    function table.pack (...)
+        return {n=select('#',...); ...}
+    end
+end
+
+-- initialise graphical environment
+Selene.UseDRMCairo()
+
+	-- Open default card.
+	-- As no argument is passed it's the default one
+	-- /dev/dri/card0
+card,err = SelDCCard.Open()
+if not card then
+	print("*E*", err)
+	os.exit()
+end
+
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
+require "Toile"
+
+Topics = {}	-- Topics we are looking for
+
+-- Global objects
+additionnalevents = {}	-- List of additionnal events to wait for (timers, inputs, ...)
+savedcols = {}		-- Collection to be saved/restored
+local SAVE_DIR = '/tmp/'
+
+function SaveCollection()
+	SelLog.log("*I* Saving collections ..")
+	for i,col in ipairs(savedcols) do
+		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
+	end
+	Notification.Log("Collections saved.")
+end
+
+function quitHDB()
+	SaveCollection()
+	os.exit()
+end
+Selene.SigIntTask( quitHDB )
+
+-- Loading modules
+local info = debug.getinfo(1,'S');
+local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
+
+--[[
+SelLog.log('Loading HDB ...')
+local linclude = MultiDirRequire(whereiam)
+linclude.loaddir('Shared')
+if psrf:GetSize() == 320 then	-- small display
+	linclude.loaddir('HDB_320')
+else
+	linclude.loaddir('HDB')
+end
+linclude.requirefiles()
+
+SelLog.log("*I* Restoring collections ..")
+for i,col in ipairs(savedcols) do
+	print('*I* ' .. col.getName() ..' ...')
+	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
+	col.updgfx()
+end
+
+-- List of topics to subscribe to
+function Command() -- CAUTION : in race condition, commands may be lost.
+	if SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
+		psrf:Dump('/tmp', 'DashBoard')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Tasks' then
+		SelShared.dump()
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Topics' then
+		for _,v in ipairs(Topics) do
+			print(_,v.topic)
+		end
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Save' then
+		SaveCollection()
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
+		Meteo.refreshGfx()
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
+		quitHDB()
+	end
+end
+
+table.insert( Topics, 
+	{ topic = 'HomeDashBoard/'.. MQTT_ClientID ..'/Command', trigger=Command }
+)
+
+-- Broker's stuffs
+function disconnected()
+	condition_network.report_issue()
+	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
+	SelLog.log("*F* Deconnecté")
+	SaveCollection()
+end
+
+local err
+Brk, err = SelMQTT.Connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID, OnDisconnectTrigger=disconnected } )
+if err then
+	print( "Broker", err )
+	return
+end
+
+-- Subscribtion
+_, err = Brk:Subscribe( Topics )
+if err then
+	print( "Subscribtion", err )
+	return
+end
+
+-- Display versions
+Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
+Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
+Notification.Log( "Command : HomeDashBoard/".. MQTT_ClientID ..'/Command' )
+
+Notification.setColor( COL_WHITE )
+
+SelLog.log("*I* Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
+SelLog.log("Let's go ...")
+
+
+-- Wait for events
+while true do
+	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
+	for _,ret in ipairs(rt) do
+		if type(ret) == 'function' then
+			ret()
+		end
+	end
+end
+
+--]]
