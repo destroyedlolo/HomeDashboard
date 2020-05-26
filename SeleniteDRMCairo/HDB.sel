@@ -52,17 +52,19 @@ Selene.SigIntTask( quitHDB )
 local info = debug.getinfo(1,'S');
 local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 
---[[
 SelLog.log('Loading HDB ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('Shared')
 if psrf:GetSize() == 320 then	-- small display
 	linclude.loaddir('HDB_320')
+elseif psrf:GetSize() == 800 then	-- test display
+	linclude.loaddir('HDB_800')
 else
 	linclude.loaddir('HDB')
 end
 linclude.requirefiles()
 
+--[[
 SelLog.log("*I* Restoring collections ..")
 for i,col in ipairs(savedcols) do
 	print('*I* ' .. col.getName() ..' ...')

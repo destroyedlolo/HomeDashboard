@@ -3,7 +3,7 @@
 
 MQTT_URL='tcp://bpi.chez.moi:1883' -- URL where to connect to the broker
 -- MQTT_URL='tcp://torchwood.chez.moi:1883' -- URL where to connect to the broker
-MQTT_ClientID='Tablette-dev'	-- Broker client ID : must be unique across the system
+MQTT_ClientID='bpi-dev'	-- Broker client ID : must be unique across the system
 
 -- Activate for debugging only
 local _,err = SelLog.init('/tmp/HDB.log_' .. os.date('%Y%m%d'), false)
@@ -12,5 +12,6 @@ if err then
 end
 
 -- As toile is in a dedicated directory in my dev environment ...
-package.path = '/home/laurent/Projets/Toile/?.lua;' .. package.path
+print "**** DEV DEV DEV DEV *****"
+package.path = '/home/laurent/Projets/?.lua;/home/laurent/Projets/?/init.lua;' .. package.path
 
