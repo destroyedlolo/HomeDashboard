@@ -1,15 +1,17 @@
 -- Font to use
 -- format { "facename", size }
 
-FONT={
-	ftitle = { name="", size=30 },
-	ftitle1 = { name="", size=20 },
-	fdigit = { name="", size=35 },
-	fmdigit = { name="", size=26 },
-	fsdigit = { name="", size=20 },
-	fstxt = { name="", size=8 },
-	fmtxt = { name="", size=10 },
-	fmenu = { name="", size=24 }
+local finternal = SelDCFont.createInternal("")
+
+fonts={
+	title = { font=finternal, size=30 },
+	title1 = { font=finternal, size=20 },
+	digit = { font=finternal, size=35 },
+	mdigit = { font=finternal, size=26 },
+	sdigit = { font=finternal, size=20 },
+	stxt = { font=finternal, size=8 },
+	mtxt = { font=finternal, size=10 },
+	menu = { font=finternal, size=24 }
 }
 
 --[[
