@@ -16,6 +16,7 @@ local function f()
 	offy = offy + self.get():GetFontExtents()
 
 	local srf_tension = FieldBlink( self, animTimer, 30, offy, fonts.mdigit, COL_DIGIT, {
+		timeout = 30,
 		ndecimal=0,
 		align = ALIGN_RIGHT,
 		sample_text = "888"
