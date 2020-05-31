@@ -2,10 +2,15 @@
 -- format { "facename", size }
 
 local finternal = SelDCFont.createInternal("")
+local fontTT,err,msg = SelDCFont.createFreeType("/usr/share/fonts/liberation-fonts/LiberationSerif-BoldItalic.ttf")
+if not fontTT then
+        print("*E*", err,msg)
+        os.exit()
+end
 
 fonts={
 	title = { font=finternal, size=30 },
-	title1 = { font=finternal, size=20 },
+	title1 = { font=fontTT, size=20 },
 	digit = { font=finternal, size=35 },
 	mdigit = { font=finternal, size=26 },
 	sdigit = { font=finternal, size=20 },

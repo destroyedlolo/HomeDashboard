@@ -139,3 +139,11 @@ while true do
 end
 
 --]]
+
+-- Test only
+
+print(psrf:Dump("/tmp","HDB"))
+
+print "Hit 'enter' key to exit"
+io.stdin:read'*l'       -- wait for enter
+

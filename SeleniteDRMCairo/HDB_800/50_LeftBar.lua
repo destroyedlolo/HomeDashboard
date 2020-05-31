@@ -11,9 +11,20 @@ local function f()
 	local offy = 3 + fonts.title1.size
 	self.setColor( COL_TITLE )
 	self.setFont( fonts.title1 )
-	srf:DrawString("Tension EDF :", 5, offy )
+	srf:DrawStringTop("Tension EDF :", 5, offy )
 
-print(srf:Dump("/tmp","tst"))
+	offy = offy + self.get():GetFontExtents()
+
+	local srf_tension = Field( self, 30, offy, fonts.mdigit, COL_DIGIT, {
+		ndecimal=0,
+		align = ALIGN_RIGHT,
+		sample_text = "888"
+	})
+	self.setFont( fonts.mdigit )
+	srf:DrawStringTop(" V", srf_tension.getAfter())
+
+	-- Drawing finished and alway visible
+	self.Visibility(true)
 
 	return self
 end
