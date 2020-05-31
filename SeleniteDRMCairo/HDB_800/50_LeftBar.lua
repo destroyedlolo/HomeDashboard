@@ -15,13 +15,15 @@ local function f()
 
 	offy = offy + self.get():GetFontExtents()
 
-	local srf_tension = Field( self, 30, offy, fonts.mdigit, COL_DIGIT, {
+	local srf_tension = FieldBlink( self, animTimer, 30, offy, fonts.mdigit, COL_DIGIT, {
 		ndecimal=0,
 		align = ALIGN_RIGHT,
 		sample_text = "888"
 	})
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" V", srf_tension.getAfter())
+
+	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)

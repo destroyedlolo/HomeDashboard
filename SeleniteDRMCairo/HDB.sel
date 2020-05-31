@@ -39,7 +39,7 @@ function SaveCollection()
 	for i,col in ipairs(savedcols) do
 		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
 	end
-	Notification.Log("Collections saved.")
+--	Notification.Log("Collections saved.")
 end
 
 function quitHDB()
@@ -71,6 +71,7 @@ for i,col in ipairs(savedcols) do
 	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
 	col.updgfx()
 end
+--]]
 
 -- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.
@@ -117,12 +118,14 @@ if err then
 	return
 end
 
+--[[
 -- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
 Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
 Notification.Log( "Command : HomeDashBoard/".. MQTT_ClientID ..'/Command' )
 
 Notification.setColor( COL_WHITE )
+--]]
 
 SelLog.log("*I* Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
 SelLog.log("Let's go ...")
@@ -130,7 +133,8 @@ SelLog.log("Let's go ...")
 
 -- Wait for events
 while true do
-	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
+--	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
+	local rt = table.pack( Selene.WaitFor(animTimer.getTimer()) )
 	for _,ret in ipairs(rt) do
 		if type(ret) == 'function' then
 			ret()
@@ -138,12 +142,4 @@ while true do
 	end
 end
 
---]]
-
--- Test only
-
-print(psrf:Dump("/tmp","HDB"))
-
-print "Hit 'enter' key to exit"
-io.stdin:read'*l'       -- wait for enter
 
