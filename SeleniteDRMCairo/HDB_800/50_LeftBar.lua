@@ -77,6 +77,8 @@ local function f()
 	)
 	offy = offy + HSGRPH
 
+		-------
+
 	self.setFont( fonts.title1 )
 	srf:DrawStringTop("Production :", 5, offy )
 	offy = offy + self.get():GetFontExtents()
@@ -124,6 +126,23 @@ local function f()
 			condition=condition_network 
 		}
 	)
+
+	offy = offy + HSGRPH
+
+		------------
+
+	local srf_onduleur = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
+		timeout = 30,
+		align = ALIGN_RIGHT, 
+		sample_text = "888.8 W",
+		suffix = ' W'
+	} )
+
+	local offx = srf_onduleur.getAfter()
+
+	local srf_gaugeOnduleur = GaugeHPercent( self, offx+2, offy+2, w-offx-4, srf_onduleur.get():GetHight()-4, COL_WHITE, COL_GFXBG, COL_BORDER )
+
+	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur, { condition=condition_network })
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)
