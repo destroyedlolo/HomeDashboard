@@ -64,14 +64,12 @@ else
 end
 linclude.requirefiles()
 
---[[
 SelLog.log("*I* Restoring collections ..")
 for i,col in ipairs(savedcols) do
 	print('*I* ' .. col.getName() ..' ...')
 	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
 	col.updgfx()
 end
---]]
 
 -- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.

@@ -12,7 +12,6 @@ local function f()
 	self.setColor( COL_TITLE )
 	self.setFont( fonts.title1 )
 	srf:DrawStringTop("Tension EDF :", 5, offy )
-
 	offy = offy + self.get():GetFontExtents()
 
 	local srf_tension = FieldBlink( self, animTimer, 30, offy, fonts.mdigit, COL_DIGIT, {
@@ -23,8 +22,59 @@ local function f()
 	})
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" V", srf_tension.getAfter())
+	offy = offy + srf_tension.getHight()
 
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
+
+		----
+
+	self.setFont( fonts.title1 )
+	srf:DrawStringTop("Consomation :", 5, offy )
+	offy = offy + self.get():GetFontExtents()
+
+	local srf_consommation = Field( self, 10,offy, fonts.digit, COL_DIGIT, {
+		timeout = 10,
+		align = ALIGN_RIGHT, 
+		sample_text = "12345", 
+		gradient = Gradient(
+			{
+				[500] = COL_DIGIT,
+				[1500] = COL_ORANGE,
+				[4500] = COL_RED
+			}
+		)
+	} )
+	self.setFont( fonts.digit )
+	srf:DrawStringTop(" VA", srf_consommation.getAfter())
+	offy = offy + srf_consommation.getHight()
+
+	local srf_trndconso = GfxArea( self, 0, offy, w-5, HSGRPH, COL_ORANGE, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		align=ALIGN_RIGHT 
+	} )
+
+	local srf_maxconso = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345",
+		bgcolor = COL_TRANSPARENT,
+		ownsurface = true,
+		gradient = Gradient(
+			{
+				[500] = COL_DIGIT,
+				[1500] = COL_ORANGE,
+				[4500] = COL_RED
+			}
+		)
+	} )
+
+	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
+		{
+			smax = srf_maxconso,
+			force_max_refresh = true,
+			forced_min = 0,
+			condition=condition_network
+		}
+	)
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)
