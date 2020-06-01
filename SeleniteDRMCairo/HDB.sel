@@ -35,7 +35,7 @@ savedcols = {}		-- Collection to be saved/restored
 local SAVE_DIR = '/tmp/'
 
 function SaveCollection()
-	SelLog.log("*I* Saving collections ..")
+	SelLog.log("Saving collections ..")
 	for i,col in ipairs(savedcols) do
 		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
 	end
@@ -64,9 +64,9 @@ else
 end
 linclude.requirefiles()
 
-SelLog.log("*I* Restoring collections ..")
+SelLog.log("Restoring collections ..")
 for i,col in ipairs(savedcols) do
-	print('*I* ' .. col.getName() ..' ...')
+	SelLog.log(col.getName() ..' ...')
 	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
 	col.updgfx()
 end
@@ -125,7 +125,7 @@ Notification.Log( "Command : HomeDashBoard/".. MQTT_ClientID ..'/Command' )
 Notification.setColor( COL_WHITE )
 --]]
 
-SelLog.log("*I* Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
+SelLog.log("Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
 SelLog.log("Let's go ...")
 
 
