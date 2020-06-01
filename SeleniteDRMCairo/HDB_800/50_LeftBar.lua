@@ -8,7 +8,7 @@ local function f()
 	self.setColor( COL_BORDER )
 	srf:DrawLine( w, 0, w, srf:GetHight() )
 
-	local offy = 3 + fonts.title1.size
+	local offy = 3 
 	self.setColor( COL_TITLE )
 	self.setFont( fonts.title1 )
 	srf:DrawStringTop("Tension EDF :", 5, offy )
@@ -49,7 +49,7 @@ local function f()
 	offy = offy + srf_consommation.getHight()
 
 	local srf_trndconso = GfxArea( self, 0, offy, w-5, HSGRPH, COL_ORANGE, COL_GFXBG,{
-		heverylines={ {1000, COL_DARKGREY} },
+		heverylines={ {5000, COL_DARKGREY} },
 		align=ALIGN_RIGHT 
 	} )
 
@@ -73,6 +73,55 @@ local function f()
 			force_max_refresh = true,
 			forced_min = 0,
 			condition=condition_network
+		}
+	)
+	offy = offy + HSGRPH
+
+	self.setFont( fonts.title1 )
+	srf:DrawStringTop("Production :", 5, offy )
+	offy = offy + self.get():GetFontExtents()
+
+	local srf_production = Field( self, 10,offy, fonts.digit, COL_DIGIT, {
+		timeout = 10,
+		align = ALIGN_RIGHT, 
+		sample_text = "12345", 
+		gradient = Gradient(
+			{
+				[200] = COL_BLUE,
+				[750] = COL_YELLOW,
+				[1200] = COL_GREEN
+			}
+		)
+	} )
+	self.setFont( fonts.digit )
+	srf:DrawStringTop(" VA", srf_production.getAfter())
+	offy = offy + srf_production.getHight()
+
+	local srf_trndprod = GfxArea( self, 0, offy, w-5, HSGRPH, COL_ORANGE, COL_GFXBG,{
+		heverylines={ {1000, COL_DARKGREY} },
+		align=ALIGN_RIGHT 
+	} )
+
+	local srf_maxprod = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345",
+		bgcolor = COL_TRANSPARENT,
+		ownsurface = true,
+		gradient = Gradient(
+			{
+				[200] = COL_BLUE,
+				[750] = COL_YELLOW,
+				[1200] = COL_GREEN
+			}
+		)
+	} )
+
+	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod,
+		{
+			smax = srf_maxprod,
+			force_max_refresh = true,
+			forced_min = 0, 
+			condition=condition_network 
 		}
 	)
 
