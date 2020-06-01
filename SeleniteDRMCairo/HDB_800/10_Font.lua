@@ -13,7 +13,7 @@ fonts={
 	title1 = { font=fontTT, size=20 },
 	digit = { font=finternal, size=35 },
 	mdigit = { font=finternal, size=26 },
-	sdigit = { font=finternal, size=20 },
+	sdigit = { font=finternal, size=15 },
 	stxt = { font=finternal, size=8 },
 	mtxt = { font=finternal, size=10 },
 	menu = { font=finternal, size=24 }
