@@ -144,6 +144,24 @@ local function f()
 
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur, { condition=condition_network })
 
+	offy = offy + srf_onduleur.get():GetHight()
+
+		------------
+
+	local img,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Thermometre.png")
+	if not img then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
+	self.get():SaveContext()
+	local imgw, imgh = img:GetSize()
+	local simg = 90/imgh
+	self.get():Scale( simg, simg )
+	self.get():Blit(img, 5/simg, offy/simg)	-- Notez-bien : translation is also scaled
+	self.get():RestoreContext()
+
+
 	-- Drawing finished and alway visible
 	self.Visibility(true)
 
