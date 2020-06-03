@@ -140,7 +140,7 @@ local function f()
 
 	local offx = srf_onduleur.getAfter()
 
-	local srf_gaugeOnduleur = GaugeHPercent( self, offx+2, offy+2, w-offx-4, srf_onduleur.get():GetHight()-4, COL_WHITE, COL_GFXBG, COL_BORDER )
+	local srf_gaugeOnduleur = HGauge( self, offx+2, offy+2, w-offx-4, srf_onduleur.get():GetHight()-4, COL_WHITE, COL_GFXBG, COL_BORDER )
 
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur, { condition=condition_network })
 
