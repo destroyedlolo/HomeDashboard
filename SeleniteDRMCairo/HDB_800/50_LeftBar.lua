@@ -29,7 +29,7 @@ local function f()
 		----
 
 	self.setFont( fonts.title1 )
-	srf:DrawStringTop("Consomation :", 5, offy )
+	srf:DrawStringTop("Consommation :", 5, offy )
 	offy = offy + self.get():GetFontExtents()
 
 	local srf_consommation = Field( self, 10,offy, fonts.digit, COL_DIGIT, {
@@ -67,7 +67,7 @@ local function f()
 		)
 	} )
 
-	local consomation = MQTTStoreGfx( 'consomation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
+	local consommation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
 		{
 			smax = srf_maxconso,
 			force_max_refresh = true,
@@ -148,6 +148,9 @@ local function f()
 
 		------------
 
+	self.setFont( fonts.title1 )
+	srf:DrawStringTop("Salon :", 35, offy )
+
 	local img,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Thermometre.png")
 	if not img then
 		print("*E*",err)
@@ -158,9 +161,38 @@ local function f()
 	local imgw, imgh = img:GetSize()
 	local simg = 90/imgh
 	self.get():Scale( simg, simg )
-	self.get():Blit(img, 5/simg, offy/simg)	-- Notez-bien : translation is also scaled
+	self.get():Blit(img, 5/simg, offy/simg+3)	-- Notez-bien : translation is also scaled
 	self.get():RestoreContext()
 
+	offy = offy + self.get():GetFontExtents()
+
+	local srf_TSalon = FieldBlink( self, animTimer, 50, offy, fonts.mdigit, COL_DIGIT, {
+		timeout = 310,
+		align = ALIGN_RIGHT, 
+		sample_text = "-88.8",
+		gradient = GRD_TEMPERATURE
+	} )
+
+	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
+	self.setFont( fonts.mdigit )
+	srf:DrawStringTop("°C", srf_TSalon.getAfter())
+	offy = offy + srf_TSalon.getHight()
+
+	self.setFont( fonts.title1 )
+	srf:DrawStringTop("Extérieur :", 35, offy )
+	offy = offy + self.get():GetFontExtents()
+
+	self.srf_TDehors = FieldBlink( self, animTimer, 50, offy, fonts.mdigit, COL_DIGIT, {
+		timeout = 310,
+		align = ALIGN_RIGHT, 
+		sample_text = "-88.8",
+		gradient = GRD_TEMPERATURE
+	} )
+
+	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', self.srf_TDehors )
+	self.setFont( fonts.mdigit )
+	srf:DrawStringTop("°C", self.srf_TDehors.getAfter())
+	offy = offy + self.srf_TDehors.getHight()
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)
