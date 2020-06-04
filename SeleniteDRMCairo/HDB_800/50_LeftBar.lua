@@ -101,7 +101,7 @@ local function f()
 
 	local srf_trndprod = GfxArea( self, 0, offy, w-5, HSGRPH, COL_ORANGE, COL_GFXBG,{
 		heverylines={ {1000, COL_DARKGREY} },
-		align=ALIGN_RIGHT 
+		align = ALIGN_RIGHT 
 	} )
 
 	local srf_maxprod = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
@@ -140,7 +140,7 @@ local function f()
 
 	local offx = srf_onduleur.getAfter()
 
-	local srf_gaugeOnduleur = HGauge( self, offx+2, offy+2, w-offx-4, srf_onduleur.get():GetHight()-4, COL_WHITE, COL_GFXBG, COL_BORDER )
+	local srf_gaugeOnduleur = HGauge( self, offx+2, offy+4, w-offx-4, srf_onduleur.get():GetHight()-6, COL_WHITE, COL_GFXBG, COL_BORDER )
 
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur, { condition=condition_network })
 
@@ -173,10 +173,23 @@ local function f()
 		gradient = GRD_TEMPERATURE
 	} )
 
+	local srf_Thermometre = VGauge( self, 14,266, 6,62, COL_RED, COL_WHITE, nil, {
+		min = 5, max =40,
+		ascend = true
+	})
+-- 14,328
+-- 20,266
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop("°C", srf_TSalon.getAfter())
 	offy = offy + srf_TSalon.getHight()
+
+	local function updthermo()
+		srf_Thermometre.Draw( TSalon.get() )
+	end
+	TSalon.TaskOnceAdd( updthermo )
+
+		----
 
 	self.setFont( fonts.title1 )
 	srf:DrawStringTop("Extérieur :", 35, offy )
@@ -188,6 +201,7 @@ local function f()
 		sample_text = "-88.8",
 		gradient = GRD_TEMPERATURE
 	} )
+
 
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', self.srf_TDehors )
 	self.setFont( fonts.mdigit )
