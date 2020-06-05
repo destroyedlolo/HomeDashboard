@@ -161,7 +161,7 @@ local function f()
 	local imgw, imgh = img:GetSize()
 	local simg = 90/imgh
 	self.get():Scale( simg, simg )
-	self.get():Blit(img, 5/simg, offy/simg+3)	-- Notez-bien : translation is also scaled
+	self.get():Blit(img, 5/simg, (offy+5)/simg)	-- Notez-bien : translation is also scaled
 	self.get():RestoreContext()
 
 	offy = offy + self.get():GetFontExtents()
@@ -173,8 +173,8 @@ local function f()
 		gradient = GRD_TEMPERATURE
 	} )
 
-	local srf_Thermometre = VGauge( self, 14,266, 6,62, COL_RED, COL_WHITE, nil, {
-		min = 5, max =40,
+	local srf_Thermometre = VGauge( self, 14,270, 6,62, COL_RED, COL_WHITE, nil, {
+		min = 5, max = 40,
 		ascend = true
 	})
 -- 14,328
@@ -207,6 +207,27 @@ local function f()
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop("°C", self.srf_TDehors.getAfter())
 	offy = offy + self.srf_TDehors.getHight()
+
+
+		----
+
+	self.setFont( fonts.sdigit )
+	imgw = self.get():GetStringExtents( "8888" )
+	local srf_dATM = FieldBlink( self, animTimer, (w-imgw)/2, offy+15, fonts.sdigit, COL_DIGIT, {
+		timeout = 310,
+		align = ALIGN_CENTER,
+		width = imgw
+	} )
+	offy = offy + srf_dATM.getHight()
+	local srf_uATM = FieldBlink( self, animTimer, (w-imgw)/2, offy, fonts.sdigit, COL_DIGIT, {
+		timeout = 310,
+		align = ALIGN_CENTER,
+		width = imgw
+	} )
+	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
+	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
+
+
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)
