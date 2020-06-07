@@ -218,14 +218,33 @@ local function f()
 		align = ALIGN_CENTER,
 		width = imgw
 	} )
-	offy = offy + srf_dATM.getHight()
-	local srf_uATM = FieldBlink( self, animTimer, (w-imgw)/2, offy, fonts.sdigit, COL_DIGIT, {
+	local srf_uATM = FieldBlink( self, animTimer, (w-imgw)/2, offy + srf_dATM.getHight() + 15, fonts.sdigit, COL_DIGIT, {
 		timeout = 310,
 		align = ALIGN_CENTER,
 		width = imgw
 	} )
-	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, srf_dnGfx )
-	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, srf_upGfx )
+
+	local gfx_download = ArcGaugePercent( self, 
+		0, offy,
+		(w-imgw)/2-5, 3*srf_dATM.getHight(),
+		{
+			parts = 1/32
+		}
+	)
+
+	local gfx_upload = ArcGaugePercent( self, 
+		w - (w-imgw)/2 +5, offy,
+		(w-imgw)/2-5, 3*srf_dATM.getHight(),
+		{
+			align = ALIGN_RIGHT,
+			parts = 1/32
+		}
+	)
+
+	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, gfx_download )
+	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, gfx_upload )
+
+--	offy = offy + srf_dATM.getHight()
 
 
 
