@@ -173,7 +173,7 @@ local function f()
 		gradient = GRD_TEMPERATURE
 	} )
 
-	local srf_Thermometre = VGauge( self, 14,270, 6,62, COL_RED, COL_WHITE, nil, {
+	local srf_Thermometre = VGauge( self, 14,330, 6,62, COL_RED, COL_WHITE, nil, {
 		min = 5, max = 40,
 		ascend = true
 	})
