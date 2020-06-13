@@ -12,5 +12,7 @@ if err then
 end
 
 -- As toile is in a dedicated directory in my dev environment ...
-package.path = '/home/laurent/Projets/Toile/?.lua;' .. package.path
+print "**** DEV DEV DEV DEV *****"
+package.path = '/home/laurent/Projets/?.lua;/home/laurent/Projets/?/init.lua;' .. package.path
+
 
