@@ -35,11 +35,11 @@ savedcols = {}		-- Collection to be saved/restored
 local SAVE_DIR = '/tmp/'
 
 function SaveCollection()
-	SelLog.log("*I* Saving collections ..")
+	SelLog.log("Saving collections ..")
 	for i,col in ipairs(savedcols) do
 		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
 	end
-	Notification.Log("Collections saved.")
+--	Notification.Log("Collections saved.")
 end
 
 function quitHDB()
@@ -52,20 +52,21 @@ Selene.SigIntTask( quitHDB )
 local info = debug.getinfo(1,'S');
 local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 
---[[
 SelLog.log('Loading HDB ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('Shared')
 if psrf:GetSize() == 320 then	-- small display
 	linclude.loaddir('HDB_320')
+elseif psrf:GetSize() == 800 then	-- test display
+	linclude.loaddir('HDB_800')
 else
 	linclude.loaddir('HDB')
 end
 linclude.requirefiles()
 
-SelLog.log("*I* Restoring collections ..")
+SelLog.log("Restoring collections ..")
 for i,col in ipairs(savedcols) do
-	print('*I* ' .. col.getName() ..' ...')
+	SelLog.log(col.getName() ..' ...')
 	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
 	col.updgfx()
 end
@@ -115,20 +116,23 @@ if err then
 	return
 end
 
+--[[
 -- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
 Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
 Notification.Log( "Command : HomeDashBoard/".. MQTT_ClientID ..'/Command' )
 
 Notification.setColor( COL_WHITE )
+--]]
 
-SelLog.log("*I* Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
+SelLog.log("Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
 SelLog.log("Let's go ...")
 
 
 -- Wait for events
 while true do
-	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
+--	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
+local rt = table.pack( Selene.WaitFor(animTimer.getTimer(), wdTimer.getTimer() ))
 	for _,ret in ipairs(rt) do
 		if type(ret) == 'function' then
 			ret()
@@ -136,4 +140,4 @@ while true do
 	end
 end
 
---]]
+
