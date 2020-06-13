@@ -15,3 +15,4 @@ end
 print "**** DEV DEV DEV DEV *****"
 package.path = '/home/laurent/Projets/?.lua;/home/laurent/Projets/?/init.lua;' .. package.path
 
+

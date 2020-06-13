@@ -185,7 +185,7 @@ function popupConsignH( Brk, topic, titre )
 		if c == 27 or c == 113 then	-- Escape or 'q'
 			break
 		elseif c == 10 and len == 5 then
-			Brk:Publish( topic, res )
+			Brk:Publish( topic, res, true )
 			break
 		elseif c == 127 then -- backspace
 			if len == 3 then
