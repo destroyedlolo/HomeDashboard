@@ -20,9 +20,20 @@ Selene.UseDRMCairo()
 	-- /dev/dri/card0
 card,err = SelDCCard.Open()
 if not card then
-	print("*E*", err)
-	os.exit()
+	print("*E* DRM :", err,msg)
+	if SELPLUG_DRMCairo_FBEXTENSION then
+		card,err,msg = SelDCCard.OpenFB("/dev/fb1")
+		if not card then
+			print("*E* FB :", err,msg)
+			os.exit()
+		else
+			print("*I* ok with Framebuffer")
+		end
+	else
+		os.exit()
+	end
 end
+
 
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 require "Toile"
