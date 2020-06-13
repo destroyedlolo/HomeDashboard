@@ -32,25 +32,26 @@ local function f()
 	srf:DrawStringTop("Consommation :", 5, offy )
 	offy = offy + self.get():GetFontExtents()
 
+	local grd_conso =  Gradient( {
+		[500] = COL_DIGIT,
+		[1500] = COL_ORANGE,
+		[4500] = COL_RED
+	})
+
 	local srf_consommation = Field( self, 10,offy, fonts.digit, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
-		gradient = Gradient(
-			{
-				[500] = COL_DIGIT,
-				[1500] = COL_ORANGE,
-				[4500] = COL_RED
-			}
-		)
+		gradient = grd_conso
 	} )
 	self.setFont( fonts.digit )
 	srf:DrawStringTop(" VA", srf_consommation.getAfter())
 	offy = offy + srf_consommation.getHight()
 
 	local srf_trndconso = GfxArea( self, 0, offy, w-5, HSGRPH, COL_ORANGE, COL_GFXBG,{
-		heverylines={ {5000, COL_DARKGREY} },
-		align=ALIGN_RIGHT 
+		heverylines={ {1000, COL_DARKGREY} },
+		align=ALIGN_RIGHT,
+		gradient = grd_conso
 	} )
 
 	local srf_maxconso = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
@@ -58,13 +59,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		ownsurface = true,
-		gradient = Gradient(
-			{
-				[500] = COL_DIGIT,
-				[1500] = COL_ORANGE,
-				[4500] = COL_RED
-			}
-		)
+		gradient = grd_conso
 	} )
 
 	local consommation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
@@ -83,25 +78,26 @@ local function f()
 	srf:DrawStringTop("Production :", 5, offy )
 	offy = offy + self.get():GetFontExtents()
 
+	local grd_prod = Gradient( {
+		[200] = COL_BLUE,
+		[750] = COL_YELLOW,
+		[1200] = COL_GREEN
+	} )
+
 	local srf_production = Field( self, 10,offy, fonts.digit, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
-		gradient = Gradient(
-			{
-				[200] = COL_BLUE,
-				[750] = COL_YELLOW,
-				[1200] = COL_GREEN
-			}
-		)
+		gradient = grd_prod
 	} )
 	self.setFont( fonts.digit )
 	srf:DrawStringTop(" VA", srf_production.getAfter())
 	offy = offy + srf_production.getHight()
 
 	local srf_trndprod = GfxArea( self, 0, offy, w-5, HSGRPH, COL_ORANGE, COL_GFXBG,{
-		heverylines={ {1000, COL_DARKGREY} },
-		align = ALIGN_RIGHT 
+		heverylines={ {500, COL_DARKGREY} },
+		align = ALIGN_RIGHT,
+		gradient = grd_prod
 	} )
 
 	local srf_maxprod = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
@@ -109,13 +105,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		ownsurface = true,
-		gradient = Gradient(
-			{
-				[200] = COL_BLUE,
-				[750] = COL_YELLOW,
-				[1200] = COL_GREEN
-			}
-		)
+		gradient = grd_prod
 	} )
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod,
@@ -177,8 +167,7 @@ local function f()
 		min = 5, max = 40,
 		ascend = true
 	})
--- 14,328
--- 20,266
+
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop("°C", srf_TSalon.getAfter())
@@ -208,7 +197,6 @@ local function f()
 	srf:DrawStringTop("°C", self.srf_TDehors.getAfter())
 	offy = offy + self.srf_TDehors.getHight()
 
-
 		----
 
 	self.setFont( fonts.sdigit )
@@ -233,7 +221,7 @@ local function f()
 	)
 
 	local gfx_upload = ArcGaugePercent( self, 
-		w - (w-imgw)/2 +5, offy,
+		w - (w-imgw)/2 +2, offy,
 		(w-imgw)/2-5, 3*srf_dATM.getHight(),
 		{
 			align = ALIGN_RIGHT,
