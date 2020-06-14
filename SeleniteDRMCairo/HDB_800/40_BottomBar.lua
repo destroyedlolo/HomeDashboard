@@ -25,6 +25,15 @@ local function f()
 	table.insert( additionnalevents, condition_freebox.getTimer() )
 	offx = offx + 24
 
+	local WiFi = ImageFiltreSurface( self, offx,24, SELENE_SCRIPT_DIR .. "/Images/WiFi.png" )
+	condition_WiFi = Condition(WiFi, .5, { autorecover=true, issue_color=COL_RED } )
+	table.insert( additionnalevents, condition_WiFi.getTimer() )
+	local WiFiNoStations = MQTTinput('WiFiNoStations', 'ESPRouter_Domo/NoStations', nil, { condition=condition_WiFi, watchdog=wdWiFi } )
+
+	local barriere = ImageFiltreSurface( self, offx,0, SELENE_SCRIPT_DIR .. "/Images/BarrierePoule.png" )
+	condition_BarrierePoule = Condition( barriere, 0, {issue_color=COL_RED } )
+	offx = offx + 24
+
 	-- Drawing finished and alway visible
 	self.Visibility(true)
 
