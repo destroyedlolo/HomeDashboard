@@ -8,7 +8,7 @@ local function f()
 	self.setColor( COL_BORDER )
 	srf:DrawLine( w, 0, w, srf:GetHight() )
 
-	local offy = 3 
+	local offy = 3
 	self.setColor( COL_TITLE )
 	self.setFont( fonts.title1 )
 	srf:DrawStringTop("Tension EDF :", 5, offy )
@@ -22,6 +22,13 @@ local function f()
 	})
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" V", srf_tension.getAfter())
+
+	local offx = srf_tension.getAfter() + srf:GetStringExtents(" V")
+	local euroicn = ImageFiltreSurface( self, offx+30,offy+2, SELENE_SCRIPT_DIR .. "/Images/Euro.png" )
+	condition_EDF = Condition( euroicn,0, {
+		ok_color = COL_DARKORANGE,
+		issue_color = COL_DARKGREEN
+	} )
 	offy = offy + srf_tension.getHight()
 
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
@@ -128,7 +135,7 @@ local function f()
 		suffix = ' W'
 	} )
 
-	local offx = srf_onduleur.getAfter()
+	offx = srf_onduleur.getAfter()
 
 	local srf_gaugeOnduleur = HGauge( self, offx+2, offy+4, w-offx-4, srf_onduleur.get():GetHight()-6, COL_WHITE, COL_GFXBG, COL_BORDER )
 
