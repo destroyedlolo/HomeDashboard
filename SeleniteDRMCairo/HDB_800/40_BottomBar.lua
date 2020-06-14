@@ -39,6 +39,8 @@ local function f()
 	log.RegisterTopic('messages', 'messages/Erreur', { udata=3 } )
 	offx = offx + 200
 
+	Saison( self, 'Saison', 'Majordome/Saison', offx, 0 )
+
 	-- Drawing finished and alway visible
 	self.Visibility(true)
 
