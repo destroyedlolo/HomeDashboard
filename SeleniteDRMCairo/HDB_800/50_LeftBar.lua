@@ -1,5 +1,5 @@
 local function f()
-	self = Surface( psrf, 0,0,LBw, psrf:GetHight() )
+	local self = Surface( psrf, 0,0,LBw, psrf:GetHight() )
 
 	-- build graphics
 
