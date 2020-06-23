@@ -4,8 +4,14 @@ local function f()
 	local srf = self.get()
 	local offx=0,offy
 
-	self.setColor( COL_BORDER )
-	srf:DrawLine( 0,0 , sw,0 )
+	function self.Clear()
+		-- notez-bien : full redrawing is not needed (yet ?) as this
+		-- bar is ALWAYS displayed
+		self.get():Clear(COL_BLACK.get() )
+		self.setColor( COL_BORDER )
+		srf:DrawLine( 0,0 , sw,0 )
+	end
+	self.Clear() -- clean the surface before displaying
 
 	local lvdonotif = ImageFiltreSurface( self, offx, 25, SELENE_SCRIPT_DIR .. "/Images/Mail.png" )
 	condition_lvdo = Condition( lvdonotif, 0 )

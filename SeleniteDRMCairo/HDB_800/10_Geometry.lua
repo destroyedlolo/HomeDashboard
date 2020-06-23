@@ -7,6 +7,6 @@ BBh = fonts.stxt.size * NotLine + 1	-- BottomBar's hight
 
 -- All sub windows geometry
 
-WINTOP = { LBw + 1, 0 }
-WINSIZE = { psrf:GetWidth() - WINTOP[1], psrf:GetHight() - BBh }
+WINTOP = { x = LBw + 1, y = 0 }
+WINSIZE = { w = psrf:GetWidth() - WINTOP.x, h = psrf:GetHight() - BBh }
 
