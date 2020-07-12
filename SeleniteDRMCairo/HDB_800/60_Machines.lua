@@ -1,7 +1,11 @@
 -- Display running machine statistics
 
 local function machines()
-	local self = Surface( psrf, WINTOP.x, WINTOP.y, WINSIZE.w, WINSIZE.h )
+	local self = Surface( psrf, WINTOP.x, WINTOP.y, WINSIZE.w, WINSIZE.h, 
+		{
+			keepcontent = true
+		}
+	)
 
 	local motherboard,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Motherboard.png")
 	if not motherboard then
