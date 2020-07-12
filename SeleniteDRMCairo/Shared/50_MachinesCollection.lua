@@ -61,7 +61,7 @@ function MachinesCollection(
 				if not lst_machines[mch].surface then -- need to allocate a new surface
 					for i=0,max_srf do
 						if not surfaces[i].getName() then -- found free surface
-							surfaces[i].allocate( mch, lst_machines[mch].ncpu )
+							surfaces[i].allocate( mch, lst_machines[mch].ncpu, lst_machines[mch] )
 							lst_machines[mch].surface = i
 							break;
 						end
@@ -69,7 +69,7 @@ function MachinesCollection(
 					if not lst_machines[mch].surface then -- Surface collection exhausted
 							SelLog.log('E', "Too many machines : ignoring '".. mch .."'")
 							lst_machines[mch] = nil	-- Don't process other data for this host
-													-- to avoid other error messages
+													-- to avoid additional error messages
 							return
 					end
 				end

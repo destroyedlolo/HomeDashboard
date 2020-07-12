@@ -28,7 +28,10 @@ local function machines()
 			self, 
 			5 + 215*(i%3), 45 + 128*math.floor(i/3), 
 			200,105, 
-			fonts.sdigit, COL_TITLE
+			fonts.sdigit, COL_TITLE,
+			{
+				timeout = 65
+			}
 		)
 	end
 
