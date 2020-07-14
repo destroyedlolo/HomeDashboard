@@ -236,8 +236,17 @@ local function f()
 		}
 	)
 
+	local wdfreebox, _ = SelTimer.Create { when=40, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc= function ()
+			Notification.setColor( COL_RED )
+			Notification.Log( "Freebox muette")
+			Notification.setColor( COL_WHITE )
+			condition_freebox.report_issue()
+		end
+	}
+
 	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, gfx_download )
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, gfx_upload )
+	table.insert( additionnalevents, wdfreebox )
 
 --	offy = offy + srf_dATM.getHight()
 
