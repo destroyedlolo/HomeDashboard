@@ -39,7 +39,7 @@ local function machines()
 		)
 	end
 
-	self.Visibility(true)
+	self.Visibility(false)
 	return self
 end
 
