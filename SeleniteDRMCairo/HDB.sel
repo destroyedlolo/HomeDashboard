@@ -98,6 +98,10 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Meteo.refreshGfx()
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
 		quitHDB()
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 0' then
+		Machines.Visibility(false)
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 1' then
+		Machines.Visibility(true)
 	end
 end
 
@@ -127,6 +131,9 @@ if err then
 	return
 end
 
+-- Ensure first window is visible
+winlist[ 1 ].Visibility(true)
+
 -- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
 Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
@@ -140,13 +147,11 @@ SelLog.log("Let's go ...")
 
 -- Wait for events
 while true do
---	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
-local rt = table.pack( Selene.WaitFor(animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents ) ))
+	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
+-- local rt = table.pack( Selene.WaitFor(animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents ) ))
 	for _,ret in ipairs(rt) do
 		if type(ret) == 'function' then
 			ret()
 		end
 	end
 end
-
-

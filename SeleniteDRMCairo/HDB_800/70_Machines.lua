@@ -34,7 +34,7 @@ local function machines()
 			200,105, 
 			fonts.sdigit, COL_TITLE,
 			{
-				timeout = 65
+				timeout = 150
 			}
 		)
 	end
@@ -44,3 +44,6 @@ local function machines()
 end
 
 Machines = machines()
+
+table.insert( winlist, Machines )
+
