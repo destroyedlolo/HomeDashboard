@@ -13,13 +13,25 @@ local function machines()
 		os.exit(EXIT_FAILURE)
 	end
 
-	function self.Clear()
+	function self.Clear(
+		clipped -- Clipping region
+	)
+		-- Restrict drawing area
+		if clipped then	-- Offset this surface
+			self.get():SaveContext()
+			self.get():SetClipS( unpack(clipped) )
+		end
+	
 		-- Redraw window's background
 		self.get():Clear( COL_BLACK.get() )
 		self.setColor( COL_TITLE )
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Machines :", 5,0 )
 		self.get():Blit(motherboard, 50,50)
+
+		if clipped then
+			self.get():RestoreContext()
+		end
 	end
 
 	self.Clear()
