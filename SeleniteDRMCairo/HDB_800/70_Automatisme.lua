@@ -27,7 +27,8 @@ local function automatisme()
 	local MajordomeTxt = NotificationArea( self, WINSIZE.w/2 + 20, 50, WINSIZE.w/2 - 40, 250, fonts.stxt, COL_LIGHTGREY, 
 		{ 
 			bgcolor=COL_TRANSPARENT60,
-			ownsurface=true
+			transparency=true,
+			ownsurface=true,
 		} )
 	local MajordomeLog = MQTTLog('Majordome', 'Majordome/Log', MajordomeTxt, { udata=1 } )
 	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Mode', { udata=2 } )
