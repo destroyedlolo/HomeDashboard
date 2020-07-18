@@ -98,10 +98,22 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Meteo.refreshGfx()
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
 		quitHDB()
+
+			---
+			-- Debugging
+			---
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 0' then
+		switchtimer:Disable()
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 1' then
+		switchtimer:Enable()
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 0' then
 		Machines.Visibility(false)
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 1' then
 		Machines.Visibility(true)
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 0' then
+		Automatisme.Visibility(false)
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 1' then
+		Automatisme.Visibility(true)
 	end
 end
 
@@ -148,7 +160,6 @@ SelLog.log("Let's go ...")
 -- Wait for events
 while true do
 	local rt = table.pack( Selene.WaitFor(switchtimer, animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents )) )
--- local rt = table.pack( Selene.WaitFor(animTimer.getTimer(), wdTimer.getTimer(), unpack( additionnalevents ) ))
 	for _,ret in ipairs(rt) do
 		if type(ret) == 'function' then
 			ret()
