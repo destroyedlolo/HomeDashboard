@@ -37,7 +37,7 @@ function NotificationArea(
 				self.setFont( opts.timefont )
 			end
 			self.setColor(opts.timecolor)
-			self.DrawString( os.date(opts.timeformat) .." :  ", true )
+			self.DrawString( os.date(opts.timeformat) .." : ", true )
 			if opts.timefont then
 				self.setFont( font )
 			end
