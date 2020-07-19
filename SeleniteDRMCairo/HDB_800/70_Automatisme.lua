@@ -29,8 +29,11 @@ local function automatisme()
 			bgcolor=COL_TRANSPARENT60,
 			transparency=true,
 			ownsurface=true,
+			timeformat='%X',
+			timefont=fonts.xstxt,
+			timecolor=COL_WHITE,
 		} )
-	local MajordomeLog = MQTTLog('Majordome', 'Majordome/Log', MajordomeTxt, { udata=1 } )
+	local MajordomeLog = MQTTLog('Majordome', 'Majordome/Log', MajordomeTxt, { udata=-1 } )
 	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Mode', { udata=2 } )
 	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Erreur', { udata=3 } )
 	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Action', { udata=5 } )

@@ -6,6 +6,20 @@ function NotificationArea(
 	font, tcolor,
 	opts
 )
+--[[ known options  :
+-- timeformat : display time of message arrival 
+-- 		the argument if time format, see os.date()
+-- 		(default : time not displayed)
+-- timefont : font to use to display time (default font)
+-- timecolor : font color (default : tcolor)
+--]]
+	if not opts then
+		opts = {}
+	end
+	if not opts.timecolor then
+		opts.timecolor = tcolor
+	end
+
 	local self = TextArea( psrf, x,y, w,h, font, tcolor, opts )
 
 	local flipcol = true	-- Color flipping flag
@@ -16,6 +30,19 @@ function NotificationArea(
 	end
 
 	function self.Display( txt, udt )
+		self.SmartCR()
+
+		if opts.timeformat then
+			if opts.timefont then
+				self.setFont( opts.timefont )
+			end
+			self.setColor(opts.timecolor)
+			self.DrawString( os.date(opts.timeformat) .." :  ", true )
+			if opts.timefont then
+				self.setFont( font )
+			end
+		end
+
 		if udt == -1 then
 			if flipcol == true then
 				flipcol = false
@@ -39,7 +66,7 @@ function NotificationArea(
 		else
 			self.setColor( tcolor )
 		end
-		self.Log(txt)
+		self.DrawString( txt )
 	end
 
 	return self
