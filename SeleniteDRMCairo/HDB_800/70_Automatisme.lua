@@ -17,6 +17,11 @@ local function automatisme()
 		print("*E*",err)
 		os.exit(EXIT_FAILURE)
 	end
+	local MarcelImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Marcel.png")
+	if not MarcelImg then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
 
 	function self.Clear( 
 		clipped -- clipping area from child (optional)
@@ -33,6 +38,7 @@ local function automatisme()
 		self.get():DrawStringTop("Automatismes :", 5,0 )
 		self.get():Blit(mainframe, 20,50)
 		self.get():Blit(MajordomeImg, 535,84)
+		self.get():Blit(MarcelImg, 430,260)
 
 		if clipped then
 			self.get():RestoreContext()
@@ -40,8 +46,6 @@ local function automatisme()
 	end
 
 	self.Clear()
-
-self.get():DrawStringTop("bla bla", 5,15 )
 
 	local MarcelTxt = NotificationArea( self, WINSIZE.w - 245, 230, 245, 200, fonts.stxt, COL_LIGHTGREY, 
 		{ 
@@ -52,9 +56,9 @@ self.get():DrawStringTop("bla bla", 5,15 )
 			timefont=fonts.xstxt,
 			timecolor=COL_WHITE,
 		} )
-	local MarcelLog = MQTTLog('marcel', 'Marcel.prod/Log/Warning', MarcelTxt, { udata=1 } )
-	MarcelLog.RegisterTopic( 'marcel', 'Marcel.prod/Log/Error', { udata=3 } )
-	MarcelLog.RegisterTopic( 'marcel', 'Marcel.prod/Log/Fatal', { udata=4 } )
+	local MarcelLog = MQTTLog('marcel', MARCEL ..'/Log/Warning', MarcelTxt, { udata=1 } )
+	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Error', { udata=3 } )
+	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Fatal', { udata=4 } )
 	MarcelTxt.Log("Marcel")
 
 	local MajordomeTxt = NotificationArea( self, WINSIZE.w - 245, 10, 245, 205, fonts.stxt, COL_LIGHTGREY, 
@@ -66,10 +70,10 @@ self.get():DrawStringTop("bla bla", 5,15 )
 			timefont=fonts.xstxt,
 			timecolor=COL_WHITE,
 		} )
-	local MajordomeLog = MQTTLog('Majordome', 'Majordome/Log', MajordomeTxt, { udata=-1 } )
-	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Mode', { udata=2 } )
-	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Erreur', { udata=3 } )
-	MajordomeLog.RegisterTopic( 'Majordome', 'Majordome/Log/Action', { udata=5 } )
+	local MajordomeLog = MQTTLog('Majordome', MAJORDOME ..'/Log', MajordomeTxt, { udata=-1 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Mode', { udata=2 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Erreur', { udata=3 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Action', { udata=5 } )
 	MajordomeTxt.Log("Majordome")
 
 	self.Visibility(false)

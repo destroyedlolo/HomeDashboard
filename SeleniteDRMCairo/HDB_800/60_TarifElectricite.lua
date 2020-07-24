@@ -1,4 +1,4 @@
 -- Display Electricity rade
 
-TarifElectricite('TarifEDF', 'Majordome/TarifElectricite', condition_EDF)
+TarifElectricite('TarifEDF', MAJORDOME ..'/TarifElectricite', condition_EDF)
 

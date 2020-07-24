@@ -1,4 +1,4 @@
 -- Display Electricity rade
 
-PoolStatus('EtatPiscine', 'Majordome/Mode/Piscine/status', condition_pool)
+PoolStatus('EtatPiscine', MAJORDOME ..'/Mode/Piscine/status', condition_pool)
 
