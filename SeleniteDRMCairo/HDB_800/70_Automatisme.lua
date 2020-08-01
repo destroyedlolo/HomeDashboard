@@ -7,18 +7,8 @@ local function automatisme()
 		}
 	)
 
-	local mainframe,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Mainframe.png")
+	local mainframe,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Automatismes.png")
 	if not mainframe then
-		print("*E*",err)
-		os.exit(EXIT_FAILURE)
-	end
-	local MajordomeImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Majordome.png")
-	if not MajordomeImg then
-		print("*E*",err)
-		os.exit(EXIT_FAILURE)
-	end
-	local MarcelImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Marcel.png")
-	if not MarcelImg then
 		print("*E*",err)
 		os.exit(EXIT_FAILURE)
 	end
@@ -37,8 +27,6 @@ local function automatisme()
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Automatismes :", 5,0 )
 		self.get():Blit(mainframe, 20,50)
-		self.get():Blit(MajordomeImg, 535,84)
-		self.get():Blit(MarcelImg, 430,260)
 
 		if clipped then
 			self.get():RestoreContext()
@@ -56,7 +44,8 @@ local function automatisme()
 			timefont=fonts.xstxt,
 			timecolor=COL_WHITE,
 		} )
-	local MarcelLog = MQTTLog('marcel', MARCEL ..'/Log/Warning', MarcelTxt, { udata=1 } )
+	 local MarcelLog = MQTTLog('marcel', MARCEL ..'/Log/Warning', MarcelTxt, { udata=1 } )
+	MarcelLog.RegisterTopic('marcel', MARCEL ..'/Log/Information', { udata=-1 } )
 	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Error', { udata=3 } )
 	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Fatal', { udata=4 } )
 	MarcelTxt.Log("Marcel")
