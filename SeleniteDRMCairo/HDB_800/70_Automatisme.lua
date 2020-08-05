@@ -28,9 +28,7 @@ local function automatisme()
 		self.get():DrawStringTop("Automatismes :", 5,0 )
 		self.get():Blit(mainframe, 20,50)
 
-		if clipped then
-			self.get():RestoreContext()
-		end
+		self.get():RestoreContext()
 	end
 
 	self.Clear()
@@ -59,9 +57,12 @@ local function automatisme()
 			timefont=fonts.xstxt,
 			timecolor=COL_WHITE,
 		} )
-	local MajordomeLog = MQTTLog('Majordome', MAJORDOME ..'/Log', MajordomeTxt, { udata=-1 } )
+	local MajordomeLog = MQTTLog('Majordome', MAJORDOME ..'/Log/Config', MajordomeTxt, { udata=1 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Information', { udata=-1 } )
 	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Mode', { udata=2 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Fatal', { udata=3 } )
 	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Erreur', { udata=3 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Warning', { udata=3 } )
 	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Action', { udata=5 } )
 	MajordomeTxt.Log("Majordome")
 

@@ -114,6 +114,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Automatisme.Visibility(false)
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 1' then
 		Automatisme.Visibility(true)
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
+		Automatisme.get():Dump('/tmp', 'Auto')
 	end
 end
 
@@ -156,6 +158,9 @@ Notification.setColor( COL_WHITE )
 SelLog.log("Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
 SelLog.log("Let's go ...")
 
+-- Request versions
+Brk:Publish( MARCEL .."/About", "x" )
+Brk:Publish( MAJORDOME .."/About", "x" )
 
 -- Wait for events
 while true do
