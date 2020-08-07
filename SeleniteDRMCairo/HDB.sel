@@ -15,6 +15,8 @@ end
 -- initialise graphical environment
 Selene.UseDRMCairo()
 
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
+
 	-- Open default card.
 	-- As no argument is passed it's the default one
 	-- /dev/dri/card0
@@ -22,7 +24,16 @@ card,err = SelDCCard.Open()
 if not card then
 	print("*E* DRM :", err,msg)
 	if SELPLUG_DRMCairo_FBEXTENSION then
-		card,err,msg = SelDCCard.OpenFB("/dev/fb1")
+			-- On my test env, I have 2 screen and DRM/KMS doesn't work
+			-- passing an argument allow to test on one or the other card
+			-- (default : external fb1)
+		local dev = "fb1"
+		if arg then
+			dev = arg[1]
+			MQTT_ClientID = MQTT_ClientID..dev
+		end
+		print("*C* using card", dev)
+		card,err,msg = SelDCCard.OpenFB("/dev/"..dev)
 		if not card then
 			print("*E* FB :", err,msg)
 			os.exit()
@@ -35,7 +46,6 @@ if not card then
 end
 
 
-require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 require "Toile"
 
 Topics = {}	-- Topics we are looking for
