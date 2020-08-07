@@ -155,8 +155,10 @@ if err then
 	return
 end
 
+--[[
 -- Ensure first window is visible
 winlist[ 1 ].Visibility(true)
+]]
 
 -- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
