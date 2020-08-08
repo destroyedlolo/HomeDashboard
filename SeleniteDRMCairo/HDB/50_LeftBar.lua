@@ -1,6 +1,14 @@
 local function f()
 	local self = Surface( psrf, 0,0,LBw, psrf:GetHight() )
 
+	local fond,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/ToleRivets.png")
+	if not fond then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
+	self.get():Blit(fond, 0,0)	-- Notez-bien : translation is also scaled
+
 	-- build graphics
 
 	local w = self.get():GetWidth()-1
@@ -11,7 +19,7 @@ local function f()
 	local offy = 3
 	self.setColor( COL_TITLE )
 	self.setFont( fonts.title1 )
-	srf:DrawStringTop("Tension EDF :", 5, offy )
+	srf:DrawStringTop("Tension EDF :", 9, offy )
 	offy = offy + self.get():GetFontExtents()
 
 	local srf_tension = FieldBlink( self, animTimer, 30, offy, fonts.mdigit, COL_DIGIT, {
@@ -36,7 +44,7 @@ local function f()
 		----
 
 	self.setFont( fonts.title1 )
-	srf:DrawStringTop("Consommation :", 5, offy )
+	srf:DrawStringTop("Consommation :", 9, offy )
 	offy = offy + self.get():GetFontExtents()
 
 	local grd_conso =  Gradient( {
@@ -82,7 +90,7 @@ local function f()
 		-------
 
 	self.setFont( fonts.title1 )
-	srf:DrawStringTop("Production :", 5, offy )
+	srf:DrawStringTop("Production :", 9, offy )
 	offy = offy + self.get():GetFontExtents()
 
 	local grd_prod = Gradient( {
