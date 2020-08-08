@@ -72,4 +72,4 @@ end
 
 Automatisme = automatisme()
 
-table.insert( winlist, Automatisme )
+--table.insert( winlist, Automatisme )
