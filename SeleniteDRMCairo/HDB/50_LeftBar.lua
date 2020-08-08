@@ -30,13 +30,13 @@ local function f()
 	self.setColor( COL_BORDER )
 	srf:DrawLine( w, 0, w, srf:GetHight() )
 
-	local offy = 3
+	local offy = 8
 	self.setColor( COL_TITLE )
 	self.setFont( fonts.title1 )
 	srf:DrawStringTop("Tension EDF :", 9, offy )
 	offy = offy + self.get():GetFontExtents()
 
-	local srf_tension = FieldBlink( self, animTimer, 30, offy, fonts.mdigit, COL_DIGIT, {
+	local srf_tension = FieldBlink( self, animTimer, 30, offy, fonts.mseg, COL_DIGIT, {
 		timeout = 30,
 		ndecimal=0,
 		align = ALIGN_RIGHT,
@@ -54,7 +54,7 @@ local function f()
 		ok_color = COL_DARKORANGE,
 		issue_color = COL_DARKGREEN
 	} )
-	offy = offy + srf_tension.getHight()
+	offy = offy + srf_tension.getHight() + 12
 
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
@@ -70,7 +70,7 @@ local function f()
 		[4500] = COL_RED
 	})
 
-	local srf_consommation = Field( self, 10,offy, fonts.digit, COL_DIGIT, {
+	local srf_consommation = Field( self, 10,offy, fonts.seg, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345",
@@ -83,7 +83,7 @@ local function f()
 	srf:DrawStringTop(" VA", srf_consommation.getAfter())
 	offy = offy + srf_consommation.getHight()
 
-	local srf_trndconso = GfxArea( self, 30, offy, w-60, HSGRPH, COL_ORANGE, COL_GFXBGT,{
+	local srf_trndconso = GfxArea( self, 36,160, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
 		debug = true,
 		heverylines={ {1000, COL_DARKGREY} },
 		align=ALIGN_RIGHT,
@@ -92,7 +92,7 @@ local function f()
 		gradient = grd_conso
 	} )
 
-	local srf_maxconso = FieldBlink( srf_trndconso, animTimer, 2, 2, fonts.sdigit, COL_DIGIT, {
+	local srf_maxconso = FieldBlink( srf_trndconso, animTimer, 2, 2, fonts.sseg, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
@@ -108,7 +108,7 @@ local function f()
 			condition=condition_network
 		}
 	)
-	offy = offy + HSGRPH
+	offy = 226
 
 		-------
 
@@ -122,7 +122,7 @@ local function f()
 		[1200] = COL_GREEN
 	} )
 
-	local srf_production = Field( self, 10,offy, fonts.digit, COL_DIGIT, {
+	local srf_production = Field( self, 10,offy, fonts.seg, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
@@ -135,7 +135,7 @@ local function f()
 	srf:DrawStringTop(" VA", srf_production.getAfter())
 	offy = offy + srf_production.getHight()
 
-	local srf_trndprod = GfxArea( self, 30, offy, w-60, HSGRPH, COL_ORANGE, COL_GFXBGT,{
+	local srf_trndprod = GfxArea( self, 36, 304, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
 		heverylines={ {500, COL_DARKGREY} },
 		align = ALIGN_RIGHT,
 		ownsurface = true,
@@ -143,7 +143,7 @@ local function f()
 		gradient = grd_prod
 	} )
 
-	local srf_maxprod = Field( srf_trndprod, 2, 2, fonts.sdigit, COL_DIGIT, {
+	local srf_maxprod = Field( srf_trndprod, 2, 2, fonts.sseg, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
@@ -160,11 +160,11 @@ local function f()
 		}
 	)
 
-	offy = offy + HSGRPH
+	offy = 375 
 
 		------------
 
-	local srf_onduleur = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
+	local srf_onduleur = FieldBlink( self, animTimer, 0, offy, fonts.sseg, COL_DIGIT, {
 		timeout = 30,
 		align = ALIGN_RIGHT, 
 		sample_text = "888.8 W",
@@ -199,7 +199,7 @@ local function f()
 
 	offy = offy + self.get():GetFontExtents()
 
-	local srf_TSalon = FieldBlink( self, animTimer, 60, offy, fonts.mdigit, COL_DIGIT, {
+	local srf_TSalon = FieldBlink( self, animTimer, 60, offy, fonts.mseg, COL_DIGIT, {
 		timeout = 310,
 		align = ALIGN_RIGHT, 
 		sample_text = "-88.8",
@@ -230,7 +230,7 @@ local function f()
 	srf:DrawStringTop("Extérieur :", 35, offy )
 	offy = offy + self.get():GetFontExtents()
 
-	self.srf_TDehors = FieldBlink( self, animTimer, 60, offy, fonts.mdigit, COL_DIGIT, {
+	self.srf_TDehors = FieldBlink( self, animTimer, 60, offy, fonts.mseg, COL_DIGIT, {
 		timeout = 310,
 		align = ALIGN_RIGHT, 
 		ownsurface=true,
@@ -250,12 +250,12 @@ local function f()
 
 	self.setFont( fonts.sdigit )
 	imgw = self.get():GetStringExtents( "8888" )
-	local srf_dATM = FieldBlink( self, animTimer, (w-imgw)/2, offy+15, fonts.sdigit, COL_DIGIT, {
+	local srf_dATM = FieldBlink( self, animTimer, (w-imgw)/2, offy+15, fonts.sseg, COL_DIGIT, {
 		timeout = 310,
 		align = ALIGN_CENTER,
 		width = imgw
 	} )
-	local srf_uATM = FieldBlink( self, animTimer, (w-imgw)/2, offy + srf_dATM.getHight() + 15, fonts.sdigit, COL_DIGIT, {
+	local srf_uATM = FieldBlink( self, animTimer, (w-imgw)/2, offy + srf_dATM.getHight() + 15, fonts.sseg, COL_DIGIT, {
 		timeout = 310,
 		align = ALIGN_CENTER,
 		width = imgw
