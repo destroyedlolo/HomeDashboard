@@ -7,7 +7,21 @@ local function f()
 		os.exit(EXIT_FAILURE)
 	end
 
-	self.get():Blit(fond, 0,0)	-- Notez-bien : translation is also scaled
+	function self.Clear( 
+		clipped -- clipping area from child (optional)
+	)
+		self.get():SaveContext()
+		if clipped then
+			self.get():SetClipS( unpack(clipped) )
+		end
+
+		-- Redraw window's background
+		self.get():Clear( COL_BLACK.get() )
+		self.get():Blit(fond, 0,0)	-- Notez-bien : translation is also scaled
+		self.get():RestoreContext()
+	end
+
+	self.Clear()
 
 	-- build graphics
 
@@ -26,6 +40,9 @@ local function f()
 		timeout = 30,
 		ndecimal=0,
 		align = ALIGN_RIGHT,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 		sample_text = "888"
 	})
 	self.setFont( fonts.mdigit )
@@ -56,24 +73,30 @@ local function f()
 	local srf_consommation = Field( self, 10,offy, fonts.digit, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
-		sample_text = "12345", 
+		sample_text = "12345",
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 		gradient = grd_conso
 	} )
-	self.setFont( fonts.digit )
+	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" VA", srf_consommation.getAfter())
 	offy = offy + srf_consommation.getHight()
 
-	local srf_trndconso = GfxArea( self, 0, offy, w-5, HSGRPH, COL_ORANGE, COL_GFXBG,{
+	local srf_trndconso = GfxArea( self, 30, offy, w-60, HSGRPH, COL_ORANGE, COL_GFXBGT,{
+		debug = true,
 		heverylines={ {1000, COL_DARKGREY} },
 		align=ALIGN_RIGHT,
+		transparency = true,
+		ownsurface = true,
 		gradient = grd_conso
 	} )
 
-	local srf_maxconso = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
+	local srf_maxconso = FieldBlink( srf_trndconso, animTimer, 2, 2, fonts.sdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
-		ownsurface = true,
+		included = true,
 		gradient = grd_conso
 	} )
 
@@ -103,23 +126,28 @@ local function f()
 		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 		gradient = grd_prod
 	} )
-	self.setFont( fonts.digit )
+	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" VA", srf_production.getAfter())
 	offy = offy + srf_production.getHight()
 
-	local srf_trndprod = GfxArea( self, 0, offy, w-5, HSGRPH, COL_ORANGE, COL_GFXBG,{
+	local srf_trndprod = GfxArea( self, 30, offy, w-60, HSGRPH, COL_ORANGE, COL_GFXBGT,{
 		heverylines={ {500, COL_DARKGREY} },
 		align = ALIGN_RIGHT,
+		ownsurface = true,
+		transparency = true,
 		gradient = grd_prod
 	} )
 
-	local srf_maxprod = FieldBlink( self, animTimer, 0, offy, fonts.sdigit, COL_DIGIT, {
+	local srf_maxprod = Field( srf_trndprod, 2, 2, fonts.sdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
-		ownsurface = true,
+		included = true,
 		gradient = grd_prod
 	} )
 
@@ -127,7 +155,7 @@ local function f()
 		{
 			smax = srf_maxprod,
 			force_max_refresh = true,
-			forced_min = 0, 
+			forced_min = 0,
 			condition=condition_network 
 		}
 	)
@@ -175,6 +203,9 @@ local function f()
 		timeout = 310,
 		align = ALIGN_RIGHT, 
 		sample_text = "-88.8",
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 		gradient = GRD_TEMPERATURE
 	} )
 
@@ -202,6 +233,9 @@ local function f()
 	self.srf_TDehors = FieldBlink( self, animTimer, 60, offy, fonts.mdigit, COL_DIGIT, {
 		timeout = 310,
 		align = ALIGN_RIGHT, 
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 		sample_text = "-88.8",
 		gradient = GRD_TEMPERATURE
 	} )
