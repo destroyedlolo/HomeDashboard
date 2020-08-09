@@ -70,7 +70,7 @@ local function f()
 		[4500] = COL_RED
 	})
 
-	local srf_consommation = Field( self, 10,offy, fonts.seg, COL_DIGIT, {
+	local srf_consommation = Field( self, 30,offy, fonts.seg, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345",
@@ -122,7 +122,7 @@ local function f()
 		[1200] = COL_GREEN
 	} )
 
-	local srf_production = Field( self, 10,offy, fonts.seg, COL_DIGIT, {
+	local srf_production = Field( self, 30,offy, fonts.seg, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
 		sample_text = "12345", 
@@ -160,46 +160,30 @@ local function f()
 		}
 	)
 
-	offy = 375 
+	offy = 397
 
 		------------
 
-	local srf_onduleur = FieldBlink( self, animTimer, 0, offy, fonts.sseg, COL_DIGIT, {
+	local srf_onduleur = FieldBlink( self, animTimer, 70, 704, fonts.sseg, COL_DIGIT, {
 		timeout = 30,
 		align = ALIGN_RIGHT, 
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 		sample_text = "888.8 W",
 		suffix = ' W'
 	} )
 
-	offx = srf_onduleur.getAfter()
-
-	local srf_gaugeOnduleur = HGauge( self, offx+2, offy+4, w-offx-4, srf_onduleur.get():GetHight()-6, COL_WHITE, COL_GFXBG, COL_BORDER )
 
 	local onduleur = UPSdata('UPS', 'onduleur/ups.load', 'onduleur/ups.realpower.nominal', srf_onduleur, srf_gaugeOnduleur, { condition=condition_network })
-
-	offy = offy + srf_onduleur.get():GetHight()
 
 		------------
 
 	self.setFont( fonts.title1 )
-	srf:DrawStringTop("Salon :", 35, offy )
-
-	local img,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Thermometre.png")
-	if not img then
-		print("*E*",err)
-		os.exit(EXIT_FAILURE)
-	end
-
-	self.get():SaveContext()
-	local imgw, imgh = img:GetSize()
-	local simg = 115/imgh
-	self.get():Scale( simg, simg )
-	self.get():Blit(img, 5/simg, (offy+10)/simg)	-- Notez-bien : translation is also scaled
-	self.get():RestoreContext()
-
+	srf:DrawStringTop("Salon :", 65, offy )
 	offy = offy + self.get():GetFontExtents()
 
-	local srf_TSalon = FieldBlink( self, animTimer, 60, offy, fonts.mseg, COL_DIGIT, {
+	local srf_TSalon = FieldBlink( self, animTimer, 65, offy, fonts.mseg, COL_DIGIT, {
 		timeout = 310,
 		align = ALIGN_RIGHT, 
 		sample_text = "-88.8",
@@ -209,25 +193,28 @@ local function f()
 		gradient = GRD_TEMPERATURE
 	} )
 
+--[[
 	local srf_Thermometre = VGauge( self, 16,offy, 7,68, COL_RED, COL_WHITE, nil, {
 		min = 5, max = 40,
 		ascend = true
 	})
+]]
 
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop("°C", srf_TSalon.getAfter())
 	offy = offy + srf_TSalon.getHight()
 
+--[[
 	local function updthermo()
 		srf_Thermometre.Draw( TSalon.get() )
 	end
 	TSalon.TaskOnceAdd( updthermo )
-
+]]
 		----
 
 	self.setFont( fonts.title1 )
-	srf:DrawStringTop("Extérieur :", 35, offy )
+	srf:DrawStringTop("Extérieur :", 65, offy )
 	offy = offy + self.get():GetFontExtents()
 
 	self.srf_TDehors = FieldBlink( self, animTimer, 60, offy, fonts.mseg, COL_DIGIT, {
@@ -244,7 +231,7 @@ local function f()
 	local TDehors = MQTTDisplay( 'TDehors', 'maison/Temperature/Dehors', self.srf_TDehors )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop("°C", self.srf_TDehors.getAfter())
-	offy = offy + self.srf_TDehors.getHight()
+	offy = offy + self.srf_TDehors.getHight() + 10
 
 		----
 
@@ -252,11 +239,17 @@ local function f()
 	imgw = self.get():GetStringExtents( "8888" )
 	local srf_dATM = FieldBlink( self, animTimer, (w-imgw)/2, offy+15, fonts.sseg, COL_DIGIT, {
 		timeout = 310,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 		align = ALIGN_CENTER,
 		width = imgw
 	} )
 	local srf_uATM = FieldBlink( self, animTimer, (w-imgw)/2, offy + srf_dATM.getHight() + 15, fonts.sseg, COL_DIGIT, {
 		timeout = 310,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 		align = ALIGN_CENTER,
 		width = imgw
 	} )
@@ -289,9 +282,6 @@ local function f()
 	local dWAN = FAIdata( 'dWAN', 'Freebox/DownloadATM', 'Freebox/UploadTV', 'Freebox/DownloadWAN', srf_dATM, gfx_download, { watchdog=wdfreebox, condition=condition_freebox } )
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, gfx_upload )
 	table.insert( additionnalevents, wdfreebox )
-
---	offy = offy + srf_dATM.getHight()
-
 
 
 	-- Drawing finished and alway visible
