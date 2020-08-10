@@ -1,7 +1,7 @@
 local function f()
 	local self = Surface( psrf, 0,0,LBw, psrf:GetHight() )
 
-	local fond,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/ToleRivets.png")
+	local fond,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/BarreGauche.png")
 	if not fond then
 		print("*E*",err)
 		os.exit(EXIT_FAILURE)
