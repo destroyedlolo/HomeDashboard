@@ -20,9 +20,20 @@ Selene.UseDRMCairo()
 	-- /dev/dri/card0
 card,err = SelDCCard.Open()
 if not card then
-	print("*E*", err)
-	os.exit()
+	print("*E* DRM :", err,msg)
+	if SELPLUG_DRMCairo_FBEXTENSION then
+		card,err,msg = SelDCCard.OpenFB("/dev/fb1")
+		if not card then
+			print("*E* FB :", err,msg)
+			os.exit()
+		else
+			print("*I* ok with Framebuffer")
+		end
+	else
+		os.exit()
+	end
 end
+
 
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 require "Toile"
@@ -35,7 +46,7 @@ savedcols = {}		-- Collection to be saved/restored
 local SAVE_DIR = '/tmp/'
 
 function SaveCollection()
-	SelLog.log("*I* Saving collections ..")
+	SelLog.log("Saving collections ..")
 	for i,col in ipairs(savedcols) do
 		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
 	end
@@ -52,20 +63,21 @@ Selene.SigIntTask( quitHDB )
 local info = debug.getinfo(1,'S');
 local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 
---[[
 SelLog.log('Loading HDB ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('Shared')
 if psrf:GetSize() == 320 then	-- small display
 	linclude.loaddir('HDB_320')
+elseif psrf:GetSize() == 800 then	-- test display
+	linclude.loaddir('HDB_800')
 else
 	linclude.loaddir('HDB')
 end
 linclude.requirefiles()
 
-SelLog.log("*I* Restoring collections ..")
+SelLog.log("Restoring collections ..")
 for i,col in ipairs(savedcols) do
-	print('*I* ' .. col.getName() ..' ...')
+	SelLog.log(col.getName() ..' ...')
 	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
 	col.updgfx()
 end
@@ -86,6 +98,24 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Meteo.refreshGfx()
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
 		quitHDB()
+
+			---
+			-- Debugging
+			---
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 0' then
+		switchtimer:Disable()
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 1' then
+		switchtimer:Enable()
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 0' then
+		Machines.Visibility(false)
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 1' then
+		Machines.Visibility(true)
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 0' then
+		Automatisme.Visibility(false)
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 1' then
+		Automatisme.Visibility(true)
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
+		Automatisme.get():Dump('/tmp', 'Auto')
 	end
 end
 
@@ -115,6 +145,9 @@ if err then
 	return
 end
 
+-- Ensure first window is visible
+winlist[ 1 ].Visibility(true)
+
 -- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )
 Notification.Log( "Toile : ".. string.format("%.4f", TOILE_VERSION) )
@@ -122,9 +155,12 @@ Notification.Log( "Command : HomeDashBoard/".. MQTT_ClientID ..'/Command' )
 
 Notification.setColor( COL_WHITE )
 
-SelLog.log("*I* Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
+SelLog.log("Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
 SelLog.log("Let's go ...")
 
+-- Request versions
+Brk:Publish( MARCEL .."/About", "x" )
+Brk:Publish( MAJORDOME .."/About", "x" )
 
 -- Wait for events
 while true do
@@ -135,5 +171,3 @@ while true do
 		end
 	end
 end
-
---]]
