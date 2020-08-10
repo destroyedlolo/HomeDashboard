@@ -255,19 +255,23 @@ local function f()
 	} )
 
 	local gfx_download = ArcGaugePercent( self, 
-		0, offy,
-		(w-imgw)/2-5, 3*srf_dATM.getHight(),
+		36, offy,
+		(w-imgw)/2-40, 3*srf_dATM.getHight(),
 		{
-			parts = 1/32
+			ownsurface=true,
+			bgcolor = COL_TRANSPARENT,
+--			parts = 1/32
 		}
 	)
 
 	local gfx_upload = ArcGaugePercent( self, 
 		w - (w-imgw)/2 +2, offy,
-		(w-imgw)/2-5, 3*srf_dATM.getHight(),
+		(w-imgw)/2-40, 3*srf_dATM.getHight(),
 		{
+			ownsurface=true,
+			bgcolor = COL_TRANSPARENT,
 			align = ALIGN_RIGHT,
-			parts = 1/32
+--			parts = 1/32
 		}
 	)
 
