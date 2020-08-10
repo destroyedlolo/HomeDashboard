@@ -3,7 +3,8 @@
 LBw = 192 -- Left bar width
 HSGRPH = 60	-- Height of small graphs
 NotLine = 6	-- Nbre of lines in notification area
-BBh = fonts.xstxt.size * NotLine + 1	-- BottomBar's hight
+-- BBh = fonts.xstxt.size * NotLine + 1	-- BottomBar's hight
+BBh = 102
 
 -- All sub windows geometry
 
