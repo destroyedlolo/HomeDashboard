@@ -13,6 +13,7 @@ function TempArea(
 --	transparency : the surfaces below must be refreshed as this one has 
 --		transparency. With this opt set, surfaces bellow are cleared first.
 --		Mostly useful when it has background image.
+--	shadow : add a shadow to the area
 --
 --	At last one of sample_text or width MUST be provided
 --]]
@@ -34,12 +35,18 @@ function TempArea(
 	x,y = math.ceil(x), math.ceil(y)
 	opts.width = math.ceil( opts.width )
 	opts.height = math.ceil( opts.height )
+	local w,h = opts.width, opts.height
 
-	if not opts.bgcolor then
-		opts.bgcolor = COL_TRANSPARENT40
+	if opts.shadow then
+		w = w+5
+		h = h+5
 	end
 
-	local self = Surface(psrf, x,y, opts.width, opts.height, opts)
+	if not opts.bgcolor then
+		opts.bgcolor = COL_TRANSPARENT05
+	end
+
+	local self = Surface(psrf, x,y, w,h, opts)
 	self.Visibility(true)
 
 	function self.Clear(
@@ -55,7 +62,15 @@ function TempArea(
 			psrf.Clear(clipped)
 		end
 
-		self.get():Clear( opts.bgcolor.get() )	-- Then clear ourself
+--		self.get():Clear( opts.bgcolor.get() )	-- Then clear ourself
+		self.setColor( opts.bgcolor )
+		self.get():FillRectangle( 0,0, opts.width, opts.height )
+
+		if opts.shadow then
+			self.setColor( COL_TRANSPARENT40 )
+			self.get():FillRectangle( opts.width,5, opts.width+5, opts.height+5 )
+			self.get():FillRectangle( 5,opts.height, opts.width+5, opts.height+5 )
+		end
 
 		self.setColor( COL_BORDER )
 		self.get():DrawRectangle(0,0, opts.width, opts.height)
@@ -79,12 +94,15 @@ function TempArea(
 		gradient = GRD_TEMPERATURE
 	} )
 
-	local production = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
+	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
 		{
+			forced_min = 15,
 			condition=condition_network 
 		}
 	)
+	table.insert( savedcols, temp )
 
+	---
 	self.Clear()
 	self.Refresh()
 

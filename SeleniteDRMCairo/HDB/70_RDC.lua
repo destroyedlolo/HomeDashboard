@@ -35,7 +35,9 @@ local function rdc()
 	end
 	self.Clear()
 
-	local TBureau = TempArea( self, "TBureau", "maison/Temperature/Bureau", 231,397)
+	local TBureau = TempArea( self, "TBureau", "maison/Temperature/Bureau", 231,397, { shadow=true })
+	local TSalon = TempArea( self, "TSalon", "maison/Temperature/Salon", 412,378, { shadow=true })
+	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
 
 	self.Visibility(false)
 	return self
