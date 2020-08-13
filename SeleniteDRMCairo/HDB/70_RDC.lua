@@ -16,6 +16,7 @@ local function rdc()
 	function self.Clear(
 		clipped -- Clipping region
 	)
+
 		-- Restrict drawing area
 		if clipped then	-- Offset this surface
 			self.get():SaveContext()
@@ -35,8 +36,10 @@ local function rdc()
 	end
 	self.Clear()
 
-	local TBureau = TempArea( self, "TBureau", "maison/Temperature/Bureau", 231,397, { shadow=true })
-	local TSalon = TempArea( self, "TSalon", "maison/Temperature/Salon", 412,378, { shadow=true })
+	local TBureau = TempArea( self, "TBureau", "maison/Temperature/Bureau", 231,397, { shadow=true, transparency=true })
+	local TSalon = TempArea( self, "TSalon", "maison/Temperature/Salon", 412,378, { shadow=true, transparency=true })
+
+		-- No transparency needed as on black background
 	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
 
 	self.Visibility(false)
