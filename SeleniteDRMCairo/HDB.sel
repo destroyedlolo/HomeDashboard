@@ -116,6 +116,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Automatisme.Visibility(true)
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
 		Automatisme.get():Dump('/tmp', 'Auto')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
+		RDC.get():Dump('/tmp', 'RDC')
 	end
 end
 

@@ -58,4 +58,3 @@ end
 Machines = machines()
 
 table.insert( winlist, Machines )
-
