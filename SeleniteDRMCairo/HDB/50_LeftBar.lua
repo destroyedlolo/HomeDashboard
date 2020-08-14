@@ -100,10 +100,20 @@ local function f()
 		gradient = grd_conso
 	} )
 
+	local srf_minconso = FieldBlink( srf_trndconso, animTimer, 2, 62-fonts.sseg.size, fonts.sseg, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345",
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = grd_conso
+	} )
+
 	local consommation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
 		{
 			smax = srf_maxconso,
 			force_max_refresh = true,
+			smin = srf_minconso,
+			force_min_refresh = true,
 			forced_min = 0,
 			condition=condition_network
 		}
@@ -151,10 +161,20 @@ local function f()
 		gradient = grd_prod
 	} )
 
+	local srf_minprod = FieldBlink( srf_trndprod, animTimer, 2, 62-fonts.sseg.size, fonts.sseg, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345",
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = grd_conso
+	} )
+
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod,
 		{
 			smax = srf_maxprod,
 			force_max_refresh = true,
+			smin = srf_minprod,
+			force_min_refresh = true,
 			forced_min = 0,
 			condition=condition_network 
 		}
