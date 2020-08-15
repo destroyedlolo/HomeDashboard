@@ -162,7 +162,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_conso
+		gradient = grd_prod
 	} )
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod,
