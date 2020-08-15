@@ -22,10 +22,7 @@ function Saison(
 
 	local parent_upd = self.Update
 	function self.Update( )
-		psrf.get():SaveContext()
-		psrf.get():SetClipS(sx,sy, opts.width, opts.hight) -- clear only this sub footprint
-		psrf.Clear()
-		psrf.get():RestoreContext()
+		psrf.Clear({sx,sy, opts.width, opts.hight})
 		parent_upd( SaisonIcons.getImg( SelShared.Get(name) ) )
 	end
 

@@ -49,11 +49,7 @@ local function f()
 	srf:DrawStringTop(" V", srf_tension.getAfter())
 
 	local offx = srf_tension.getAfter() + srf:GetStringExtents(" V")
-	local euroicn = ImageFiltreSurface( self, offx+30,offy+2, SELENE_SCRIPT_DIR .. "/Images/Euro.png" )
-	condition_EDF = Condition( euroicn,0, {
-		ok_color = COL_DARKORANGE,
-		issue_color = COL_DARKGREEN
-	} )
+	local hc = HeureCreuse( self, offx+30,offy+2 )
 	offy = offy + srf_tension.getHight() + 12
 
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
@@ -100,10 +96,20 @@ local function f()
 		gradient = grd_conso
 	} )
 
+	local srf_minconso = FieldBlink( srf_trndconso, animTimer, 2, 62-fonts.sseg.size, fonts.sseg, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345",
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = grd_conso
+	} )
+
 	local consommation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
 		{
 			smax = srf_maxconso,
 			force_max_refresh = true,
+			smin = srf_minconso,
+			force_min_refresh = true,
 			forced_min = 0,
 			condition=condition_network
 		}
@@ -151,10 +157,20 @@ local function f()
 		gradient = grd_prod
 	} )
 
+	local srf_minprod = FieldBlink( srf_trndprod, animTimer, 2, 62-fonts.sseg.size, fonts.sseg, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = "12345",
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = grd_conso
+	} )
+
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod,
 		{
 			smax = srf_maxprod,
 			force_max_refresh = true,
+			smin = srf_minprod,
+			force_min_refresh = true,
 			forced_min = 0,
 			condition=condition_network 
 		}
