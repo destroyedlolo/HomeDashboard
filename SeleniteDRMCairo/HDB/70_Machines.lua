@@ -7,8 +7,24 @@ local function machines()
 		}
 	)
 
+	----
+	-- Additional graphics
+	----
+
 	local motherboard,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Motherboard.png")
 	if not motherboard then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
+	local MajordomeImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Majordome.png")
+	if not MajordomeImg then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
+	local MarcelImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Marcel.png")
+	if not MarcelImg then
 		print("*E*",err)
 		os.exit(EXIT_FAILURE)
 	end
@@ -28,6 +44,9 @@ local function machines()
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Machines :", 5,0 )
 		self.get():Blit(motherboard, 50,50)
+
+		local ix = MajordomeImg:GetSize()
+		self.get():Blit(MajordomeImg, WINSIZE.w-ix,10)
 
 		if clipped then
 			self.get():RestoreContext()
@@ -50,6 +69,28 @@ local function machines()
 			}
 		)
 	end
+
+	local MajordomeTxt = NotificationArea( 
+		self, 
+		WINSIZE.w - 405, 0, 405, 275, fonts.stxt, COL_LIGHTGREY, 
+		{ 
+			bgcolor=COL_TRANSPARENT60,
+			transparency=true,
+			ownsurface=true,
+			timeformat='%X',
+			timefont=fonts.xstxt,
+			timecolor=COL_WHITE,
+		} 
+	)
+	local MajordomeLog = MQTTLog('Majordome', MAJORDOME ..'/Log/Config', MajordomeTxt, { udata=1 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Information', { udata=-1 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Mode', { udata=2 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Fatal', { udata=3 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Erreur', { udata=3 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Warning', { udata=3 } )
+	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Action', { udata=5 } )
+	MajordomeTxt.Log("Majordome")
+
 
 	self.Visibility(false)
 	return self
