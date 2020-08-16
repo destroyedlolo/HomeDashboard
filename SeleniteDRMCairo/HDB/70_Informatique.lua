@@ -42,7 +42,7 @@ local function machines()
 		self.get():Clear( COL_BLACK.get() )
 		self.setColor( COL_TITLE )
 		self.setFont( fonts.title )
-		self.get():DrawStringTop("Machines :", 5,0 )
+		self.get():DrawStringTop("Informatique :", 5,0 )
 		self.get():Blit(motherboard, 50,50)
 
 		local ix = MajordomeImg:GetSize()
