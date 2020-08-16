@@ -120,12 +120,12 @@ end
 		heverylines={ {500, COL_DARKGREY} },
 		align = ALIGN_RIGHT,
 		transparency = true,
+		min_delta = 1,
 		gradient = GRD_TEMPERATURE
 	} )
 
 	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
 		{
-			forced_min = 15,
 			condition=condition_network 
 		}
 	)
