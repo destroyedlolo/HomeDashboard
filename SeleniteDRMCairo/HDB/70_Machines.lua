@@ -48,6 +48,9 @@ local function machines()
 		local ix = MajordomeImg:GetSize()
 		self.get():Blit(MajordomeImg, WINSIZE.w-ix,10)
 
+		ix = MarcelImg:GetSize()
+		self.get():Blit(MarcelImg, WINSIZE.w-ix,340)
+
 		if clipped then
 			self.get():RestoreContext()
 		end
@@ -72,7 +75,7 @@ local function machines()
 
 	local MajordomeTxt = NotificationArea( 
 		self, 
-		WINSIZE.w - 405, 0, 405, 275, fonts.stxt, COL_LIGHTGREY, 
+		WINSIZE.w - 405, 0, 405, 310, fonts.stxt, COL_LIGHTGREY, 
 		{ 
 			bgcolor=COL_TRANSPARENT60,
 			transparency=true,
@@ -91,6 +94,21 @@ local function machines()
 	MajordomeLog.RegisterTopic( 'Majordome', MAJORDOME ..'/Log/Action', { udata=5 } )
 	MajordomeTxt.Log("Majordome")
 
+	local MarcelTxt = NotificationArea(
+		self, WINSIZE.w - 405, 330, 405, 310, fonts.stxt, COL_LIGHTGREY, 
+		{ 
+			bgcolor=COL_TRANSPARENT60,
+			transparency=true,
+			ownsurface=true,
+			timeformat='%X',
+			timefont=fonts.xstxt,
+			timecolor=COL_WHITE,
+		} )
+	 local MarcelLog = MQTTLog('marcel', MARCEL ..'/Log/Warning', MarcelTxt, { udata=1 } )
+	MarcelLog.RegisterTopic('marcel', MARCEL ..'/Log/Information', { udata=-1 } )
+	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Error', { udata=3 } )
+	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Fatal', { udata=4 } )
+	MarcelTxt.Log("Marcel")
 
 	self.Visibility(false)
 	return self
