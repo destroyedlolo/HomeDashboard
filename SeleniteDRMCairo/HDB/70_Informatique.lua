@@ -68,7 +68,8 @@ local function machines()
 			200,105, 
 			fonts.sdigit, COL_TITLE,
 			{
-				timeout = 150
+				timeout = 150,
+				debug = true
 			}
 		)
 	end
