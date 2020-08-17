@@ -54,7 +54,7 @@ local function f()
 	condition_BarrierePoule = Condition( barriere, 0, {issue_color=COL_RED } )
 	offx = offx + 24
 
-	Notification = NotificationArea( self, 810, 31, 267, sh-31, fonts.xstxt, COL_DARKGREEN, { bgcolor=COL_GFXBG } )
+	Notification = NotificationArea( self, 810, 31, sw-820, sh-31, fonts.xstxt, COL_DARKGREEN, { bgcolor=COL_GFXBG } )
 	local log = MQTTLog('messages', 'messages', Notification, { udata=-1 } )
 	log.RegisterTopic('messages', 'messages/Erreur', { udata=3 } )
 	offx = offx + 200
