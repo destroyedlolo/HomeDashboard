@@ -66,6 +66,7 @@ local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 SelLog.log('Loading HDB ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('Shared')
+linclude.loaddir('Inputs')
 if psrf:GetSize() == 320 then	-- small display
 	linclude.loaddir('HDB_320')
 elseif psrf:GetSize() == 800 then	-- test display
@@ -116,6 +117,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Automatisme.Visibility(true)
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
 		Automatisme.get():Dump('/tmp', 'Auto')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
+		RDC.get():Dump('/tmp', 'RDC')
 	end
 end
 
