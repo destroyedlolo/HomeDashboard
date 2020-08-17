@@ -66,6 +66,7 @@ local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 SelLog.log('Loading HDB ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('Shared')
+linclude.loaddir('Inputs')
 if psrf:GetSize() == 320 then	-- small display
 	linclude.loaddir('HDB_320')
 elseif psrf:GetSize() == 800 then	-- test display
