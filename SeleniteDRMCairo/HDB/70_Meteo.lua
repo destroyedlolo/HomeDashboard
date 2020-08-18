@@ -57,6 +57,8 @@ local function meteo()
 	} )
 	MQTTDisplay( 'SunsetNonlard', "Meteo/Nonglard/sunset", srf_sunset )
 
+	local currentw = cweather( self, 0, 50 )
+	local w0 = Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
 
 	self.Visibility(false)
 	return self
