@@ -48,9 +48,9 @@ local function meteo()
 	} )
 	MQTTDisplay( 'SunriseNonlard', "Meteo/Nonglard/sunrise", srf_sunrise )
 
-	self.get():DrawStringTop(" -", 780, 0)
+	self.get():DrawStringTop("-", 764, 0)
 
-	local srf_sunset = FieldBlink( self, animTimer, 810, 0, fonts.mdigit, COL_DIGIT, {
+	local srf_sunset = FieldBlink( self, animTimer, 795, 0, fonts.mdigit, COL_DIGIT, {
 		timeout = 87000,
 		align = ALIGN_CENTER,
 		sample_text = '88:88'
