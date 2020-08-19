@@ -119,6 +119,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Automatisme.get():Dump('/tmp', 'Auto')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
 		RDC.get():Dump('/tmp', 'RDC')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
+		Meteo.get():Dump('/tmp', 'Meteo')
 	end
 end
 

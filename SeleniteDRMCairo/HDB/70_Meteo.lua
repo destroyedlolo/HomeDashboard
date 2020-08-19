@@ -41,7 +41,7 @@ local function meteo()
 
 	self.Clear()
 
-	local srf_sunrise = FieldBlink( self, animTimer, 675, 0, fonts.digit, COL_DIGIT, {
+	local srf_sunrise = FieldBlink( self, animTimer, 675, 0, fonts.mdigit, COL_DIGIT, {
 		timeout = 87000,
 		align = ALIGN_CENTER,
 		sample_text = '88:88'
@@ -50,7 +50,7 @@ local function meteo()
 
 	self.get():DrawStringTop(" -", 780, 0)
 
-	local srf_sunset = FieldBlink( self, animTimer, 810, 0, fonts.digit, COL_DIGIT, {
+	local srf_sunset = FieldBlink( self, animTimer, 810, 0, fonts.mdigit, COL_DIGIT, {
 		timeout = 87000,
 		align = ALIGN_CENTER,
 		sample_text = '88:88'

@@ -20,6 +20,7 @@ fonts={
 	title1 = { font=fontTT, size=24 },
 	digit = { font=finternal, size=42 },
 	mdigit = { font=finternal, size=31 },
+	smdigit = { font=finternal, size=25 },
 	sdigit = { font=finternal, size=18 },
 	seg = { font=fontSeg, size=42 },
 	mseg = { font=fontSeg, size=31 },
