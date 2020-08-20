@@ -12,7 +12,7 @@ function cweather(
 		opts = {}
 	end
 
-	local self = SubSurface( psrf, x,y, 500, 170 )
+	local self = SubSurface( psrf, x,y, 433, 195 )
 
 	local name
 	function self.setName( tp )
@@ -20,24 +20,24 @@ function cweather(
 	end
 
 	local icon = ImageSurface( 
-		self, 0,0, 280, 194, { 
+		self, 0,0, 250, 174, { 
 			transparency = true,
 			autoscale = true
 		} 
 	)
-	self.desc = FieldBlink( self, animTimer, 0, 194, fonts.sdigit, COL_DIGIT, {
+	self.desc = FieldBlink( self, animTimer, 0, 174, fonts.xsdigit, COL_DIGIT, {
 		align = ALIGN_CENTER,
 		width = 280
 	} )
 
-	local offy = 20
-	self.setFont( fonts.smdigit )
+	local offx,offy = 280,20
+	self.setFont( fonts.sdigit )
 	self.setColor( COL_TITLE )
-	self.get():DrawStringTop("Pour :", 310,offy)
+	self.get():DrawStringTop("Pour :", offx,offy)
 
 	local time = FieldBlink( self,
-		animTimer, 310 + self.get():GetStringExtents("Pour_:_"), offy,
-		fonts.smdigit, COL_DIGIT, {
+		animTimer, offx + self.get():GetStringExtents("Pour_:_"), offy,
+		fonts.sdigit, COL_DIGIT, {
 			align = ALIGN_CENTER,
 			sample_text = "88:88"
 		}
@@ -46,34 +46,34 @@ function cweather(
 	offy = offy + time.getHight()
 
 	self.temp = FieldBlink( self,
-		animTimer, 310, offy,
-		fonts.digit, COL_DIGIT, {
+		animTimer, offx, offy,
+		fonts.mdigit, COL_DIGIT, {
 			align = ALIGN_RIGHT,
 			ndecimal = 1,
 			sample_text = "-88:8"
 		}
 	)
-	self.setFont( fonts.digit )
+	self.setFont( fonts.mdigit )
 	self.get():DrawStringTop("°C", self.temp.getAfter())
 	offy = offy + self.temp.getHight()
 	
-	self.windd = WindDir( self, 310, offy, fonts.mdigit.size,fonts.mdigit.size)
+	self.windd = WindDir( self, offx, offy, fonts.smdigit.size,fonts.smdigit.size)
 	self.windspeed = FieldBlink( self,
-		animTimer, 310 + fonts.mdigit.size, offy,
-		fonts.mdigit, COL_DIGIT, {
+		animTimer, offx + fonts.smdigit.size, offy,
+		fonts.smdigit, COL_DIGIT, {
 			align = ALIGN_RIGHT,
 			sample_text = "88.88"
 		}
 	)
-	self.setFont( fonts.mdigit )
+	self.setFont( fonts.smdigit )
 	self.get():DrawStringTop(" km/h", self.windspeed.getAfter())
 	offy = offy + self.windspeed.getHight()
 
-	local cloud = ImageSurface( self, 310, offy, fonts.mdigit.size+10, fonts.mdigit.size+10, { autoscale=true } )
+	local cloud = ImageSurface( self, offx, offy, fonts.smdigit.size+10, fonts.smdigit.size+10, { autoscale=true } )
 	cloud.Update( WeatherIcons.getImg('21') )
 	self.clouds = FieldBlink( self,
-		animTimer, 320 + fonts.mdigit.size, offy,
-		fonts.mdigit, COL_DIGIT, {
+		animTimer, offx + fonts.smdigit.size + 10, offy,
+		fonts.smdigit, COL_DIGIT, {
 			suffix = '%',
 			align = ALIGN_RIGHT,
 			sample_text = "188%"
@@ -81,11 +81,11 @@ function cweather(
 	)
 	offy = offy + self.clouds.getHight()
 
-	local drop = ImageSurface( self, 310, offy, fonts.mdigit.size, fonts.mdigit.size, { autoscale=true } )
+	local drop = ImageSurface( self, offx, offy, fonts.smdigit.size, fonts.smdigit.size, { autoscale=true } )
 	drop.Update( DropImg )
 	self.humidity = FieldBlink( self,
-		animTimer, 320 + fonts.mdigit.size, offy,
-		fonts.mdigit, COL_DIGIT, {
+		animTimer, offx + fonts.smdigit.size + 10, offy,
+		fonts.smdigit, COL_DIGIT, {
 			suffix = '%',
 			align = ALIGN_RIGHT,
 			sample_text = "188%"

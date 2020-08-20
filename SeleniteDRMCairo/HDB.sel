@@ -107,16 +107,18 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		switchtimer:Disable()
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 1' then
 		switchtimer:Enable()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 0' then
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Info 0' then
 		Machines.Visibility(false)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 1' then
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Info 1' then
 		Machines.Visibility(true)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 0' then
+--[[
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Info 0' then
 		Automatisme.Visibility(false)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 1' then
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Info 1' then
 		Automatisme.Visibility(true)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
-		Automatisme.get():Dump('/tmp', 'Auto')
+--]]
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Info' then
+		Machines.get():Dump('/tmp', 'Info')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
 		RDC.get():Dump('/tmp', 'RDC')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
