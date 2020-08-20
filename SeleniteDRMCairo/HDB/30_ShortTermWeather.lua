@@ -19,20 +19,25 @@ function ShortTermWeather(
 	end
 
 	local time = Field( self, 0, 0, fonts.sdigit, COL_DIGIT, {
+		bgcolor = false,
+		transparency = true,
 		align = ALIGN_CENTER,
 		width = self.get():GetWidth()
 	} )
 	local goffx, goffy = time.getBelow()
 
 	local icon = ImageSurface( 
-		self, goffx, goffy, 78, 54, {
+		self, goffx+5, goffy, 78, 56, {
+			transparency = true,
 			autoscale = true
 		}
 	)
-	goffy = goffy + 54
+	goffy = goffy + 56
 
 	self.temp = Field( self, goffx, goffy,
 		fonts.sdigit, COL_DIGIT, {
+			bgcolor = false,
+			transparency = true,
 			suffix = '°C',
 			align = ALIGN_CENTER,
 			ndecimal = 1,
@@ -43,16 +48,25 @@ function ShortTermWeather(
 
 	self.windspeed = Field( self, goffx, goffy,
 		fonts.sdigit, COL_DIGIT, {
+			bgcolor = false,
+			transparency = true,
 			align = ALIGN_RIGHT,
 			width = self.get():GetWidth() - fonts.sdigit.size
 		}
 	)
 	goffx, goffy = self.windspeed.getAfter()
-	self.windd = WindDir( self, goffx, goffy, fonts.sdigit.size, fonts.sdigit.size)
+	self.windd = WindDir( self, 
+		goffx, goffy, fonts.sdigit.size, fonts.sdigit.size, 
+		{
+			bgcolor = false,
+		}
+	)
 	goffx, goffy = self.windspeed.getBelow()
 
 	self.clouds = Field( self, goffx, goffy,
 		fonts.sdigit, COL_DIGIT, {
+			bgcolor = false,
+			transparency = true,
 			suffix = '%',
 			align = ALIGN_RIGHT,
 			width = self.get():GetWidth() - fonts.sdigit.size-10
@@ -71,6 +85,6 @@ function ShortTermWeather(
 		icon.Update( WeatherIcons.getImg( SelShared.Get(name..'acode') ) )
 	end
 
-	self.Refresh()
+--	self.Refresh()
 	return self
 end

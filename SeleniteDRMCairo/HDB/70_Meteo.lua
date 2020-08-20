@@ -17,6 +17,12 @@ local function meteo()
 		os.exit(EXIT_FAILURE)
 	end
 
+	local FrogImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Grenouille.png")
+	if not FrogImg then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
 	function self.Clear(
 		clipped -- Clipping region
 	)
@@ -33,6 +39,7 @@ local function meteo()
 		self.get():DrawStringTop("Prévisions météo pour Nonglard", 5,0 )
 
 		self.get():Blit(SunriseImg, 600,10)
+		self.get():Blit(FrogImg, 240,230)
 
 		if clipped then
 			self.get():RestoreContext()
