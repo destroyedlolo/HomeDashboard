@@ -59,6 +59,16 @@ local function meteo()
 
 	local currentw = cweather( self, 0, 50 )
 	local w0 = Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
+	
+	self.setColor( COL_BORDER )
+	self.get():DrawLine(50,260, 380, 260)
+	self.get():DrawLine(500,95, 500, 565)
+
+	local stw,stwtopic = {}, {}
+	for i=0,7 do
+		stw[i] = ShortTermWeather(self, (i%4)*120, 280 + 185*math.floor(i/4))
+		stwtopic[i] = Weather3H( stw[i], 'Meteo3H', 'Nonglard', i+1)
+	end
 
 	self.Visibility(false)
 	return self
