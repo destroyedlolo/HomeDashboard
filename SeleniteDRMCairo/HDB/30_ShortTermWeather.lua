@@ -36,6 +36,7 @@ function ShortTermWeather(
 
 	self.temp = Field( self, goffx, goffy,
 		fonts.sdigit, COL_DIGIT, {
+			gradient = GRD_TEMPERATURE,
 			bgcolor = false,
 			transparency = true,
 			suffix = '°C',

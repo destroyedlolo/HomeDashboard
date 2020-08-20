@@ -48,6 +48,7 @@ function cweather(
 	self.temp = FieldBlink( self,
 		animTimer, offx, offy,
 		fonts.mdigit, COL_DIGIT, {
+			gradient = GRD_TEMPERATURE,
 			align = ALIGN_RIGHT,
 			ndecimal = 1,
 			sample_text = "-88:8"
