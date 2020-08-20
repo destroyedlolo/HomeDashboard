@@ -251,7 +251,7 @@ local function f()
 
 		----
 
-	self.setFont( fonts.sdigit )
+	self.setFont( fonts.sseg )
 	imgw = self.get():GetStringExtents( "8888" )
 	local srf_dATM = FieldBlink( self, animTimer, (w-imgw)/2, offy+15, fonts.sseg, COL_DIGIT, {
 		timeout = 310,
