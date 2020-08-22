@@ -11,7 +11,7 @@ function LongTermWeather(
 		opts = {}
 	end
 
-	local self = SubSurface( psrf, x,y, 100, 130 )
+	local self = SubSurface( psrf, x,y, 85, 112 )
 
 	local name
 	function self.setName( tp )
@@ -19,14 +19,14 @@ function LongTermWeather(
 	end
 
 	local icon = ImageSurface( self, 
-		15, 0, 70, 49, {
+		7, 0, 70, 49, {
 			transparency = true,
 			autoscale = true
 		}
 	)
 	local goffx, goffy = 0, 50
 
-	local time = Field( self, goffx, goffy, fonts.sdigit, COL_DIGIT, {
+	local time = Field( self, goffx, goffy, fonts.xsdigit, COL_DIGIT, {
 		bgcolor = false,
 		transparency = true,
 		align = ALIGN_CENTER,
@@ -34,9 +34,10 @@ function LongTermWeather(
 	} )
 	local goffx, goffy = time.getBelow()
 
-	self.tmax = Field( self, goffx, goffy, fonts.sdigit, COL_DIGIT, {
+	self.tmax = Field( self, goffx, goffy, fonts.xsdigit, COL_DIGIT, {
 		bgcolor = false,
 		transparency = true,
+		gradient = GRD_TEMPERATURE,
 		suffix = '°C',
 		ndecimal = 1,
 		align = ALIGN_CENTER,
@@ -44,9 +45,10 @@ function LongTermWeather(
 	} )
 	goffx, goffy = self.tmax.getBelow()
 
-	self.tmin = Field( self, goffx, goffy, fonts.sdigit, COL_DIGIT, {
+	self.tmin = Field( self, goffx, goffy, fonts.xsdigit, COL_DIGIT, {
 		bgcolor = false,
 		transparency = true,
+		gradient = GRD_TEMPERATURE,
 		suffix = '°C',
 		ndecimal = 1,
 		align = ALIGN_CENTER,

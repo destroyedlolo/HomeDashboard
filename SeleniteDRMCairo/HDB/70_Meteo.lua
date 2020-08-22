@@ -77,9 +77,13 @@ local function meteo()
 		stwtopic[_] = Weather3H( stw[_], 'Meteo3H', 'Nonglard', _+1)
 	end
 
+	self.setFont( fonts.sdigit )
+	self.setColor( COL_TITLE )
+	self.get():DrawString("Pour les prochains jours !", 540, 80)
+
 	local ltw, ltwtopic = {}, {}
-	for _=0,7 do
-		ltw[_] = LongTermWeather(self, 560 + (_%4)*120, 60 + 140*math.floor(_/4))
+	for _=0,5 do
+		ltw[_] = LongTermWeather(self, 520 + (_%7)*95, 100 + 125*math.floor(_/7))
 		ltwtopic[_] = Weather( ltw[_], 'Meteo', 'Nonglard', _+1)
 	end
 
