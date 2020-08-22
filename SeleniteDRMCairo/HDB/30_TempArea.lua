@@ -9,11 +9,13 @@ function TempArea(
 --[[ known options  :
 --	width, height : force the field's geometry
 --	bgcolor : background color
+--	border : border's color (default none)
 --	timeout : force to timeoutcolor after timeout seconds without update
 --	transparency : the surfaces below must be refreshed as this one has 
 --		transparency. With this opt set, surfaces bellow are cleared first.
 --		Mostly useful when it has background image.
 --	shadow : add a shadow to the area
+--	gradient : gradient to use (default GRD_TEMPERATURE)
 --
 --	At last one of sample_text or width MUST be provided
 --]]
@@ -29,6 +31,9 @@ function TempArea(
 	end
 	if not opts.font then
 		opts.font = fonts.mdigit
+	end
+	if not opts.gradient then
+		opts.gradient = GRD_TEMPERATURE
 	end
 
 		-- Normalisation
@@ -93,8 +98,10 @@ end
 			self.get():FillRectangle( 5,opts.height, opts.width+5, opts.height+5 )
 		end
 
-		self.setColor( COL_BORDER )
-		self.get():DrawRectangle(0,0, opts.width, opts.height)
+		if opts.border then
+			self.setColor( opts.border )
+			self.get():DrawRectangle(0,0, opts.width, opts.height)
+		end
 
 		if not full then
 			self.get():RestoreContext()
@@ -109,7 +116,7 @@ end
 			timeout = 310,
 			width = opts.width - 4,
 			align = ALIGN_RIGHT, 
-			gradient = GRD_TEMPERATURE,
+			gradient = opts.gradient,
 			bgcolor = COL_TRANSPARENT40,
 			transparency = true,
 			debug = opts.debug
@@ -121,7 +128,7 @@ end
 		align = ALIGN_RIGHT,
 		transparency = true,
 		min_delta = 1,
-		gradient = GRD_TEMPERATURE
+		gradient = opts.gradient
 	} )
 
 	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,

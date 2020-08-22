@@ -13,6 +13,12 @@ local function rdc()
 		os.exit(EXIT_FAILURE)
 	end
 
+	local poule,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Poule.png")
+	if not poule then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
 	function self.Clear(
 		clipped -- Clipping region
 	)
@@ -29,6 +35,7 @@ local function rdc()
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Rez-de-chaussée :", 5,0 )
 		self.get():Blit(backgnd, 135,135)
+		self.get():Blit(poule, WINSIZE.w - 60,10)
 
 		if clipped then
 			self.get():RestoreContext()
@@ -36,8 +43,15 @@ local function rdc()
 	end
 	self.Clear()
 
-	local TBureau = TempArea( self, "TBureau", "maison/Temperature/Bureau", 231,397, { shadow=true, transparency=true })
-	local TSalon = TempArea( self, "TSalon", "maison/Temperature/Salon", 412,378, { shadow=true, transparency=true })
+	local TBureau = TempArea( self, "TBureau", "maison/Temperature/Bureau", 231,397, { border=COL_BORDER, shadow=true, transparency=true })
+	local TSalon = TempArea( self, "TSalon", "maison/Temperature/Salon", 412,378, { border=COL_BORDER, shadow=true, transparency=true })
+
+	local TPoulailler = TempArea( self, "TPoulailler", "Poulailler/Perchoir/Temperature", 805, 28, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.smdigit, 
+		width = 250, 
+		transparency=true 
+	})
 
 		-- No transparency needed as on black background
 --	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
