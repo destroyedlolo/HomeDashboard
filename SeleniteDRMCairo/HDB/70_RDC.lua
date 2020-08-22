@@ -40,7 +40,7 @@ local function rdc()
 	local TSalon = TempArea( self, "TSalon", "maison/Temperature/Salon", 412,378, { shadow=true, transparency=true })
 
 		-- No transparency needed as on black background
-	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
+--	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
 
 	self.Visibility(false)
 	return self
