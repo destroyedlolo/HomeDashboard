@@ -72,9 +72,15 @@ local function meteo()
 	self.get():DrawLine(500,95, 500, 565)
 
 	local stw,stwtopic = {}, {}
-	for i=0,7 do
-		stw[i] = ShortTermWeather(self, (i%4)*120, 280 + 185*math.floor(i/4))
-		stwtopic[i] = Weather3H( stw[i], 'Meteo3H', 'Nonglard', i+1)
+	for _=0,7 do
+		stw[_] = ShortTermWeather(self, (_%4)*120, 280 + 195*math.floor(_/4))
+		stwtopic[_] = Weather3H( stw[_], 'Meteo3H', 'Nonglard', _+1)
+	end
+
+	local ltw, ltwtopic = {}, {}
+	for _=0,7 do
+		ltw[_] = LongTermWeather(self, 560 + (_%4)*120, 60 + 140*math.floor(_/4))
+		ltwtopic[_] = Weather( ltw[_], 'Meteo', 'Nonglard', _+1)
 	end
 
 	self.Visibility(false)
