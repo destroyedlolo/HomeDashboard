@@ -87,6 +87,54 @@ local function meteo()
 		ltwtopic[_] = Weather( ltw[_], 'Meteo', 'Nonglard', _+1)
 	end
 
+
+	local temp = FieldBlink( self, animTimer, 935, 265, fonts.digit, COL_DIGIT, {
+		timeout = 87000,
+		align = ALIGN_CENTER,
+		suffix = '°C',
+		sample_text = '-88.88°C',
+		gradient = GRD_TEMPERATURE
+	} )
+
+	local srf_Gfx = GfxArea( self, 530, 345, WINSIZE.w - 530, 290, COL_ORANGE, COL_TRANSPARENT20,{
+		align = ALIGN_RIGHT,
+		hlines={ { 0, COL_DIGIT } },
+		heverylines={ {5, COL_DARKGREY}, { 10, COL_GREY } },
+		vlinesH=COL_DARKGREY,
+		vlinesD=COL_GREY,
+		transparency = true,
+		min_delta = 10,
+		ownsurface = true,
+		gradient = GRD_TEMPERATURE
+	} )
+
+	local srf_maxtemp = FieldBlink( srf_Gfx, animTimer, 2, 2, fonts.xsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = '-88.88',
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = GRD_TEMPERATURE
+	} )
+
+	local srf_mintemp = FieldBlink( srf_Gfx, animTimer, 2, 285-fonts.xsdigit.size, fonts.xsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = '-88.88',
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = GRD_TEMPERATURE
+	} )
+
+	local temp = MQTTStoreGfx( "TDehors", "maison/Temperature/Dehors", temp, srf_Gfx,
+		{
+			smax = srf_maxtemp,
+			force_max_refresh = true,
+			smin = srf_mintemp,
+			force_min_refresh = true,
+			condition=condition_network 
+		}
+	)
+	table.insert( savedcols, temp )
+
 	self.Visibility(false)
 	return self
 end
