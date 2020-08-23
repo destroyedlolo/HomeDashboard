@@ -60,6 +60,9 @@ local function f()
 	offx = offx + 200
 
 	Saison( self, 'Saison', MAJORDOME ..'/Saison', 446, 46 )
+	Saison( self, 'PSaison', MAJORDOME ..'/Saison/Hier', 258, 57, 
+		{ width=40, hight=40, autoscale=true } 
+	)
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)
