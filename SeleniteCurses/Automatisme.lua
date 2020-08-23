@@ -73,7 +73,7 @@ end
 
 function keyAuto(Brk, c,cn)
 	if c == 'a' then
-		popupSaison(Brk,'Majordome/Saison')
+		popupSaison(Brk, MAJORDOME..'/Saison')
 	end
 
 	initAuto()
@@ -86,7 +86,7 @@ swinLst['M'] = { titre="&Majordome", func=initAuto, key=keyAuto, close=FermeAuto
 function updateSaison()
 	if Mode == 'M' then
 		Saison:clear()
-		Saison:print(SelShared.Get('Majordome/Saison'))
+		Saison:print(SelShared.Get(MAJORDOME..'/Saison'))
 		Saison:refresh()
 	end
 end
@@ -94,7 +94,7 @@ end
 function updateSaisonH()
 	if Mode == 'M' then
 		SaisonH:clear()
-		SaisonH:print(SelShared.Get('Majordome/Saison/Hier'))
+		SaisonH:print(SelShared.Get(MAJORDOME..'/Saison/Hier'))
 		SaisonH:refresh()
 	end
 end
@@ -102,7 +102,7 @@ end
 function updateModeR()
 	if Mode == 'M' then
 		ModeR:clear()
-		ModeR:print(SelShared.Get('Majordome/Mode'))
+		ModeR:print(SelShared.Get(MAJORDOME..'/Mode'))
 		ModeR:refresh()
 	end
 end
@@ -110,7 +110,7 @@ end
 function updateSuiviSol()
 	if Mode == 'M' then
 		SuiviSol:clear()
-		local r = SelShared.Get('Majordome/Traces/SuiviCoucherSoleil')
+		local r = SelShared.Get(MAJORDOME..'/Traces/SuiviCoucherSoleil')
 		if r ~= nil then
 			if r:byte() == 70 then -- 'F'
 				local h,m,hd,md = r:match( "(%d+):(%d+);(%d+):(%d+)" )
@@ -128,16 +128,16 @@ function updateSuiviSol()
 end
 
 local ltopics = {
-	{ topic = 'Majordome/Saison', trigger=updateSaison, trigger_once=true },
-	{ topic = 'Majordome/Saison/Hier', trigger=updateSaisonH, trigger_once=true },
-	{ topic = 'Majordome/Mode', trigger=updateModeR, trigger_once=true },
-	{ topic = 'Majordome/Traces/SuiviCoucherSoleil', trigger=updateSuiviSol, trigger_once=true },
+	{ topic = MAJORDOME..'/Saison', trigger=updateSaison, trigger_once=true },
+	{ topic = MAJORDOME..'/Saison/Hier', trigger=updateSaisonH, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode', trigger=updateModeR, trigger_once=true },
+	{ topic = MAJORDOME..'/Traces/SuiviCoucherSoleil', trigger=updateSuiviSol, trigger_once=true },
 }
 TableMerge( Topics, ltopics)
 
 -- Valeurs par défauts (pour éviter un crash si elle ne sont pas définies)
 
-SelShared.Set('Majordome/Saison', '?')
-SelShared.Set('Majordome/Saison/Hier', '?')
-SelShared.Set('Majordome/Mode', '?')
+SelShared.Set(MAJORDOME..'/Saison', '?')
+SelShared.Set(MAJORDOME..'/Saison/Hier', '?')
+SelShared.Set(MAJORDOME..'/Mode', '?')
 
