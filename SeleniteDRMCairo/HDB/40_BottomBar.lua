@@ -59,9 +59,9 @@ local function f()
 	log.RegisterTopic('messages', 'messages/Erreur', { udata=3 } )
 	offx = offx + 200
 
-	Saison( self, 'Saison', MAJORDOME ..'/Saison', 446, 46 )
-	Saison( self, 'PSaison', MAJORDOME ..'/Saison/Hier', 258, 57, 
-		{ width=40, hight=40, autoscale=true } 
+	Saison( self, 'Saison', MAJORDOME ..'/Saison', 273, 46 )
+	Saison( self, 'PSaison', MAJORDOME ..'/Saison/Hier', 235, 60, 
+		{ width=35, hight=35, autoscale=true } 
 	)
 
 	-- Drawing finished and alway visible
