@@ -17,6 +17,12 @@ local function machines()
 		os.exit(EXIT_FAILURE)
 	end
 
+	local CylonImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Cylon.png")
+	if not CylonImg then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
 	local MajordomeImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Majordome.png")
 	if not MajordomeImg then
 		print("*E*",err)
@@ -43,7 +49,8 @@ local function machines()
 		self.setColor( COL_TITLE )
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Informatique :", 5,0 )
-		self.get():Blit(motherboard, 50,50)
+--		self.get():Blit(motherboard, 50,50)
+		self.get():Blit(CylonImg, 200,135)
 
 		local ix = MajordomeImg:GetSize()
 		self.get():Blit(MajordomeImg, WINSIZE.w-ix,10)
@@ -78,7 +85,7 @@ local function machines()
 		self, 
 		WINSIZE.w - 405, 0, 405, 310, fonts.stxt, COL_LIGHTGREY, 
 		{ 
-			bgcolor=COL_TRANSPARENT60,
+			bgcolor=COL_TRANSPARENT20,
 			transparency=true,
 			ownsurface=true,
 			timeformat='%X',
@@ -98,7 +105,7 @@ local function machines()
 	local MarcelTxt = NotificationArea(
 		self, WINSIZE.w - 405, 330, 405, 310, fonts.stxt, COL_LIGHTGREY, 
 		{ 
-			bgcolor=COL_TRANSPARENT60,
+			bgcolor=COL_TRANSPARENT20,
 			transparency=true,
 			ownsurface=true,
 			timeformat='%X',
