@@ -209,24 +209,21 @@ local function f()
 		gradient = GRD_TEMPERATURE
 	} )
 
---[[
-	local srf_Thermometre = VGauge( self, 16,offy, 7,68, COL_RED, COL_WHITE, nil, {
+	local srf_Thermometre = VGauge( self, 42,428, 2,74, COL_RED, COL_WHITE, nil, {
 		min = 5, max = 40,
 		ascend = true
 	})
-]]
 
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop("°C", srf_TSalon.getAfter())
 	offy = offy + srf_TSalon.getHight()
 
---[[
 	local function updthermo()
 		srf_Thermometre.Draw( TSalon.get() )
 	end
 	TSalon.TaskOnceAdd( updthermo )
-]]
+
 		----
 
 	self.setFont( fonts.title1 )
