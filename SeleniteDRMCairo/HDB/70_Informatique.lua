@@ -11,8 +11,22 @@ local function machines()
 	-- Additional graphics
 	----
 
+--[[
 	local motherboard,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Motherboard.png")
 	if not motherboard then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+--]]
+
+	local MachineImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Machine.png")
+	if not MachineImg then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
+	local CylonImg,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Cylon.png")
+	if not CylonImg then
 		print("*E*",err)
 		os.exit(EXIT_FAILURE)
 	end
@@ -43,7 +57,9 @@ local function machines()
 		self.setColor( COL_TITLE )
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Informatique :", 5,0 )
-		self.get():Blit(motherboard, 50,50)
+--		self.get():Blit(motherboard, 50,50)
+		self.get():Blit(MachineImg, 47,434)
+		self.get():Blit(CylonImg, 200,114)
 
 		local ix = MajordomeImg:GetSize()
 		self.get():Blit(MajordomeImg, WINSIZE.w-ix,10)
@@ -78,7 +94,7 @@ local function machines()
 		self, 
 		WINSIZE.w - 405, 0, 405, 310, fonts.stxt, COL_LIGHTGREY, 
 		{ 
-			bgcolor=COL_TRANSPARENT60,
+			bgcolor=COL_TRANSPARENT20,
 			transparency=true,
 			ownsurface=true,
 			timeformat='%X',
@@ -96,9 +112,9 @@ local function machines()
 	MajordomeTxt.Log("Majordome")
 
 	local MarcelTxt = NotificationArea(
-		self, WINSIZE.w - 405, 330, 405, 310, fonts.stxt, COL_LIGHTGREY, 
+		self, WINSIZE.w - 405, 330, 405, 145, fonts.stxt, COL_LIGHTGREY, 
 		{ 
-			bgcolor=COL_TRANSPARENT60,
+			bgcolor=COL_TRANSPARENT20,
 			transparency=true,
 			ownsurface=true,
 			timeformat='%X',
