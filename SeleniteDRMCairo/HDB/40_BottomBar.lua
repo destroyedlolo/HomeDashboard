@@ -64,6 +64,8 @@ local function f()
 		{ width=35, hight=35, autoscale=true } 
 	)
 
+	Mode( self, 'Mode', MAJORDOME ..'/Mode', 446, 46 )
+	
 	-- Drawing finished and alway visible
 	self.Visibility(true)
 
