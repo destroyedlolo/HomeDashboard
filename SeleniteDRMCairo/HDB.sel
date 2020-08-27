@@ -123,6 +123,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		RDC.get():Dump('/tmp', 'RDC')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
 		Meteo.get():Dump('/tmp', 'Meteo')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab 1er' then
+		Etage.get():Dump('/tmp', '1er')
 	end
 end
 
