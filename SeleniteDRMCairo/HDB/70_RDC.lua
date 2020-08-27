@@ -49,7 +49,7 @@ local function rdc()
 	local TPoulailler = TempArea( self, "TPoulailler", "Poulailler/Perchoir/Temperature", 805, 28, {
 		bgcolor = COL_GFXBGT,
 		font=fonts.smdigit, 
-		width = 250, 
+		width = WINSIZE.w - 837, 
 		transparency=true 
 	})
 

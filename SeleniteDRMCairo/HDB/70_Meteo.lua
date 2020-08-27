@@ -57,12 +57,18 @@ local function meteo()
 
 	self.get():DrawStringTop("-", 764, 0)
 
-	local srf_sunset = FieldBlink( self, animTimer, 795, 0, fonts.mdigit, COL_DIGIT, {
+	local srf_sunset = FieldBlink( self, animTimer, 786, 0, fonts.mdigit, COL_DIGIT, {
 		timeout = 87000,
 		align = ALIGN_CENTER,
 		sample_text = '88:88'
 	} )
 	MQTTDisplay( 'SunsetNonlard', "Meteo/Nonglard/sunset", srf_sunset )
+
+	local Surveillance = ImageFiltreSurface( self, 880, 20, SELENE_SCRIPT_DIR .. "/Images/Oeil.png" )
+	condition_Soleil = Condition( Surveillance, 0, { issue_color=COL_ORANGE } )
+	heure_finsrv = FieldBlink( self, animTimer, 905, 10, fonts.sdigit, COL_DIGIT, {
+		sample_text = '88:88'
+	} )
 
 	local currentw = cweather( self, 0, 50 )
 	local w0 = Weather3H(currentw, 'Meteo3H', 'Nonglard', 0)
