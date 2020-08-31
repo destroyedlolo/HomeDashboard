@@ -9,13 +9,13 @@ function SuiviSolaire (
 	local self = MQTTinput( name, topic )
 
 	function self.update()
-		if self.get():sub(1,1) == 'E' then
+		if self.get() == "CHECKING" then
 			condition.force_issue()
 			time.Clear()
 			time.Refresh()
-		elseif self.get():sub(1,1) == 'F' then
+		elseif self.get() == "DONE" then
 			condition.force_ok()
-			time.update( self.get():sub(3,8) )
+			time.update( os.date("%H:%M") )
 		else
 			condition.clear()
 			time.Clear()
