@@ -35,6 +35,9 @@ function TempArea(
 	if not opts.gradient then
 		opts.gradient = GRD_TEMPERATURE
 	end
+	if not opts.timeout then
+		opts.timeout = 310
+	end
 
 		-- Normalisation
 	x,y = math.ceil(x), math.ceil(y)
@@ -113,7 +116,7 @@ end
 
 	local srf_Temp = Field( self,
 		2, 2, opts.font, COL_DIGIT, {
-			timeout = 310,
+			timeout = opts.timeout,
 			width = opts.width - 4,
 			align = ALIGN_RIGHT, 
 			gradient = opts.gradient,
