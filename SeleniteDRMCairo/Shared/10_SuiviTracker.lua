@@ -1,25 +1,31 @@
--- Manage pool status
+-- handle tracker's status
 
-function SuiviSolaire (
+function SuiviTracker (
 	name,
 	topic,		-- topic to listen to
 	condition,	-- condition to report to
-	time		-- report time, ending
+	time		-- report time ending (optional)
 )
 	local self = MQTTinput( name, topic )
 
 	function self.update()
 		if self.get() == "CHECKING" then
 			condition.force_issue()
-			time.Clear()
-			time.Refresh()
+			if time then
+				time.Clear()
+				time.Refresh()
+			end
 		elseif self.get() == "DONE" then
 			condition.force_ok()
-			time.update( os.date("%H:%M") )
+			if time then
+				time.update( os.date("%H:%M") )
+			end
 		else
 			condition.clear()
-			time.Clear()
-			time.Refresh()
+			if time then
+				time.Clear()
+				time.Refresh()
+			end
 		end
 	end
 
