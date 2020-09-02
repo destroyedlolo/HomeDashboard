@@ -17,6 +17,8 @@ function TempArea(
 --	shadow : add a shadow to the area
 --	gradient : gradient to use (default GRD_TEMPERATURE)
 --
+--	TempTracking : token used for this room temperature tracker
+--
 --	At last one of sample_text or width MUST be provided
 --]]
 	if not opts then
@@ -114,10 +116,16 @@ print("fin clear" )
 end
 	end
 
+	if opts.TempTracking then
+		local Surveillance = ImageFiltreSurface( self, 0,0, SELENE_SCRIPT_DIR .. "/Images/Oeil.png" )
+		self.srvtemp = Condition( Surveillance, 0, { issue_color=COL_ORANGE } )
+		SuiviTracker("Suivi ".. name, opts.TempTracking, self.srvtemp, nil)
+	end
+
 	local srf_Temp = Field( self,
-		2, 2, opts.font, COL_DIGIT, {
+		20, 2, opts.font, COL_DIGIT, {
 			timeout = opts.timeout,
-			width = opts.width - 4,
+			width = opts.width - 24,
 			align = ALIGN_RIGHT, 
 			gradient = opts.gradient,
 			bgcolor = COL_TRANSPARENT40,
@@ -126,13 +134,17 @@ end
 		} 
 	)
 
-	local srf_Gfx = GfxArea( self, 2, 2+srf_Temp.getHight(), opts.width-4, opts.height-srf_Temp.getHight()-4 , COL_ORANGE, COL_TRANSPARENT20,{
-		heverylines={ {500, COL_DARKGREY} },
-		align = ALIGN_RIGHT,
-		transparency = true,
-		min_delta = 1,
-		gradient = opts.gradient
-	} )
+	local srf_Gfx = GfxArea( self,
+		2, 2+srf_Temp.getHight(),
+		opts.width-4, opts.height-srf_Temp.getHight()-4,
+		COL_ORANGE, COL_TRANSPARENT20,{
+			heverylines={ {500, COL_DARKGREY} },
+			align = ALIGN_RIGHT,
+			transparency = true,
+			min_delta = 1,
+			gradient = opts.gradient
+		}
+	)
 
 	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
 		{
@@ -141,6 +153,7 @@ end
 	)
 	table.insert( savedcols, temp )
 
+--	if 
 	---
 	self.Clear()
 	self.Refresh()
