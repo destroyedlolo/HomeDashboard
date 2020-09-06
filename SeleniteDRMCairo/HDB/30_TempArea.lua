@@ -87,15 +87,13 @@ end
 			else
 				clipped = { x,y, opts.width, opts.height }
 			end
-			psrf.Clear(clipped)
 if opts.debug then
 print(opts.debug, "(TA)clear parent", unpack(clipped) )
 end
+			psrf.Clear({ clipped[1],clipped[2],clipped[3],clipped[4] })
 		end
 
---		self.get():Clear( opts.bgcolor.get() )	-- Then clear ourself
-		self.setColor( opts.bgcolor )
-		self.get():FillRectangle( 0,0, opts.width, opts.height )
+		self.get():Clear( opts.bgcolor.get() )	-- Then clear ourself
 
 		if opts.shadow then
 			self.setColor( COL_TRANSPARENT60 )

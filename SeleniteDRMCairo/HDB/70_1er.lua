@@ -53,6 +53,7 @@ local function etage()
 		"TChOceane", "maison/Temperature/Chambre Oceane",
 		565,320,
 		{
+-- debug="TCO",
 			TempTracking=MAJORDOME .. "/SurveillanceChOceane/status",
 			border=COL_BORDER,
 			shadow=true,
