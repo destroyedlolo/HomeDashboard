@@ -85,7 +85,6 @@ local function machines()
 			fonts.xsdigit, COL_TITLE,
 			{
 				timeout = 150,
-				debug = true
 			}
 		)
 	end
