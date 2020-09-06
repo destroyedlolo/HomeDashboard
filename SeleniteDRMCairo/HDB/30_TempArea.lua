@@ -18,6 +18,7 @@ function TempArea(
 --	gradient : gradient to use (default GRD_TEMPERATURE)
 --
 --	TempTracking : token used for this room temperature tracker
+--	ModeTopic : topic to follow room's mode
 --
 --	At last one of sample_text or width MUST be provided
 --]]
@@ -120,6 +121,10 @@ end
 		SuiviTracker("Suivi ".. name, opts.TempTracking, self.srvtemp, nil)
 	end
 
+	if opts.ModeTopic then
+		Mode( self, "Mode_"..name, opts.ModeTopic, 0, 15, { width=20, hight=20, autoscale=true } );
+	end
+
 	local srf_Temp = Field( self,
 		20, 2, opts.font, COL_DIGIT, {
 			timeout = opts.timeout,
@@ -151,7 +156,6 @@ end
 	)
 	table.insert( savedcols, temp )
 
---	if 
 	---
 	self.Clear()
 	self.Refresh()
