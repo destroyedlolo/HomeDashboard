@@ -37,6 +37,7 @@ local function etage()
 	self.Clear()
 
 	local TGrenierNord = TempArea( self, "TGrenierNord", "maison/Temperature/Grenier Nord", 223,361, { border=COL_BORDER, shadow=true, transparency=true })
+
 	local TChJoris = TempArea( self,
 		"TChJoris", "maison/Temperature/Chambre Joris", 
 		405,380, 
@@ -47,6 +48,7 @@ local function etage()
 			transparency=true
 		}
 	)
+
 	local TChOceane = TempArea( self,
 		"TChOceane", "maison/Temperature/Chambre Oceane",
 		565,320,
@@ -57,6 +59,7 @@ local function etage()
 			transparency=true
 		}
 	)
+
 	local TChParent = TempArea( self,
 		"TChParent", "maison/Temperature/Chambre Parents",
 		427,136,
@@ -67,6 +70,7 @@ local function etage()
 			transparency=true
 		}
 	)
+
 	local TGrenierSud = TempArea( self, "TGrenierSud", "maison/Temperature/Grenier Sud", 678,211, { border=COL_BORDER, shadow=true, transparency=true })
 
 		-- No transparency needed as on black background

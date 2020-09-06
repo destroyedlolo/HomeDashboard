@@ -24,6 +24,10 @@ function TempArea(
 	if not opts then
 		opts = {}
 	end
+	if opts.debug then
+		opts.debug = opts.debug .."/TempArea"
+	end
+
 
 	if not opts.width then
 		opts.width = 120
@@ -70,9 +74,9 @@ function TempArea(
 		end
 if opts.debug then
 	if full then
-print("Full")
+print(opts.debug, "(TA)clear Full")
 	else
-print("clip", unpack(clipped) )
+print(opts.debug, "(TA)clear clip", unpack(clipped) )
 	end
 end
 
@@ -85,11 +89,7 @@ end
 			end
 			psrf.Clear(clipped)
 if opts.debug then
-print("clear parent", unpack(clipped) )
-end
-else
-if opts.debug then
-print("clear sans clip" )
+print(opts.debug, "(TA)clear parent", unpack(clipped) )
 end
 		end
 
@@ -112,12 +112,12 @@ end
 			self.get():RestoreContext()
 		end
 if opts.debug then
-print("fin clear" )
+print(opts.debug, "(TA)fin clear", unpack(clipped) )
 end
 	end
 
 	if opts.TempTracking then
-		local Surveillance = ImageFiltreSurface( self, 0,0, SELENE_SCRIPT_DIR .. "/Images/Oeil.png" )
+		local Surveillance = ImageStencilSurface( self, 0,0, SELENE_SCRIPT_DIR .. "/Images/Oeil.png", { debug = opts.debug } )
 		self.srvtemp = Condition( Surveillance, 0, { issue_color=COL_ORANGE } )
 		SuiviTracker("Suivi ".. name, opts.TempTracking, self.srvtemp, nil)
 	end
@@ -130,7 +130,7 @@ end
 			gradient = opts.gradient,
 			bgcolor = COL_TRANSPARENT40,
 			transparency = true,
-			debug = opts.debug
+--			debug = opts.debug
 		} 
 	)
 
