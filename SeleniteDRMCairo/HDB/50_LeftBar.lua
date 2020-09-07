@@ -80,7 +80,6 @@ local function f()
 	offy = offy + srf_consommation.getHight()
 
 	local srf_trndconso = GfxArea( self, 36,160, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
-		debug = true,
 		heverylines={ {1000, COL_DARKGREY} },
 		align=ALIGN_RIGHT,
 		transparency = true,

@@ -17,11 +17,18 @@ function TempArea(
 --	shadow : add a shadow to the area
 --	gradient : gradient to use (default GRD_TEMPERATURE)
 --
+--	TempTracking : token used for this room temperature tracker
+--	ModeTopic : topic to follow room's mode
+--
 --	At last one of sample_text or width MUST be provided
 --]]
 	if not opts then
 		opts = {}
 	end
+	if opts.debug then
+		opts.debug = opts.debug .."/TempArea"
+	end
+
 
 	if not opts.width then
 		opts.width = 120
@@ -34,6 +41,9 @@ function TempArea(
 	end
 	if not opts.gradient then
 		opts.gradient = GRD_TEMPERATURE
+	end
+	if not opts.timeout then
+		opts.timeout = 310
 	end
 
 		-- Normalisation
@@ -65,9 +75,9 @@ function TempArea(
 		end
 if opts.debug then
 	if full then
-print("Full")
+print(opts.debug, "(TA)clear Full")
 	else
-print("clip", unpack(clipped) )
+print(opts.debug, "(TA)clear clip", unpack(clipped) )
 	end
 end
 
@@ -78,19 +88,13 @@ end
 			else
 				clipped = { x,y, opts.width, opts.height }
 			end
-			psrf.Clear(clipped)
 if opts.debug then
-print("clear parent", unpack(clipped) )
+print(opts.debug, "(TA)clear parent", unpack(clipped) )
 end
-else
-if opts.debug then
-print("clear sans clip" )
-end
+			psrf.Clear({ clipped[1],clipped[2],clipped[3],clipped[4] })
 		end
 
---		self.get():Clear( opts.bgcolor.get() )	-- Then clear ourself
-		self.setColor( opts.bgcolor )
-		self.get():FillRectangle( 0,0, opts.width, opts.height )
+		self.get():Clear( opts.bgcolor.get() )	-- Then clear ourself
 
 		if opts.shadow then
 			self.setColor( COL_TRANSPARENT60 )
@@ -107,29 +111,43 @@ end
 			self.get():RestoreContext()
 		end
 if opts.debug then
-print("fin clear" )
+print(opts.debug, "(TA)fin clear", unpack(clipped) )
 end
 	end
 
+	if opts.TempTracking then
+		local Surveillance = ImageStencilSurface( self, 0,0, SELENE_SCRIPT_DIR .. "/Images/Oeil.png", { debug = opts.debug } )
+		self.srvtemp = Condition( Surveillance, 0, { issue_color=COL_ORANGE } )
+		SuiviTracker("Suivi ".. name, opts.TempTracking, self.srvtemp, nil)
+	end
+
+	if opts.ModeTopic then
+		Mode( self, "Mode_"..name, opts.ModeTopic, 0, 15, { width=20, hight=20, autoscale=true } );
+	end
+
 	local srf_Temp = Field( self,
-		2, 2, opts.font, COL_DIGIT, {
-			timeout = 310,
-			width = opts.width - 4,
+		20, 2, opts.font, COL_DIGIT, {
+			timeout = opts.timeout,
+			width = opts.width - 24,
 			align = ALIGN_RIGHT, 
 			gradient = opts.gradient,
 			bgcolor = COL_TRANSPARENT40,
 			transparency = true,
-			debug = opts.debug
+--			debug = opts.debug
 		} 
 	)
 
-	local srf_Gfx = GfxArea( self, 2, 2+srf_Temp.getHight(), opts.width-4, opts.height-srf_Temp.getHight()-4 , COL_ORANGE, COL_TRANSPARENT20,{
-		heverylines={ {500, COL_DARKGREY} },
-		align = ALIGN_RIGHT,
-		transparency = true,
-		min_delta = 1,
-		gradient = opts.gradient
-	} )
+	local srf_Gfx = GfxArea( self,
+		2, 2+srf_Temp.getHight(),
+		opts.width-4, opts.height-srf_Temp.getHight()-4,
+		COL_ORANGE, COL_TRANSPARENT20,{
+			heverylines={ {500, COL_DARKGREY} },
+			align = ALIGN_RIGHT,
+			transparency = true,
+			min_delta = 1,
+			gradient = opts.gradient
+		}
+	)
 
 	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
 		{

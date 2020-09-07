@@ -43,8 +43,26 @@ local function rdc()
 	end
 	self.Clear()
 
-	local TBureau = TempArea( self, "TBureau", "maison/Temperature/Bureau", 231,397, { border=COL_BORDER, shadow=true, transparency=true })
-	local TSalon = TempArea( self, "TSalon", "maison/Temperature/Salon", 412,378, { border=COL_BORDER, shadow=true, transparency=true })
+	local TBureau = TempArea( self,
+		"TBureau", "maison/Temperature/Bureau",
+		231,397,
+		{
+			TempTracking=MAJORDOME .. "/SurveillanceBureau/status",
+			border=COL_BORDER,
+			shadow=true,
+			transparency=true
+		}
+	)
+	local TSalon = TempArea( self,
+		"TSalon", "maison/Temperature/Salon",
+		412,378,
+		{
+			TempTracking=MAJORDOME .. "/SurveillanceSalon/status",
+			border=COL_BORDER,
+			shadow=true,
+			transparency=true
+		}
+	)
 
 	local TPoulailler = TempArea( self, "TPoulailler", "Poulailler/Perchoir/Temperature", 805, 28, {
 		bgcolor = COL_GFXBGT,
