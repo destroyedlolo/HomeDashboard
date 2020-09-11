@@ -44,6 +44,7 @@ local function etage()
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceChJoris/status",
 			ModeTopic=MAJORDOME .. "/Mode/Joris",
+			HLeverTopic=MAJORDOME .. "/HLever/Joris",
 			border=COL_BORDER,
 			shadow=true,
 			transparency=true
@@ -57,6 +58,7 @@ local function etage()
 -- debug="TCO",
 			TempTracking=MAJORDOME .. "/SurveillanceChOceane/status",
 			ModeTopic=MAJORDOME .. "/Mode/Oceane",
+			HLeverTopic=MAJORDOME .. "/HLever/Oceane",
 			border=COL_BORDER,
 			shadow=true,
 			transparency=true
@@ -69,6 +71,7 @@ local function etage()
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceChParents/status",
 			ModeTopic=MAJORDOME .. "/Mode/Parents",
+			HLeverTopic=MAJORDOME .. "/HLever",
 			border=COL_BORDER,
 			shadow=true,
 			transparency=true

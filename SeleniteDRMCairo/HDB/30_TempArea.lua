@@ -115,20 +115,23 @@ print(opts.debug, "(TA)fin clear", unpack(clipped) )
 end
 	end
 
+	local offset = false
 	if opts.TempTracking then
-		local Surveillance = ImageStencilSurface( self, 0,0, SELENE_SCRIPT_DIR .. "/Images/Oeil.png", { debug = opts.debug } )
+		local Surveillance = ImageStencilSurface( self, 0,0, SELENE_SCRIPT_DIR .. "/Images/Oeil.png", { debug = opts.debug, bgcolor=COL_TRANSPARENT40 } )
 		self.srvtemp = Condition( Surveillance, 0, { issue_color=COL_ORANGE } )
 		SuiviTracker("Suivi ".. name, opts.TempTracking, self.srvtemp, nil)
+		offset = true
 	end
 
 	if opts.ModeTopic then
-		Mode( self, "Mode_"..name, opts.ModeTopic, 0, 15, { width=20, hight=20, autoscale=true } );
+		Mode( self, "Mode_"..name, opts.ModeTopic, 0, 15, { width=20, hight=20, autoscale=true, bgcolor = COL_TRANSPARENT40 } );
+		offset = true
 	end
 
 	local srf_Temp = Field( self,
-		20, 2, opts.font, COL_DIGIT, {
+		2 + (offset and 18 or 0), 2, opts.font, COL_DIGIT, {
 			timeout = opts.timeout,
-			width = opts.width - 24,
+			width = opts.width - (offset and 24 or 4),
 			align = ALIGN_RIGHT, 
 			gradient = opts.gradient,
 			bgcolor = COL_TRANSPARENT40,
@@ -149,9 +152,27 @@ end
 		}
 	)
 
+	local srf_hlever
+	if opts.HLeverTopic then
+		srf_hlever = Field( srf_Gfx, 
+			5, opts.height-srf_Temp.getHight()-4-fonts.stxt.size,
+			fonts.stxt, COL_DIGIT, {
+				align = ALIGN_RIGHT,
+				sample_text = "88.88",
+				bgcolor = false,
+				transparency=true,
+				ownsurface=true,
+				bgcolor=COL_TRANSPARENT,
+--				included = true
+			}
+		)
+		local hlever = MQTTDisplay( 'hlever'.. name, opts.HLeverTopic, srf_hlever )
+	end
+
 	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
 		{
-			condition=condition_network 
+			condition=condition_network,
+			force_field=srf_hlever
 		}
 	)
 	table.insert( savedcols, temp )
