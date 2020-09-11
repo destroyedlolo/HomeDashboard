@@ -152,9 +152,27 @@ end
 		}
 	)
 
+	if opts.HLeverTopic then
+		local srf_hlever = Field( srf_Gfx, 
+			5, opts.height-srf_Temp.getHight()-4-fonts.stxt.size,
+			fonts.stxt, COL_DIGIT, {
+debug="srf/hlever/"..name,
+				align = ALIGN_RIGHT,
+				sample_text = "88.88",
+				bgcolor = false,
+				transparency=true,
+				ownsurface=true,
+				bgcolor=COL_TRANSPARENT,
+--				included = true
+			}
+		)
+		local hlever = MQTTDisplay( 'hlever'.. name, opts.HLeverTopic, srf_hlever, { debug="hlever/"..name } )
+	end
+
 	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
 		{
-			condition=condition_network 
+			condition=condition_network,
+			force_field=srf_hlever
 		}
 	)
 	table.insert( savedcols, temp )
