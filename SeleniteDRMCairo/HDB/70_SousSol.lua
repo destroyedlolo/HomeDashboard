@@ -28,7 +28,7 @@ local function soussol()
 		self.setColor( COL_TITLE )
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Sous-Sol :", 5,0 )
-		self.get():Blit(backgnd, 150,52)
+		self.get():Blit(backgnd, 20,52)
 
 		if clipped then
 			self.get():RestoreContext()
@@ -36,13 +36,13 @@ local function soussol()
 	end
 	self.Clear()
 
-	TempArea( self, "TSSPorte", "maison/Temperature/GarageP", 260,460, { border=COL_BORDER, shadow=true, transparency=true })
+	TempArea( self, "TSSPorte", "maison/Temperature/GarageP", 130,460, { border=COL_BORDER, shadow=true, transparency=true })
 
-	TempArea( self, "TSS", "maison/Temperature/Garage", 680,290, { border=COL_BORDER, shadow=true, transparency=true })
+	TempArea( self, "TSS", "maison/Temperature/Garage", 550,290, { border=COL_BORDER, shadow=true, transparency=true })
 
-	TempArea( self, "TCVin", "maison/Temperature/Cave Vin", 590, 75, { border=COL_BORDER, shadow=true, transparency=true })
+	TempArea( self, "TCVin", "maison/Temperature/Cave Vin", 460, 75, { border=COL_BORDER, shadow=true, transparency=true })
 
-	TempArea( self, "TCongelo", "maison/Temperature/Congelateur", 700, 170,
+	TempArea( self, "TCongelo", "maison/Temperature/Congelateur", 570, 170,
 		{
 			gradient = Gradient( {
 				[-19] = COL_DIGIT,
@@ -55,6 +55,26 @@ local function soussol()
 			transparency=true
 		}
 	)
+
+	---
+	--Electricity
+	---
+
+	MQTTCounterStatGfx( self,
+		'Stat mensuelle', 'Domestik/Electricite/Mensuel', 
+		760,30 , 310,160, {
+			bordercolor = COL_GREY ,
+			consumption_border = COL_ORANGED,
+			xproduction_border = COL_GREEND,
+			maxyears = 3,
+			fadeyears = 20,
+			barrespace = 0,
+			yearXoffset = 3,
+			production_offset = 2
+		} 
+	)
+
+	---
 
 	self.Visibility(false)
 	return self
