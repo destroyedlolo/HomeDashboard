@@ -91,7 +91,7 @@ local function machines()
 
 	local MajordomeTxt = NotificationArea( 
 		self, 
-		WINSIZE.w - 405, 0, 405, 310, fonts.stxt, COL_LIGHTGREY, 
+		680, 0, WINSIZE.w - 700, 310, fonts.stxt, COL_LIGHTGREY, 
 		{ 
 			bgcolor=COL_TRANSPARENT20,
 			transparency=true,
@@ -111,7 +111,7 @@ local function machines()
 	MajordomeTxt.Log("Majordome")
 
 	local MarcelTxt = NotificationArea(
-		self, WINSIZE.w - 405, 330, 405, 145, fonts.stxt, COL_LIGHTGREY, 
+		self, 680, 330, WINSIZE.w - 700, 145, fonts.stxt, COL_LIGHTGREY, 
 		{ 
 			bgcolor=COL_TRANSPARENT20,
 			transparency=true,
