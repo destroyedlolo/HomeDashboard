@@ -77,6 +77,8 @@ local function soussol()
 
 	w = w-10
 	local srf_ctrndconso = GfxArea( self, 760, 210, w/2, 85, COL_TRANSPARENT, COL_GFXBG,{
+-- debug="conso",
+		gradient = GRD_CONSOMMATION,
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
@@ -94,6 +96,7 @@ local function soussol()
 	table.insert( savedcols, conso2 )
 
 	local srf_ctrndprod = GfxArea( self, 770 + w/2, 210, w/2, 85, COL_TRANSPARENT, COL_GFXBG,{
+		gradient = GRD_PRODUCTION,
 		heverylines={ {1000, COL_DARKGREY} },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
