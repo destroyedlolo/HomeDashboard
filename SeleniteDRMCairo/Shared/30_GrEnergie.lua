@@ -1,0 +1,11 @@
+GRD_CONSOMMATION =  Gradient( {
+	[500] = COL_DIGIT,
+	[1500] = COL_ORANGE,
+	[4500] = COL_RED
+})
+
+GRD_PRODUCTION = Gradient( {
+	[200] = COL_BLUE,
+	[750] = COL_YELLOW,
+	[1200] = COL_GREEN
+} )

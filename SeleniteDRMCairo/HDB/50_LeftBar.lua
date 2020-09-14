@@ -60,12 +60,6 @@ local function f()
 	srf:DrawStringTop("Consommation :", 9, offy )
 	offy = offy + self.get():GetFontExtents()
 
-	local grd_conso =  Gradient( {
-		[500] = COL_DIGIT,
-		[1500] = COL_ORANGE,
-		[4500] = COL_RED
-	})
-
 	local srf_consommation = Field( self, 30,offy, fonts.seg, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
@@ -73,7 +67,7 @@ local function f()
 		ownsurface=true,
 		bgcolor = COL_TRANSPARENT,
 		transparency = true,
-		gradient = grd_conso
+		gradient = GRD_CONSOMMATION
 	} )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" VA", srf_consommation.getAfter())
@@ -84,7 +78,7 @@ local function f()
 		align=ALIGN_RIGHT,
 		transparency = true,
 		ownsurface = true,
-		gradient = grd_conso
+		gradient = GRD_CONSOMMATION
 	} )
 
 	local srf_maxconso = FieldBlink( srf_trndconso, animTimer, 2, 2, fonts.sseg, COL_DIGIT, {
@@ -92,7 +86,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_conso
+		gradient = GRD_CONSOMMATION
 	} )
 
 	local srf_minconso = FieldBlink( srf_trndconso, animTimer, 2, 62-fonts.sseg.size, fonts.sseg, COL_DIGIT, {
@@ -100,7 +94,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_conso
+		gradient = GRD_CONSOMMATION
 	} )
 
 	local consommation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
@@ -121,12 +115,6 @@ local function f()
 	srf:DrawStringTop("Production :", 9, offy )
 	offy = offy + self.get():GetFontExtents()
 
-	local grd_prod = Gradient( {
-		[200] = COL_BLUE,
-		[750] = COL_YELLOW,
-		[1200] = COL_GREEN
-	} )
-
 	local srf_production = Field( self, 30,offy, fonts.seg, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
@@ -134,7 +122,7 @@ local function f()
 		ownsurface=true,
 		bgcolor = COL_TRANSPARENT,
 		transparency = true,
-		gradient = grd_prod
+		gradient = GRD_PRODUCTION
 	} )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" VA", srf_production.getAfter())
@@ -145,7 +133,7 @@ local function f()
 		align = ALIGN_RIGHT,
 		ownsurface = true,
 		transparency = true,
-		gradient = grd_prod
+		gradient = GRD_PRODUCTION
 	} )
 
 	local srf_maxprod = Field( srf_trndprod, 2, 2, fonts.sseg, COL_DIGIT, {
@@ -153,7 +141,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_prod
+		gradient = GRD_PRODUCTION
 	} )
 
 	local srf_minprod = FieldBlink( srf_trndprod, animTimer, 2, 62-fonts.sseg.size, fonts.sseg, COL_DIGIT, {
@@ -161,7 +149,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_prod
+		gradient = GRD_PRODUCTION
 	} )
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod,
