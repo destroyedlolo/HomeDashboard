@@ -69,8 +69,8 @@ local function soussol()
 			xproduction_border = COL_GREEND,
 			maxyears = 5,
 			fadeyears = 5,
-			barrespace = 0,
-			yearXoffset = 6,
+			barrespace = 2,
+			yearXoffset = 4,
 			production_offset = 2
 		} 
 	)
