@@ -90,7 +90,7 @@ local function soussol()
 			forced_min = 0,
 			smax = maxTConso,
 			force_max_refresh = true,
-			group = 6*60*60 / srf_ctrndconso.get():GetWidth()	-- 6h retention
+			group = 18*60*60 / srf_ctrndconso.get():GetWidth()	-- 6h retention
 		}
 	)
 	table.insert( savedcols, conso2 )
@@ -108,7 +108,7 @@ local function soussol()
 			smax = maxTProd,
 			force_max_refresh = true,
 			forced_min = 0,
-			group = 6*60*60 / srf_ctrndprod.get():GetWidth()	-- 6h retention
+			group = 18*60*60 / srf_ctrndprod.get():GetWidth()	-- 6h retention
 		}
 	)
 	table.insert( savedcols, prod2 )
