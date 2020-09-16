@@ -69,8 +69,8 @@ local function soussol()
 			xproduction_border = COL_GREEND,
 			maxyears = 5,
 			fadeyears = 5,
-			barrespace = 0,
-			yearXoffset = 6,
+			barrespace = 2,
+			yearXoffset = 4,
 			production_offset = 2
 		} 
 	)
@@ -85,11 +85,29 @@ local function soussol()
 		align=ALIGN_RIGHT
 	} )
 
+	local srf_maxconso = FieldBlink( srf_ctrndconso, animTimer, 2, 0, fonts.xsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = '12345',
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = GRD_CONSOMMATION
+	} )
+
+	local srf_minconso = FieldBlink( srf_ctrndconso, animTimer, 2, 85-fonts.xsdigit.size, fonts.xsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = '12345',
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = GRD_CONSOMMATION
+	} )
+
 	local conso2 = MQTTStoreGfx( 'consommation2', 'TeleInfo/Consommation/values/PAPP', nil, srf_ctrndconso, 
 		{
-			forced_min = 0,
-			smax = maxTConso,
+--			forced_min = 0,
+			smax = srf_maxconso,
+			smin = srf_minconso,
 			force_max_refresh = true,
+			force_min_refresh = true,
 			group = 18*60*60 / srf_ctrndconso.get():GetWidth()	-- 6h retention
 		}
 	)
@@ -103,11 +121,30 @@ local function soussol()
 		align=ALIGN_RIGHT 
 	} )
 
+	local srf_maxprod = FieldBlink( srf_ctrndprod, animTimer, 2, 0, fonts.xsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = '12345',
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = GRD_CONSOMMATION
+	} )
+
+	local srf_minprod = FieldBlink( srf_ctrndprod, animTimer, 2, 85-fonts.xsdigit.size, fonts.xsdigit, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		sample_text = '12345',
+		bgcolor = COL_TRANSPARENT,
+		included = true,
+		gradient = GRD_CONSOMMATION
+	} )
+
+
 	local prod2 = MQTTStoreGfx( 'production2', 'TeleInfo/Production/values/PAPP', nil, srf_ctrndprod, 
 		{
-			smax = maxTProd,
-			force_max_refresh = true,
 			forced_min = 0,
+			smax = srf_maxprod,
+			smin = srf_minprod,
+			force_max_refresh = true,
+			force_min_refresh = true,
 			group = 18*60*60 / srf_ctrndprod.get():GetWidth()	-- 6h retention
 		}
 	)

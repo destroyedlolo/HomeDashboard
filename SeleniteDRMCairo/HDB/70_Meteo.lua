@@ -114,7 +114,7 @@ local function meteo()
 		gradient = GRD_TEMPERATURE
 	} )
 
-	local srf_maxtemp = FieldBlink( srf_Gfx, animTimer, 2, 2, fonts.xsdigit, COL_DIGIT, {
+	local srf_maxtemp = FieldBlink( srf_Gfx, animTimer, 2, 2, fonts.sdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = '-88.88',
 		bgcolor = COL_TRANSPARENT,
@@ -122,7 +122,7 @@ local function meteo()
 		gradient = GRD_TEMPERATURE
 	} )
 
-	local srf_mintemp = FieldBlink( srf_Gfx, animTimer, 2, 285-fonts.xsdigit.size, fonts.xsdigit, COL_DIGIT, {
+	local srf_mintemp = FieldBlink( srf_Gfx, animTimer, 2, 285-fonts.sdigit.size, fonts.sdigit, COL_DIGIT, {
 		align = ALIGN_RIGHT,
 		sample_text = '-88.88',
 		bgcolor = COL_TRANSPARENT,
