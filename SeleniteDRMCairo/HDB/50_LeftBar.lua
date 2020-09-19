@@ -50,7 +50,7 @@ local function f()
 
 	local offx = srf_tension.getAfter() + srf:GetStringExtents(" V")
 	local hc = HeureCreuse( self, offx+30,offy+2 )
-	offy = offy + srf_tension.getHight() + 12
+	offy = offy + srf_tension.getHight() + 23
 
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
@@ -73,7 +73,7 @@ local function f()
 	srf:DrawStringTop(" VA", srf_consommation.getAfter())
 	offy = offy + srf_consommation.getHight()
 
-	local srf_trndconso = GfxArea( self, 36,160, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
+	local srf_trndconso = GfxArea( self, 36,171, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
 		heverylines={ {1000, COL_DARKGREY} },
 		align=ALIGN_RIGHT,
 		transparency = true,
@@ -107,7 +107,7 @@ local function f()
 			condition=condition_network
 		}
 	)
-	offy = 226
+	offy = 240
 
 		-------
 
@@ -128,7 +128,7 @@ local function f()
 	srf:DrawStringTop(" VA", srf_production.getAfter())
 	offy = offy + srf_production.getHight()
 
-	local srf_trndprod = GfxArea( self, 36, 304, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
+	local srf_trndprod = GfxArea( self, 36, 320, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
 		heverylines={ {500, COL_DARKGREY} },
 		align = ALIGN_RIGHT,
 		ownsurface = true,
@@ -163,11 +163,11 @@ local function f()
 		}
 	)
 
-	offy = 397
+	offy = 408
 
 		------------
 
-	local srf_onduleur = FieldBlink( self, animTimer, 70, 704, fonts.sseg, COL_DIGIT, {
+	local srf_onduleur = FieldBlink( self, animTimer, 50, 72, fonts.sseg, COL_DIGIT, {
 		timeout = 30,
 		align = ALIGN_RIGHT, 
 		ownsurface=true,
