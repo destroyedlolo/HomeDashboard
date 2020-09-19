@@ -50,7 +50,7 @@ local function f()
 
 	local offx = srf_tension.getAfter() + srf:GetStringExtents(" V")
 	local hc = HeureCreuse( self, offx+30,offy+2 )
-	offy = offy + srf_tension.getHight() + 12
+	offy = offy + srf_tension.getHight() + 23
 
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
@@ -73,7 +73,7 @@ local function f()
 	srf:DrawStringTop(" VA", srf_consommation.getAfter())
 	offy = offy + srf_consommation.getHight()
 
-	local srf_trndconso = GfxArea( self, 36,160, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
+	local srf_trndconso = GfxArea( self, 36,171, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
 		heverylines={ {1000, COL_DARKGREY} },
 		align=ALIGN_RIGHT,
 		transparency = true,
@@ -107,7 +107,7 @@ local function f()
 			condition=condition_network
 		}
 	)
-	offy = 226
+	offy = 240
 
 		-------
 
@@ -128,7 +128,7 @@ local function f()
 	srf:DrawStringTop(" VA", srf_production.getAfter())
 	offy = offy + srf_production.getHight()
 
-	local srf_trndprod = GfxArea( self, 36, 304, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
+	local srf_trndprod = GfxArea( self, 36, 320, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
 		heverylines={ {500, COL_DARKGREY} },
 		align = ALIGN_RIGHT,
 		ownsurface = true,
@@ -163,11 +163,11 @@ local function f()
 		}
 	)
 
-	offy = 397
+	offy = 408
 
 		------------
 
-	local srf_onduleur = FieldBlink( self, animTimer, 70, 704, fonts.sseg, COL_DIGIT, {
+	local srf_onduleur = FieldBlink( self, animTimer, 50, 72, fonts.sseg, COL_DIGIT, {
 		timeout = 30,
 		align = ALIGN_RIGHT, 
 		ownsurface=true,
@@ -196,7 +196,7 @@ local function f()
 		gradient = GRD_TEMPERATURE
 	} )
 
-	local srf_Thermometre = VGauge( self, 42,428, 2,74, COL_RED, COL_WHITE, nil, {
+	local srf_Thermometre = VGauge( self, 42,439, 2,74, COL_RED, COL_WHITE, nil, {
 		min = 5, max = 40,
 		ascend = true
 	})
@@ -287,6 +287,29 @@ local function f()
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, gfx_upload )
 	table.insert( additionnalevents, wdfreebox )
 
+	--------
+
+	local srf_consoj = Field( self, 40, 635, fonts.mcounter, COL_BLACK, {
+		timeout = 30,
+		align = ALIGN_RIGHT,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT20,
+		transparency = true,
+		sample_text = "888888"
+	})
+
+	ConsoJ = MQTTDisplay( 'ConsoJ', MAJORDOME .. '/Electricite/Consommation', srf_consoj )
+
+	local srf_prodj = Field( self, 50, 670, fonts.mcounter, COL_BLACK, {
+		timeout = 300,
+		align = ALIGN_RIGHT,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT20,
+		transparency = true,
+		sample_text = "88888"
+	})
+
+	ProdJ = MQTTDisplay( 'ProdJ', MAJORDOME .. '/Electricite/Production', srf_prodj )
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)
