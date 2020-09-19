@@ -196,7 +196,7 @@ local function f()
 		gradient = GRD_TEMPERATURE
 	} )
 
-	local srf_Thermometre = VGauge( self, 42,428, 2,74, COL_RED, COL_WHITE, nil, {
+	local srf_Thermometre = VGauge( self, 42,439, 2,74, COL_RED, COL_WHITE, nil, {
 		min = 5, max = 40,
 		ascend = true
 	})
@@ -287,6 +287,29 @@ local function f()
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, gfx_upload )
 	table.insert( additionnalevents, wdfreebox )
 
+	--------
+
+	local srf_consoj = Field( self, 40, 635, fonts.mcounter, COL_BLACK, {
+		timeout = 30,
+		align = ALIGN_RIGHT,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT20,
+		transparency = true,
+		sample_text = "888888"
+	})
+
+	ConsoJ = MQTTDisplay( 'ConsoJ', MAJORDOME .. '/Electricite/Consommation', srf_consoj )
+
+	local srf_prodj = Field( self, 50, 670, fonts.mcounter, COL_BLACK, {
+		timeout = 300,
+		align = ALIGN_RIGHT,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT20,
+		transparency = true,
+		sample_text = "88888"
+	})
+
+	ProdJ = MQTTDisplay( 'ProdJ', MAJORDOME .. '/Electricite/Production', srf_prodj )
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)

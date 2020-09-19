@@ -154,6 +154,34 @@ local function soussol()
 
 	---
 
+	local srf_ConsoJ = Field( self, 790, 305, fonts.mseg, COL_DIGIT, {
+		timeout = 300,
+		align = ALIGN_RIGHT,
+		sample_text = '88888'
+	} )
+
+	local function updConsoJ()
+		srf_ConsoJ.update( ConsoJ.get() )
+	end
+
+	ConsoJ.TaskOnceAdd( updConsoJ )
+
+	---
+
+	local srf_ProdJ = Field( self, 800 + w/2, 305, fonts.mseg, COL_DIGIT, {
+		timeout = 300,
+		align = ALIGN_RIGHT,
+		sample_text = '88888'
+	} )
+
+	local function updProdJ()
+		srf_ProdJ.update( ProdJ.get() )
+	end
+
+	ProdJ.TaskOnceAdd( updProdJ )
+
+	---
+
 	self.Visibility(false)
 	return self
 end
