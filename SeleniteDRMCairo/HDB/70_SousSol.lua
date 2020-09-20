@@ -37,8 +37,10 @@ local function soussol()
 	self.Clear()
 
 	TempArea( self, "TSSPorte", "maison/Temperature/GarageP", 130,460, { border=COL_BORDER, shadow=true, transparency=true })
+	Porte( self, 'PorteGarage', 'maison/IO/Porte_Garage', 90, 550 )
 
 	TempArea( self, "TSS", "maison/Temperature/Garage", 550,290, { border=COL_BORDER, shadow=true, transparency=true })
+	Porte( self, 'PorteCave', 'maison/IO/Porte_Cave', 458, 272 )
 
 	TempArea( self, "TCVin", "maison/Temperature/Cave Vin", 460, 75, { border=COL_BORDER, shadow=true, transparency=true })
 
@@ -169,7 +171,7 @@ local function soussol()
 	---
 
 	local srf_ProdJ = Field( self, 800 + w/2, 305, fonts.mseg, COL_DIGIT, {
-		timeout = 300,
+--		timeout = 300,
 		align = ALIGN_RIGHT,
 		sample_text = '88888'
 	} )
