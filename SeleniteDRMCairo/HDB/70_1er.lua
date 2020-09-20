@@ -36,9 +36,11 @@ local function etage()
 	end
 	self.Clear()
 
-	local TGrenierNord = TempArea( self, "TGrenierNord", "maison/Temperature/Grenier Nord", 223,361, { border=COL_BORDER, shadow=true, transparency=true })
+	TempArea( self, "TGrenierNord", "maison/Temperature/Grenier Nord", 223,361, { border=COL_BORDER, shadow=true, transparency=true })
 
-	local TChJoris = TempArea( self,
+	Porte( self, 'PorteGN', 'maison/IO/Porte_GNord', 300, 288 )
+
+	TempArea( self,
 		"TChJoris", "maison/Temperature/Chambre Joris", 
 		405,380, 
 		{
@@ -51,7 +53,7 @@ local function etage()
 		}
 	)
 
-	local TChOceane = TempArea( self,
+	TempArea( self,
 		"TChOceane", "maison/Temperature/Chambre Oceane",
 		565,320,
 		{
@@ -65,7 +67,7 @@ local function etage()
 		}
 	)
 
-	local TChParent = TempArea( self,
+	TempArea( self,
 		"TChParent", "maison/Temperature/Chambre Parents",
 		427,136,
 		{
@@ -78,10 +80,12 @@ local function etage()
 		}
 	)
 
-	local TGrenierSud = TempArea( self, "TGrenierSud", "maison/Temperature/Grenier Sud", 678,211, { border=COL_BORDER, shadow=true, transparency=true })
+	TempArea( self, "TGrenierSud", "maison/Temperature/Grenier Sud", 678,211, { border=COL_BORDER, shadow=true, transparency=true })
+
+	Porte( self, 'PorteGS', 'maison/IO/Porte_GSud', 607,187 )
 
 		-- No transparency needed as on black background
-	local TComble = TempArea( self, "TComble", "maison/Temperature/Comble", 896,38)
+	TempArea( self, "TComble", "maison/Temperature/Comble", 896,38)
 
 	self.Visibility(false)
 	return self
