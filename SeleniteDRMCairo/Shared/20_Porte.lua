@@ -24,6 +24,9 @@ function Porte(
 
 	local parent_upd = self.Update
 	function self.Update( )
+if opts.debug then
+	print(opts.debug, name, topic, SelShared.Get(name))
+end
 		psrf.Clear({sx,sy, opts.width, opts.hight})
 		parent_upd( PorteIcons.getImg( SelShared.Get(name) ) )
 	end
