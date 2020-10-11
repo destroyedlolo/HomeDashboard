@@ -37,6 +37,7 @@ conky.config = {
 	own_window_type = 'normal',
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 	own_window_transparent = true,
+	own_window_argb_visual = true,
 --own_window_transparent no
 --own_window_argb_value 30
 	stippled_borders = 0,
@@ -79,6 +80,7 @@ ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
  ${template0 Comble Comble °C}  ${template0 Dehors Dehors °C}
  ${template0 Gr_Sud GrenierS °C}	${template0 Gr_Nord GrenierN °C}	 
  ${template0 Oceane ChOceane °C}	  ${template0 Joris ChJoris °C}
+ ${template0 Parent ChParent °C}	   ${template0 Amis ChAmis °C}
   ${template0 Salon Salon °C}	 ${template0 Bureau Bureau °C}
  ${template0 Garage Garage °C}	${template0 Prt_Grg GarageP °C}
 
