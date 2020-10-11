@@ -53,6 +53,18 @@ local function rdc()
 			transparency=true
 		}
 	)
+
+	local TChAmis = TempArea( self,
+		"TAmis", "maison/Temperature/Chambre Amis",
+		230,213,
+		{
+			TempTracking=MAJORDOME .. "/SurveillanceChAmis/status",
+			border=COL_BORDER,
+			shadow=true,
+			transparency=true
+		}
+	)
+
 	local TSalon = TempArea( self,
 		"TSalon", "maison/Temperature/Salon",
 		412,378,
