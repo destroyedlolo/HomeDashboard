@@ -28,7 +28,7 @@ local function soussol()
 		self.setColor( COL_TITLE )
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Sous-Sol :", 5,0 )
-		self.get():Blit(backgnd, 20,52)
+		self.get():Blit(backgnd, 5,22)
 
 		if clipped then
 			self.get():RestoreContext()
@@ -36,15 +36,15 @@ local function soussol()
 	end
 	self.Clear()
 
-	TempArea( self, "TSSPorte", "maison/Temperature/GarageP", 130,460, { border=COL_BORDER, shadow=true, transparency=true })
-	Porte( self, 'PorteGarage', 'maison/IO/Porte_Garage', 90, 550 )
+	TempArea( self, "TSSPorte", "maison/Temperature/GarageP", 155,460, { border=COL_BORDER, shadow=true, transparency=true })
+	Porte( self, 'PorteGarage', 'maison/IO/Porte_Garage', 128, 550 )
 
-	TempArea( self, "TSS", "maison/Temperature/Garage", 550,290, { border=COL_BORDER, shadow=true, transparency=true })
-	Porte( self, 'PorteCave', 'maison/IO/Porte_Cave', 458, 272 )
+	TempArea( self, "TSS", "maison/Temperature/Garage", 565,312, { border=COL_BORDER, shadow=true, transparency=true })
+	Porte( self, 'PorteCave', 'maison/IO/Porte_Cave', 478, 257 )
 
-	TempArea( self, "TCVin", "maison/Temperature/Cave Vin", 460, 75, { border=COL_BORDER, shadow=true, transparency=true })
+	TempArea( self, "TCVin", "maison/Temperature/Cave Vin", 482, 65, { border=COL_BORDER, shadow=true, transparency=true })
 
-	TempArea( self, "TCongelo", "maison/Temperature/Congelateur", 570, 170,
+	TempArea( self, "TCongelo", "maison/Temperature/Congelateur", 546, 168,
 		{
 			gradient = Gradient( {
 				[-19] = COL_DIGIT,
