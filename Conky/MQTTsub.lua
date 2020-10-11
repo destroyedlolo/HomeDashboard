@@ -48,7 +48,9 @@ local topics = {	-- Topics to subscribe
 	GrenierN= {tpc = 'maison/Temperature/Grenier Nord'},
 	GrenierS= {tpc = 'maison/Temperature/Grenier Sud'},
 	ChJoris= {tpc = 'maison/Temperature/Chambre Joris'},
-	ChOceane= {tpc = 'maison/Temperature/Chambre Oceane'}
+	ChOceane= {tpc = 'maison/Temperature/Chambre Oceane'},
+	ChParent= {tpc = 'maison/Temperature/Chambre Parents'},
+	ChAmis = {tpc = 'maison/Temperature/Chambre Amis'}
 }
 
 ---- End of configurable area ----
