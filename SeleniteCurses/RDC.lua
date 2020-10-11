@@ -13,6 +13,10 @@ pwnd:print(' ??.?"C,  Bureau: ')
 x,y = pwnd:GetXY()
 TBureau = pwnd:DerWin(x,y,5,1)
 TBureau:attrset( SelCurses.CharAttrConst('BOLD') )
+pwnd:print(' ??.?"C, Amis: ')
+x,y = pwnd:GetXY()
+TAmis = pwnd:DerWin(x,y,5,1)
+TAmis:attrset( SelCurses.CharAttrConst('BOLD') )
 pwnd:print(' ??.?"C')
 
 function updateTDehors()
@@ -33,12 +37,19 @@ function updateTBureau()
 	TBureau:refresh()
 end
 
+function updateTAmis()
+	TAmis:clear()
+	TAmis:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Bureau')) )
+	TAmis:refresh()
+end
+
 
 -- local subscription
 local ltopics = {
 	{ topic = 'maison/Temperature/Dehors', trigger=updateTDehors, trigger_once=true },
 	{ topic = 'maison/Temperature/Salon', trigger=updateTSalon, trigger_once=true },
 	{ topic = 'maison/Temperature/Bureau', trigger=updateTBureau, trigger_once=true },
+	{ topic = 'maison/Temperature/Chambre Amis', trigger=updateTAmis, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
