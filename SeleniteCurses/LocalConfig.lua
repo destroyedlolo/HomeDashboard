@@ -6,7 +6,9 @@ MQTT_ClientID='HDBControl'	-- Broker client ID : must be unique across the syste
 --- Prod
 MQTT_URL='tcp://actif.chez.moi:1883' -- URL where to connect to the broker
 MAJORDOME="Majordome"
+MARCEL = 'Marcel.prod'
 
 -- Dev
--- MQTT_URL='tcp://torchwood.chez.moi:1883' -- URL where to connect to the broker
--- MAJORDOME="Majordome.dev"
+--MQTT_URL='tcp://torchwood.chez.moi:1883' -- URL where to connect to the broker
+--MAJORDOME="Majordome.dev"
+--MARCEL = 'Marcel.test'
