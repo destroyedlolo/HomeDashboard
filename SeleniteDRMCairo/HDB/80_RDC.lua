@@ -86,6 +86,8 @@ local function rdc()
 		-- No transparency needed as on black background
 --	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
 
+	Porte( self, 'PorteEscalier', 'maison/IO/Porte_Escalier', 581, 240 )
+
 	self.Visibility(false)
 	return self
 end
