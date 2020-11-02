@@ -43,6 +43,9 @@ function initAuto()
 	SuiviSol:attrset( SelCurses.CharAttrConst('BOLD') )
 	updateSuiviSol()
 
+	wmdSub:Move(2,5)
+	genTitre(wmdSub, 'Invoie &separateur de logs')
+
 	wmdSub:refresh()
 	genMenu()
 end
@@ -74,6 +77,9 @@ end
 function keyAuto(Brk, c,cn)
 	if c == 'a' then
 		popupSaison(Brk, MAJORDOME..'/Saison')
+	elseif c == 's' then
+		Brk:Publish(MAJORDOME..'/Log/Information', '--------------------------')
+		Brk:Publish(MARCEL..'/Log/Information', '--------------------------')
 	end
 
 	initAuto()
