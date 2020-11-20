@@ -46,17 +46,17 @@ local function upstaire()
 	srf:SetColor( COL_WHITE.get() )
 	srf:DrawLine( tcj.getAfter()+2 , 43, tcj.getAfter()+2, 160 )
 
-	local tcp = RoomArea( srf, 'TCP', 'maison/Temperature/Chambre Parents', 85,25,
-		'Majordome/Mode/Parents',
-		'Majordome/HLever',
+	local tca = RoomArea( srf, 'TCA', 'maison/Temperature/Chambre Amis', 85,25,
+		'Majordome/Mode/ChAmis',
+		'Majordome/HLever/ChAmis',
 		{
 			font = fmdigit,
-			title = "Parents",
+			title = "Amis",
 			min_delta = 0.75
 		}
 	)
 	srf:SetColor( COL_WHITE.get() )
-	srf:DrawLine( tcp.getAfter()+2 , 28, tcp.getAfter()+2, 130 )
+	srf:DrawLine( tca.getAfter()+2 , 28, tca.getAfter()+2, 130 )
 
 	RoomArea( srf, 'TCO', 'maison/Temperature/Chambre Oceane', 128,40,
 		'Majordome/Mode/Oceane',

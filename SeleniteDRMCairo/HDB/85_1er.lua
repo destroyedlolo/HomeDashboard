@@ -67,13 +67,11 @@ local function etage()
 		}
 	)
 
-	TempArea( self,
-		"TChParent", "maison/Temperature/Chambre Parents",
+	local TChAmis = TempArea( self,
+		"TAmis", "maison/Temperature/Chambre Amis",
 		427,136,
 		{
-			TempTracking=MAJORDOME .. "/SurveillanceChParents/status",
-			ModeTopic=MAJORDOME .. "/Mode/Parents",
-			HLeverTopic=MAJORDOME .. "/HLever",
+			TempTracking=MAJORDOME .. "/SurveillanceChAmis/status",
 			border=COL_BORDER,
 			shadow=true,
 			transparency=true

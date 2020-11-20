@@ -30,8 +30,10 @@ if not card then
 		local fb_fch = "/dev/fb1"
 		if not file_exists(fb_fch) then
 			fb_fch = "/dev/fb0"
+			card,err,msg = SelDCCard.OpenFB(fb_fch)
+		else
+			card,err,msg = SelDCCard.OpenFB(fb_fch, 768)
 		end
-		card,err,msg = SelDCCard.OpenFB(fb_fch)
 		if not card then
 			print("*E* ".. fb_fch .." :", err,msg)
 			os.exit()

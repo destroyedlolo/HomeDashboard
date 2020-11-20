@@ -54,11 +54,13 @@ local function rdc()
 		}
 	)
 
-	local TChAmis = TempArea( self,
-		"TAmis", "maison/Temperature/Chambre Amis",
+	TempArea( self,
+		"TChParent", "maison/Temperature/Chambre Parents",
 		230,213,
 		{
-			TempTracking=MAJORDOME .. "/SurveillanceChAmis/status",
+			TempTracking=MAJORDOME .. "/SurveillanceChParents/status",
+			ModeTopic=MAJORDOME .. "/Mode/Parents",
+			HLeverTopic=MAJORDOME .. "/HLever",
 			border=COL_BORDER,
 			shadow=true,
 			transparency=true
