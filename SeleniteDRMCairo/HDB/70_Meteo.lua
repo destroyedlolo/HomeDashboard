@@ -104,7 +104,7 @@ local function meteo()
 
 	local srf_Gfx = GfxArea( self, 530, 345, WINSIZE.w - 530, 290, COL_ORANGE, COL_TRANSPARENT20,{
 		align = ALIGN_RIGHT,
-		hlines={ { 0, COL_DIGIT } },
+		hlines={ { 0, COL_DARKBLUE } },
 		heverylines={ {5, COL_DARKGREY}, { 10, COL_GREY } },
 		vlinesH=COL_DARKGREY,
 		vlinesD=COL_GREY,
