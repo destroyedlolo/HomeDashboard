@@ -150,12 +150,6 @@ for i,col in ipairs(savedcols) do
 end
 --]]
 
--- Ne fonctionne pas car "savedcols" n'est pas dispo dans un autre thread
--- il faut :
--- 	sauvegarder les données dans une SelShared
---	créer un FIFO avec la liste du nom des collections récupérées
---	envoyer une tache de chargement
-
 function RestoreCollection(topic, msg)
 	local name = topic:match("/.+$"):sub(2)
 
@@ -174,7 +168,15 @@ function RestoreCollection(topic, msg)
 		for l in msg:gmatch("(.-)\n") do
 			local t,v = l:match("(%d+)\t(%S+)");
 			col:Push(v, tonumber(t))
-		end 
+		end
+
+			-- Request updating
+		local ref,_ = SelShared.FindRef(name..".updgfx")
+		if not ref then
+			print("*E*", name, _)
+		else
+			SelShared.PushTaskByRef(ref)
+		end
 	else
 		print( "non", name, col:HowMany() )
 	end
@@ -232,6 +234,18 @@ Brk:Publish( MAJORDOME .."/About", "x" )
 
 for i,col in ipairs(savedcols) do
 	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' ) then
+			-- register refresh function
+		local ref,_ = SelShared.RegisterFunction(col.updgfx)
+		if not ref then
+			SelLog.log('E', "Reference " .. col.getName() .. " : " .. _)
+		else
+			local r,_ = SelShared.RegisterRef( ref, col.getName()..".updgfx" )
+			if not r then
+				SelLog.log('E', "Register " .. col.getName() .. " : " .. _)
+			end
+		end
+
+			-- ask for database values
 		Brk:Publish( 'DemandeHistorique', col.getName() )
 		local ret,_ = SelShared.RegisterTimedCollection(col.getCollection(), col.getName())
 		if not ret then
