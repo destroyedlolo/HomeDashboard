@@ -87,14 +87,10 @@ else
 end
 linclude.requirefiles()
 
-SelLog.log("Restoring collections ..")
-for i,col in ipairs(savedcols) do
-	SelLog.log(col.getName() ..' ...')
-	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
-	col.updgfx()
-end
+----
+-- Commands
+----
 
--- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.
 	if SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
 		psrf:Dump('/tmp', 'DashBoard')
@@ -135,11 +131,64 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 	end
 end
 
+
 table.insert( Topics, 
 	{ topic = 'HomeDashBoard/'.. MQTT_ClientID ..'/Command', trigger=Command }
 )
 
+-----
+-- Restoring collection
+-----
+
+--[[
+-- disabled as loading from the DB
+SelLog.log("Restoring collections ..")
+for i,col in ipairs(savedcols) do
+	SelLog.log(col.getName() ..' ...')
+	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
+	col.updgfx()
+end
+--]]
+
+-- Ne fonctionne pas car "savedcols" n'est pas dispo dans un autre thread
+-- il faut :
+-- 	sauvegarder les données dans une SelShared
+--	créer un FIFO avec la liste du nom des collections récupérées
+--	envoyer une tache de chargement
+
+function RestoreCollection(topic, msg)
+	local name = topic:match("/.+$"):sub(2)
+
+--	SelLog.log('I', "Get history for '".. name .. "'")
+
+	local col, _ = SelShared.RetrieveTimedCollection(name)
+
+	if not col then
+--		SelLog.log("E", name .." : ".. _)
+		print("E", name .." : ".. _)
+		return;
+	end
+
+	if col:HowMany() == 0 then
+		print( "ok", name, col:HowMany() )
+		for l in msg:gmatch("(.-)\n") do
+			local t,v = l:match("(%d+)\t(%S+)");
+			col:Push(v, tonumber(t))
+		end 
+	else
+		print( "non", name, col:HowMany() )
+	end
+end
+
+table.insert( Topics, 
+	{ topic = 'ReponseHistorique/#', func=RestoreCollection }
+)
+
+
+----
 -- Broker's stuffs
+----
+
 function disconnected()
 	condition_network.report_issue()
 	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
@@ -177,6 +226,19 @@ SelLog.log("Let's go ...")
 -- Request versions
 Brk:Publish( MARCEL .."/About", "x" )
 Brk:Publish( MAJORDOME .."/About", "x" )
+
+-- Ask collections history
+-- and create shared ones
+
+for i,col in ipairs(savedcols) do
+	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' ) then
+		Brk:Publish( 'DemandeHistorique', col.getName() )
+		local ret,_ = SelShared.RegisterTimedCollection(col.getCollection(), col.getName())
+		if not ret then
+			SelLog.log('E', "Collection " .. col.getName() .. " : " .. _ )
+		end
+	end
+end
 
 -- Wait for events
 while true do
