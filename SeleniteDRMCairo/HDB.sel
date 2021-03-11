@@ -1,5 +1,5 @@
 #!/usr/local/bin/Selene
--- HomeDashBoard, Selenite version
+-- HomeDashBoard, DRMCairo version
 --
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own dashboard
@@ -152,19 +152,15 @@ end
 
 function RestoreCollection(topic, msg)
 	local name = topic:match("/.+$"):sub(2)
-
---	SelLog.log('I', "Get history for '".. name .. "'")
-
 	local col, _ = SelShared.RetrieveTimedCollection(name)
 
 	if not col then
---		SelLog.log("E", name .." : ".. _)
-		print("E", name .." : ".. _)
+		SelLog.log("E", name .." : ".. _)
 		return;
 	end
 
-	if col:HowMany() == 0 then
-		print( "ok", name, col:HowMany() )
+	if col:HowMany() < 5 then	-- load only if the collection contains only few data
+		SelLog.log('R', "Get history for '".. name .. "'")
 		for l in msg:gmatch("(.-)\n") do
 			local t,v = l:match("(%d+)\t(%S+)");
 			col:Push(v, tonumber(t))
@@ -173,12 +169,12 @@ function RestoreCollection(topic, msg)
 			-- Request updating
 		local ref,_ = SelShared.FindRef(name..".updgfx")
 		if not ref then
-			print("*E*", name, _)
+			SelLog.log('E', name .. ":" .. (_ or "updgfx function not found"))
 		else
 			SelShared.PushTaskByRef(ref)
 		end
 	else
-		print( "non", name, col:HowMany() )
+		SelLog.log('I', "Ignoring history for '".. name .. "'")
 	end
 end
 
