@@ -154,7 +154,7 @@ local function soussol()
 	)
 	table.insert( savedcols, prod2 )
 
-	SelLog.log("*I* Consummation / Production grouped by ".. 6*60*60 / srf_ctrndconso.get():GetWidth())
+	SelLog.log("Consummation / Production grouped by ".. 6*60*60 / srf_ctrndconso.get():GetWidth())
 
 	---
 
