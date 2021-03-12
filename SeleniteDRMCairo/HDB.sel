@@ -247,6 +247,8 @@ for i,col in ipairs(savedcols) do
 		if not ret then
 			SelLog.log('E', "Collection " .. col.getName() .. " : " .. _ )
 		end
+	else
+		SelLog.log('W', col.getName() .. " : ignored due as a " .. getmetatable(col.getCollection()).__name )
 	end
 end
 
