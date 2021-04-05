@@ -128,6 +128,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		RDC.get():Dump('/tmp', 'RDC')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
 		Meteo.get():Dump('/tmp', 'Meteo')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab SS' then
+		SousSol.get():Dump('/tmp', 'SousSol')
 	end
 end
 
@@ -248,7 +250,13 @@ for i,col in ipairs(savedcols) do
 			SelLog.log('E', "Collection " .. col.getName() .. " : " .. _ )
 		end
 	else
-		SelLog.log('W', col.getName() .. " : ignored due as a " .. getmetatable(col.getCollection()).__name )
+		SelLog.log('W', col.getName() .." : ".. getmetatable(col.getCollection()).__name .." - trying to load from file")
+		local _,err = col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )
+		if not err then
+			col.updgfx()
+		else
+			SelLog.log('E', col.getName() .." : ".. err)
+		end
 	end
 end
 
