@@ -62,7 +62,7 @@ function initVolets()
 	local s = " FHaut: Monte, Fbas: Descent, Espace: My ou stop "
 	wmdSub:clear()
 	wmdSub:border()
-	wmdSub:PrintAt((w-s:len())/2,0, s)
+	wmdSub:PrintAt( math.floor((w-s:len())/2),0, s)
 	wmdSub:refresh()
 
 	AffVolets()
