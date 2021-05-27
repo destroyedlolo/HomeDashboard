@@ -52,7 +52,7 @@ end
 
 function popupSaison(Brk, topic)
 	local w,h = wmdSub:GetSize()
-	local popup = wmdSub:DerWin((w-15)/2,2, 18,5)
+	local popup = wmdSub:DerWin( math.floor((w-15)/2), 2, 18,5)
 
 	genTitre(popup, "\n  &Intersaison\n")
 	genTitre(popup, "  &Ete\n")
