@@ -112,7 +112,7 @@ end
 function popupConsMode( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
-	local popup = wmdSub:DerWin((w-15)/2,2, 15,7)
+	local popup = wmdSub:DerWin( math.floor((w-15)/2), 2, 15,7)
 
 	genTitre(popup, "\n  &Auto\n")
 	genTitre(popup, "  &Manuel\n")
@@ -143,7 +143,7 @@ end
 function popupConsPiscine( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
-	local popup = wmdSub:DerWin((w-15)/2,2, 18,5)
+	local popup = wmdSub:DerWin( math.floor((w-15)/2), 2, 18,5)
 
 	genTitre(popup, "\n  &Heures Creuses\n")
 	genTitre(popup, "  &Arret\n")
