@@ -1,5 +1,5 @@
 #!/usr/local/bin/Selene
--- HomeDashBoard, Selenite version
+-- HomeDashBoard, DRMCairo version
 --
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own dashboard
@@ -18,13 +18,24 @@ Selene.UseDRMCairo()
 	-- Open default card.
 	-- As no argument is passed it's the default one
 	-- /dev/dri/card0
-card,err = SelDCCard.Open()
+function file_exists(name)
+	local f=io.open(name,"r")
+	if f~=nil then io.close(f) return true else return false end
+end
+
+card,err,msg = SelDCCard.Open()
 if not card then
 	print("*E* DRM :", err,msg)
 	if SELPLUG_DRMCairo_FBEXTENSION then
-		card,err,msg = SelDCCard.OpenFB("/dev/fb1")
+		local fb_fch = "/dev/fb1"
+		if not file_exists(fb_fch) then
+			fb_fch = "/dev/fb0"
+			card,err,msg = SelDCCard.OpenFB(fb_fch)
+		else
+			card,err,msg = SelDCCard.OpenFB(fb_fch, 768)
+		end
 		if not card then
-			print("*E* FB :", err,msg)
+			print("*E* ".. fb_fch .." :", err,msg)
 			os.exit()
 		else
 			print("*I* ok with Framebuffer")
@@ -76,14 +87,10 @@ else
 end
 linclude.requirefiles()
 
-SelLog.log("Restoring collections ..")
-for i,col in ipairs(savedcols) do
-	SelLog.log(col.getName() ..' ...')
-	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
-	col.updgfx()
-end
+----
+-- Commands
+----
 
--- List of topics to subscribe to
 function Command() -- CAUTION : in race condition, commands may be lost.
 	if SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
 		psrf:Dump('/tmp', 'DashBoard')
@@ -119,14 +126,69 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Automatisme.get():Dump('/tmp', 'Auto')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
 		RDC.get():Dump('/tmp', 'RDC')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
+		Meteo.get():Dump('/tmp', 'Meteo')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab SS' then
+		SousSol.get():Dump('/tmp', 'SousSol')
 	end
 end
+
 
 table.insert( Topics, 
 	{ topic = 'HomeDashBoard/'.. MQTT_ClientID ..'/Command', trigger=Command }
 )
 
+-----
+-- Restoring collection
+-----
+
+--[[
+-- disabled as loading from the DB
+SelLog.log("Restoring collections ..")
+for i,col in ipairs(savedcols) do
+	SelLog.log(col.getName() ..' ...')
+	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
+	col.updgfx()
+end
+--]]
+
+function RestoreCollection(topic, msg)
+	local name = topic:match("/.+$"):sub(2)
+	local col, _ = SelShared.RetrieveTimedCollection(name)
+
+	if not col then
+		SelLog.log("E", name .." : ".. _)
+		return;
+	end
+
+	if col:HowMany() < 5 then	-- load only if the collection contains only few data
+		SelLog.log('R', "Get history for '".. name .. "'")
+		for l in msg:gmatch("(.-)\n") do
+			local t,v = l:match("(%d+)\t(%S+)");
+			col:Push(v, tonumber(t))
+		end
+
+			-- Request updating
+		local ref,_ = SelShared.FindRef(name..".updgfx")
+		if not ref then
+			SelLog.log('E', name .. ":" .. (_ or "updgfx function not found"))
+		else
+			SelShared.PushTaskByRef(ref)
+		end
+	else
+		SelLog.log('I', "Ignoring history for '".. name .. "'")
+	end
+end
+
+table.insert( Topics, 
+	{ topic = 'ReponseHistorique/#', func=RestoreCollection }
+)
+
+
+----
 -- Broker's stuffs
+----
+
 function disconnected()
 	condition_network.report_issue()
 	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
@@ -164,6 +226,39 @@ SelLog.log("Let's go ...")
 -- Request versions
 Brk:Publish( MARCEL .."/About", "x" )
 Brk:Publish( MAJORDOME .."/About", "x" )
+
+-- Ask collections history
+-- and create shared ones
+
+for i,col in ipairs(savedcols) do
+	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' ) then
+			-- register refresh function
+		local ref,_ = SelShared.RegisterFunction(col.updgfx)
+		if not ref then
+			SelLog.log('E', "Reference " .. col.getName() .. " : " .. _)
+		else
+			local r,_ = SelShared.RegisterRef( ref, col.getName()..".updgfx" )
+			if not r then
+				SelLog.log('E', "Register " .. col.getName() .. " : " .. _)
+			end
+		end
+
+			-- ask for database values
+		Brk:Publish( 'DemandeHistorique', col.getName() )
+		local ret,_ = SelShared.RegisterTimedCollection(col.getCollection(), col.getName())
+		if not ret then
+			SelLog.log('E', "Collection " .. col.getName() .. " : " .. _ )
+		end
+	else
+		SelLog.log('W', col.getName() .." : ".. getmetatable(col.getCollection()).__name .." - trying to load from file")
+		local _,err = col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )
+		if not err then
+			col.updgfx()
+		else
+			SelLog.log('E', col.getName() .." : ".. err)
+		end
+	end
+end
 
 -- Wait for events
 while true do

@@ -50,7 +50,7 @@ local function f()
 
 	local offx = srf_tension.getAfter() + srf:GetStringExtents(" V")
 	local hc = HeureCreuse( self, offx+30,offy+2 )
-	offy = offy + srf_tension.getHight() + 12
+	offy = offy + srf_tension.getHight() + 23
 
 	local tension = MQTTDisplay( 'tension', 'onduleur/input.voltage', srf_tension, { condition=condition_network } )
 
@@ -60,12 +60,6 @@ local function f()
 	srf:DrawStringTop("Consommation :", 9, offy )
 	offy = offy + self.get():GetFontExtents()
 
-	local grd_conso =  Gradient( {
-		[500] = COL_DIGIT,
-		[1500] = COL_ORANGE,
-		[4500] = COL_RED
-	})
-
 	local srf_consommation = Field( self, 30,offy, fonts.seg, COL_DIGIT, {
 		timeout = 10,
 		align = ALIGN_RIGHT, 
@@ -73,19 +67,18 @@ local function f()
 		ownsurface=true,
 		bgcolor = COL_TRANSPARENT,
 		transparency = true,
-		gradient = grd_conso
+		gradient = GRD_CONSOMMATION
 	} )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" VA", srf_consommation.getAfter())
 	offy = offy + srf_consommation.getHight()
 
-	local srf_trndconso = GfxArea( self, 36,160, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
-		debug = true,
+	local srf_trndconso = GfxArea( self, 36,171, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
 		heverylines={ {1000, COL_DARKGREY} },
 		align=ALIGN_RIGHT,
 		transparency = true,
 		ownsurface = true,
-		gradient = grd_conso
+		gradient = GRD_CONSOMMATION
 	} )
 
 	local srf_maxconso = FieldBlink( srf_trndconso, animTimer, 2, 2, fonts.sseg, COL_DIGIT, {
@@ -93,7 +86,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_conso
+		gradient = GRD_CONSOMMATION
 	} )
 
 	local srf_minconso = FieldBlink( srf_trndconso, animTimer, 2, 62-fonts.sseg.size, fonts.sseg, COL_DIGIT, {
@@ -101,7 +94,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_conso
+		gradient = GRD_CONSOMMATION
 	} )
 
 	local consommation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
@@ -114,19 +107,13 @@ local function f()
 			condition=condition_network
 		}
 	)
-	offy = 226
+	offy = 240
 
 		-------
 
 	self.setFont( fonts.title1 )
 	srf:DrawStringTop("Production :", 9, offy )
 	offy = offy + self.get():GetFontExtents()
-
-	local grd_prod = Gradient( {
-		[200] = COL_BLUE,
-		[750] = COL_YELLOW,
-		[1200] = COL_GREEN
-	} )
 
 	local srf_production = Field( self, 30,offy, fonts.seg, COL_DIGIT, {
 		timeout = 10,
@@ -135,18 +122,18 @@ local function f()
 		ownsurface=true,
 		bgcolor = COL_TRANSPARENT,
 		transparency = true,
-		gradient = grd_prod
+		gradient = GRD_PRODUCTION
 	} )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop(" VA", srf_production.getAfter())
 	offy = offy + srf_production.getHight()
 
-	local srf_trndprod = GfxArea( self, 36, 304, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
+	local srf_trndprod = GfxArea( self, 36, 320, 120, 64, COL_ORANGE, COL_TRANSPARENT,{
 		heverylines={ {500, COL_DARKGREY} },
 		align = ALIGN_RIGHT,
 		ownsurface = true,
 		transparency = true,
-		gradient = grd_prod
+		gradient = GRD_PRODUCTION
 	} )
 
 	local srf_maxprod = Field( srf_trndprod, 2, 2, fonts.sseg, COL_DIGIT, {
@@ -154,7 +141,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_prod
+		gradient = GRD_PRODUCTION
 	} )
 
 	local srf_minprod = FieldBlink( srf_trndprod, animTimer, 2, 62-fonts.sseg.size, fonts.sseg, COL_DIGIT, {
@@ -162,7 +149,7 @@ local function f()
 		sample_text = "12345",
 		bgcolor = COL_TRANSPARENT,
 		included = true,
-		gradient = grd_prod
+		gradient = GRD_PRODUCTION
 	} )
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod,
@@ -176,11 +163,11 @@ local function f()
 		}
 	)
 
-	offy = 397
+	offy = 408
 
 		------------
 
-	local srf_onduleur = FieldBlink( self, animTimer, 70, 704, fonts.sseg, COL_DIGIT, {
+	local srf_onduleur = FieldBlink( self, animTimer, 50, 72, fonts.sseg, COL_DIGIT, {
 		timeout = 30,
 		align = ALIGN_RIGHT, 
 		ownsurface=true,
@@ -209,24 +196,21 @@ local function f()
 		gradient = GRD_TEMPERATURE
 	} )
 
---[[
-	local srf_Thermometre = VGauge( self, 16,offy, 7,68, COL_RED, COL_WHITE, nil, {
+	local srf_Thermometre = VGauge( self, 42,439, 2,74, COL_RED, COL_WHITE, nil, {
 		min = 5, max = 40,
 		ascend = true
 	})
-]]
 
 	local TSalon = MQTTDisplay( 'TSalon', 'maison/Temperature/Salon', srf_TSalon )
 	self.setFont( fonts.mdigit )
 	srf:DrawStringTop("°C", srf_TSalon.getAfter())
 	offy = offy + srf_TSalon.getHight()
 
---[[
 	local function updthermo()
 		srf_Thermometre.Draw( TSalon.get() )
 	end
 	TSalon.TaskOnceAdd( updthermo )
-]]
+
 		----
 
 	self.setFont( fonts.title1 )
@@ -251,7 +235,7 @@ local function f()
 
 		----
 
-	self.setFont( fonts.sdigit )
+	self.setFont( fonts.sseg )
 	imgw = self.get():GetStringExtents( "8888" )
 	local srf_dATM = FieldBlink( self, animTimer, (w-imgw)/2, offy+15, fonts.sseg, COL_DIGIT, {
 		timeout = 310,
@@ -303,6 +287,29 @@ local function f()
 	local uWAN = FAIdata( 'uWAN', 'Freebox/UploadATM', 'Freebox/DownloadTV', 'Freebox/UploadWAN', srf_uATM, gfx_upload )
 	table.insert( additionnalevents, wdfreebox )
 
+	--------
+
+	local srf_consoj = Field( self, 40, 635, fonts.mcounter, COL_BLACK, {
+		timeout = 30,
+		align = ALIGN_RIGHT,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT20,
+		transparency = true,
+		sample_text = "888888"
+	})
+
+	ConsoJ = MQTTDisplay( 'ConsoJ', MAJORDOME .. '/Electricite/Consommation', srf_consoj )
+
+	local srf_prodj = Field( self, 50, 670, fonts.mcounter, COL_BLACK, {
+		timeout = 300,
+		align = ALIGN_RIGHT,
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT20,
+		transparency = true,
+		sample_text = "88888"
+	})
+
+	ProdJ = MQTTDisplay( 'ProdJ', MAJORDOME .. '/Electricite/Production', srf_prodj )
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)

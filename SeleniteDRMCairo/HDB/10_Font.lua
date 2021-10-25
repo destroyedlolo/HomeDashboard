@@ -15,15 +15,25 @@ if not fontSeg then
         os.exit()
 end
 
+local CounterDial
+CounterDial,err,msg = SelDCFont.createFreeType(SELENE_SCRIPT_DIR .. "/Ressources/Counter-Dial.ttf")
+if not fontSeg then
+        print("*E*", err,msg)
+        os.exit()
+end
+
 fonts={
 	title = { font=finternal, size=36 },
 	title1 = { font=fontTT, size=24 },
 	digit = { font=finternal, size=42 },
 	mdigit = { font=finternal, size=31 },
-	sdigit = { font=finternal, size=18 },
+	smdigit = { font=finternal, size=25 },
+	sdigit = { font=finternal, size=22 },
+	xsdigit = { font=finternal, size=17 },
 	seg = { font=fontSeg, size=42 },
 	mseg = { font=fontSeg, size=31 },
 	sseg = { font=fontSeg, size=18 },
+	mcounter = { font=CounterDial, size=31 },
 	xstxt = { font=finternal, size=9.6 },
 	stxt = { font=finternal, size=11 },
 	mtxt = { font=finternal, size=12 },
