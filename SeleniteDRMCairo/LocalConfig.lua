@@ -3,12 +3,9 @@
 
 MQTT_URL='tcp://bpi.chez.moi:1883' -- URL where to connect to the broker
 -- MQTT_URL='tcp://torchwood.chez.moi:1883' -- URL where to connect to the broker
-MQTT_ClientID='bpi-devFB'	-- Broker client ID : must be unique across the system
-
-MAJORDOME = 'Majordome.dev'
-MARCEL = 'Marcel.test'
+MQTT_ClientID='TdB'	-- Broker client ID : must be unique across the system
+MARCEL='Marcel.prod'
 --MAJORDOME = 'Majordome'
---MARCEL = 'Marcel.prod'
 
 -- Activate for debugging only
 local _,err = SelLog.init('/tmp/HDB.log_' .. os.date('%Y%m%d'), false)
