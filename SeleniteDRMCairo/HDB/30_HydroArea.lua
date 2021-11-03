@@ -16,6 +16,7 @@ function HydroArea(
 --		Mostly useful when it has background image.
 --	shadow : add a shadow to the area
 --	gradient : gradient to use (default GRD_HYDRO)
+--	save_locally : retrieve from local backup
 --
 --	At last one of sample_text or width MUST be provided
 --]]
@@ -126,6 +127,7 @@ function HydroArea(
 	local temp = MQTTStoreGfx( name, topic, srf_Hydro, srf_Gfx,
 		{
 			condition=condition_network,
+			save_locally = opts.save_locally
 		}
 	)
 	table.insert( savedcols, temp )

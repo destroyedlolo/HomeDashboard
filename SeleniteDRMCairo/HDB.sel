@@ -231,7 +231,7 @@ Brk:Publish( MAJORDOME .."/About", "x" )
 -- and create shared ones
 
 for i,col in ipairs(savedcols) do
-	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' ) then
+	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' and not col.getLocal() ) then
 			-- register refresh function
 		local ref,_ = SelShared.RegisterFunction(col.updgfx)
 		if not ref then

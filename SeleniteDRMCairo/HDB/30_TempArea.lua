@@ -16,6 +16,7 @@ function TempArea(
 --		Mostly useful when it has background image.
 --	shadow : add a shadow to the area
 --	gradient : gradient to use (default GRD_TEMPERATURE)
+--	save_locally : retrieve from local backup
 --
 --	TempTracking : token used for this room temperature tracker
 --	ModeTopic : topic to follow room's mode
@@ -172,7 +173,8 @@ end
 	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
 		{
 			condition=condition_network,
-			force_field=srf_hlever
+			force_field=srf_hlever,
+			save_locally = opts.save_locally
 		}
 	)
 	table.insert( savedcols, temp )
