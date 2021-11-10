@@ -1,6 +1,6 @@
--- Display a temperature and associated gfx
+-- Display an hydrometry and associated gfx
 
-function TempArea(
+function HydroArea(	
 	psrf,	-- mother surface
 	name, topic,
 	x,y,	-- position in the mother surface
@@ -15,11 +15,8 @@ function TempArea(
 --		transparency. With this opt set, surfaces bellow are cleared first.
 --		Mostly useful when it has background image.
 --	shadow : add a shadow to the area
---	gradient : gradient to use (default GRD_TEMPERATURE)
+--	gradient : gradient to use (default GRD_HYDRO)
 --	save_locally : retrieve from local backup
---
---	TempTracking : token used for this room temperature tracker
---	ModeTopic : topic to follow room's mode
 --
 --	At last one of sample_text or width MUST be provided
 --]]
@@ -27,7 +24,7 @@ function TempArea(
 		opts = {}
 	end
 	if opts.debug then
-		opts.debug = opts.debug .."/TempArea"
+		opts.debug = opts.debug .."/HydroArea"
 	end
 
 
@@ -41,7 +38,7 @@ function TempArea(
 		opts.font = fonts.mdigit
 	end
 	if not opts.gradient then
-		opts.gradient = GRD_TEMPERATURE
+		opts.gradient = GRD_HYDRO
 	end
 	if not opts.timeout then
 		opts.timeout = 310
@@ -74,13 +71,6 @@ function TempArea(
 			self.get():SetClipS( unpack(clipped) )
 			full = false
 		end
-if opts.debug then
-	if full then
-print(opts.debug, "(TA)clear Full")
-	else
-print(opts.debug, "(TA)clear clip", unpack(clipped) )
-	end
-end
 
 		if psrf.Clear and opts.transparency then
 			if clipped then	-- Offset this surface
@@ -89,9 +79,6 @@ end
 			else
 				clipped = { x,y, opts.width, opts.height }
 			end
-if opts.debug then
-print(opts.debug, "(TA)clear parent", unpack(clipped) )
-end
 			psrf.Clear({ clipped[1],clipped[2],clipped[3],clipped[4] })
 		end
 
@@ -111,39 +98,23 @@ end
 		if not full then
 			self.get():RestoreContext()
 		end
-if opts.debug then
-print(opts.debug, "(TA)fin clear", unpack(clipped) )
-end
 	end
 
-	local offset = false
-	if opts.TempTracking then
-		local Surveillance = ImageStencilSurface( self, 0,0, SELENE_SCRIPT_DIR .. "/Images/Oeil.png", { debug = opts.debug, bgcolor=COL_TRANSPARENT40 } )
-		self.srvtemp = Condition( Surveillance, 0, { issue_color=COL_ORANGE } )
-		SuiviTracker("Suivi ".. name, opts.TempTracking, self.srvtemp, nil)
-		offset = true
-	end
-
-	if opts.ModeTopic then
-		Mode( self, "Mode_"..name, opts.ModeTopic, 0, 15, { width=20, hight=20, autoscale=true, bgcolor = COL_TRANSPARENT40 } );
-		offset = true
-	end
-
-	local srf_Temp = Field( self,
-		2 + (offset and 18 or 0), 2, opts.font, COL_DIGIT, {
+	local srf_Hydro = Field( self,
+		2, 2, opts.font, COL_DIGIT, {
 			timeout = opts.timeout,
-			width = opts.width - (offset and 24 or 4),
-			align = ALIGN_RIGHT, 
+			width = opts.width - 4,
+			align = ALIGN_RIGHT,
 			gradient = opts.gradient,
 			bgcolor = COL_TRANSPARENT40,
 			transparency = true,
 --			debug = opts.debug
-		} 
+		}
 	)
 
 	local srf_Gfx = GfxArea( self,
-		2, 2+srf_Temp.getHight(),
-		opts.width-4, opts.height-srf_Temp.getHight()-4,
+		2, 2+srf_Hydro.getHight(),
+		opts.width-4, opts.height-srf_Hydro.getHight()-4,
 		COL_ORANGE, COL_TRANSPARENT20,{
 			heverylines={ {500, COL_DARKGREY} },
 			align = ALIGN_RIGHT,
@@ -153,27 +124,9 @@ end
 		}
 	)
 
-	local srf_hlever
-	if opts.HLeverTopic then
-		srf_hlever = Field( srf_Gfx, 
-			5, opts.height-srf_Temp.getHight()-4-fonts.stxt.size,
-			fonts.stxt, COL_DIGIT, {
-				align = ALIGN_RIGHT,
-				sample_text = "88.88",
-				bgcolor = false,
-				transparency=true,
-				ownsurface=true,
-				bgcolor=COL_TRANSPARENT,
---				included = true
-			}
-		)
-		local hlever = MQTTDisplay( 'hlever'.. name, opts.HLeverTopic, srf_hlever )
-	end
-
-	local temp = MQTTStoreGfx( name, topic, srf_Temp, srf_Gfx,
+	local temp = MQTTStoreGfx( name, topic, srf_Hydro, srf_Gfx,
 		{
 			condition=condition_network,
-			force_field=srf_hlever,
 			save_locally = opts.save_locally
 		}
 	)

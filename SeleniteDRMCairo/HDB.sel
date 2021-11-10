@@ -54,7 +54,10 @@ Topics = {}	-- Topics we are looking for
 -- Global objects
 additionnalevents = {}	-- List of additionnal events to wait for (timers, inputs, ...)
 savedcols = {}		-- Collection to be saved/restored
-local SAVE_DIR = '/tmp/'
+if not SAVE_DIR then
+	SAVE_DIR = '/tmp/'
+end
+SelLog.log("Data backup in : ".. SAVE_DIR)
 
 function SaveCollection()
 	SelLog.log("Saving collections ..")
@@ -124,6 +127,8 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 		Automatisme.Visibility(true)
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
 		Automatisme.get():Dump('/tmp', 'Auto')
+	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Mch' then
+		Machines.get():Dump('/tmp', 'Mch')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
 		RDC.get():Dump('/tmp', 'RDC')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
@@ -231,7 +236,7 @@ Brk:Publish( MAJORDOME .."/About", "x" )
 -- and create shared ones
 
 for i,col in ipairs(savedcols) do
-	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' ) then
+	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' and not col.getLocal() ) then
 			-- register refresh function
 		local ref,_ = SelShared.RegisterFunction(col.updgfx)
 		if not ref then

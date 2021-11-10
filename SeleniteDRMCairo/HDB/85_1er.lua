@@ -36,13 +36,13 @@ local function etage()
 	end
 	self.Clear()
 
-	TempArea( self, "TGrenierNord", "maison/Temperature/Grenier Nord", 223,361, { border=COL_BORDER, shadow=true, transparency=true })
+	TempArea( self, "TGrenierNord", "maison/Temperature/Grenier Nord", 183,312, { border=COL_BORDER, shadow=true, transparency=true })
 
-	Porte( self, 'PorteGN', 'maison/IO/Porte_GNord', 300, 288 )
+	Porte( self, 'PorteGN', 'maison/IO/Porte_GNord', 275, 217 )
 
 	TempArea( self,
 		"TChJoris", "maison/Temperature/Chambre Joris", 
-		405,380, 
+		367,333, 
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceChJoris/status",
 			ModeTopic=MAJORDOME .. "/Mode/Joris",
@@ -55,7 +55,7 @@ local function etage()
 
 	TempArea( self,
 		"TChOceane", "maison/Temperature/Chambre Oceane",
-		565,320,
+		538,285,
 		{
 -- debug="TCO",
 			TempTracking=MAJORDOME .. "/SurveillanceChOceane/status",
@@ -69,7 +69,7 @@ local function etage()
 
 	local TChAmis = TempArea( self,
 		"TAmis", "maison/Temperature/Chambre Amis",
-		427,136,
+		399,95,
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceChAmis/status",
 			border=COL_BORDER,
@@ -78,9 +78,9 @@ local function etage()
 		}
 	)
 
-	TempArea( self, "TGrenierSud", "maison/Temperature/Grenier Sud", 678,211, { border=COL_BORDER, shadow=true, transparency=true })
+	TempArea( self, "TGrenierSud", "maison/Temperature/Grenier Sud", 637,185, { border=COL_BORDER, shadow=true, transparency=true })
 
-	Porte( self, 'PorteGS', 'maison/IO/Porte_GSud', 607,187 )
+	Porte( self, 'PorteGS', 'maison/IO/Porte_GSud', 582,158 )
 
 		-- No transparency needed as on black background
 	TempArea( self, "TComble", "maison/Temperature/Comble", 896,38)
