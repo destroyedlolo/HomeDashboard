@@ -54,7 +54,10 @@ Topics = {}	-- Topics we are looking for
 -- Global objects
 additionnalevents = {}	-- List of additionnal events to wait for (timers, inputs, ...)
 savedcols = {}		-- Collection to be saved/restored
-local SAVE_DIR = '/tmp/'
+if not SAVE_DIR then
+	SAVE_DIR = '/tmp/'
+end
+SelLog.log("Data backup in : ".. SAVE_DIR)
 
 function SaveCollection()
 	SelLog.log("Saving collections ..")
