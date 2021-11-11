@@ -75,9 +75,9 @@ local function machines()
 	self.Clear()
 
 	local machines = {}
-	MachinesCollection(machines, 8)
+	MachinesCollection(machines, 11)
 
-	for i=0,8 do
+	for i=0,11 do
 		machines[i] = Machine(
 			self, 
 			5 + 215*(i%3), 45 + 128*math.floor(i/3), 
