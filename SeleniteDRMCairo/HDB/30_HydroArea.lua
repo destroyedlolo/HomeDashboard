@@ -18,6 +18,8 @@ function HydroArea(
 --	gradient : gradient to use (default GRD_HYDRO)
 --	save_locally : retrieve from local backup
 --
+--	icon : reserve some room for icon 
+--
 --	At last one of sample_text or width MUST be provided
 --]]
 	if not opts then
@@ -62,6 +64,8 @@ function HydroArea(
 	local self = Surface(psrf, x,y, w,h, opts)
 	self.Visibility(true)
 
+	local drop = ImageSurface( self, 2,2, fonts.smdigit.size, fonts.smdigit.size, { autoscale=true } )
+
 	function self.Clear(
 		clipped -- clipping area from child (optional)
 	)
@@ -95,15 +99,22 @@ function HydroArea(
 			self.get():DrawRectangle(0,0, opts.width, opts.height)
 		end
 
+		if opts.icon then
+				-- Refresh() is not enough as ImageSurface is a SubSurface only
+				-- consequently, the "image" is destroyed everytime the parent
+				-- surface is cleared
+			drop.Update( DropImg )
+		end
+	
 		if not full then
 			self.get():RestoreContext()
 		end
 	end
 
 	local srf_Hydro = Field( self,
-		2, 2, opts.font, COL_DIGIT, {
+		2 + (opts.icon and 18 or 0), 2, opts.font, COL_DIGIT, {
 			timeout = opts.timeout,
-			width = opts.width - 4,
+			width = opts.width - ( opts.icon and 24 or 4 ),
 			align = ALIGN_RIGHT,
 			gradient = opts.gradient,
 			bgcolor = COL_TRANSPARENT40,
