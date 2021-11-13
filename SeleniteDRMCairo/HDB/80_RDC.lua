@@ -43,7 +43,6 @@ local function rdc()
 	end
 	self.Clear()
 
---	local TBureau = 
 	TempArea( self,
 		"TBureau", "maison/Temperature/Bureau",
 		231,397,
@@ -68,7 +67,6 @@ local function rdc()
 		}
 	)
 
---	local TSalon = 
 	TempArea( self,
 		"TSalon", "maison/Temperature/Salon",
 		412,378,
@@ -80,7 +78,6 @@ local function rdc()
 		}
 	)
 
---	local TPoulailler =
 	TempArea( self, "TPoulailler", "Poulailler/Perchoir/Temperature", 805, 28, {
 		bgcolor = COL_GFXBGT,
 		font=fonts.smdigit, 
@@ -92,6 +89,7 @@ local function rdc()
 		bgcolor = COL_GFXBGT,
 		font=fonts.smdigit, 
 		width = WINSIZE.w - 837,
+		timeout = 310,
 		icon=true 
 	})
 
