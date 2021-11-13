@@ -20,6 +20,8 @@ function TempArea(
 --
 --	TempTracking : token used for this room temperature tracker
 --	ModeTopic : topic to follow room's mode
+--	HLeverTopic : wakeup time topic.
+--		if present, add a field to display it (bedrooms)
 --
 --	At last one of sample_text or width MUST be provided
 --]]
