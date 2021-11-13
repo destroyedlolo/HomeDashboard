@@ -44,7 +44,7 @@ local function soussol()
 
 	HydroArea( self, "HCave", "maison/Humidity/cave", 350,405, { 
 		border=COL_BORDER, shadow=true, transparency=true, save_locally=true,
-		width=140, icon=true
+		width=160, icon=true
 	})
 
 	Porte( self, 'PorteCave', 'maison/IO/Porte_Cave', 478, 257 )
