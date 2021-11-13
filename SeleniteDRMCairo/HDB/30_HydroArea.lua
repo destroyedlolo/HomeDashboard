@@ -64,7 +64,11 @@ function HydroArea(
 	local self = Surface(psrf, x,y, w,h, opts)
 	self.Visibility(true)
 
-	local drop = ImageSurface( self, 2,2, fonts.smdigit.size, fonts.smdigit.size, { autoscale=true } )
+	local drop = ImageSurface( self,
+		w - opts.font.size, 2,	-- "sizeof("100.00%") + some room"
+		opts.font.size, opts.font.size, 
+		{ autoscale=true } 
+	)
 
 	function self.Clear(
 		clipped -- clipping area from child (optional)
@@ -112,14 +116,17 @@ function HydroArea(
 	end
 
 	local srf_Hydro = Field( self,
-		2 + (opts.icon and 18 or 0), 2, opts.font, COL_DIGIT, {
+		math.max(2,w - opts.font.size), 2, 
+		opts.font, COL_DIGIT, {
 			timeout = opts.timeout,
-			width = opts.width - ( opts.icon and 24 or 4 ),
-			align = ALIGN_RIGHT,
+			sample_text = '100.00%',
+			suffix = '%',
+--			width = opts.width - ( opts.icon and 24 or 4 ),
+			align = ALIGN_FRIGHT,
 			gradient = opts.gradient,
 			bgcolor = COL_TRANSPARENT40,
 			transparency = true,
---			debug = opts.debug
+			debug = opts.debug
 		}
 	)
 
