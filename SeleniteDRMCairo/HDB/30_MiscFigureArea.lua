@@ -1,35 +1,49 @@
--- Display an hydrometry and associated gfx
+-- Generic graphics display
 
-function HydroArea(	
+function MiscFigureArea(
 	psrf,	-- mother surface
 	name, topic,
 	x,y,	-- position in the mother surface
 	opts
 )
 --[[ known options  :
---	width, height : force the field's geometry
---	bgcolor : background color
+--
+--		Global options
+--		--------------
+--
+--	width, height : force the area's geometry
+--	bgcolor : background color (default : COL_TRANSPARENT20)
+--	color : color if no gradient (default : COL_DIGIT)
 --	border : border's color (default none)
---	timeout : force to timeoutcolor after timeout seconds without update
 --	transparency : the surfaces below must be refreshed as this one has 
 --		transparency. With this opt set, surfaces bellow are cleared first.
 --		Mostly useful when it has background image.
 --	shadow : add a shadow to the area
---	gradient : gradient to use (default GRD_HYDRO)
+--	gradient : gradient to use (default none)
 --	save_locally : retrieve from local backup
+--	icon : SelDCSurfaceImage image to be placed at the right of the field
 --
---	icon : reserve some room for icon 
+--		Figure field options
+--		--------------------
+--	
+--	all Field's are applicable, but
 --
---	At last one of sample_text or width MUST be provided
+--	figure_bgcolor : replace bgcolor (default : COL_TRANSPARENT40)
+--	figure_gradient : default : global gradient
+--	figure_color : default : global color
+--	
+--	If sample_text is not set, it use global width
+--
 --]]
+
 	if not opts then
 		opts = {}
 	end
 	if opts.debug then
-		opts.debug = opts.debug .."/HydroArea"
+		opts.debug = opts.debug .."/MiscFigureArea"
 	end
 
-
+		-- default options' values
 	if not opts.width then
 		opts.width = 120
 	end
@@ -39,11 +53,22 @@ function HydroArea(
 	if not opts.font then
 		opts.font = fonts.mdigit
 	end
-	if not opts.gradient then
-		opts.gradient = GRD_HYDRO
+	if not opts.bgcolor then
+		opts.bgcolor = COL_TRANSPARENT20
 	end
-	if not opts.timeout then
-		opts.timeout = 310
+	if not opts.color then
+		opts.color = COL_DIGIT
+	end
+
+		-- default figure's values
+	if not opts.figure_bgcolor then
+		opts.figure_bgcolor = COL_TRANSPARENT40
+	end
+	if not opts.figure_gradient then
+		opts.figure_gradient = opts.gradient
+	end
+	if not opts.figure_color then
+		opts.figure_color = opts.color
 	end
 
 		-- Normalisation
@@ -57,14 +82,12 @@ function HydroArea(
 		h = h+5
 	end
 
-	if not opts.bgcolor then
-		opts.bgcolor = COL_TRANSPARENT20
-	end
-
+		-- main surface
 	local self = Surface(psrf, x,y, w,h, opts)
 	self.Visibility(true)
 
-	local drop = ImageSurface( self,
+		-- icon's area
+	local icon = ImageSurface( self,
 		w - opts.font.size, 2,	-- "sizeof("100.00%") + some room"
 		opts.font.size, opts.font.size, 
 		{ autoscale=true } 
@@ -105,9 +128,9 @@ function HydroArea(
 
 		if opts.icon then
 				-- Refresh() is not enough as ImageSurface is a SubSurface only
-				-- consequently, the "image" is destroyed everytime the parent
+				-- consequently, the "image" is destroyed every time the parent
 				-- surface is cleared
-			drop.Update( DropImg )
+			icon.Update( opts.icon )
 		end
 	
 		if not full then
@@ -115,40 +138,41 @@ function HydroArea(
 		end
 	end
 
-	local srf_Hydro = Field( self,
+	local srf_field = Field( self,
 		math.max(2,w - opts.font.size), 2, 
-		opts.font, COL_DIGIT, {
+		opts.font, opts.figure_color, {
 			timeout = opts.timeout,
-			sample_text = '100.00%',
-			suffix = '%',
---			width = opts.width - ( opts.icon and 24 or 4 ),
+			timeoutcolor = opts.timeoutcolor,
+			sample_text = opts.sample_text,
+			ndecimal = opts.ndecimal,
+			suffix = opts.suffix,
 			align = ALIGN_FRIGHT,
-			gradient = opts.gradient,
-			bgcolor = COL_TRANSPARENT40,
+			gradient = opts.figure_gradient,
+			bgcolor = opts.figure_bgcolor,
 			transparency = true,
 			debug = opts.debug
 		}
 	)
 
 	local srf_Gfx = GfxArea( self,
-		2, 2+srf_Hydro.getHight(),
-		opts.width-4, opts.height-srf_Hydro.getHight()-4,
-		COL_ORANGE, COL_TRANSPARENT20,{
-			heverylines={ {500, COL_DARKGREY} },
-			align = ALIGN_RIGHT,
+		2, 2+srf_field.getHight(),
+		opts.width-4, opts.height-srf_field.getHight()-4,
+		opts.color, opts.bgcolor,{
+			heverylines = opts.heverylines,
+			align = opts.align,
 			transparency = true,
-			min_delta = 1,
+			min_delta = opts.min_delta,
 			gradient = opts.gradient
 		}
 	)
 
-	local temp = MQTTStoreGfx( name, topic, srf_Hydro, srf_Gfx,
+	local dt = MQTTStoreGfx( name, topic, srf_field, srf_Gfx,
 		{
 			condition=condition_network,
 			save_locally = opts.save_locally
 		}
 	)
-	table.insert( savedcols, temp )
+	table.insert( savedcols, dt )
 
 	---
 	self.Clear()
