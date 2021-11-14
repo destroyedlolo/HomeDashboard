@@ -93,6 +93,15 @@ local function rdc()
 		icon=true 
 	})
 
+	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 227, 289, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.smdigit, 
+		width = 200,
+		timeout = 310,
+		gradient = GRD_BAT5V,
+		sample_text = "8888"
+	})
+
 		-- No transparency needed as on black background
 --	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
 

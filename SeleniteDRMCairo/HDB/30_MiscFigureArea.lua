@@ -168,8 +168,10 @@ function MiscFigureArea(
 
 	local dt = MQTTStoreGfx( name, topic, srf_field, srf_Gfx,
 		{
-			condition=condition_network,
+			condition = condition_network,
+			forced_min = opts.forced_min,
 			save_locally = opts.save_locally
+
 		}
 	)
 	table.insert( savedcols, dt )
