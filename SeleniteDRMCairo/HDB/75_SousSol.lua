@@ -42,8 +42,10 @@ local function soussol()
 	TempArea( self, "TSS", "maison/Temperature/Garage", 565,312, { border=COL_BORDER, shadow=true, transparency=true })
 	Porte( self, 'PorteCave', 'maison/IO/Porte_Cave', 478, 257 )
 
-	HydroArea( self, "HCave", "maison/Humidity/cave", 379,405, { border=COL_BORDER, shadow=true, transparency=true, save_locally=true
-		})
+	HydroArea( self, "HCave", "maison/Humidity/cave", 350,405, { 
+		border=COL_BORDER, shadow=true, transparency=true, save_locally=true,
+		width=160, icon=true
+	})
 
 	Porte( self, 'PorteCave', 'maison/IO/Porte_Cave', 478, 257 )
 	TempArea( self, "TBuanderie", "maison/Temperature/Buanderie", 307,170, { border=COL_BORDER, shadow=true, transparency=true })

@@ -1,0 +1,5 @@
+GRD_CONNECTION = Gradient( {
+	[500] = COL_GREEN,
+	[1000] = COL_DIGIT,
+	[2500] = COL_RED
+} )

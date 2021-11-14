@@ -43,7 +43,7 @@ local function rdc()
 	end
 	self.Clear()
 
-	local TBureau = TempArea( self,
+	TempArea( self,
 		"TBureau", "maison/Temperature/Bureau",
 		231,397,
 		{
@@ -67,7 +67,7 @@ local function rdc()
 		}
 	)
 
-	local TSalon = TempArea( self,
+	TempArea( self,
 		"TSalon", "maison/Temperature/Salon",
 		412,378,
 		{
@@ -78,11 +78,50 @@ local function rdc()
 		}
 	)
 
-	local TPoulailler = TempArea( self, "TPoulailler", "Poulailler/Perchoir/Temperature", 805, 28, {
+	TempArea( self, "TPoulailler", "Poulailler/Perchoir/Temperature", 805, 28, {
 		bgcolor = COL_GFXBGT,
 		font=fonts.smdigit, 
 		width = WINSIZE.w - 837, 
 		transparency=true 
+	})
+
+	HydroArea( self, "HPoulailler", "Poulailler/Perchoir/Humidite", 805, 115, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.smdigit, 
+		width = WINSIZE.w - 837,
+		timeout = 310,
+		icon=true 
+	})
+
+	MiscFigureArea( self, "MQTTPoulailler", "Poulailler/MQTT", WINSIZE.w - 150, 202, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.xsdigit,
+		timeout = 310,
+		gradient = GRD_CONNECTION,
+		sample_text = "888888mS",
+		suffix = "mS",
+		icon=MQTTImg
+	})
+
+	MiscFigureArea( self, "WifiPoulailler", "Poulailler/Wifi", WINSIZE.w - 300, 202, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.xsdigit,
+		timeout = 310,
+		gradient = GRD_CONNECTION,
+		sample_text = "888888mS",
+		suffix = "mS",
+		icon=WiFiImg
+	})
+
+	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 227, 289, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.smdigit, 
+		width = 200,
+		timeout = 310,
+		gradient = GRD_BAT5V,
+		sample_text = "8888mV",
+		suffix = "mV",
+		icon=BatteryImg
 	})
 
 		-- No transparency needed as on black background
