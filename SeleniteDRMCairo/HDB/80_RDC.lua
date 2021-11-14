@@ -99,7 +99,9 @@ local function rdc()
 		width = 200,
 		timeout = 310,
 		gradient = GRD_BAT5V,
-		sample_text = "8888"
+		sample_text = "8888mV",
+		suffix = "mV",
+		icon=BatteryImg
 	})
 
 		-- No transparency needed as on black background
