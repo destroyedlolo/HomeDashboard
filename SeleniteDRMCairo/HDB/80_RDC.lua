@@ -93,6 +93,26 @@ local function rdc()
 		icon=true 
 	})
 
+	MiscFigureArea( self, "MQTTPoulailler", "Poulailler/MQTT", WINSIZE.w - 150, 202, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.xsdigit,
+		timeout = 310,
+		gradient = GRD_CONNECTION,
+		sample_text = "888888mS",
+		suffix = "mS",
+		icon=MQTTImg
+	})
+
+	MiscFigureArea( self, "WifiPoulailler", "Poulailler/Wifi", WINSIZE.w - 300, 202, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.xsdigit,
+		timeout = 310,
+		gradient = GRD_CONNECTION,
+		sample_text = "888888mS",
+		suffix = "mS",
+		icon=WiFiImg
+	})
+
 	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 227, 289, {
 		bgcolor = COL_GFXBGT,
 		font=fonts.smdigit, 
