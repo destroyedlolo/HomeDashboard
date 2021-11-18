@@ -69,6 +69,18 @@ local function f()
 		{ width=35, hight=35, autoscale=true } 
 	)
 	
+	local srf_alertcnt = Field( self, 565, 50, fonts.seg, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		bgcolor = COL_TRANSPARENT,
+		ownsurface = true,
+		transparency = true,
+		gradient = GRD_ALERT,
+		sample_text = "88"
+	})
+	MQTTDisplay( 'AlertNbre', MARCEL ..'/AlertsCounter', srf_alertcnt, {
+--		debug = 'AlertNbre'
+	})
+
 	-- Drawing finished and alway visible
 	self.Visibility(true)
 
