@@ -111,7 +111,8 @@ local function machines()
 	MajordomeTxt.Log("Majordome")
 
 	local MarcelTxt = NotificationArea(
-		self, 680, 330, WINSIZE.w - 700, 145, fonts.stxt, COL_LIGHTGREY, 
+		self,
+		680, 330, WINSIZE.w - 700, 310, fonts.stxt, COL_LIGHTGREY, 
 		{ 
 			bgcolor=COL_TRANSPARENT20,
 			transparency=true,
@@ -124,6 +125,7 @@ local function machines()
 	MarcelLog.RegisterTopic('marcel', MARCEL ..'/Log/Information', { udata=-1 } )
 	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Error', { udata=3 } )
 	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Fatal', { udata=4 } )
+	MarcelLog.RegisterTopic( 'marcel', MARCEL ..'/Log/Corrected', { udata=2 } )
 	MarcelTxt.Log("Marcel")
 
 	self.Visibility(false)
