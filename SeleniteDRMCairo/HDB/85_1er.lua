@@ -101,7 +101,7 @@ local function etage()
 
 -- 550,480, 610, 100
 	local srf_trndconsopiscine = GfxArea( self, 470,500, 690, 100, COL_ORANGE, COL_BLACK,{
---		align=ALIGN_RIGHT,
+		align=ALIGN_RIGHT,
 		gradient = GRD_POMPEPISCINE,
 --[[
 		heverylines={ {1000, COL_DARKGREY} },
