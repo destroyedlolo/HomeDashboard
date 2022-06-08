@@ -81,6 +81,19 @@ local function f()
 --		debug = 'AlertNbre'
 	})
 
+	local srf_pompepiscine = Field( self, 677, 24, fonts.sseg, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		bgcolor = COL_TRANSPARENT,
+		ownsurface = true,
+		transparency = true,
+		timeout = 10,
+		sample_text = "12345",
+		gradient = GRD_POMPEPISCINE
+	} )
+	MQTTDisplay( 'pompepiscine', 'TeleInfo/PompePiscine/values/PAPP', srf_pompepiscine, {
+--		debug = 'AlertNbre'
+	})
+
 	-- Drawing finished and alway visible
 	self.Visibility(true)
 
