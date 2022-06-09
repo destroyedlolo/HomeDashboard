@@ -90,9 +90,22 @@ local function f()
 		sample_text = "12345",
 		gradient = GRD_POMPEPISCINE
 	} )
-	MQTTDisplay( 'pompepiscine', 'TeleInfo/PompePiscine/values/PAPP', srf_pompepiscine, {
---		debug = 'AlertNbre'
+
+	local srf_vupompe = VuMeter( self, 685,56, 32,25, COL_WHITE,
+		550, -math.pi/6 , 670, math.pi/6, {
+			oy = 25,
+			length = 22,
+			gradient = GRD_POMPEPISCINE
+		}
+	)
+
+	-- /!\ same name as in the 1st floor
+	-- otherwise, the value is not store in the correct variable
+
+	local pompepiscine = MQTTDisplay( 'consopiscine', 'TeleInfo/PompePiscine/values/PAPP', srf_pompepiscine, {
+--		debug = 'pompepiscine'
 	})
+	pompepiscine.NotifObject( srf_vupompe,'consopiscine'  )
 
 	-- Drawing finished and alway visible
 	self.Visibility(true)
