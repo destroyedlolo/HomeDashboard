@@ -13,6 +13,12 @@ local function soussol()
 		os.exit(EXIT_FAILURE)
 	end
 
+	local poule,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Poule.png")
+	if not poule then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
+
 	function self.Clear(
 		clipped -- Clipping region
 	)
@@ -29,6 +35,7 @@ local function soussol()
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Sous-Sol :", 5,0 )
 		self.get():Blit(backgnd, 5,22)
+		self.get():Blit(poule, WINSIZE.w - 60, 390)
 
 		if clipped then
 			self.get():RestoreContext()
@@ -191,6 +198,56 @@ local function soussol()
 	ProdJ.TaskOnceAdd( updProdJ )
 
 	---
+
+	---
+	-- Poulailler
+	---
+
+	TempArea( self, "TPoulailler", "Poulailler/Perchoir/Temperature", 805, 413, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.smdigit, 
+		width = WINSIZE.w - 837, 
+		transparency=true 
+	})
+
+	HydroArea( self, "HPoulailler", "Poulailler/Perchoir/Humidite", 805, 498, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.smdigit, 
+		width = WINSIZE.w - 837,
+		timeout = 310,
+		icon=true 
+	})
+
+	MiscFigureArea( self, "MQTTPoulailler", "Poulailler/MQTT", WINSIZE.w - 150, 577, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.xsdigit,
+		timeout = 310,
+		gradient = GRD_CONNECTION,
+		sample_text = "888888mS",
+		suffix = "mS",
+		icon=MQTTImg
+	})
+
+	MiscFigureArea( self, "WifiPoulailler", "Poulailler/Wifi", WINSIZE.w - 300, 577, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.xsdigit,
+		timeout = 310,
+		gradient = GRD_CONNECTION,
+		sample_text = "888888mS",
+		suffix = "mS",
+		icon=WiFiImg
+	})
+
+	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 511, 577, {
+		bgcolor = COL_GFXBGT,
+		font=fonts.smdigit, 
+		width = 200,
+		timeout = 310,
+		gradient = GRD_BAT5V,
+		sample_text = "8888mV",
+		suffix = "mV",
+		icon=BatteryImg
+	})
 
 	self.Visibility(false)
 	return self
