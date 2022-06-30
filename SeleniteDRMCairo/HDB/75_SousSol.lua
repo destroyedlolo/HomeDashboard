@@ -238,7 +238,7 @@ local function soussol()
 		icon=WiFiImg
 	})
 
-	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 511, 577, {
+	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 550, 577, {
 		bgcolor = COL_GFXBGT,
 		font=fonts.smdigit, 
 		width = 200,

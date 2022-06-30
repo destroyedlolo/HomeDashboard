@@ -13,12 +13,6 @@ local function rdc()
 		os.exit(EXIT_FAILURE)
 	end
 
-	local poule,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Poule.png")
-	if not poule then
-		print("*E*",err)
-		os.exit(EXIT_FAILURE)
-	end
-
 	function self.Clear(
 		clipped -- Clipping region
 	)
@@ -35,7 +29,6 @@ local function rdc()
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Rez-de-chaussée :", 5,0 )
 		self.get():Blit(backgnd, 135,135)
-		self.get():Blit(poule, WINSIZE.w - 60,10)
 
 		if clipped then
 			self.get():RestoreContext()
