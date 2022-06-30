@@ -218,7 +218,7 @@ local function soussol()
 		icon=true 
 	})
 
-	MiscFigureArea( self, "MQTTPoulailler", "Poulailler/MQTT", WINSIZE.w - 150, 577, {
+	MiscFigureArea( self, "MQTTPoulailler", "Poulailler/MQTT", WINSIZE.w - 185, 577, {
 		bgcolor = COL_GFXBGT,
 		font=fonts.xsdigit,
 		timeout = 310,
@@ -228,7 +228,7 @@ local function soussol()
 		icon=MQTTImg
 	})
 
-	MiscFigureArea( self, "WifiPoulailler", "Poulailler/Wifi", WINSIZE.w - 300, 577, {
+	MiscFigureArea( self, "WifiPoulailler", "Poulailler/Wifi", WINSIZE.w - 395, 577, {
 		bgcolor = COL_GFXBGT,
 		font=fonts.xsdigit,
 		timeout = 310,
@@ -238,10 +238,10 @@ local function soussol()
 		icon=WiFiImg
 	})
 
-	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 550, 577, {
+	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 660, 577, {
 		bgcolor = COL_GFXBGT,
 		font=fonts.smdigit, 
-		width = 200,
+		width = 220,
 		timeout = 310,
 		gradient = GRD_BAT5V,
 		sample_text = "8888mV",
