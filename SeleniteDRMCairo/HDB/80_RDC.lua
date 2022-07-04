@@ -12,6 +12,11 @@ local function rdc()
 		print("*E*",err)
 		os.exit(EXIT_FAILURE)
 	end
+	local Engrenages,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Engrenages.png")
+	if not Engrenages then
+		print("*E*",err)
+		os.exit(EXIT_FAILURE)
+	end
 
 	function self.Clear(
 		clipped -- Clipping region
@@ -28,7 +33,8 @@ local function rdc()
 		self.setColor( COL_TITLE )
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Rez-de-chaussée :", 5,0 )
-		self.get():Blit(backgnd, 135,135)
+		self.get():Blit(backgnd, 25,85)
+		self.get():Blit(Engrenages, WINSIZE.w - Engrenages:GetWidth(), WINSIZE.h - Engrenages:GetHight())
 
 		if clipped then
 			self.get():RestoreContext()
@@ -38,7 +44,7 @@ local function rdc()
 
 	TempArea( self,
 		"TBureau", "maison/Temperature/Bureau",
-		231,397,
+		121,347,
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceBureau/status",
 			border=COL_BORDER,
@@ -49,7 +55,7 @@ local function rdc()
 
 	TempArea( self,
 		"TChParent", "maison/Temperature/Chambre Parents",
-		230,213,
+		120,163,
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceChParents/status",
 			ModeTopic=MAJORDOME .. "/Mode/Parents",
@@ -62,7 +68,7 @@ local function rdc()
 
 	TempArea( self,
 		"TSalon", "maison/Temperature/Salon",
-		412,378,
+		302,328,
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceSalon/status",
 			border=COL_BORDER,
@@ -71,10 +77,21 @@ local function rdc()
 		}
 	)
 
+	local srf_JourFerie = FieldBlink( self, animTimer, 820, 620, fonts.digit, COL_DIGIT, {
+		align = ALIGN_CENTER, 
+		sample_text = "Victoire des allies",
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
+	})
+	MQTTDisplay( 'JourFerieSN', MAJORDOME .. '/JourFerieSuivant/Nom', srf_JourFerie, {
+--		debug = 'JourFerieSN'
+	})
+
 		-- No transparency needed as on black background
 --	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
 
-	Porte( self, 'PorteEscalier', 'maison/IO/Porte_Escalier', 581, 240 )
+	Porte( self, 'PorteEscalier', 'maison/IO/Porte_Escalier', 471, 190 )
 
 	self.Visibility(false)
 	return self
