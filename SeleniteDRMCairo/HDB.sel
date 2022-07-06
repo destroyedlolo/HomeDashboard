@@ -15,6 +15,9 @@ end
 -- initialise graphical environment
 Selene.UseDRMCairo()
 
+-- switch to French
+os.setlocale("fr_FR", "time")
+
 	-- Open default card.
 	-- As no argument is passed it's the default one
 	-- /dev/dri/card0
