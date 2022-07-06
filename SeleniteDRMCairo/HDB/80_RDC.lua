@@ -96,6 +96,20 @@ local function rdc()
 		transparency = true,
 	})
 
+	local GRD_COMPTEUR = Gradient( {
+		[7] = COL_RED,
+		[15] = COL_GREEN,
+	} )
+
+	local srf_FerieCompteur = FieldBlink( self, animTimer, 1060, 540, fonts.mdigit, COL_ORANGE, {
+		align = ALIGN_CENTER, 
+		sample_text = "99 jours",
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
+		gradient = GRD_COMPTEUR
+	})
+
 	local function rcvJFS()
 		local a,m,j = SelShared.Get("JourFerieS"):match("(%d+)-(%d+)-(%d+)")
 		local t = os.time{year=a, month=m, day=j}
@@ -110,8 +124,8 @@ local function rdc()
 		srf_DateFerie.updtxt(os.date("%A %d %B %Y", t))
 
 -- calculer le nombre de jours a attendre
-		local nd = os.difftime(t, os.time())  / (24 * 60 * 60)
-print(nd, math.floor(nd))
+		local nd = math.floor( os.difftime(t, os.time())  / (24 * 60 * 60) )
+		srf_FerieCompteur.updtxt(nd .. " jour" .. ((nd > 1) and 's' or ''))
 	end
 
 	MQTTinput( 'JourFerieS', MAJORDOME .. '/JourFerieSuivant', nil, {
