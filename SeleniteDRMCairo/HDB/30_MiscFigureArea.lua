@@ -45,7 +45,7 @@ function MiscFigureArea(
 
 		-- default options' values
 	if not opts.width then
-		opts.width = 120
+		opts.width = 175
 	end
 	if not opts.height then
 		opts.height = 80

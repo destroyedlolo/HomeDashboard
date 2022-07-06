@@ -69,6 +69,44 @@ local function f()
 		{ width=35, hight=35, autoscale=true } 
 	)
 	
+	local srf_alertcnt = Field( self, 565, 50, fonts.seg, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		bgcolor = COL_TRANSPARENT,
+		ownsurface = true,
+		transparency = true,
+		gradient = GRD_ALERT,
+		sample_text = "88"
+	})
+	MQTTDisplay( 'AlertNbre', MARCEL ..'/AlertsCounter', srf_alertcnt, {
+--		debug = 'AlertNbre'
+	})
+
+	local srf_pompepiscine = Field( self, 677, 24, fonts.sseg, COL_DIGIT, {
+		align = ALIGN_RIGHT,
+		bgcolor = COL_TRANSPARENT,
+		ownsurface = true,
+		transparency = true,
+		timeout = 10,
+		sample_text = "12345",
+		gradient = GRD_POMPEPISCINE
+	} )
+
+	local srf_vupompe = VuMeter( self, 685,56, 32,25, COL_WHITE,
+		550, -math.pi/6 , 670, math.pi/6, {
+			oy = 25,
+			length = 22,
+			gradient = GRD_POMPEPISCINE
+		}
+	)
+
+	-- /!\ same name as in the 1st floor
+	-- otherwise, the value is not store in the correct variable
+
+	local pompepiscine = MQTTDisplay( 'consopiscine', 'TeleInfo/PompePiscine/values/PAPP', srf_pompepiscine, {
+--		debug = 'pompepiscine'
+	})
+	pompepiscine.NotifObject( srf_vupompe,'consopiscine'  )
+
 	-- Drawing finished and alway visible
 	self.Visibility(true)
 

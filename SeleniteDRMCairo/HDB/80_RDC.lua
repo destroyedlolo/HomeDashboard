@@ -12,9 +12,8 @@ local function rdc()
 		print("*E*",err)
 		os.exit(EXIT_FAILURE)
 	end
-
-	local poule,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Poule.png")
-	if not poule then
+	local Engrenages,err = SelDCSurfaceImage.createFromPNG(SELENE_SCRIPT_DIR .. "/Images/Engrenages.png")
+	if not Engrenages then
 		print("*E*",err)
 		os.exit(EXIT_FAILURE)
 	end
@@ -34,8 +33,8 @@ local function rdc()
 		self.setColor( COL_TITLE )
 		self.setFont( fonts.title )
 		self.get():DrawStringTop("Rez-de-chaussée :", 5,0 )
-		self.get():Blit(backgnd, 135,135)
-		self.get():Blit(poule, WINSIZE.w - 60,10)
+		self.get():Blit(backgnd, 25,85)
+		self.get():Blit(Engrenages, WINSIZE.w - Engrenages:GetWidth(), WINSIZE.h - Engrenages:GetHight())
 
 		if clipped then
 			self.get():RestoreContext()
@@ -45,7 +44,7 @@ local function rdc()
 
 	TempArea( self,
 		"TBureau", "maison/Temperature/Bureau",
-		231,397,
+		121,347,
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceBureau/status",
 			border=COL_BORDER,
@@ -56,7 +55,7 @@ local function rdc()
 
 	TempArea( self,
 		"TChParent", "maison/Temperature/Chambre Parents",
-		230,213,
+		120,163,
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceChParents/status",
 			ModeTopic=MAJORDOME .. "/Mode/Parents",
@@ -69,7 +68,7 @@ local function rdc()
 
 	TempArea( self,
 		"TSalon", "maison/Temperature/Salon",
-		412,378,
+		302,328,
 		{
 			TempTracking=MAJORDOME .. "/SurveillanceSalon/status",
 			border=COL_BORDER,
@@ -78,56 +77,65 @@ local function rdc()
 		}
 	)
 
-	TempArea( self, "TPoulailler", "Poulailler/Perchoir/Temperature", 805, 28, {
-		bgcolor = COL_GFXBGT,
-		font=fonts.smdigit, 
-		width = WINSIZE.w - 837, 
-		transparency=true 
+	local srf_JourFerie = FieldBlink( self, animTimer, 820, 583, fonts.digit, COL_DIGIT, {
+		align = ALIGN_CENTER, 
+		sample_text = "Victoire des allies",
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
+	})
+	MQTTDisplay( 'JourFerieSN', MAJORDOME .. '/JourFerieSuivant/Nom', srf_JourFerie, {
+--		debug = 'JourFerieSN'
 	})
 
-	HydroArea( self, "HPoulailler", "Poulailler/Perchoir/Humidite", 805, 115, {
-		bgcolor = COL_GFXBGT,
-		font=fonts.smdigit, 
-		width = WINSIZE.w - 837,
-		timeout = 310,
-		icon=true 
+	local srf_DateFerie = FieldBlink( self, animTimer, 760, 625, fonts.mdigit, COL_ORANGE, {
+		align = ALIGN_CENTER, 
+		sample_text = "Vendredi 30 Septembre 2022",
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
 	})
 
-	MiscFigureArea( self, "MQTTPoulailler", "Poulailler/MQTT", WINSIZE.w - 150, 202, {
-		bgcolor = COL_GFXBGT,
-		font=fonts.xsdigit,
-		timeout = 310,
-		gradient = GRD_CONNECTION,
-		sample_text = "888888mS",
-		suffix = "mS",
-		icon=MQTTImg
+	local GRD_COMPTEUR = Gradient( {
+		[7] = COL_RED,
+		[15] = COL_GREEN,
+	} )
+
+	local srf_FerieCompteur = FieldBlink( self, animTimer, 1060, 540, fonts.mdigit, COL_ORANGE, {
+		align = ALIGN_CENTER, 
+		sample_text = "99 jours",
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
+		gradient = GRD_COMPTEUR
 	})
 
-	MiscFigureArea( self, "WifiPoulailler", "Poulailler/Wifi", WINSIZE.w - 300, 202, {
-		bgcolor = COL_GFXBGT,
-		font=fonts.xsdigit,
-		timeout = 310,
-		gradient = GRD_CONNECTION,
-		sample_text = "888888mS",
-		suffix = "mS",
-		icon=WiFiImg
-	})
+	local function rcvJFS()
+		local a,m,j = SelShared.Get("JourFerieS"):match("(%d+)-(%d+)-(%d+)")
+		local t = os.time{year=a, month=m, day=j}
+		local dt = os.date("*t", t)	-- date as table
 
-	MiscFigureArea( self, "VBatPoulailler", "Poulailler/Alim", WINSIZE.w - 227, 289, {
-		bgcolor = COL_GFXBGT,
-		font=fonts.smdigit, 
-		width = 200,
-		timeout = 310,
-		gradient = GRD_BAT5V,
-		sample_text = "8888mV",
-		suffix = "mV",
-		icon=BatteryImg
+		if dt[wday] == 1 or dt[wday] == 7 then
+			srf_DateFerie.setColor(COL_ORANGE)
+		else
+			srf_DateFerie.setColor(COL_GREEN)
+		end
+
+		srf_DateFerie.updtxt(os.date("%A %d %B %Y", t))
+
+-- calculer le nombre de jours a attendre
+		local nd = math.floor( os.difftime(t, os.time())  / (24 * 60 * 60) )
+		srf_FerieCompteur.updtxt(nd .. " jour" .. ((nd > 1) and 's' or ''))
+	end
+
+	MQTTinput( 'JourFerieS', MAJORDOME .. '/JourFerieSuivant', nil, {
+		task = rcvJFS
 	})
 
 		-- No transparency needed as on black background
 --	local TDehors = TempArea( self, "TDehors", "maison/Temperature/Dehors", 850,30)
 
-	Porte( self, 'PorteEscalier', 'maison/IO/Porte_Escalier', 581, 240 )
+	Porte( self, 'PorteEscalier', 'maison/IO/Porte_Escalier', 471, 190 )
 
 	self.Visibility(false)
 	return self
