@@ -77,7 +77,7 @@ local function rdc()
 		}
 	)
 
-	local srf_JourFerie = FieldBlink( self, animTimer, 820, 620, fonts.digit, COL_DIGIT, {
+	local srf_JourFerie = FieldBlink( self, animTimer, 820, 583, fonts.digit, COL_DIGIT, {
 		align = ALIGN_CENTER, 
 		sample_text = "Victoire des allies",
 		ownsurface=true,
@@ -86,6 +86,36 @@ local function rdc()
 	})
 	MQTTDisplay( 'JourFerieSN', MAJORDOME .. '/JourFerieSuivant/Nom', srf_JourFerie, {
 --		debug = 'JourFerieSN'
+	})
+
+	local srf_DateFerie = FieldBlink( self, animTimer, 760, 625, fonts.mdigit, COL_ORANGE, {
+		align = ALIGN_CENTER, 
+		sample_text = "Vendredi 30 Septembre 2022",
+		ownsurface=true,
+		bgcolor = COL_TRANSPARENT,
+		transparency = true,
+	})
+
+	local function rcvJFS()
+		local a,m,j = SelShared.Get("JourFerieS"):match("(%d+)-(%d+)-(%d+)")
+		local t = os.time{year=a, month=m, day=j}
+		local dt = os.date("*t", t)	-- date as table
+
+		if dt[wday] == 1 or dt[wday] == 7 then
+			srf_DateFerie.setColor(COL_ORANGE)
+		else
+			srf_DateFerie.setColor(COL_GREEN)
+		end
+
+		srf_DateFerie.updtxt(os.date("%A %d %B %Y", t))
+
+-- calculer le nombre de jours a attendre
+		local nd = os.difftime(t, os.time())  / (24 * 60 * 60)
+print(nd, math.floor(nd))
+	end
+
+	MQTTinput( 'JourFerieS', MAJORDOME .. '/JourFerieSuivant', nil, {
+		task = rcvJFS
 	})
 
 		-- No transparency needed as on black background
