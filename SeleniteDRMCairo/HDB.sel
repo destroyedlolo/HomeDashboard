@@ -16,7 +16,7 @@ end
 Selene.UseDRMCairo()
 
 -- switch to French
-os.setlocale("fr_FR", "time")
+os.setlocale("fr_FR.UTF-8", "time")
 
 	-- Open default card.
 	-- As no argument is passed it's the default one
