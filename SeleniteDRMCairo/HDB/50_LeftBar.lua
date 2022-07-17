@@ -78,7 +78,8 @@ local function f()
 		align=ALIGN_RIGHT,
 		transparency = true,
 		ownsurface = true,
-		gradient = GRD_CONSOMMATION
+		gradient = GRD_CONSOMMATION,
+		gradientA = GRD_CONSOMMATION_AVERAGE
 	} )
 
 	local srf_maxconso = FieldBlink( srf_trndconso, animTimer, 2, 2, fonts.sseg, COL_DIGIT, {
@@ -99,6 +100,8 @@ local function f()
 
 	local consommation = MQTTStoreGfx( 'consommation', 'TeleInfo/Consommation/values/PAPP', srf_consommation, srf_trndconso, 
 		{
+			average = true,
+			group = 60,	-- average on minutes
 			smax = srf_maxconso,
 			force_max_refresh = true,
 			smin = srf_minconso,
@@ -133,7 +136,8 @@ local function f()
 		align = ALIGN_RIGHT,
 		ownsurface = true,
 		transparency = true,
-		gradient = GRD_PRODUCTION
+		gradient = GRD_PRODUCTION,
+		gradientA = GRD_PRODUCTION_AVERAGE
 	} )
 
 	local srf_maxprod = Field( srf_trndprod, 2, 2, fonts.sseg, COL_DIGIT, {
@@ -154,6 +158,8 @@ local function f()
 
 	local production = MQTTStoreGfx( 'production', 'TeleInfo/Production/values/PAPP', srf_production, srf_trndprod,
 		{
+			average = true,
+			group = 60,	-- average on minutes
 			smax = srf_maxprod,
 			force_max_refresh = true,
 			smin = srf_minprod,

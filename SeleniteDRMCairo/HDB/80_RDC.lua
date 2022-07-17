@@ -77,7 +77,7 @@ local function rdc()
 		}
 	)
 
-	local srf_JourFerie = FieldBlink( self, animTimer, 820, 583, fonts.digit, COL_DIGIT, {
+	local srf_JourFerie = FieldBlink( self, animTimer, 820, 580, fonts.digit, COL_DIGIT, {
 		align = ALIGN_CENTER, 
 		sample_text = "Victoire des allies",
 		ownsurface=true,
@@ -94,6 +94,7 @@ local function rdc()
 		ownsurface=true,
 		bgcolor = COL_TRANSPARENT,
 		transparency = true,
+--		debug = 'JourFerierDT'
 	})
 
 	local GRD_COMPTEUR = Gradient( {
@@ -101,7 +102,7 @@ local function rdc()
 		[15] = COL_GREEN,
 	} )
 
-	local srf_FerieCompteur = FieldBlink( self, animTimer, 1060, 540, fonts.mdigit, COL_ORANGE, {
+	local srf_FerieCompteur = FieldBlink( self, animTimer, 1050, 540, fonts.mdigit, COL_ORANGE, {
 		align = ALIGN_CENTER, 
 		sample_text = "99 jours",
 		ownsurface=true,
