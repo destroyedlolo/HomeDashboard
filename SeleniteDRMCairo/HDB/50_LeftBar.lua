@@ -107,6 +107,7 @@ local function f()
 			smin = srf_minconso,
 			force_min_refresh = true,
 			forced_min = 0,
+			minmax_round = true,
 			condition=condition_network
 		}
 	)
@@ -165,6 +166,7 @@ local function f()
 			smin = srf_minprod,
 			force_min_refresh = true,
 			forced_min = 0,
+			minmax_round = true,
 			condition=condition_network 
 		}
 	)
