@@ -143,9 +143,10 @@ end
 function popupConsPiscine( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
-	local popup = wmdSub:DerWin( math.floor((w-15)/2), 2, 18,5)
+	local popup = wmdSub:DerWin( math.floor((w-15)/2), 2, 18,6)
 
 	genTitre(popup, "\n  &Heures Creuses\n")
+	genTitre(popup, "  &Canicule\n")
 	genTitre(popup, "  &Arret\n")
 	genTitre(popup, "  &Force\n")
 
@@ -156,6 +157,8 @@ function popupConsPiscine( Brk, topic )
 
 	if c == 'H' then
 		Brk:Publish( topic, "Heures Creuses", true)
+	elseif c == 'C' then
+		Brk:Publish( topic, "Canicule", true)
 	elseif c == 'A' then
 		Brk:Publish( topic, "Arret", true)
 	elseif c == 'F' then
