@@ -1,7 +1,9 @@
 conky.config = {
 --configuration pour Conky écoutant un broker MQTT
 
-	lua_load = '/usr/local/share/conky/MQTTsub.lua',
+--	lua_load = '/usr/local/share/conky/MQTTsub.lua',
+	lua_load = './MQTTsub.lua',
+
 	lua_startup_hook = 'init',
 	lua_shutdown_hook = 'cleanup',
 	lua_draw_hook_pre = 'handlebroker',
@@ -77,50 +79,4 @@ ${color grey}\1 : ${lua_parse displayAccess \2 \3}]],
 conky.text = [[
 ${color Green}Températures maison${offset 8}${color8}${voffset -2}${hr}
 
- ${template0 Comble Comble °C}  ${template0 Dehors Dehors °C}
- ${template0 Gr_Sud GrenierS °C}	${template0 Gr_Nord GrenierN °C}	 
- ${template0 Oceane ChOceane °C}	  ${template0 Joris ChJoris °C}
- ${template0 Parent ChParent °C}	   ${template0 Amis ChAmis °C}
-  ${template0 Salon Salon °C}	 ${template0 Bureau Bureau °C}
- ${template0 Garage Garage °C}	${template0 Prt_Grg GarageP °C}
-
-${template3 Congelo Congelo °C}
-
-${color Green}Poulailler${offset 8}${color8}${voffset -2}${hr}
-
-${template0 Température Poulailler °C} Humidité : ${color}${lua_parse getHPoulailler}
-${color grey}Batterie : ${color}${lua_parse getVPoulailler} V ${lua_bar getprc vPoulailler}
-
-${color Green}Piscine${offset 8}${color8}${voffset -2}${hr}
-
-${template0 Température Piscine °C}
-${color grey}Batterie : ${color}${lua_parse getVPiscine} V ${lua_bar getprc vPiscine}
-
-${color Green}Portes${offset 8}${color8}${voffset -2}${hr}
-
-${color grey}Grenier ${template4 Sud P_GSud} ${template4 Nord P_GNord}
-${template4 Cave P_Cave} ${template4 Garage P_Garage}
-${template4 Barriere_Poules B_Poules}
-
-${color Green}Electricité${offset 8}${color8}${voffset -2}${hr}
-#${lua_graph getConso 20, 00aa00 aa0000 -t}
-# ${voffset -19}${template0 Consomation Consomation VA}
-
-${template0 Consomation Consomation VA}	${lua_bar getprc Consomation}
-#${lua_graph getProd 20, 00aa00 aa0000 -t}
-# ${voffset -19}${template0 Production Production VA}
-${template0 Production Production VA}	${lua_bar getprc Production}
-
-${color Green}Onduleur${offset 8}${color8}${voffset -2}${hr}
-
-${template0 Réseau ups_voltage V}
-Charge : ${color}${lua_parse getCharge} W ${lua_bar getprc ups_load}
-
-${color Green}Internet${offset 8}${color8}${voffset -2}${hr}
-
- ${template1 Vitesse EVtsd EVtsu Kb}
-   ${template1 Marge EMrgd EMrgu db}
-${template1 Internet EWANd EWANu Ko}
-      ${template1 TV ETVd ETVu Ko}
-     ${template1 Lan ELand ELanu Ko}
 ]];
