@@ -88,7 +88,7 @@ local function rdc()
 --		debug = 'JourFerieSN'
 	})
 
-	local srf_DateFerie = FieldBlink( self, animTimer, 760, 625, fonts.mdigit, COL_ORANGE, {
+	local srf_DateFerie = FieldBlink( self, animTimer, 740, 625, fonts.mdigit, COL_ORANGE, {
 		align = ALIGN_CENTER, 
 		sample_text = "Vendredi 30 Septembre 2022",
 		ownsurface=true,
@@ -102,7 +102,7 @@ local function rdc()
 		[15] = COL_GREEN,
 	} )
 
-	local srf_FerieCompteur = FieldBlink( self, animTimer, 1050, 540, fonts.mdigit, COL_ORANGE, {
+	local srf_FerieCompteur = FieldBlink( self, animTimer, 1040, 540, fonts.mdigit, COL_ORANGE, {
 		align = ALIGN_CENTER, 
 		sample_text = "99 jours",
 		ownsurface=true,
