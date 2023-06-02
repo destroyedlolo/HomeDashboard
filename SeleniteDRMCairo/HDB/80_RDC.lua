@@ -77,7 +77,7 @@ local function rdc()
 		}
 	)
 
-	local srf_JourFerie = FieldBlink( self, animTimer, 820, 580, fonts.digit, COL_DIGIT, {
+	local srf_JourFerie = FieldBlink( self, animTimer, 750, 580, fonts.digit, COL_DIGIT, {
 		align = ALIGN_CENTER, 
 		sample_text = "Victoire des allies",
 		ownsurface=true,
