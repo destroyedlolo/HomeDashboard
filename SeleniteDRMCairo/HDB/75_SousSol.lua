@@ -215,6 +215,7 @@ local function soussol()
 		font=fonts.smdigit, 
 		width = WINSIZE.w - 837,
 		timeout = 310,
+		align = ALIGN_RIGHT,
 		icon=true 
 	})
 
@@ -225,6 +226,7 @@ local function soussol()
 		gradient = GRD_CONNECTION,
 		sample_text = "888888mS",
 		suffix = "mS",
+		align = ALIGN_RIGHT,
 		icon=MQTTImg
 	})
 
@@ -235,6 +237,7 @@ local function soussol()
 		gradient = GRD_CONNECTION,
 		sample_text = "888888mS",
 		suffix = "mS",
+		align = ALIGN_RIGHT,
 		icon=WiFiImg
 	})
 
@@ -246,6 +249,7 @@ local function soussol()
 		gradient = GRD_BAT5V,
 		sample_text = "8888mV",
 		suffix = "mV",
+		align = ALIGN_RIGHT,
 		icon=BatteryImg
 	})
 
