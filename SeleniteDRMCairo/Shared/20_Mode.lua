@@ -1,6 +1,6 @@
--- Display season's icon
+-- Display Mode's icon
 
-function Saison(
+function Mode(
 	psrf,			-- mother surface
 	name, topic,	-- Topic to look for
 	sx,sy,			-- position
@@ -23,7 +23,7 @@ function Saison(
 	local parent_upd = self.Update
 	function self.Update( )
 		psrf.Clear({sx,sy, opts.width, opts.hight})
-		parent_upd( SaisonIcons.getImg( SelShared.Get(name) ) )
+		parent_upd( ModeIcons.getImg( SelShared.Get(name) ) )
 	end
 
 	local dt = MQTTinput( name, topic )

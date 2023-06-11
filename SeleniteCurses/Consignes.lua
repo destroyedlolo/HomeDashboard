@@ -3,7 +3,7 @@
 function updateMForce()
 	if Mode == 'C' then
 		MForce:clear()
-		MForce:print( SelShared.Get('Majordome/Mode/Force') )
+		MForce:print( SelShared.Get(MAJORDOME..'/Mode/Force') )
 		MForce:refresh()
 	end
 end
@@ -11,7 +11,7 @@ end
 function updateMActif()
 	if Mode == 'C' then
 		MActif:clear()
-		MActif:print( SelShared.Get('Majordome/Mode') )
+		MActif:print( SelShared.Get(MAJORDOME..'/Mode') )
 		MActif:refresh()
 	end
 end
@@ -19,7 +19,7 @@ end
 function updateMForceEnfants()
 	if Mode == 'C' then
 		MForceE:clear()
-		MForceE:print( SelShared.Get('Majordome/Mode/Force/Enfants') )
+		MForceE:print( SelShared.Get(MAJORDOME..'/Mode/Force/Enfants') )
 		MForceE:refresh()
 	end
 end
@@ -27,7 +27,7 @@ end
 function updateMForceEOceane()
 	if Mode == 'C' then
 		MForceEO:clear()
-		MForceEO:print( SelShared.Get('Majordome/Mode/Force/Enfants/Oceane') )
+		MForceEO:print( SelShared.Get(MAJORDOME..'/Mode/Force/Enfants/Oceane') )
 		MForceEO:refresh()
 	end
 end
@@ -35,7 +35,7 @@ end
 function updateMForceEJoris()
 	if Mode == 'C' then
 		MForceEJ:clear()
-		MForceEJ:print( SelShared.Get('Majordome/Mode/Force/Enfants/Joris') )
+		MForceEJ:print( SelShared.Get(MAJORDOME..'/Mode/Force/Enfants/Joris') )
 		MForceEJ:refresh()
 	end
 end
@@ -43,7 +43,7 @@ end
 function updateMForceParents()
 	if Mode == 'C' then
 		MForceP:clear()
-		MForceP:print( SelShared.Get('Majordome/Mode/Force/Parents') )
+		MForceP:print( SelShared.Get(MAJORDOME..'/Mode/Force/Parents') )
 		MForceP:refresh()
 	end
 end
@@ -51,7 +51,7 @@ end
 function updateMForceChAmis()
 	if Mode == 'C' then
 		MForceA:clear()
-		MForceA:print( SelShared.Get('Majordome/Mode/Force/ChAmis') )
+		MForceA:print( SelShared.Get(MAJORDOME..'/Mode/Force/ChAmis') )
 		MForceA:refresh()
 	end
 end
@@ -59,7 +59,7 @@ end
 function updateMChAmis()
 	if Mode == 'C' then
 		MForceAr:clear()
-		MForceAr:print( SelShared.Get('Majordome/Mode/ChAmis') )
+		MForceAr:print( SelShared.Get(MAJORDOME..'/Mode/ChAmis') )
 		MForceAr:refresh()
 	end
 end
@@ -67,7 +67,7 @@ end
 function updateMPiscine()
 	if Mode == 'C' then
 		MPiscine:clear()
-		local v = SelShared.Get('Majordome/Mode/Piscine')
+		local v = SelShared.Get(MAJORDOME..'/Mode/Piscine')
 		if v == 'Forcé' then
 			MPiscine:print('Force')
 		else
@@ -80,7 +80,7 @@ end
 function updateCCoucher()
 	if Mode == 'C' then
 		CCoucher:clear()
-		CCoucher:print( SelShared.Get('Majordome/HCoucher') )
+		CCoucher:print( SelShared.Get(MAJORDOME..'/HCoucher') )
 		CCoucher:refresh()
 	end
 end
@@ -88,7 +88,7 @@ end
 function updateCLvO()
 	if Mode == 'C' then
 		CLvO:clear()
-		CLvO:print( SelShared.Get('Majordome/HLever/Oceane') )
+		CLvO:print( SelShared.Get(MAJORDOME..'/HLever/Oceane') )
 		CLvO:refresh()
 	end
 end
@@ -96,7 +96,7 @@ end
 function updateCLvJ()
 	if Mode == 'C' then
 		CLvJ:clear()
-		CLvJ:print( SelShared.Get('Majordome/HLever/Joris') )
+		CLvJ:print( SelShared.Get(MAJORDOME..'/HLever/Joris') )
 		CLvJ:refresh()
 	end
 end
@@ -104,7 +104,7 @@ end
 function updateCLvP()
 	if Mode == 'C' then
 		CLvP:clear()
-		CLvP:print( SelShared.Get('Majordome/HLever') )
+		CLvP:print( SelShared.Get(MAJORDOME..'/HLever') )
 		CLvP:refresh()
 	end
 end
@@ -112,7 +112,7 @@ end
 function popupConsMode( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
-	local popup = wmdSub:DerWin((w-15)/2,2, 15,7)
+	local popup = wmdSub:DerWin( math.floor((w-15)/2), 2, 15,7)
 
 	genTitre(popup, "\n  &Auto\n")
 	genTitre(popup, "  &Manuel\n")
@@ -143,9 +143,10 @@ end
 function popupConsPiscine( Brk, topic )
 	local w,h = wmdSub:GetSize()
 
-	local popup = wmdSub:DerWin((w-15)/2,2, 18,5)
+	local popup = wmdSub:DerWin( math.floor((w-15)/2), 2, 18,6)
 
 	genTitre(popup, "\n  &Heures Creuses\n")
+	genTitre(popup, "  &Canicule\n")
 	genTitre(popup, "  &Arret\n")
 	genTitre(popup, "  &Force\n")
 
@@ -156,6 +157,8 @@ function popupConsPiscine( Brk, topic )
 
 	if c == 'H' then
 		Brk:Publish( topic, "Heures Creuses", true)
+	elseif c == 'C' then
+		Brk:Publish( topic, "Canicule", true)
 	elseif c == 'A' then
 		Brk:Publish( topic, "Arret", true)
 	elseif c == 'F' then
@@ -230,27 +233,27 @@ end
 
 function keyConsignes(Brk, c,cn)
 	if c == 'o' then
-		popupConsMode( Brk, 'Majordome/Mode/Force' )
+		popupConsMode( Brk, MAJORDOME..'/Mode/Force' )
 	elseif c == 'n' then
-		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants' )
+		popupConsMode( Brk, MAJORDOME..'/Mode/Force/Enfants' )
 	elseif c == 'c' then
-		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants/Oceane' )
+		popupConsMode( Brk, MAJORDOME..'/Mode/Force/Enfants/Oceane' )
 	elseif c == 's' then
-		popupConsMode( Brk, 'Majordome/Mode/Force/Enfants/Joris' )
+		popupConsMode( Brk, MAJORDOME..'/Mode/Force/Enfants/Joris' )
 	elseif c == 'p' then
-		popupConsMode( Brk, 'Majordome/Mode/Force/Parents' )
+		popupConsMode( Brk, MAJORDOME..'/Mode/Force/Parents' )
 	elseif c == 'm' then
-		popupConsMode( Brk, 'Majordome/Mode/Force/ChAmis' )
+		popupConsMode( Brk, MAJORDOME..'/Mode/Force/ChAmis' )
 	elseif c == 'i' then
-		popupConsPiscine( Brk, 'Majordome/Mode/Piscine' )
+		popupConsPiscine( Brk, MAJORDOME..'/Mode/Piscine' )
 	elseif c == 'h' then
-		popupConsignH( Brk, 'Majordome/HCoucher', 'Heure coucher' )
+		popupConsignH( Brk, MAJORDOME..'/HCoucher', 'Heure coucher' )
 	elseif c == 'v' then
-		popupConsignH( Brk, 'Majordome/HLever/Oceane', 'Heure lever Oceane' )
+		popupConsignH( Brk, MAJORDOME..'/HLever/Oceane', 'Heure lever Oceane' )
 	elseif c == 'r' then
-		popupConsignH( Brk, 'Majordome/HLever/Joris', 'Heure lever Joris' )
+		popupConsignH( Brk, MAJORDOME..'/HLever/Joris', 'Heure lever Joris' )
 	elseif c == 'e' then
-		popupConsignH( Brk, 'Majordome/HLever', 'Heure lever Parents' )
+		popupConsignH( Brk, MAJORDOME..'/HLever', 'Heure lever Parents' )
 	end
 
 	initConsignes()
@@ -377,34 +380,34 @@ swinLst['C'] = { titre="&Consignes", func=initConsignes, key=keyConsignes, close
 -- Topics
 
 local ltopics = {
-	{ topic = 'Majordome/Mode/Force', trigger=updateMForce, trigger_once=true },
-	{ topic = 'Majordome/Mode', trigger=updateMActif, trigger_once=true },
-	{ topic = 'Majordome/Mode/Force/Enfants', trigger=updateMForceEnfants, trigger_once=true },
-	{ topic = 'Majordome/Mode/Force/Enfants/Oceane', trigger=updateMForceEOceane, trigger_once=true },
-	{ topic = 'Majordome/Mode/Force/Enfants/Joris', trigger=updateMForceEJoris, trigger_once=true },
-	{ topic = 'Majordome/Mode/Force/Parents', trigger=updateMForceParents, trigger_once=true },
-	{ topic = 'Majordome/Mode/Force/ChAmis', trigger=updateMForceChAmis, trigger_once=true },
-	{ topic = 'Majordome/Mode/ChAmis', trigger=updateMChAmis, trigger_once=true },
-	{ topic = 'Majordome/Mode/Piscine', trigger=updateMPiscine, trigger_once=true },
-	{ topic = 'Majordome/HCoucher', trigger=updateCCoucher, trigger_once=true },
-	{ topic = 'Majordome/HLever/Oceane', trigger=updateCLvO, trigger_once=true },
-	{ topic = 'Majordome/HLever/Joris', trigger=updateCLvJ, trigger_once=true },
-	{ topic = 'Majordome/HLever', trigger=updateCLvP, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode/Force', trigger=updateMForce, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode', trigger=updateMActif, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode/Force/Enfants', trigger=updateMForceEnfants, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode/Force/Enfants/Oceane', trigger=updateMForceEOceane, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode/Force/Enfants/Joris', trigger=updateMForceEJoris, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode/Force/Parents', trigger=updateMForceParents, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode/Force/ChAmis', trigger=updateMForceChAmis, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode/ChAmis', trigger=updateMChAmis, trigger_once=true },
+	{ topic = MAJORDOME..'/Mode/Piscine', trigger=updateMPiscine, trigger_once=true },
+	{ topic = MAJORDOME..'/HCoucher', trigger=updateCCoucher, trigger_once=true },
+	{ topic = MAJORDOME..'/HLever/Oceane', trigger=updateCLvO, trigger_once=true },
+	{ topic = MAJORDOME..'/HLever/Joris', trigger=updateCLvJ, trigger_once=true },
+	{ topic = MAJORDOME..'/HLever', trigger=updateCLvP, trigger_once=true },
 }
 
 TableMerge( Topics, ltopics)
 
 -- Valeurs par défauts (pour éviter un crash si elle ne sont pas définies)
 
-SelShared.Set('Majordome/Mode/Force', '?')
-SelShared.Set('Majordome/Mode/Force/Enfants', '?')
-SelShared.Set('Majordome/Mode/Force/Enfants/Oceane', '?')
-SelShared.Set('Majordome/Mode/Force/Enfants/Joris', '?')
-SelShared.Set('Majordome/Mode/Force/Parents', '?')
-SelShared.Set('Majordome/Mode/Force/ChAmis', '?')
-SelShared.Set('Majordome/Mode/ChAmis', '?')
-SelShared.Set('Majordome/Mode/Piscine', 'Heures Creuses')
-SelShared.Set('Majordome/HCoucher', '??.??')
-SelShared.Set('Majordome/HLever/Oceane', '??.??')
-SelShared.Set('Majordome/HLever/Joris', '??.??')
-SelShared.Set('Majordome/HLever', '??.??')
+SelShared.Set(MAJORDOME..'/Mode/Force', '?')
+SelShared.Set(MAJORDOME..'/Mode/Force/Enfants', '?')
+SelShared.Set(MAJORDOME..'/Mode/Force/Enfants/Oceane', '?')
+SelShared.Set(MAJORDOME..'/Mode/Force/Enfants/Joris', '?')
+SelShared.Set(MAJORDOME..'/Mode/Force/Parents', '?')
+SelShared.Set(MAJORDOME..'/Mode/Force/ChAmis', '?')
+SelShared.Set(MAJORDOME..'/Mode/ChAmis', '?')
+SelShared.Set(MAJORDOME..'/Mode/Piscine', 'Heures Creuses')
+SelShared.Set(MAJORDOME..'/HCoucher', '??.??')
+SelShared.Set(MAJORDOME..'/HLever/Oceane', '??.??')
+SelShared.Set(MAJORDOME..'/HLever/Joris', '??.??')
+SelShared.Set(MAJORDOME..'/HLever', '??.??')

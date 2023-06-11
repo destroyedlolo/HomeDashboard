@@ -1,6 +1,6 @@
--- Display season's icon
+-- Display gate's image
 
-function Saison(
+function Porte(
 	psrf,			-- mother surface
 	name, topic,	-- Topic to look for
 	sx,sy,			-- position
@@ -13,17 +13,22 @@ function Saison(
 		opts = {}
 	end
 	if not opts.width then
-		opts.width = 48
+		opts.width = 41
 	end
 	if not opts.hight then
-		opts.hight = 48
+		opts.hight = 70
 	end
+	opts.autoscale=true
+
 	local self = ImageSurface( psrf, sx,sy, opts.width, opts.hight, opts )
 
 	local parent_upd = self.Update
 	function self.Update( )
+if opts.debug then
+	print(opts.debug, name, topic, SelShared.Get(name))
+end
 		psrf.Clear({sx,sy, opts.width, opts.hight})
-		parent_upd( SaisonIcons.getImg( SelShared.Get(name) ) )
+		parent_upd( PorteIcons.getImg( SelShared.Get(name) ) )
 	end
 
 	local dt = MQTTinput( name, topic )
