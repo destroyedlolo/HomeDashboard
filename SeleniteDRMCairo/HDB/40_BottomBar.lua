@@ -46,9 +46,9 @@ local function f()
 	offx = offx + 24
 
 	local wdWiFi, _ = SelTimer.Create { when=150, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc= function ()
-			Notification.setColor( COL_RED )
-			Notification.Log( "Répéteur WiFi muet")
-			Notification.setColor( COL_WHITE )
+--			Notification.setColor( COL_RED )
+--			Notification.Log( "Répéteur WiFi muet")
+--			Notification.setColor( COL_WHITE )
 			condition_WiFi.report_issue()
 		end
 	}
