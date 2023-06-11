@@ -15,6 +15,8 @@ end
 -- initialise graphical environment
 Selene.UseDRMCairo()
 
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
+
 -- switch to French
 os.setlocale("fr_FR.UTF-8", "time")
 
@@ -49,7 +51,6 @@ if not card then
 end
 
 
-require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 require "Toile"
 
 Topics = {}	-- Topics we are looking for
@@ -220,8 +221,10 @@ if err then
 	return
 end
 
+--[[
 -- Ensure first window is visible
 winlist[ 1 ].Visibility(true)
+]]
 
 -- Display versions
 Notification.Log( "Séléné : ".. string.format("%.4f", SELENE_VERSION) )

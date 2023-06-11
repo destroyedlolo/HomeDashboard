@@ -12,6 +12,7 @@ function ModePool( titre, topic, y )
 	},
 	{
 		{ 'Heures Creuses', function () Brk:Publish( topic, 'Heures Creuses', true ) end },
+		{ 'Canicule', function () Brk:Publish( topic, 'Canicule', true ) end },
 		{ 'Arret', function () Brk:Publish( topic, 'Arret', true ) end },
 		{ 'Forcé', function () Brk:Publish( topic, 'Forcé', true ) end },
 	}, -- list
