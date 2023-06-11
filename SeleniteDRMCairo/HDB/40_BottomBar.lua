@@ -45,6 +45,14 @@ local function f()
 	table.insert( additionnalevents, condition_freebox.getTimer() )
 	offx = offx + 24
 
+	local wdWiFi, _ = SelTimer.Create { when=20, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), ifunc= function ()
+			Notification.setColor( COL_RED )
+			Notification.Log( "Répéteur WiFi muet")
+			Notification.setColor( COL_WHITE )
+			condition_WiFi.report_issue()
+		end
+	}
+	table.insert( additionnalevents, wdWiFi )
 	local WiFi = ImageFiltreSurface( self, offx,offy+24, SELENE_SCRIPT_DIR .. "/Images/WiFi.png" )
 	condition_WiFi = Condition(WiFi, .5, { autorecover=true, issue_color=COL_RED } )
 	table.insert( additionnalevents, condition_WiFi.getTimer() )
