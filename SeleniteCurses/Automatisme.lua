@@ -46,6 +46,9 @@ function initAuto()
 	wmdSub:Move(2,5)
 	genTitre(wmdSub, 'Invoie &separateur de logs')
 
+	wmdSub:Move(2,7)
+	genTitre(wmdSub, 'In&ternet')
+
 	wmdSub:refresh()
 	genMenu()
 end
@@ -74,9 +77,34 @@ function popupSaison(Brk, topic)
 	popup:delwin()
 end
 
+function popupInternet(Brk, topic)
+	local w,h = wmdSub:GetSize()
+	local popup = wmdSub:DerWin( math.floor((w-15)/2), 2, 18,6)
+
+	genTitre(popup, "\n\n  &Oui\n")
+	genTitre(popup, "  &Non\n")
+
+	popup:border()
+	popup:refresh()
+
+	local c = string.upper(string.char(popup:getch()))
+
+	if c == 'O' then
+		Brk:Publish( MARCEL..'/OnOff/Meteo Nonglard 3H', "1", true)
+		Brk:Publish( MARCEL..'/OnOff/Meteo Nonglard', "1", true)
+	elseif c == 'N' then
+		Brk:Publish( MARCEL..'/OnOff/Meteo Nonglard 3H', "0", true)
+		Brk:Publish( MARCEL..'/OnOff/Meteo Nonglard', "0", true)
+	end
+
+	popup:delwin()
+end
+
 function keyAuto(Brk, c,cn)
 	if c == 'a' then
 		popupSaison(Brk, MAJORDOME..'/Saison')
+	elseif c == 't' then
+		popupInternet(Brk)
 	elseif c == 's' then
 		Brk:Publish(MAJORDOME..'/Log/Information', '--------------------------')
 		Brk:Publish(MARCEL..'/Log/Information', '--------------------------')
