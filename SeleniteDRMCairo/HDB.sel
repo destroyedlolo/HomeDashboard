@@ -20,6 +20,7 @@ Selene.Use("SelTimer")
 Selene.Use("SelSharedVar")
 Selene.Use("SelFIFO")
 Selene.Use("SelSharedFunction")
+Selene.Use("SelSharedRef")
 Selene.Use("SelMQTT")
 Selene.Use("SelAverageCollection")
 Selene.Use("SelTimedCollection")
@@ -178,7 +179,7 @@ end
 
 function RestoreCollection(topic, msg)
 	local name = topic:match("/.+$"):sub(2)
-	local col, _ = SelShared.RetrieveTimedCollection(name)
+	local col, _ = SelTimedCollection.Find(name)
 
 	if not col then
 		SelLog.Log("E", name .." : ".. _)
@@ -193,11 +194,11 @@ function RestoreCollection(topic, msg)
 		end
 
 			-- Request updating
-		local ref,_ = SelShared.FindRef(name..".updgfx")
+		local ref = SelSharedRef.Find(name..".updgfx")
 		if not ref then
 			SelLog.Log('E', name .. ":" .. (_ or "updgfx function not found"))
 		else
-			SelShared.PushTaskByRef(ref)
+			Selene.PushTaskByRef(ref)
 		end
 	else
 		SelLog.Log('I', "Ignoring history for '".. name .. "'")
@@ -257,11 +258,11 @@ Brk:Publish( MAJORDOME .."/About", "x" )
 for i,col in ipairs(savedcols) do
 	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' and not col.getLocal() ) then
 			-- register refresh function
-		local ref,_ = SelShared.RegisterFunction(col.updgfx)
+		local ref,_ = Selene.RegisterFunction(col.updgfx)
 		if not ref then
 			SelLog.Log('E', "Reference " .. col.getName() .. " : " .. _)
 		else
-			local r,_ = SelShared.RegisterRef( ref, col.getName()..".updgfx" )
+			local r,_ = SelSharedRef.Register( ref, col.getName()..".updgfx" )
 			if not r then
 				SelLog.Log('E', "Register " .. col.getName() .. " : " .. _)
 			end
@@ -269,10 +270,6 @@ for i,col in ipairs(savedcols) do
 
 			-- ask for database values
 		Brk:Publish( 'DemandeHistorique', col.getName() )
-		local ret,_ = SelShared.RegisterTimedCollection(col.getCollection(), col.getName())
-		if not ret then
-			SelLog.Log('E', "Collection " .. col.getName() .. " : " .. _ )
-		end
 	else
 		SelLog.Log('W', col.getName() .." : ".. getmetatable(col.getCollection()).__name .." - trying to load from file")
 		local _,err = col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )
