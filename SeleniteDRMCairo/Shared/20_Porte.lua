@@ -25,10 +25,10 @@ function Porte(
 	local parent_upd = self.Update
 	function self.Update( )
 if opts.debug then
-	print(opts.debug, name, topic, SelShared.Get(name))
+	print(opts.debug, name, topic, SelSharedVar.Get(name))
 end
 		psrf.Clear({sx,sy, opts.width, opts.hight})
-		parent_upd( PorteIcons.getImg( SelShared.Get(name) ) )
+		parent_upd( PorteIcons.getImg( SelSharedVar.Get(name) ) )
 	end
 
 	local dt = MQTTinput( name, topic )

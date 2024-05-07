@@ -104,9 +104,7 @@ elseif psrf:GetSize() == 800 then	-- test display
 else
 	linclude.loaddir('HDB')
 end
-SelLog.Log('D', ">>>>>>>>> OK HDB")
 linclude.requirefiles()
-SelLog.Log('D', ">>>>>>>>> OK HDB2")
 
 ----
 -- Commands
@@ -182,7 +180,7 @@ function RestoreCollection(topic, msg)
 	local col, _ = SelTimedCollection.Find(name)
 
 	if not col then
-		SelLog.Log("E", name .." : ".. _)
+		SelLog.Log("E", "Can't find SelTimedCollection ".. name)
 		return;
 	end
 

@@ -78,12 +78,12 @@ function ShortTermWeather(
 	cloud.Update( WeatherIcons.getImg('21') )
 
 	function self.updTime()
-		local t=os.date("*t", tonumber(SelShared.Get(name)) )
+		local t=os.date("*t", tonumber(SelSharedVar.Get(name)) )
 		time.update(string.format("%02d:%02d", t.hour, t.min))
 	end
 
 	function self.updateIcon()
-		icon.Update( WeatherIcons.getImg( SelShared.Get(name..'acode') ) )
+		icon.Update( WeatherIcons.getImg( SelSharedVar.Get(name..'acode') ) )
 	end
 
 --	self.Refresh()
