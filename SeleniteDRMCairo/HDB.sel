@@ -112,46 +112,46 @@ SelLog.Log('D', ">>>>>>>>> OK HDB2")
 ----
 
 function Command() -- CAUTION : in race condition, commands may be lost.
-	if SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
+	if SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
 		psrf:Dump('/tmp', 'DashBoard')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Tasks' then
-		SelShared.dump()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Topics' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Tasks' then
+		SelSharedVar.dump()
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Topics' then
 		for _,v in ipairs(Topics) do
 			print(_,v.topic)
 		end
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Save' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Save' then
 		SaveCollection()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
 		Meteo.refreshGfx()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
 		quitHDB()
 
 			---
 			-- Debugging
 			---
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 0' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 0' then
 		switchtimer:Disable()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 1' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 1' then
 		switchtimer:Enable()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 0' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 0' then
 		Machines.Visibility(false)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 1' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 1' then
 		Machines.Visibility(true)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 0' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 0' then
 		Automatisme.Visibility(false)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 1' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 1' then
 		Automatisme.Visibility(true)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
 		Automatisme.get():Dump('/tmp', 'Auto')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Mch' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Mch' then
 		Machines.get():Dump('/tmp', 'Mch')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
 		RDC.get():Dump('/tmp', 'RDC')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
 		Meteo.get():Dump('/tmp', 'Meteo')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab SS' then
-		SousSol.get():Dump('/tmp', 'SousSol')
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab SS' then
+		SousSol.SelSharedVar():Dump('/tmp', 'SousSol')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab 1er' then
 		Etage.get():Dump('/tmp', 'Etage')
 	end
