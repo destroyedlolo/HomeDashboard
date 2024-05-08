@@ -20,7 +20,7 @@ function HeureCreuse(
 
 	function self.getData()
 		psrf.Clear({ sx,sy, sw,sh })
-		if SelShared.Get("TarifEDF") == "HC.." then
+		if SelSharedVar.Get("TarifEDF") == "HC.." then
 			self.Update( img )
 		else
 			self.Refresh()

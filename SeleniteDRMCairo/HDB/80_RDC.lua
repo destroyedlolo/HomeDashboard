@@ -112,7 +112,7 @@ local function rdc()
 	})
 
 	local function rcvJFS()
-		local a,m,j = SelShared.Get("JourFerieS"):match("(%d+)-(%d+)-(%d+)")
+		local a,m,j = SelSharedVar.Get("JourFerieS"):match("(%d+)-(%d+)-(%d+)")
 		local t = os.time{year=a, month=m, day=j}
 		local dt = os.date("*t", t)	-- date as table
 

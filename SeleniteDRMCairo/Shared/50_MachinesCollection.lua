@@ -67,7 +67,7 @@ function MachinesCollection(
 						end
 					end
 					if not lst_machines[mch].surface then -- Surface collection exhausted
-							SelLog.log('E', "Too many machines : ignoring '".. mch .."'")
+							SelLog.Log('E', "Too many machines : ignoring '".. mch .."'")
 							lst_machines[mch] = nil	-- Don't process other data for this host
 													-- to avoid additional error messages
 							return

@@ -13,7 +13,20 @@ if not table.pack then
 end
 
 -- initialise graphical environment
-Selene.UseDRMCairo()
+Selene.Use("SelDRMCairo")
+
+-- end load needed modules
+Selene.Use("SelTimer")
+Selene.Use("SelSharedVar")
+Selene.Use("SelFIFO")
+Selene.Use("SelSharedFunction")
+Selene.Use("SelSharedRef")
+Selene.Use("SelMQTT")
+Selene.Use("SelAverageCollection")
+Selene.Use("SelTimedCollection")
+Selene.Use("SelTimedWindowCollection")
+
+Selene.LetsGo()	-- ensure late building dependencies
 
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 
@@ -61,10 +74,10 @@ savedcols = {}		-- Collection to be saved/restored
 if not SAVE_DIR then
 	SAVE_DIR = '/tmp/'
 end
-SelLog.log("Data backup in : ".. SAVE_DIR)
+SelLog.Log("Data backup in : ".. SAVE_DIR)
 
 function SaveCollection()
-	SelLog.log("Saving collections ..")
+	SelLog.Log("Saving collections ..")
 	for i,col in ipairs(savedcols) do
 		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbdt' )
 	end
@@ -81,7 +94,7 @@ Selene.SigIntTask( quitHDB )
 local info = debug.getinfo(1,'S');
 local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 
-SelLog.log('Loading HDB ...')
+SelLog.Log('Loading HDB ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('Shared')
 linclude.loaddir('Inputs')
@@ -99,46 +112,46 @@ linclude.requirefiles()
 ----
 
 function Command() -- CAUTION : in race condition, commands may be lost.
-	if SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
+	if SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab' then
 		psrf:Dump('/tmp', 'DashBoard')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Tasks' then
-		SelShared.dump()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Topics' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Tasks' then
+		SelSharedVar.dump()
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Topics' then
 		for _,v in ipairs(Topics) do
 			print(_,v.topic)
 		end
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Save' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Save' then
 		SaveCollection()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'RefreshGFX' then
 		Meteo.refreshGfx()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Quit' then
 		quitHDB()
 
 			---
 			-- Debugging
 			---
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 0' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 0' then
 		switchtimer:Disable()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 1' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Switch 1' then
 		switchtimer:Enable()
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 0' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 0' then
 		Machines.Visibility(false)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 1' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Mch 1' then
 		Machines.Visibility(true)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 0' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 0' then
 		Automatisme.Visibility(false)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 1' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Auto 1' then
 		Automatisme.Visibility(true)
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Auto' then
 		Automatisme.get():Dump('/tmp', 'Auto')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Mch' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Mch' then
 		Machines.get():Dump('/tmp', 'Mch')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab RDC' then
 		RDC.get():Dump('/tmp', 'RDC')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
 		Meteo.get():Dump('/tmp', 'Meteo')
-	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab SS' then
-		SousSol.get():Dump('/tmp', 'SousSol')
+	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab SS' then
+		SousSol.SelSharedVar():Dump('/tmp', 'SousSol')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab 1er' then
 		Etage.get():Dump('/tmp', 'Etage')
 	end
@@ -155,9 +168,9 @@ table.insert( Topics,
 
 --[[
 -- disabled as loading from the DB
-SelLog.log("Restoring collections ..")
+SelLog.Log("Restoring collections ..")
 for i,col in ipairs(savedcols) do
-	SelLog.log(col.getName() ..' ...')
+	SelLog.Log(col.getName() ..' ...')
 	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )	-- we don't check return code as these data are not mandatory
 	col.updgfx()
 end
@@ -165,29 +178,29 @@ end
 
 function RestoreCollection(topic, msg)
 	local name = topic:match("/.+$"):sub(2)
-	local col, _ = SelShared.RetrieveTimedCollection(name)
+	local col, _ = SelTimedCollection.Find(name)
 
 	if not col then
-		SelLog.log("E", name .." : ".. _)
+		SelLog.Log("E", "Can't find SelTimedCollection ".. name)
 		return;
 	end
 
 	if col:HowMany() < 5 then	-- load only if the collection contains only few data
-		SelLog.log('R', "Get history for '".. name .. "'")
+		SelLog.Log('R', "Get history for '".. name .. "'")
 		for l in msg:gmatch("(.-)\n") do
 			local t,v = l:match("(%d+)\t(%S+)");
 			col:Push(v, tonumber(t))
 		end
 
 			-- Request updating
-		local ref,_ = SelShared.FindRef(name..".updgfx")
+		local ref = SelSharedRef.Find(name..".updgfx")
 		if not ref then
-			SelLog.log('E', name .. ":" .. (_ or "updgfx function not found"))
+			SelLog.Log('E', name .. ":" .. (_ or "updgfx function not found"))
 		else
-			SelShared.PushTaskByRef(ref)
+			Selene.PushTaskByRef(ref)
 		end
 	else
-		SelLog.log('I', "Ignoring history for '".. name .. "'")
+		SelLog.Log('I', "Ignoring history for '".. name .. "'")
 	end
 end
 
@@ -203,7 +216,7 @@ table.insert( Topics,
 function disconnected()
 	condition_network.report_issue()
 	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
-	SelLog.log("*F* Deconnecté")
+	SelLog.Log("*F* Deconnecté")
 	SaveCollection()
 end
 
@@ -233,8 +246,8 @@ Notification.Log( "Command : HomeDashBoard/".. MQTT_ClientID ..'/Command' )
 
 Notification.setColor( COL_WHITE )
 
-SelLog.log("Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
-SelLog.log("Let's go ...")
+SelLog.Log("Listening on topic : HomeDashBoard/".. MQTT_ClientID ..'/Command')
+SelLog.Log("Let's go ...")
 
 -- Request versions
 Brk:Publish( MARCEL .."/About", "x" )
@@ -246,29 +259,25 @@ Brk:Publish( MAJORDOME .."/About", "x" )
 for i,col in ipairs(savedcols) do
 	if( getmetatable(col.getCollection()).__name == 'SelTimedCollection' and not col.getLocal() ) then
 			-- register refresh function
-		local ref,_ = SelShared.RegisterFunction(col.updgfx)
+		local ref,_ = Selene.RegisterFunction(col.updgfx)
 		if not ref then
-			SelLog.log('E', "Reference " .. col.getName() .. " : " .. _)
+			SelLog.Log('E', "Reference " .. col.getName() .. " : " .. _)
 		else
-			local r,_ = SelShared.RegisterRef( ref, col.getName()..".updgfx" )
+			local r,_ = SelSharedRef.Register( ref, col.getName()..".updgfx" )
 			if not r then
-				SelLog.log('E', "Register " .. col.getName() .. " : " .. _)
+				SelLog.Log('E', "Register " .. col.getName() .. " : " .. _)
 			end
 		end
 
 			-- ask for database values
 		Brk:Publish( 'DemandeHistorique', col.getName() )
-		local ret,_ = SelShared.RegisterTimedCollection(col.getCollection(), col.getName())
-		if not ret then
-			SelLog.log('E', "Collection " .. col.getName() .. " : " .. _ )
-		end
 	else
-		SelLog.log('W', col.getName() .." : ".. getmetatable(col.getCollection()).__name .." - trying to load from file")
+		SelLog.Log('W', col.getName() .." : ".. getmetatable(col.getCollection()).__name .." - trying to load from file")
 		local _,err = col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbdt' )
 		if not err then
 			col.updgfx()
 		else
-			SelLog.log('E', col.getName() .." : ".. err)
+			SelLog.Log('E', col.getName() .." : ".. err)
 		end
 	end
 end
@@ -279,6 +288,10 @@ while true do
 	for _,ret in ipairs(rt) do
 		if type(ret) == 'function' then
 			ret()
+		elseif SelError.isSelError(ret) then -- Technical error ?
+			SelLog.Log('E', "Error ".. ret:getLevel() ..": ".. ret:getMessage())
+		else	-- Unknown/unsupported action (dependency missing ?)
+			SelLog.Log('E', "Don't know what to do with ".. type(ret))
 		end
 	end
 end
