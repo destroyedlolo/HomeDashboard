@@ -120,7 +120,7 @@ swinLst['M'] = { titre="&Majordome", func=initAuto, key=keyAuto, close=FermeAuto
 function updateSaison()
 	if Mode == 'M' then
 		Saison:clear()
-		Saison:print(SelShared.Get(MAJORDOME..'/Saison'))
+		Saison:print(SelSharedVar.Get(MAJORDOME..'/Saison'))
 		Saison:refresh()
 	end
 end
@@ -128,7 +128,7 @@ end
 function updateSaisonH()
 	if Mode == 'M' then
 		SaisonH:clear()
-		SaisonH:print(SelShared.Get(MAJORDOME..'/Saison/Hier'))
+		SaisonH:print(SelSharedVar.Get(MAJORDOME..'/Saison/Hier'))
 		SaisonH:refresh()
 	end
 end
@@ -136,7 +136,7 @@ end
 function updateModeR()
 	if Mode == 'M' then
 		ModeR:clear()
-		ModeR:print(SelShared.Get(MAJORDOME..'/Mode'))
+		ModeR:print(SelSharedVar.Get(MAJORDOME..'/Mode'))
 		ModeR:refresh()
 	end
 end
@@ -144,7 +144,7 @@ end
 function updateSuiviSol()
 	if Mode == 'M' then
 		SuiviSol:clear()
-		local r = SelShared.Get(MAJORDOME..'/Traces/SuiviCoucherSoleil')
+		local r = SelSharedVar.Get(MAJORDOME..'/Traces/SuiviCoucherSoleil')
 		if r ~= nil then
 			if r:byte() == 70 then -- 'F'
 				local h,m,hd,md = r:match( "(%d+):(%d+);(%d+):(%d+)" )
@@ -171,7 +171,7 @@ TableMerge( Topics, ltopics)
 
 -- Valeurs par défauts (pour éviter un crash si elle ne sont pas définies)
 
-SelShared.Set(MAJORDOME..'/Saison', '?')
-SelShared.Set(MAJORDOME..'/Saison/Hier', '?')
-SelShared.Set(MAJORDOME..'/Mode', '?')
+SelSharedVar.Set(MAJORDOME..'/Saison', '?')
+SelSharedVar.Set(MAJORDOME..'/Saison/Hier', '?')
+SelSharedVar.Set(MAJORDOME..'/Mode', '?')
 

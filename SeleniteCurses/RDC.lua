@@ -21,25 +21,25 @@ pwnd:print(' ??.?"C')
 
 function updateTDehors()
 	TDehors:clear()
-	TDehors:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Dehors')) )
+	TDehors:print( string.format('%4.1f', SelSharedVar.Get('maison/Temperature/Dehors')) )
 	TDehors:refresh()
 end
 
 function updateTSalon()
 	TSalon:clear()
-	TSalon:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Salon')) )
+	TSalon:print( string.format('%4.1f', SelSharedVar.Get('maison/Temperature/Salon')) )
 	TSalon:refresh()
 end
 
 function updateTBureau()
 	TBureau:clear()
-	TBureau:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Bureau')) )
+	TBureau:print( string.format('%4.1f', SelSharedVar.Get('maison/Temperature/Bureau')) )
 	TBureau:refresh()
 end
 
 function updateTAmis()
 	TAmis:clear()
-	TAmis:print( string.format('%4.1f', SelShared.Get('maison/Temperature/Bureau')) )
+	TAmis:print( string.format('%4.1f', SelSharedVar.Get('maison/Temperature/Bureau')) )
 	TAmis:refresh()
 end
 

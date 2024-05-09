@@ -3,7 +3,7 @@
 function updateMForce()
 	if Mode == 'C' then
 		MForce:clear()
-		MForce:print( SelShared.Get(MAJORDOME..'/Mode/Force') )
+		MForce:print( SelSharedVar.Get(MAJORDOME..'/Mode/Force') )
 		MForce:refresh()
 	end
 end
@@ -11,7 +11,7 @@ end
 function updateMActif()
 	if Mode == 'C' then
 		MActif:clear()
-		MActif:print( SelShared.Get(MAJORDOME..'/Mode') )
+		MActif:print( SelSharedVar.Get(MAJORDOME..'/Mode') )
 		MActif:refresh()
 	end
 end
@@ -19,7 +19,7 @@ end
 function updateMForceEnfants()
 	if Mode == 'C' then
 		MForceE:clear()
-		MForceE:print( SelShared.Get(MAJORDOME..'/Mode/Force/Enfants') )
+		MForceE:print( SelSharedVar.Get(MAJORDOME..'/Mode/Force/Enfants') )
 		MForceE:refresh()
 	end
 end
@@ -27,7 +27,7 @@ end
 function updateMForceEOceane()
 	if Mode == 'C' then
 		MForceEO:clear()
-		MForceEO:print( SelShared.Get(MAJORDOME..'/Mode/Force/Enfants/Oceane') )
+		MForceEO:print( SelSharedVar.Get(MAJORDOME..'/Mode/Force/Enfants/Oceane') )
 		MForceEO:refresh()
 	end
 end
@@ -35,7 +35,7 @@ end
 function updateMForceEJoris()
 	if Mode == 'C' then
 		MForceEJ:clear()
-		MForceEJ:print( SelShared.Get(MAJORDOME..'/Mode/Force/Enfants/Joris') )
+		MForceEJ:print( SelSharedVar.Get(MAJORDOME..'/Mode/Force/Enfants/Joris') )
 		MForceEJ:refresh()
 	end
 end
@@ -43,7 +43,7 @@ end
 function updateMForceParents()
 	if Mode == 'C' then
 		MForceP:clear()
-		MForceP:print( SelShared.Get(MAJORDOME..'/Mode/Force/Parents') )
+		MForceP:print( SelSharedVar.Get(MAJORDOME..'/Mode/Force/Parents') )
 		MForceP:refresh()
 	end
 end
@@ -51,7 +51,7 @@ end
 function updateMForceChAmis()
 	if Mode == 'C' then
 		MForceA:clear()
-		MForceA:print( SelShared.Get(MAJORDOME..'/Mode/Force/ChAmis') )
+		MForceA:print( SelSharedVar.Get(MAJORDOME..'/Mode/Force/ChAmis') )
 		MForceA:refresh()
 	end
 end
@@ -59,7 +59,7 @@ end
 function updateMChAmis()
 	if Mode == 'C' then
 		MForceAr:clear()
-		MForceAr:print( SelShared.Get(MAJORDOME..'/Mode/ChAmis') )
+		MForceAr:print( SelSharedVar.Get(MAJORDOME..'/Mode/ChAmis') )
 		MForceAr:refresh()
 	end
 end
@@ -67,7 +67,7 @@ end
 function updateMPiscine()
 	if Mode == 'C' then
 		MPiscine:clear()
-		local v = SelShared.Get(MAJORDOME..'/Mode/Piscine')
+		local v = SelSharedVar.Get(MAJORDOME..'/Mode/Piscine')
 		if v == 'Forcé' then
 			MPiscine:print('Force')
 		else
@@ -80,7 +80,7 @@ end
 function updateCCoucher()
 	if Mode == 'C' then
 		CCoucher:clear()
-		CCoucher:print( SelShared.Get(MAJORDOME..'/HCoucher') )
+		CCoucher:print( SelSharedVar.Get(MAJORDOME..'/HCoucher') )
 		CCoucher:refresh()
 	end
 end
@@ -88,7 +88,7 @@ end
 function updateCLvO()
 	if Mode == 'C' then
 		CLvO:clear()
-		CLvO:print( SelShared.Get(MAJORDOME..'/HLever/Oceane') )
+		CLvO:print( SelSharedVar.Get(MAJORDOME..'/HLever/Oceane') )
 		CLvO:refresh()
 	end
 end
@@ -96,7 +96,7 @@ end
 function updateCLvJ()
 	if Mode == 'C' then
 		CLvJ:clear()
-		CLvJ:print( SelShared.Get(MAJORDOME..'/HLever/Joris') )
+		CLvJ:print( SelSharedVar.Get(MAJORDOME..'/HLever/Joris') )
 		CLvJ:refresh()
 	end
 end
@@ -104,7 +104,7 @@ end
 function updateCLvP()
 	if Mode == 'C' then
 		CLvP:clear()
-		CLvP:print( SelShared.Get(MAJORDOME..'/HLever') )
+		CLvP:print( SelSharedVar.Get(MAJORDOME..'/HLever') )
 		CLvP:refresh()
 	end
 end
@@ -399,15 +399,15 @@ TableMerge( Topics, ltopics)
 
 -- Valeurs par défauts (pour éviter un crash si elle ne sont pas définies)
 
-SelShared.Set(MAJORDOME..'/Mode/Force', '?')
-SelShared.Set(MAJORDOME..'/Mode/Force/Enfants', '?')
-SelShared.Set(MAJORDOME..'/Mode/Force/Enfants/Oceane', '?')
-SelShared.Set(MAJORDOME..'/Mode/Force/Enfants/Joris', '?')
-SelShared.Set(MAJORDOME..'/Mode/Force/Parents', '?')
-SelShared.Set(MAJORDOME..'/Mode/Force/ChAmis', '?')
-SelShared.Set(MAJORDOME..'/Mode/ChAmis', '?')
-SelShared.Set(MAJORDOME..'/Mode/Piscine', 'Heures Creuses')
-SelShared.Set(MAJORDOME..'/HCoucher', '??.??')
-SelShared.Set(MAJORDOME..'/HLever/Oceane', '??.??')
-SelShared.Set(MAJORDOME..'/HLever/Joris', '??.??')
-SelShared.Set(MAJORDOME..'/HLever', '??.??')
+SelSharedVar.Set(MAJORDOME..'/Mode/Force', '?')
+SelSharedVar.Set(MAJORDOME..'/Mode/Force/Enfants', '?')
+SelSharedVar.Set(MAJORDOME..'/Mode/Force/Enfants/Oceane', '?')
+SelSharedVar.Set(MAJORDOME..'/Mode/Force/Enfants/Joris', '?')
+SelSharedVar.Set(MAJORDOME..'/Mode/Force/Parents', '?')
+SelSharedVar.Set(MAJORDOME..'/Mode/Force/ChAmis', '?')
+SelSharedVar.Set(MAJORDOME..'/Mode/ChAmis', '?')
+SelSharedVar.Set(MAJORDOME..'/Mode/Piscine', 'Heures Creuses')
+SelSharedVar.Set(MAJORDOME..'/HCoucher', '??.??')
+SelSharedVar.Set(MAJORDOME..'/HLever/Oceane', '??.??')
+SelSharedVar.Set(MAJORDOME..'/HLever/Joris', '??.??')
+SelSharedVar.Set(MAJORDOME..'/HLever', '??.??')
