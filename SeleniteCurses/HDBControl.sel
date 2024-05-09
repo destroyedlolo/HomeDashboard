@@ -7,21 +7,24 @@
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own one
 
-assert( SELENE_VERSION >= 4.0300, "HDB requires at least Selene v4.03.00, using " .. SELENE_VERSION )
-local stitle = " Home Dashboard Control v0.6.1 (Selene v".. SELENE_VERSION ..") "
+local stitle = " Home Dashboard Control v0.7.0 (Selene v".. SELENE_VERSION ..") "
+
+Selene.Use("SelCurses")
+Selene.Use("SelSharedVar")
+Selene.Use("SelMQTT")
+Selene.LetsGo()	-- ensure late building dependencies
 
 -- Debug only
 --[[
 require("tostring")
-SelLog.init("hdb.log")
---]]
+SelLog.configure("hdb.log")
+]]
 
 require(SELENE_SCRIPT_DIR .. "/LocalConfig")
 require(SELENE_SCRIPT_DIR .. "/Helpers")
 
 stitle =  stitle .. ' [' .. string.match( MQTT_URL, '://(.-).chez') .. ']'
 
-Selene.UseCurses()
 pwnd = SelCurses.init()
 w,h = pwnd:GetSize()
 

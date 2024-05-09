@@ -8,7 +8,7 @@ TPoul:attrset( SelCurses.CharAttrConst('BOLD') )
 
 function updateTPoul()
 	TPoul:clear()
-	TPoul:print( string.format('%4.1f', SelShared.Get('Poulailler/Perchoir/Temperature')) )
+	TPoul:print( string.format('%4.1f', SelSharedVar.Get('Poulailler/Perchoir/Temperature')) )
 	TPoul:refresh()
 end
 
@@ -19,7 +19,7 @@ HPoul:attrset( SelCurses.CharAttrConst('BOLD') )
 
 function updateHPoul()
 	HPoul:clear()
-	HPoul:print( string.format('%3.1f', SelShared.Get('Poulailler/Perchoir/Humidite')) )
+	HPoul:print( string.format('%3.1f', SelSharedVar.Get('Poulailler/Perchoir/Humidite')) )
 	HPoul:refresh()
 end
 
@@ -30,7 +30,7 @@ VPoul:attrset( SelCurses.CharAttrConst('BOLD') )
 
 function updateVPoul()
 	VPoul:clear()
-	VPoul:print( string.format('%2.2f', SelShared.Get('Poulailler/Alim')/1000) )
+	VPoul:print( string.format('%2.2f', SelSharedVar.Get('Poulailler/Alim')/1000) )
 	VPoul:refresh()
 end
 
