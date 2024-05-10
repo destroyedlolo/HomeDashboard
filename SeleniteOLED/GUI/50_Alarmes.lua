@@ -21,7 +21,7 @@ function f()
 		SelOLED.Clear()
 		gcongelo.DrawGfx(congelo.getCollection(), congelo.getOpts().forced_min)
 
-		local l=SelShared.Get('congelo')
+		local l=SelSharedVar.Get('congelo')
 		if l then
 			l = tonumber(l)
 			if l > -10 then

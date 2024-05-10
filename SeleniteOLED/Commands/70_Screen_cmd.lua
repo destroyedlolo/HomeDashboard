@@ -7,16 +7,16 @@ cmd_desc.Off = "Turn screen off (WD untouched)"
 function on_cmd()
 	enableWSwitchTimer()
 	SelOLED.OnOff(true)
-	SelLog.log("Screen Enabled")
+	SelLog.Log("Screen Enabled")
 end
 
 function off_cmd()
 	disableWSwitchTimer()
 	SelOLED.OnOff(false)
-	SelLog.log("Screen Disabled")
+	SelLog.Log("Screen Disabled")
 end
 
-local ref = SelShared.RegisterFunction( on_cmd )
-SelShared.RegisterRef( ref, "On" )
-ref = SelShared.RegisterFunction( off_cmd )
-SelShared.RegisterRef( ref, "Off" )
+local ref = Selene.RegisterFunction( on_cmd )
+SelSharedRef.Register( ref, "On" )
+ref = Selene.RegisterFunction( off_cmd )
+SelSharedRef.Register( ref, "Off" )

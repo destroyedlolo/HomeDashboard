@@ -3,6 +3,14 @@
 -- This tool is configured for my own usage and is matching my home configuration
 -- but it should be took as example to build your own dashboard
 
+Selene.Use("SelOLED")
+Selene.Use("SelMQTT")
+Selene.Use("SelTimer")
+Selene.Use("SelSharedVar")
+Selene.Use("SelSharedRef")
+Selene.Use("SelTimedCollection")
+Selene.LetsGo()	-- ensure late building dependencies
+
 -- Configuration
 local SAVE_DIR = '/var/tmp/'
 local SCRN_ID = 2				-- Screen identifier
@@ -19,7 +27,7 @@ end
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 
 -- initialise graphical environment
-Selene.UseOLED()
+Selene.Use("SelOLED")
 if SelOLED.Init( SCRN_ID, I2C_DEV ) == false then
 	error("Can't open I2C Device\n")
 end
@@ -42,9 +50,9 @@ additionnalevents = {}	-- List of additionnal events to wait for (timers, inputs
 savedcols = {}		-- Collection to be saved/restored
 
 function SaveCollection()
-	SelLog.log("Saving collections ..")
+	SelLog.Log("Saving collections ..")
 	for i,col in ipairs(savedcols) do
-		SelLog.log("\tSaving ".. col.getName())
+		SelLog.Log("\tSaving ".. col.getName())
 		col.getCollection():Save( SAVE_DIR .. col.getName() ..'.hdbodt' )
 	end
 end
@@ -60,15 +68,15 @@ Selene.SigIntTask( quitHDB )
 local info = debug.getinfo(1,'S');
 local whereiam = string.match(info.source, "@(.-)([^\\/]-%.?([^%.\\/]*))$")
 
-SelLog.log('Loading HDBOLed ...')
+SelLog.Log('Loading HDBOLed ...')
 local linclude = MultiDirRequire(whereiam)
 linclude.loaddir('GUI')
 linclude.loaddir('Commands')
 linclude.requirefiles()
 
-SelLog.log("Restoring collections ..")
+SelLog.Log("Restoring collections ..")
 for i,col in ipairs(savedcols) do
-	SelLog.log('\t' .. col.getName() ..' ...')
+	SelLog.Log('\t' .. col.getName() ..' ...')
 	col.getCollection():Load( SAVE_DIR .. col.getName() ..'.hdbodt' )	-- we don't check return code as these data are not mandatory
 end
 
@@ -76,7 +84,7 @@ end
 function disconnected()
 	condition_network.report_issue()
 	Notification.Log( os.date('%H:%M:%S') .. ' - Déconnecté')
-	SelLog.log('F', "Deconnecté")
+	SelLog.Log('F', "Deconnecté")
 	SaveCollection()
 end
 
@@ -111,12 +119,16 @@ SelOLED.Print("Toile : ".. string.format("%.4f", TOILE_VERSION) .."\n")
 SelOLED.Display()
 
 -- Wait for events
-SelLog.log("Let's go ...")
+SelLog.Log("Here we go ...")
 while true do
 	local rt = table.pack( Selene.WaitFor(switchtimer, screenWDtimer, wdTimer.getTimer(), unpack( additionnalevents )) )
-	for _,ret in ipairs(rt) do
+	for _,ret in ipairs(rt) do	-- An imediate function to execute ?
 		if type(ret) == 'function' then
 			ret()
+		elseif SelError.isSelError(ret) then -- Technical error ?
+			SelLog.Log('E', "Error ".. ret:getLevel() ..": ".. ret:getMessage())
+		else	-- Unknown/unsupported action (dependency missing ?)
+			SelLog.Log('E', "Don't know what to do with ".. type(ret))
 		end
 	end
 end
