@@ -3,12 +3,12 @@
 cmd_desc.Status = "Display current configuration"
 
 function cmd_status()
-	SelLog.log('Current configuration')
-	SelLog.log('Switch timer : ' .. switchtimer:Get())
-	SelLog.log('\tconsign : ' .. switchtimerconsign)
-	SelLog.log('Screen timeout : ' .. screenWDtimer:Get())
-	SelLog.log('\tconsign : ' .. screenWDconsign)
+	SelLog.Log('Current configuration')
+	SelLog.Log('Switch timer : ' .. switchtimer:Get())
+	SelLog.Log('\tconsign : ' .. switchtimerconsign)
+	SelLog.Log('Screen timeout : ' .. screenWDtimer:Get())
+	SelLog.Log('\tconsign : ' .. screenWDconsign)
 end
 
-local ref = SelShared.RegisterFunction( cmd_status )
-SelShared.RegisterRef( ref, "Status" )
+local ref = Selene.RegisterFunction( cmd_status )
+SelSharedRef.Register( ref, "Status" )

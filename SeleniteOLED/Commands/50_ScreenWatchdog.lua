@@ -1,7 +1,7 @@
 -- Watchdog timer to turn the screen
 function screentimeout()
 	off_cmd()
-	SelLog.log("Inactivity timeout")
+	SelLog.Log("Inactivity timeout")
 end
 
 screenWDconsign = 60 -- consign for windows switching
@@ -20,6 +20,6 @@ function resetWD()
 	screenWDtimer:Reset()
 end
 
-local ref = SelShared.RegisterFunction( resetWD )
-SelShared.RegisterRef( ref, "Wakeup" )
+local ref = Selene.RegisterFunction( resetWD )
+SelSharedRef.Register( ref, "Wakeup" )
 
