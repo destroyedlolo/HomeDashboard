@@ -7,11 +7,14 @@ MQTT_ClientID='TdB'	-- Broker client ID : must be unique across the system
 MARCEL='Marcel.prod'
 --MAJORDOME = 'Majordome'
 
+SAVE_DIR = '/home/laurent/hdbdt/'
+
 -- Activate for debugging only
-local _,err = SelLog.init('/tmp/HDB.log_' .. os.date('%Y%m%d'), false)
+local _,err = SelLog.configure('/tmp/HDB.log_' .. os.date('%Y%m%d'), false)
 if err then
 	print("*E* Log creation", err)
 end
+SelLog.ignore("D") -- Avoid debuging messages
 
 -- As toile is in a dedicated directory in my dev environment ...
 print "**** DEV DEV DEV DEV *****"
