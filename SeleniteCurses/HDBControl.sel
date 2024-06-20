@@ -32,7 +32,7 @@ Topics = {}
 
 pwnd:HLineAt(0,0,w,'=')
 pwnd:attrset( SelCurses.CharAttrConst("REVERSE") )
-pwnd:PrintAt((w-stitle:len())/2,0, stitle)
+pwnd:PrintAt(math.floor((w-stitle:len())/2),0, stitle)
 pwnd:attrset( SelCurses.CharAttrConst("NORMAL") )
 
 pwnd:Move(0,1)

@@ -170,7 +170,7 @@ end
 
 function popupConsignH( Brk, topic, titre )
 	local w,h = wmdSub:GetSize()
-	local popup = wmdSub:DerWin((w-20)/2,2, 22,4)
+	local popup = wmdSub:DerWin(math.floor((w-20)/2),2, 22,4)
 	local res = ""
 	
 	popup:clear()
