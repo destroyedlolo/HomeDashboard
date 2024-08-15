@@ -9,6 +9,8 @@ MQTT_ClientID='TdB.tst'	-- Broker client ID : must be unique across the system
 MARCEL='Marcel.tst'
 MAJORDOME = 'Majordome.dev'
 
+SAVE_DIR = '/home/laurent/hdbdt/'
+
 -- Activate for debugging only
 local _,err = SelLog.configure('/tmp/HDB.log_' .. os.date('%Y%m%d'), false)
 if err then
