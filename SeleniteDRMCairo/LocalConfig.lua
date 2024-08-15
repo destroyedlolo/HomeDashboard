@@ -1,13 +1,11 @@
 -- HDB configuration file
 -- all local configuration change have to be made here
 
--- MQTT_URL='tcp://bpi.chez.moi:1883' -- URL where to connect to the broker
-MQTT_URL='tcp://torchwood.chez.moi:1883' -- URL where to connect to the broker
-MQTT_ClientID='TdB.tst'	-- Broker client ID : must be unique across the system
--- MARCEL='Marcel.prod'
--- MAJORDOME = 'Majordome'
-MARCEL='Marcel.tst'
-MAJORDOME = 'Majordome.dev'
+MQTT_URL='tcp://bpi.chez.moi:1883' -- URL where to connect to the broker
+-- MQTT_URL='tcp://torchwood.chez.moi:1883' -- URL where to connect to the broker
+MQTT_ClientID='TdB'	-- Broker client ID : must be unique across the system
+MARCEL='Marcel.prod'
+MAJORDOME = 'Majordome'
 
 SAVE_DIR = '/home/laurent/hdbdt/'
 
