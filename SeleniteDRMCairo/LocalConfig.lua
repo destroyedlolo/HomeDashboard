@@ -8,7 +8,7 @@ MARCEL='Marcel.prod'
 --MAJORDOME = 'Majordome'
 
 -- Activate for debugging only
-local _,err = SelLog.init('/tmp/HDB.log_' .. os.date('%Y%m%d'), false)
+local _,err = SelLog.configure('/tmp/HDB.log_' .. os.date('%Y%m%d'), false)
 if err then
 	print("*E* Log creation", err)
 end
