@@ -151,7 +151,7 @@ function Command() -- CAUTION : in race condition, commands may be lost.
 	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab Meteo' then
 		Meteo.get():Dump('/tmp', 'Meteo')
 	elseif SelSharedVar.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab SS' then
-		SousSol.SelSharedVar():Dump('/tmp', 'SousSol')
+		SousSol.get():Dump('/tmp', 'SousSol')
 	elseif SelShared.Get('HomeDashBoard/'.. MQTT_ClientID ..'/Command') == 'Grab 1er' then
 		Etage.get():Dump('/tmp', 'Etage')
 	end
