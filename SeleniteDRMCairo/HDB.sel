@@ -45,9 +45,9 @@ card,err,msg = SelDCCard.Open()
 if not card then
 	print("*E* DRM :", err,msg)
 	if SELPLUG_DRMCairo_FBEXTENSION then
-		local fb_fch = "/dev/fb1"
+		local fb_fch = "/dev/fb0"
 		if not file_exists(fb_fch) then
-			fb_fch = "/dev/fb0"
+			fb_fch = "/dev/fb1"
 			card,err,msg = SelDCCard.OpenFB(fb_fch)
 		else
 			card,err,msg = SelDCCard.OpenFB(fb_fch, 768)
