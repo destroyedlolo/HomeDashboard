@@ -41,8 +41,6 @@ function genMenu()
 			wndMenu:attrset( SelCurses.CharAttrConst("NORMAL") )
 		end
 	end
-print "ok6 ----"
 	wndMenu:refresh()
-print "ok7 ----"
 end
 
