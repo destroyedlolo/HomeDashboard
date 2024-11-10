@@ -106,8 +106,8 @@ linclude.requirefiles()
 -- Wait for events
 SelLog.Log("Here we go ...")
 while true do
-	local rt = table.pack( Selene.WaitFor() )
-	for _,ret in ipairs(rt) do	-- An imediate function to execute ?
+	local rt = table.pack( Selene.WaitFor(clockTimer) )
+	for _,ret in ipairs(rt) do	-- An immediate function to execute ?
 		if type(ret) == 'function' then
 			ret()
 		elseif SelError.isSelError(ret) then -- Technical error ?

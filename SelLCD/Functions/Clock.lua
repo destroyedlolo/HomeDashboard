@@ -5,94 +5,94 @@ local function setChar( num, val, min)
 -- min : if true, add ':' behind
 	local dt = {
 		{
-			"     ",
-			"   x ",
-			"  x x",
-			"  x x",
-			"  x x",
-			"  x x",
-			"   x ",
+			"    ",
+			"  x ",
+			" x x",
+			" x x",
+			" x x",
+			" x x",
+			"  x ",
 			"     "
 		}, {
-			"     ",
-			"   x ",
-			"  xx ",
-			"   x ",
-			"   x ",
-			"   x ",
-			"  xxx",
+			"    ",
+			"  x ",
+			" xx ",
+			"  x ",
+			"  x ",
+			"  x ",
+			" xxx",
 			"     "
 		}, {
-			"     ",
-			"  xxx",
-			"    x",
-			"  xxx",
-			"  x  ",
-			"  x  ",
-			"  xxx",
+			"    ",
+			" xxx",
+			"   x",
+			" xxx",
+			" x  ",
+			" x  ",
+			" xxx",
 			"     "
 		}, {
-			"     ",
-			"  xxx",
-			"    x",
-			"   xx",
-			"    x",
-			"    x",
-			"  xxx",
+			"    ",
+			" xxx",
+			"   x",
+			"  xx",
+			"   x",
+			"   x",
+			" xxx",
 			"     "
 		}, {
-			"     ",
-			"  x x",
-			"  x x",
-			"   xx",
-			"    x",
-			"    x",
-			"    x",
+			"    ",
+			" x x",
+			" x x",
+			"  xx",
+			"   x",
+			"   x",
+			"   x",
 			"     "
 		}, {
-			"     ",
-			"  xxx",
-			"  x  ",
-			"  xxx",
-			"    x",
-			"    x",
-			"  xxx",
-			"     "
+			"    ",
+			" xxx",
+			" x  ",
+			" xxx",
+			"   x",
+			"   x",
+			" xxx",
+			"    "
 		}, {
-			"     ",
-			"  xx ",
-			"  x  ",
-			"  xxx",
-			"  x x",
-			"  x x",
-			"  xxx",
-			"     "
+			"    ",
+			" xx ",
+			" x  ",
+			" xxx",
+			" x x",
+			" x x",
+			" xxx",
+			"    "
 		}, {
-			"     ",
-			"  xxx",
-			"    x",
-			"    x",
-			"    x",
-			"    x",
-			"    x",
-			"     "
+			"    ",
+			" xxx",
+			"   x",
+			"   x",
+			"   x",
+			"   x",
+			"   x",
+			"    "
 		}, {
-			"     ",
-			"  xxx",
-			"  x x",
-			"  xxx",
-			"  x x",
-			"  x x",
-			"  xxx",
-			"     "
+			"    ",
+			" xxx",
+			" x x",
+			" xxx",
+			" x x",
+			" x x",
+			" xxx",
+			"    "
 		}, {
-			"     ",
-			"  xxx",
-			"  x x",
-			"  xxx",
-			"    x",
-			"    x",
-			"  xxx",
+			"    ",
+			" xxx",
+			" x x",
+			" xxx",
+			"   x",
+			"   x",
+			" xxx",
 			"     "
 		}, {
 			"     ",
@@ -124,19 +124,25 @@ local function setChar( num, val, min)
 		}
 	}
 
---[[
-print(dt[val])
-for _,v in pairs(dt[val])
-do
-	print(v)
+	local t = dt[val]
+	if min then
+		for i=1,8 do
+			if (i%3) == 0 then
+				t[i] = 'X' .. t[i]
+			else
+				t[i] = ' ' .. t[i]
+			end
+		end
+	end
+
+	lcd:SetChar(num, t)
 end
---]]
-	lcd:SetChar(num, dt[val])
-end
+
 
 function displayTime()
 	local t = os.date('*t')
-	print(t.hour%12, math.floor(t.min/10), t.min%10)
+
+	clockTimer:Set { when=60-t.sec }	-- Ready for next run
 
 	setChar(0, t.hour%12 +1, false)
 	setChar(1, math.floor(t.min/10) +1, true)
@@ -145,5 +151,7 @@ function displayTime()
 	lcd:SetCursor(13,1)
 	lcd:WriteString( string.char(0x08)..string.char(0x09)..string.char(0x0a))
 end
+
+clockTimer = SelTimer.Create { when=60, clockid=SelTimer.ClockModeConst("CLOCK_MONOTONIC"), task=displayTime }
 
 displayTime()
