@@ -1,12 +1,17 @@
 #!./Selene
 --- My Home Dashboard, LCD 16x2 version
 
+lfs = require "lfs" -- LuaFileSystem
+
 Selene.Use("SelLCD")
+Selene.Use("SelTimer")
 Selene.LetsGo() -- ensure late building dependencies
 
 	-- configuration
 local I2C_BUS = 2	-- Suitable for my BananaPI using 3.x kernel and FEX
 local I2C_ADDR = 0x27	-- Screen address
+
+require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
 
 --
 -- Utilities
@@ -29,6 +34,53 @@ function TableMerge( t1, t2 )
 	return t1
 end
 
+	-- Log a message on the 2nd lines of the screen
+function Log( msg, lmsg )
+	lcd:SetCursor(0,1)
+	lcd:WriteString(msg)
+	SelLog.Log( lmsg or msg )
+end
+
+	-- Implement inclusions of multiple directories
+	-- filenames are stored before they are loaded
+	-- This is allowing to prioritise required files among several directories
+function MultiDirRequire()
+	local self = {}
+	local files = {}	-- files to load
+	function self.loaddir( dir )
+		for f in lfs.dir(SELENE_SCRIPT_DIR ..'/'.. dir) do
+			local attr = lfs.attributes( SELENE_SCRIPT_DIR ..'/'.. dir ..'/'.. f )
+			local found, len, res = f:find("^(.*)%.[^%.]*$")
+			if found and attr.mode == 'file' and res:sub(1,1) ~= '.' and f:match("^.+(%..+)$") ~= '.md' and string.len(res) ~= 0 then
+				if files[res] then
+					SelLog.Log('E', res .. ' erasing "' .. files[res] ..'"')
+				end
+				files[res] = dir ..'/'.. res
+			end
+		end
+	end
+
+	function self.requirefiles()
+		local keys = {}
+
+		for k,v in pairs(files) do
+			table.insert( keys, k )
+		end
+		table.sort(keys)
+
+		for _,k in ipairs(keys) do
+			SelLog.Log('L', files[k] .. ' loading')
+			require( files[k] )
+			SelLog.Log('L', files[k] .. ' loaded')
+		end
+	end
+
+	return self
+end
+
+--
+-- Main code
+--
 	-- Cleaning
 function quitHDB()
 	lcd:Backlight(false)
@@ -44,6 +96,12 @@ lcd:Clear()
 lcd:WriteString("Selene : ".. string.format("%.4f", SELENE_VERSION))
 lcd:Backlight(true)
 lcd:DisplayCtl(true, false, false)	-- On, but no cursor
+
+Log("Loading ...", "Loading modules ...")
+local linclude = MultiDirRequire()
+-- linclude.loaddir('Support')
+linclude.loaddir('Functions')
+linclude.requirefiles()
 
 -- Wait for events
 SelLog.Log("Here we go ...")
