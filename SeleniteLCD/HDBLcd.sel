@@ -42,7 +42,7 @@ end
 	-- Log a message on the 2nd lines of the screen
 function Log( msg, lmsg )
 	lcd:SetCursor(0,1)
-	lcd:WriteString(msg)
+	lcd:WriteString(string.format('%13s', msg))
 	SelLog.Log( lmsg or msg )
 end
 
