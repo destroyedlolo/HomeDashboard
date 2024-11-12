@@ -5,7 +5,12 @@ lfs = require "lfs" -- LuaFileSystem
 
 Selene.Use("SelLCD")
 Selene.Use("SelTimer")
+Selene.Use("SelMQTT")
+Selene.Use("SelSharedVar")
 Selene.LetsGo() -- ensure late building dependencies
+
+-- Debug only
+-- require("tostring")
 
 	-- configuration
 local I2C_BUS = 2	-- Suitable for my BananaPI using 3.x kernel and FEX
@@ -27,7 +32,7 @@ end
 
 	-- merge t2 in t1
 function TableMerge( t1, t2 )
-	for _,v in ipairs(t2) do
+	for _,v in pairs(t2) do
 		table.insert(t1, v)
 	end
 
@@ -81,6 +86,10 @@ end
 --
 -- Main code
 --
+
+	-- Topics to follow
+Topics = {}
+
 	-- Cleaning
 function quitHDB()
 	lcd:Backlight(false)
@@ -91,6 +100,7 @@ Selene.SigIntTask( quitHDB )
 
 	-- Init the screen handle
 lcd = SelLCD.Init(I2C_BUS, I2C_ADDR, true, false)
+SelLCD.SetTiming(500, 0)
 
 lcd:Clear()
 lcd:WriteString("Selene : ".. string.format("%.4f", SELENE_VERSION))
@@ -103,8 +113,29 @@ linclude.loaddir('Support')
 linclude.loaddir('Functions')
 linclude.requirefiles()
 
+Log("MQTT ...", "MQTT Broker connection ...")
+function disconnected()
+	Log("Disconnected");
+end
+
+local Brk, err = SelMQTT.Connect( MQTT_URL, { reliable=false, clientID=MQTT_ClientID.."_"..Selene.getHostname().."_"..Selene.getPid(), OnDisconnectTrigger=disconnected } )
+if err then
+	print( "Broker", err )
+	return
+end
+SelLog.Log(MQTT_ClientID.."_"..Selene.getHostname().."_"..Selene.getPid())
+
+_, err = Brk:Subscribe( Topics )
+if err then
+	SelLog.Log('F', err)
+	return
+end
+
+-- print(universal_tostring(Topics))
+
 -- Wait for events
 SelLog.Log("Here we go ...")
+lcd:Clear()
 while true do
 	local rt = table.pack( Selene.WaitFor(clockTimer) )
 	for _,ret in ipairs(rt) do	-- An immediate function to execute ?

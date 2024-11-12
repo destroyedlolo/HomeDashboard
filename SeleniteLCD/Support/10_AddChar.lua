@@ -34,6 +34,16 @@ lcd:SetChar(5, {
 	"     "
 })
 
+lcd:SetChar(6, {
+	"x   x",
+	"x  x ",
+	"x x  ",
+	"xx  x",
+	"x  xx",
+	"  x x",
+	" xxxx",
+	"x   x"
+})
 --[[
 lcd:SetCursor(0,1)
 lcd:WriteString("New : ")
