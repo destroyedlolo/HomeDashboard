@@ -99,7 +99,7 @@ lcd:DisplayCtl(true, false, false)	-- On, but no cursor
 
 Log("Loading ...", "Loading modules ...")
 local linclude = MultiDirRequire()
--- linclude.loaddir('Support')
+linclude.loaddir('Support')
 linclude.loaddir('Functions')
 linclude.requirefiles()
 
