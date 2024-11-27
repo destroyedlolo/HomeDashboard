@@ -144,7 +144,11 @@ function displayTime()
 
 	clockTimer:Set { when=60-t.sec }	-- Ready for next run
 
-	setChar(0, t.hour%12 +1, false)
+	if t.hour ~= 12 then
+		t.hour = t.hour%12
+	end
+
+	setChar(0, t.hour +1, false)
 	setChar(1, math.floor(t.min/10) +1, true)
 	setChar(2, t.min%10 +1, false)
 
