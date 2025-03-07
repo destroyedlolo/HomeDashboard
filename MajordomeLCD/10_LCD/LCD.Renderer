@@ -1,0 +1,35 @@
+-- Attach an LCD screen on I2C@0x27
+--
+-- In the header of the script (comment bloc at the very beginning of
+-- the script), each line starting with -->> are Majordome's commands.
+-- Consequently, '--->>' are commented out commands.
+--
+-- Failure will crash Majordome
+-->> Fatal
+--
+-- remove some trace
+-- This option is useful to avoid logging of very noisy topics
+--->> quiet
+
+-- We need administrative API to load additional modules
+Selene.exposeAdminAPI()
+
+-- Include Séléné 3rd parties modules
+Selene.Use("SelLCD")
+Majordome.LetsGo() -- ensure late building dependencies
+
+	-- Init the screen handle
+	-- Suitable for my BananaPI under Arch/Gentoo
+local lcd = SelLCD.Init(1, 0x27, true, false)
+if not lcd then	-- Fallback if on bus #2
+	lcd = SelLCD.Init(2, 0x27, true, false)
+end
+lcd:SetTiming(500, 0)
+lcd:SetSize(16,2)	-- Even if it's the default value
+
+	-- Turn on a clean display
+lcd:Clear()
+lcd:Backlight(true)
+lcd:DisplayCtl(true, false, false)	-- On, but no cursor
+
+return lcd
