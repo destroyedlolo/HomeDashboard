@@ -13,7 +13,7 @@ Selene.LetsGo() -- ensure late building dependencies
 -- require("tostring")
 
 	-- configuration
-local I2C_BUS = 2	-- Suitable for my BananaPI using 3.x kernel and FEX
+local I2C_BUS = 1	-- Suitable for my BananaPI using mainline kernel and DTB
 local I2C_ADDR = 0x27	-- Screen address
 
 require (SELENE_SCRIPT_DIR .. "/LocalConfig")	-- Local configuration
