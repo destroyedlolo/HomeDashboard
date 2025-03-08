@@ -1,0 +1,19 @@
+-- Global background
+--
+-- In the header of the script (comment bloc at the very beginning of
+-- the script), each line starting with -->> are Majordome's commands.
+-- Consequently, '--->>' are commented out commands.
+--
+-- On which object this decoration will be applied ?
+-- On a Surface object
+--->> ApplyOn=
+-- On a Renderer
+-->> ApplyOnRenderer=LCD
+
+-- The surface to apply on is embodied as MAJORDOME_PAINTING
+
+MAJORDOME_PAINTING:Clear()
+MAJORDOME_PAINTING:WriteString(string.char(4))
+
+MAJORDOME_PAINTING:SetCursor(7)
+MAJORDOME_PAINTING:WriteString(string.char(6))
