@@ -1,4 +1,4 @@
--- Global background
+-- Clear the screen before doing per field decoration
 --
 -- In the header of the script (comment bloc at the very beginning of
 -- the script), each line starting with -->> are Majordome's commands.
@@ -12,8 +12,4 @@
 
 -- The surface to apply on is embodied as MAJORDOME_PAINTING
 
-MAJORDOME_PAINTING:SetCursor(9,1)
-MAJORDOME_PAINTING:WriteString(string.char(3))
-
-MAJORDOME_PAINTING:SetCursor(15,1)
-MAJORDOME_PAINTING:WriteString(string.char(6))
+MAJORDOME_PAINTING:Clear()
