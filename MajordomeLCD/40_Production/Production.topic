@@ -1,6 +1,6 @@
 -- Production topic
 --
--->> topic=TeleInfo/LinkyProduction/values/SINSTI
+-->> topic=TeleInfo/LinkyProduction/SINSTI
 --
 -- disable this topic
 --->> disabled

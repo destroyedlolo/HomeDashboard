@@ -39,4 +39,4 @@
 --
 -->> listen=Production
 
-return string.format("%5.f", MAJORDOME_PAYLOAD);
+return string.format("%5.f", MAJORDOME_PAYLOAD)
