@@ -1,0 +1,17 @@
+-- Display an Euro logo during "Heures Creuses"
+--
+--->> disabled
+--->> quiet
+--
+-->> Renderer Parent=LCD
+-->> Origin=7,1
+-->> Size=1x1
+--
+-->> listen=HC
+-->> need_topic=HC
+
+if HC:getVal() == 'HC..' then
+	return string.char(5)
+else
+	return ' '
+end

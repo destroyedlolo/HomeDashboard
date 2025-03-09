@@ -15,5 +15,5 @@
 MAJORDOME_PAINTING:SetCursor(0,1)
 MAJORDOME_PAINTING:WriteString(string.char(4))
 
-MAJORDOME_PAINTING:SetCursor(7,1)
+MAJORDOME_PAINTING:SetCursor(6,1)
 MAJORDOME_PAINTING:WriteString(string.char(6))

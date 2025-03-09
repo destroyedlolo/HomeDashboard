@@ -26,7 +26,7 @@
 --
 -- Size of the surface
 -- If not set, trying to get it from parent
--->> Size=6x1
+-->> Size=5x1
 -- Notez-Bien :
 --	- set to the size of the parent if the origin is outsize parent surface
 --
@@ -39,4 +39,4 @@
 --
 -->> listen=Consumption
 
-return string.format("%6.f", MAJORDOME_PAYLOAD);
+return string.format("%5.f", MAJORDOME_PAYLOAD);
