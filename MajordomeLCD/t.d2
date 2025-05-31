@@ -1,0 +1,58 @@
+00_Majordome.TMR_MidnightOrAtLaunch: MidnightOrAtLaunch
+00_Majordome.TMR_MidnightOrAtLaunch.class: Timer
+00_Majordome.TSK_LogToFile <- 00_Majordome.TMR_MidnightOrAtLaunch: when { class: llink }
+00_Majordome.TSK_LogToFile: LogToFile
+00_Majordome.TSK_LogToFile.class: Task
+00_Majordome.TSK_PurgeLog <- 00_Majordome.TMR_MidnightOrAtLaunch: when { class: llink }
+00_Majordome.TSK_PurgeLog: PurgeLog
+00_Majordome.TSK_PurgeLog.class: Task
+10_LCD.RDR_LCD: LCD
+10_LCD.RDR_LCD.class: Renderer
+10_LCD.RDR_LCD <- 10_LCD.DEC_LCD: ApplyOnRenderer { class: llink }
+10_LCD.DEC_LCD: LCD
+10_LCD.DEC_LCD.class: Decoration
+10_LCD.SHT_LCD: LCD
+10_LCD.SHT_LCD.class: Shutdown
+20_DefChar.TSK_CustomChar: CustomChar
+20_DefChar.TSK_CustomChar.class: Task
+30_Clock.TMR_Clock: Clock
+30_Clock.TMR_Clock.class: Timer
+10_LCD.RDR_LCD <- 30_Clock.FLD_Clock: Renderer Parent { class: llink }
+30_Clock.FLD_Clock <- 30_Clock.TMR_Clock: when { class: llink }
+30_Clock.FLD_Clock -- 30_Clock.TMR_Clock: need { class: lneed }
+30_Clock.FLD_Clock: Clock
+30_Clock.FLD_Clock.class: Field
+30_Consumption.TPK_Consumption: Consumption
+30_Consumption.TPK_Consumption.class: Topic
+10_LCD.RDR_LCD <- 30_Consumption.FLD_Consumption: Renderer Parent { class: llink }
+30_Consumption.FLD_Consumption <- 30_Consumption.TPK_Consumption: listen { class: llink }
+30_Consumption.FLD_Consumption: Consumption
+30_Consumption.FLD_Consumption.class: Field
+10_LCD.RDR_LCD <- 30_Consumption.DEC_Consumption: ApplyOnRenderer { class: llink }
+30_Consumption.DEC_Consumption: Consumption
+30_Consumption.DEC_Consumption.class: Decoration
+30_HeuresCreuse.TPK_HC: HC
+30_HeuresCreuse.TPK_HC.class: Topic
+10_LCD.RDR_LCD <- 30_HeuresCreuse.FLD_HC: Renderer Parent { class: llink }
+30_HeuresCreuse.FLD_HC <- 30_HeuresCreuse.TPK_HC: listen { class: llink }
+30_HeuresCreuse.FLD_HC -- 30_HeuresCreuse.TPK_HC: need { class: lneed }
+30_HeuresCreuse.FLD_HC: HC
+30_HeuresCreuse.FLD_HC.class: Field
+30_Piscine.TPK_Piscine: Piscine
+30_Piscine.TPK_Piscine.class: Topic
+10_LCD.RDR_LCD <- 30_Piscine.FLD_Piscine: Renderer Parent { class: llink }
+30_Piscine.FLD_Piscine <- 30_Piscine.TPK_Piscine: listen { class: llink }
+30_Piscine.FLD_Piscine: Piscine
+30_Piscine.FLD_Piscine.class: Field
+10_LCD.RDR_LCD <- 30_Piscine.DEC_Piscine: ApplyOnRenderer { class: llink }
+30_Piscine.DEC_Piscine: Piscine
+30_Piscine.DEC_Piscine.class: Decoration
+40_Production.TPK_Production: Production
+40_Production.TPK_Production.class: Topic
+10_LCD.RDR_LCD <- 40_Production.FLD_Production: Renderer Parent { class: llink }
+40_Production.FLD_Production <- 40_Production.TPK_Production: listen { class: llink }
+40_Production.FLD_Production: Production
+40_Production.FLD_Production.class: Field
+10_LCD.RDR_LCD <- 40_Production.DEC_Production: ApplyOnRenderer { class: llink }
+40_Production.DEC_Production: Production
+40_Production.DEC_Production.class: Decoration

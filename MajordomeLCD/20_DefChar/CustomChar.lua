@@ -4,6 +4,7 @@
 -- Define custom characters
 -- char 0-2 are already used by the clock
 
+-- 3 : Photovoltaic
 LCD:SetChar(3, {
 	"     ",
 	"  XXx",
@@ -15,17 +16,19 @@ LCD:SetChar(3, {
 	"     "
 })
 
+-- 4 : Consumption
 LCD:SetChar(4, {
 	"     ",
 	" x x ",
 	"xxxxx",
 	"xxxxx",
-	"xxxxx",
 	" xxx ",
+	"  x  ",
 	"  x  ",
 	"  x  "
 })
 
+-- 5 : powersaving
 LCD:SetChar(5, {
 	" xXX ",
 	"x   X",
@@ -37,6 +40,7 @@ LCD:SetChar(5, {
 	"     "
 })
 
+-- 6 : Volt-Ampere
 LCD:SetChar(6, {
 	"x   x",
 	"x  x ",
