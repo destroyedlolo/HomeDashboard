@@ -1,3 +1,4 @@
+-->> desc=Define custom chars
 -->> RunAtStartup
 -->> need_renderer=LCD
 

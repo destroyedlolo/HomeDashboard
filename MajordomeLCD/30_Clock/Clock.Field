@@ -1,4 +1,4 @@
--- Display the current time
+-->> desc=Display the current time
 --
 --->> disabled
 --->> quiet

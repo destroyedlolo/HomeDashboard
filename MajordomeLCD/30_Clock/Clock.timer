@@ -1,4 +1,4 @@
--- Timer to display the current time
+-->> desc=Timer to display the current time
 --
 -->> immediate
 -->> every=60

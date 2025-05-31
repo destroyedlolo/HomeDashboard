@@ -1,4 +1,4 @@
--- Turn off the I2C LCD screen.
+-->> desc=Turn off the I2C LCD screen.
 --
 -- In the header of the script (comment bloc at the very beginning of
 -- the script), each line starting with -->> are Majordome's commands.

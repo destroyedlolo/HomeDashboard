@@ -1,4 +1,4 @@
--- Clear the screen before doing per field decoration
+-->> desc=Clear the screen before doing per field decoration
 --
 -- In the header of the script (comment bloc at the very beginning of
 -- the script), each line starting with -->> are Majordome's commands.
